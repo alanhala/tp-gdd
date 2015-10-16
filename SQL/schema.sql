@@ -164,7 +164,7 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	modelo NVARCHAR(255) NOT NULL,
 	kgs_disponibles NUMERIC(18,0) NOT NULL,
 	fabricante NVARCHAR(255) NOT NULL,
-	tipo_servicio NVARCHAR(255),
+	tipo_servicio NVARCHAR(255) CHECK (tipo_servicio in ('Semi-Cama', 'Cama', 'Premium', 'Ejecutivo', 'Común')),
 	fecha_alta DATETIME,
 	numero NUMERIC(18,0),
 	baja_fuera_servicio BINARY,
@@ -172,8 +172,7 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	fecha_fuera_servicio DATETIME,
 	fecha_reinicio_servicio DATETIME,
 	fecha_baja_definitiva DATETIME,
-	PRIMARY KEY(matricula),
-	CONSTRAINT chk_tipo_servicio CHECK (tipo_servicio in ('Semi-Cama', 'Cama', 'Premium', 'Ejecutivo', 'Común'))
+	PRIMARY KEY(matricula)
 )
 
 GO
@@ -217,9 +216,8 @@ CREATE TABLE JUST_DO_IT.Butacas(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	numero INT,
 	piso NUMERIC(18,0),
-	tipo nvarchar(10),
-	PRIMARY KEY (id),
-	CONSTRAINT chk_tipo_butaca CHECK (tipo in ('Pasillo', 'Ventanilla'))
+	tipo nvarchar(10) CHECK (tipo in ('Pasillo', 'Ventanilla')),
+	PRIMARY KEY (id)
 )
 
 /******NORMALIZACION******/
