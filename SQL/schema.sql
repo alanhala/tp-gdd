@@ -5,7 +5,37 @@ GO
 CREATE SCHEMA [JUST_DO_IT]
 GO
 
-/****** DROP TABLES ******/
+/******DROP TABLES******/
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Rol_Funcionalidad'))
+	drop table JUST_DO_IT.Rol_Funcionalidad
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Roles'))
+	drop table JUST_DO_IT.Roles
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Butacas'))
+	drop table JUST_DO_IT.Butacas
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Funcionalidades'))
+	drop table JUST_DO_IT.Funcionalidades
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Puntos'))
+	drop table JUST_DO_IT.Puntos
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Compras'))
+	drop table JUST_DO_IT.Compras
+
+GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Paquete'))
 	drop table JUST_DO_IT.Paquete
@@ -32,79 +62,189 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ci
 
 GO
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Clientes'))
-	drop table JUST_DO_IT.Clientes
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Usuarios'))
+	drop table JUST_DO_IT.Usuarios
 
 GO
 
-/***************************************************/
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves'))
+	drop table JUST_DO_IT.Aeronaves
+
+GO
+
+/******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
-	ciu_id int,
-	ciu_nombre NVARCHAR(255),
-	PRIMARY KEY (ciu_id)
+	id int IDENTITY(1,1) NOT NULL,
+	nombre NVARCHAR(255) NOT NULL,
+	PRIMARY KEY (id)
 )
 
 GO
 
 CREATE TABLE JUST_DO_IT.Rutas(
-	ru_codigo NUMERIC(18,0),
-	ru_precio_baseKG NUMERIC(18,2),
-	ru_precio_basePasaje NUMERIC(18,2),
-	ru_ciu_id_origen INT,
-	ru_ciu_id_destino INT,
-	ru_tipo_servicio NVARCHAR(255)
-	PRIMARY KEY(ru_codigo),
-	FOREIGN KEY (ru_ciu_id_origen) REFERENCES JUST_DO_IT.Ciudades,
-	FOREIGN KEY (ru_ciu_id_destino) REFERENCES JUST_DO_IT.Ciudades
+	id NUMERIC(18,0) IDENTITY(1,1),
+	codigo NUMERIC(18,0) NOT NULL,
+	precio_baseKG NUMERIC(18,2) NOT NULL,
+	precio_basePasaje NUMERIC(18,2) NOT NULL,
+	ciu_id_origen INT NOT NULL,
+	ciu_id_destino INT NOT NULL,
+	tipo_servicio NVARCHAR(255),
+	PRIMARY KEY(id),
+	FOREIGN KEY (ciu_id_origen) REFERENCES JUST_DO_IT.Ciudades,
+	FOREIGN KEY (ciu_id_destino) REFERENCES JUST_DO_IT.Ciudades
 ) 
 
 GO
 
-CREATE TABLE JUST_DO_IT.Clientes(
-	cli_dni NUMERIC(18,0),
-	cli_nombre NVARCHAR(255),
-	cli_apellido NVARCHAR(255),
-	cli_direccion NVARCHAR(255),
-	cli_telefono NUMERIC(18,0),
-	cli_mail NVARCHAR(255),
-	cli_fecha_nacimiento DATETIME,
-	PRIMARY KEY(cli_dni)
+CREATE TABLE JUST_DO_IT.Usuarios(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	dni NUMERIC(18,0) UNIQUE NOT NULL,
+	nombre NVARCHAR(255) NOT NULL,
+	apellido NVARCHAR(255) NOT NULL,
+	direccion NVARCHAR(255) NOT NULL,
+	telefono NUMERIC(18,0) NOT NULL,
+	mail NVARCHAR(255) NOT NULL,
+	fecha_nacimiento DATETIME NOT NULL,
+	PRIMARY KEY(id)
 )
 
 GO
 
 CREATE TABLE JUST_DO_IT.Vuelos(
-	vue_id NUMERIC(18,0),
-	vue_fecha_salida DATETIME, 
-	vue_fecha_llegada DATETIME,
-	vue_fecha_llegada_estimada DATETIME,
-	vue_ru_codigo NUMERIC(18,0),
-	PRIMARY KEY (vue_id),
-	FOREIGN KEY (vue_ru_codigo) references JUST_DO_IT.Rutas
+	id NUMERIC(18,0) IDENTITY(1,1),
+	fecha_salida DATETIME NOT NULL, 
+	fecha_llegada DATETIME,
+	fecha_llegada_estimada DATETIME NOT NULL,
+	codigo NUMERIC(18,0) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (codigo) references JUST_DO_IT.Rutas
 )
 
 GO
 
 CREATE TABLE JUST_DO_IT.Pasajes(
-	pa_codigo NUMERIC(18,0),
-	pa_precio NUMERIC(18,0),
-	pa_fecha_compra DATETIME,
-	pa_cli_pasajero NUMERIC(18,0),
-	pa_cli_comprador NUMERIC(18,0),
-	PRIMARY KEY (pa_codigo),
-	FOREIGN KEY (pa_cli_pasajero) REFERENCES JUST_DO_IT.Clientes,
-	FOREIGN KEY (pa_cli_comprador) REFERENCES JUST_DO_IT.Clientes
+	codigo NUMERIC(18,0) NOT NULL,
+	precio NUMERIC(18,0) NOT NULL,
+	fecha_compra DATETIME NOT NULL,
+	pasajero NUMERIC(18,0) NOT NULL,
+	comprador NUMERIC(18,0) NOT NULL,
+	PRIMARY KEY (codigo),
+	FOREIGN KEY (pasajero) REFERENCES JUST_DO_IT.Usuarios,
+	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios
 )
 
 GO
 
 CREATE TABLE JUST_DO_IT.Paquete(
-	paq_id NUMERIC(18,0) IDENTITY(1,1),
-	paq_codigo NUMERIC(18,0),
-	paq_precio NUMERIC(18,2),
-	paq_kg NUMERIC(18,0),
-	paq_vue_id NUMERIC(18,0),
-	PRIMARY KEY(paq_id),
-	FOREIGN KEY(paq_vue_id) REFERENCES JUST_DO_IT.Vuelos
+	id NUMERIC(18,0) IDENTITY(1,1),
+	codigo NUMERIC(18,0) NOT NULL,
+	precio NUMERIC(18,2) NOT NULL,
+	kg NUMERIC(18,0) NOT NULL,
+	id_vuelo NUMERIC(18,0) NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(id_vuelo) REFERENCES JUST_DO_IT.Vuelos
 )
+
+GO
+
+CREATE TABLE JUST_DO_IT.Puntos(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	millas NUMERIC(18,0) NOT NULL,
+	vencimiento DATETIME NOT NULL,
+	dni NUMERIC(18,0) NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(dni) REFERENCES JUST_DO_IT.Usuarios
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Aeronaves(
+	matricula NVARCHAR(255) UNIQUE NOT NULL,
+	modelo NVARCHAR(255) NOT NULL,
+	kgs_disponibles NUMERIC(18,0) NOT NULL,
+	fabricante NVARCHAR(255) NOT NULL,
+	tipo_servicio NVARCHAR(255) CHECK (tipo_servicio in ('Semi-Cama', 'Cama', 'Premium', 'Ejecutivo', 'Común')),
+	fecha_alta DATETIME,
+	numero NUMERIC(18,0),
+	baja_fuera_servicio BINARY,
+	baja_vida_util BINARY,
+	fecha_fuera_servicio DATETIME,
+	fecha_reinicio_servicio DATETIME,
+	fecha_baja_definitiva DATETIME,
+	PRIMARY KEY(matricula)
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Roles(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	nombre varchar(50) NOT NULL,
+	PRIMARY KEY (id)
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Funcionalidades(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	descripcion NVARCHAR(255),
+	PRIMARY KEY (id)
+)
+
+CREATE TABLE JUST_DO_IT.Rol_Funcionalidad(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	id_rol NUMERIC(18,0) NOT NULL,
+	id_funcionalidad NUMERIC(18,0) NOT NULL,
+	FOREIGN KEY (id_rol) REFERENCES JUST_DO_IT.Roles,
+	FOREIGN KEY (id_funcionalidad) REFERENCES JUST_DO_IT.Funcionalidades
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Compras(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	fecha_devolucion DATETIME,
+	codigo_pasaje NUMERIC(18,0) NOT NULL,
+	motivo_cancelacion NVARCHAR(255),
+	PRIMARY KEY (id),
+	FOREIGN KEY (codigo_pasaje) REFERENCES JUST_DO_IT.Pasajes
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Butacas(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	numero INT,
+	piso NUMERIC(18,0),
+	tipo nvarchar(10) CHECK (tipo in ('Pasillo', 'Ventanilla')),
+	PRIMARY KEY (id)
+)
+
+/******NORMALIZACION******/
+
+INSERT INTO JUST_DO_IT.Usuarios(nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento) 
+	SELECT  DISTINCT Cli_Nombre, Cli_Apellido, Cli_Dni, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
+		FROM gd_esquema.Maestra
+
+INSERT INTO JUST_DO_IT.Ciudades(nombre)
+	SELECT DISTINCT Ruta_Ciudad_Origen AS Ciudad FROM gd_esquema.Maestra
+	UNION
+	SELECT DISTINCT Ruta_Ciudad_Destino As Ciudad FROM gd_esquema.Maestra
+
+INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, fabricante)
+	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, Aeronave_Fabricante
+		FROM gd_esquema.Maestra
+
+INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
+INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
+
+INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_origen, ciu_id_destino)
+	SELECT Ruta_Codigo, MAX(Ruta_Precio_BaseKG), MAX(Ruta_Precio_BasePasaje), ciudades1.id, ciudades2.id
+		FROM JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2, gd_esquema.Maestra AS maestra
+			WHERE ciudades1.nombre = maestra.Ruta_Ciudad_Origen AND ciudades2.nombre = maestra.Ruta_Ciudad_Destino 
+				 GROUP BY Ruta_Codigo, ciudades1.id, ciudades2.id
+
+INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo)
+	SELECT DISTINCT Butaca_Nro, Butaca_Piso, Butaca_Tipo 
+		FROM gd_esquema.Maestra
+			WHERE Butaca_Tipo <> '0'
