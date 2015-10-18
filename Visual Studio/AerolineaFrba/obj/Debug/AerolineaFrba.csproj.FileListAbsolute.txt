@@ -10,4 +10,9 @@ C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Stu
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.csproj.GenerateResource.Cache
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.exe
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
-C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Registro_Llegada_Destino.Form2.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.Form1.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Consulta_Millas.Form1.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Devolucion.Form1.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Generacion_Viaje.Form1.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Listado_Estadistico.Form1.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Registro_de_Usuario.Form1.resources
