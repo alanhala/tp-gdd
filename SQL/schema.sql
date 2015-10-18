@@ -75,7 +75,7 @@ GO
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
-	id int IDENTITY(1,1) NOT NULL,
+	id int IDENTITY(1,1),
 	nombre NVARCHAR(255) NOT NULL,
 	PRIMARY KEY (id)
 )
