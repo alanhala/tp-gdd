@@ -99,7 +99,7 @@ GO
 
 CREATE TABLE JUST_DO_IT.Usuarios(
 	id NUMERIC(18,0) IDENTITY(1,1),
-	dni NUMERIC(18,0) UNIQUE NOT NULL,
+	dni NUMERIC(18,0) NOT NULL,
 	nombre NVARCHAR(255) NOT NULL,
 	apellido NVARCHAR(255) NOT NULL,
 	direccion NVARCHAR(255) NOT NULL,
@@ -116,9 +116,9 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 	fecha_salida DATETIME NOT NULL, 
 	fecha_llegada DATETIME,
 	fecha_llegada_estimada DATETIME NOT NULL,
-	codigo NUMERIC(18,0) NOT NULL,
+	ruta_id NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (codigo) references JUST_DO_IT.Rutas
+	FOREIGN KEY (ruta_id) references JUST_DO_IT.Rutas
 )
 
 GO
@@ -127,9 +127,11 @@ CREATE TABLE JUST_DO_IT.Pasajes(
 	codigo NUMERIC(18,0) NOT NULL,
 	precio NUMERIC(18,0) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
+	vuelo_id NUMERIC(18,0) NOT NULL,
 	pasajero NUMERIC(18,0) NOT NULL,
-	comprador NUMERIC(18,0) NOT NULL,
-	PRIMARY KEY (codigo),
+	comprador NUMERIC(18,0) NOT NULL
+	PRIMARY KEY (codigo)
+	FOREIGN KEY (vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
 	FOREIGN KEY (pasajero) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios
 )
@@ -141,9 +143,9 @@ CREATE TABLE JUST_DO_IT.Paquete(
 	codigo NUMERIC(18,0) NOT NULL,
 	precio NUMERIC(18,2) NOT NULL,
 	kg NUMERIC(18,0) NOT NULL,
-	id_vuelo NUMERIC(18,0) NOT NULL,
+	vuelo_id NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY(id),
-	FOREIGN KEY(id_vuelo) REFERENCES JUST_DO_IT.Vuelos
+	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos
 )
 
 GO
@@ -220,6 +222,8 @@ CREATE TABLE JUST_DO_IT.Butacas(
 	PRIMARY KEY (id)
 )
 
+GO
+
 /******NORMALIZACION******/
 
 INSERT INTO JUST_DO_IT.Usuarios(nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento) 
@@ -248,3 +252,11 @@ INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo)
 	SELECT DISTINCT Butaca_Nro, Butaca_Piso, Butaca_Tipo 
 		FROM gd_esquema.Maestra
 			WHERE Butaca_Tipo <> '0'
+
+INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id)
+	SELECT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id
+		FROM gd_esquema.Maestra AS maestra, (SELECT r.id, codigo, ciudades1.nombre AS ciudad_orgien, ciudades2.nombre AS ciudad_destino
+												FROM JUST_DO_IT.Rutas AS r, JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2
+													WHERE r.ciu_id_destino = ciudades2.id AND r.ciu_id_origen = ciudades1.id) AS rutas
+			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.ciudad_orgien AND maestra.Ruta_Ciudad_Destino = rutas.ciudad_destino
+
