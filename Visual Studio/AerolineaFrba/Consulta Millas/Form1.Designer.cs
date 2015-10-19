@@ -37,6 +37,8 @@
             this.puntos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaAcumulacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.canjeRealizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,11 +119,31 @@
             this.canjeRealizado.Name = "canjeRealizado";
             this.canjeRealizado.ReadOnly = true;
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(380, 377);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 17;
+            this.button4.Text = "Guardar";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(286, 377);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 16;
+            this.button5.Text = "Limpiar";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 374);
+            this.ClientSize = new System.Drawing.Size(485, 412);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -147,5 +169,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn puntos;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaAcumulacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn canjeRealizado;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
