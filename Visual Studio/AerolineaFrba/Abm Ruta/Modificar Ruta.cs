@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AerolineaFrba.Canje_Millas
+namespace AerolineaFrba.Abm_Ruta
 {
-    public partial class Form1 : Form
+    public partial class Modificar_Ruta : Form
     {
-        public Form1()
+        public Modificar_Ruta()
         {
             InitializeComponent();
+        }
+
+        private void Modificar_Ruta_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
