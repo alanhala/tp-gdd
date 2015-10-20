@@ -89,7 +89,6 @@ CREATE TABLE JUST_DO_IT.Rutas(
 	precio_basePasaje NUMERIC(18,2) NOT NULL,
 	ciu_id_origen NUMERIC(18,0) NOT NULL,
 	ciu_id_destino NUMERIC(18,0) NOT NULL,
-	tipo_servicio NVARCHAR(255),
 	PRIMARY KEY(id),
 	FOREIGN KEY (ciu_id_origen) REFERENCES JUST_DO_IT.Ciudades,
 	FOREIGN KEY (ciu_id_destino) REFERENCES JUST_DO_IT.Ciudades
@@ -237,8 +236,8 @@ INSERT INTO JUST_DO_IT.Ciudades(nombre)
 	UNION
 	SELECT DISTINCT Ruta_Ciudad_Destino As Ciudad FROM gd_esquema.Maestra
 
-INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, fabricante)
-	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, Aeronave_Fabricante
+INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, fabricante, tipo_servicio)
+	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, Aeronave_Fabricante, Tipo_Servicio
 		FROM gd_esquema.Maestra
 
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
@@ -255,16 +254,32 @@ INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo)
 		FROM gd_esquema.Maestra
 			WHERE Butaca_Tipo <> '0'
 
-INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id)
+/*INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id)
 	SELECT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id
 		FROM gd_esquema.Maestra AS maestra, (SELECT r.id, codigo, ciudades1.nombre AS ciudad_origen, ciudades2.nombre AS ciudad_destino
 												FROM JUST_DO_IT.Rutas AS r, JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2
 													WHERE r.ciu_id_destino = ciudades2.id AND r.ciu_id_origen = ciudades1.id) AS rutas
-			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.ciudad_origen AND maestra.Ruta_Ciudad_Destino = rutas.ciudad_destino
+			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.ciudad_origen AND maestra.Ruta_Ciudad_Destino = rutas.ciudad_destino*/
+
+GO
+CREATE VIEW JUST_DO_IT.rutasDeLaMaestra
+AS 
+	SELECT rutas.id AS id, rutas.codigo AS codigo, ciudades1.id AS origen, ciudades2.id AS destino
+		FROM JUST_DO_IT.Rutas AS rutas, JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2, gd_esquema.Maestra AS maestra
+			WHERE rutas.codigo = maestra.Ruta_Codigo AND rutas.ciu_id_origen = ciudades1.id AND rutas.ciu_id_destino = ciudades2.id
+				AND ciudades1.nombre = maestra.Ruta_Ciudad_Origen AND ciudades2.nombre = maestra.Ruta_Ciudad_Destino 
+GO
+
+INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id)
+	SELECT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.rutasDeLaMaestra AS rutas
+			WHERE maestra.Ruta_Codigo = rutas.codigo 
+
 
 INSERT INTO JUST_DO_IT.Pasajes(codigo, precio, fecha_compra, vuelo_id, pasajero, comprador)
 	SELECT maestra.Pasaje_Codigo, maestra.Pasaje_Precio, maestra.Pasaje_FechaCompra, vuelos.id, usuarios.id, usuarios.id
 		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos 
 			WHERE maestra.Pasaje_Codigo <> 0 
 				AND maestra.Cli_Apellido = usuarios.apellido AND maestra.Cli_Nombre =  usuarios.nombre AND maestra.Cli_Dni = usuarios.dni
-				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
+				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada 
+				AND maestra.FechaLLegada = vuelos.fecha_llegada 
