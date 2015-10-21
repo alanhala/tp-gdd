@@ -197,7 +197,6 @@ CREATE TABLE JUST_DO_IT.Funcionalidades(
 	descripcion NVARCHAR(255),
 	PRIMARY KEY (id)
 )
-
 GO
 
 CREATE TABLE JUST_DO_IT.Rol_Funcionalidad(
@@ -207,7 +206,6 @@ CREATE TABLE JUST_DO_IT.Rol_Funcionalidad(
 	FOREIGN KEY (id_rol) REFERENCES JUST_DO_IT.Roles,
 	FOREIGN KEY (id_funcionalidad) REFERENCES JUST_DO_IT.Funcionalidades
 )
-
 GO
 
 CREATE TABLE JUST_DO_IT.Compras(
@@ -287,3 +285,22 @@ INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede acceder al logueo')
 
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUEs (1, 1)
+
+173074
+
+GO
+CREATE FUNCTION vueloCorrespondiente(@salida DATETIME, @llegada DATETIME, @estimada DATETIME, @origen VARCHAR(255), @destino VARCHAR(255), @codigo NUMERIC(18,0))
+RETURNS TABLE
+AS RETURN
+	SELECT vuelos.id FROM JUST_DO_IT.rutasDeLaMaestra AS rutas, JUST_DO_IT.Vuelos AS vuelos
+		WHERE vuelos.fecha_salida = @salida AND vuelos.fecha_llegada_estimada = @estimada AND vuelos.fecha_llegada = @llegada
+				AND rutas.origen = @origen AND rutas.destino = @destino AND rutas.codigo = @codigo
+				AND vuelos.ruta_id = rutas.id
+GO		
+INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
+	SELECT distinct maestra.Paquete_Codigo, maestra.Paquete_FechaCompra, maestra.Paquete_KG, maestra.Paquete_Precio, vuelos.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.vue
+			WHERE maestra.Paquete_Codigo <> 0 
+
+GO 
+
