@@ -128,14 +128,13 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 GO
 
 CREATE TABLE JUST_DO_IT.Pasajes(
-	id NUMERIC(18,0) IDENTITY(1,1),
-	codigo NUMERIC(18,0) NOT NULL,
+	codigo NUMERIC(18,0),
 	precio NUMERIC(18,0) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
 	pasajero NUMERIC(18,0) NOT NULL,
 	comprador NUMERIC(18,0) NOT NULL
-	PRIMARY KEY (id)
+	PRIMARY KEY (codigo)
 	FOREIGN KEY (vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
 	FOREIGN KEY (pasajero) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios
@@ -172,7 +171,7 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	modelo NVARCHAR(255) NOT NULL,
 	kgs_disponibles NUMERIC(18,0) NOT NULL,
 	fabricante NVARCHAR(255) NOT NULL,
-	tipo_servicio NVARCHAR(255) CHECK (tipo_servicio in ('Semi-Cama', 'Cama', 'Premium', 'Ejecutivo', 'Común', 'Primera Clase', 'Turista')),
+	tipo_servicio NVARCHAR(255) CHECK (tipo_servicio in ('Semi-Cama', 'Cama', 'Premium', 'Ejecutivo', 'Común')),
 	fecha_alta DATETIME,
 	numero NUMERIC(18,0),
 	baja_fuera_servicio BINARY,
@@ -198,6 +197,8 @@ CREATE TABLE JUST_DO_IT.Funcionalidades(
 	descripcion NVARCHAR(255),
 	PRIMARY KEY (id)
 )
+
+GO
 
 CREATE TABLE JUST_DO_IT.Rol_Funcionalidad(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -230,6 +231,15 @@ CREATE TABLE JUST_DO_IT.Butacas(
 
 GO
 
+/******VIEWS******/
+
+CREATE VIEW JUST_DO_IT.rutasDeLaMaestra
+AS 
+	SELECT rutas.id AS id, rutas.codigo AS codigo, ciudades1.nombre AS origen, ciudades2.nombre AS destino
+		FROM JUST_DO_IT.Rutas AS rutas, JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2
+			WHERE rutas.ciu_id_origen = ciudades1.id AND rutas.ciu_id_destino = ciudades2.id
+GO
+
 /******NORMALIZACION******/
 
 INSERT INTO JUST_DO_IT.Usuarios(nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento) 
@@ -245,9 +255,6 @@ INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, fabricante,
 	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, Aeronave_Fabricante, Tipo_Servicio
 		FROM gd_esquema.Maestra
 
-INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
-INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
-
 INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_origen, ciu_id_destino)
 	SELECT Ruta_Codigo, MAX(Ruta_Precio_BaseKG), MAX(Ruta_Precio_BasePasaje), ciudades1.id, ciudades2.id
 		FROM JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2, gd_esquema.Maestra AS maestra
@@ -258,25 +265,25 @@ INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo)
 	SELECT DISTINCT Butaca_Nro, Butaca_Piso, Butaca_Tipo 
 		FROM gd_esquema.Maestra
 			WHERE Butaca_Tipo <> '0'
-GO
-
-CREATE VIEW JUST_DO_IT.rutas_con_ciudades
-AS 
-	SELECT rutas.id AS id, rutas.codigo AS codigo, ciudades1.nombre AS origen, ciudades2.nombre AS destino
-		FROM JUST_DO_IT.Rutas AS rutas, JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2
-			WHERE rutas.ciu_id_origen = ciudades1.id AND rutas.ciu_id_destino = ciudades2.id
-GO
 
 INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id)
 	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.rutas_con_ciudades AS rutas
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.rutasDeLaMaestra AS rutas
 			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
 
-
-/*INSERT INTO JUST_DO_IT.Pasajes(codigo, precio, fecha_compra, vuelo_id, pasajero, comprador)
-	SELECT maestra.Pasaje_Codigo, maestra.Pasaje_Precio, maestra.Pasaje_FechaCompra, vuelos.id, usuarios.id, usuarios.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos 
+INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, comprador) 
+	SELECT DISTINCT maestra.Pasaje_Codigo, maestra.Pasaje_FechaCompra, maestra.Pasaje_Precio, vuelos.id, usuarios.id, usuarios.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos, JUST_DO_IT.rutasDeLaMaestra AS rutas
 			WHERE maestra.Pasaje_Codigo <> 0 
 				AND maestra.Cli_Apellido = usuarios.apellido AND maestra.Cli_Nombre =  usuarios.nombre AND maestra.Cli_Dni = usuarios.dni
-				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada 
-				AND maestra.FechaLLegada = vuelos.fecha_llegada*/
+				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
+				AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino AND maestra.Ruta_Codigo = rutas.codigo
+				AND vuelos.ruta_id = rutas.id
+
+INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
+
+INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
+
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede acceder al logueo')
+
+INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUEs (1, 1)
