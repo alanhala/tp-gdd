@@ -45,6 +45,7 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.process1 = new System.Diagnostics.Process();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -145,7 +146,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(542, 179);
+            this.button1.Location = new System.Drawing.Point(539, 224);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 13;
@@ -156,7 +157,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(15, 179);
+            this.button2.Location = new System.Drawing.Point(12, 224);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 14;
@@ -196,7 +197,7 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Location = new System.Drawing.Point(32, 23);
+            this.groupBox1.Location = new System.Drawing.Point(29, 68);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(585, 127);
             this.groupBox1.TabIndex = 17;
@@ -204,23 +205,35 @@
             this.groupBox1.Text = "Complete los siguientes campos";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(225, 24);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(156, 22);
+            this.label7.TabIndex = 38;
+            this.label7.Text = "Generar aeronave";
+            // 
             // Alta
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(645, 219);
+            this.ClientSize = new System.Drawing.Size(642, 259);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Alta";
-            this.Text = "Generar Aeronave";
+            this.Text = "Aeronave";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -242,5 +255,6 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Diagnostics.Process process1;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label7;
     }
 }

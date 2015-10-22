@@ -1,6 +1,6 @@
 ﻿namespace AerolineaFrba.Listado_Estadistico
 {
-    partial class Form1
+    partial class Estadistica
     {
         /// <summary>
         /// Required designer variable.
@@ -28,40 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Estadistica));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ciudad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pasajesComprados = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantAcientosVacios = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantPuntos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.ciudadPasajeCancelados = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantPasajesCancelados = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.matriculaAeronave = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidadDiasFueraDeServicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,50 +110,6 @@
             this.tabPage1.Text = "Distinos con más pasajes comprados";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.dataGridView2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(513, 158);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Destinos con aeronaves mas vacías";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.dataGridView3);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(513, 158);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Clientes con más puntos";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.dataGridView4);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(513, 158);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Destinos con pasajes cancelados";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.dataGridView5);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(513, 158);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Aeronaves con mayor cantidad de días fuera de servicio";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -171,11 +128,24 @@
             // 
             this.ciudad.HeaderText = "Cuidad";
             this.ciudad.Name = "ciudad";
+            this.ciudad.ReadOnly = true;
             // 
             // pasajesComprados
             // 
             this.pasajesComprados.HeaderText = "Cantidad de pasajes comprados";
             this.pasajesComprados.Name = "pasajesComprados";
+            this.pasajesComprados.ReadOnly = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dataGridView2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(513, 158);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Destinos con aeronaves mas vacías";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dataGridView2
             // 
@@ -191,6 +161,29 @@
             this.dataGridView2.Size = new System.Drawing.Size(245, 98);
             this.dataGridView2.TabIndex = 1;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Cuidad";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // cantAcientosVacios
+            // 
+            this.cantAcientosVacios.HeaderText = "Cantidad de acietos vacíos de la aeronave más vacia";
+            this.cantAcientosVacios.Name = "cantAcientosVacios";
+            this.cantAcientosVacios.ReadOnly = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.dataGridView3);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(513, 158);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Clientes con más puntos";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
             // dataGridView3
             // 
             this.dataGridView3.AllowUserToAddRows = false;
@@ -205,25 +198,28 @@
             this.dataGridView3.Size = new System.Drawing.Size(501, 147);
             this.dataGridView3.TabIndex = 1;
             // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Cuidad";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // cantAcientosVacios
-            // 
-            this.cantAcientosVacios.HeaderText = "Cantidad de acietos vacíos de la aeronave más vacia";
-            this.cantAcientosVacios.Name = "cantAcientosVacios";
-            // 
             // nombreCliente
             // 
             this.nombreCliente.HeaderText = "Nombre";
             this.nombreCliente.Name = "nombreCliente";
+            this.nombreCliente.ReadOnly = true;
             // 
             // cantPuntos
             // 
             this.cantPuntos.HeaderText = "Cantidad de puntos";
             this.cantPuntos.Name = "cantPuntos";
+            this.cantPuntos.ReadOnly = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.dataGridView4);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(513, 158);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Destinos con pasajes cancelados";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // dataGridView4
             // 
@@ -243,11 +239,24 @@
             // 
             this.ciudadPasajeCancelados.HeaderText = "Destino";
             this.ciudadPasajeCancelados.Name = "ciudadPasajeCancelados";
+            this.ciudadPasajeCancelados.ReadOnly = true;
             // 
             // cantPasajesCancelados
             // 
             this.cantPasajesCancelados.HeaderText = "Cantidad de pasajes cancelados";
             this.cantPasajesCancelados.Name = "cantPasajesCancelados";
+            this.cantPasajesCancelados.ReadOnly = true;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.dataGridView5);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(513, 158);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Aeronaves con mayor cantidad de días fuera de servicio";
+            this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // dataGridView5
             // 
@@ -267,14 +276,17 @@
             // 
             this.matriculaAeronave.HeaderText = "Matrícula";
             this.matriculaAeronave.Name = "matriculaAeronave";
+            this.matriculaAeronave.ReadOnly = true;
             // 
             // cantidadDiasFueraDeServicio
             // 
             this.cantidadDiasFueraDeServicio.HeaderText = "Cantidad de días fuera de servicio";
             this.cantidadDiasFueraDeServicio.Name = "cantidadDiasFueraDeServicio";
+            this.cantidadDiasFueraDeServicio.ReadOnly = true;
             // 
             // button1
             // 
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button1.Location = new System.Drawing.Point(16, 296);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -282,27 +294,29 @@
             this.button1.Text = "Volver";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // Estadistica
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.button1;
             this.ClientSize = new System.Drawing.Size(600, 331);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Estadistica";
+            this.Text = "Estadísticas";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

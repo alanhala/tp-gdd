@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AerolineaFrba.Devolucion
+namespace AerolineaFrba.Listado_Estadistico
 {
-    public partial class Form1 : Form
+    public partial class Estadistica : Form
     {
-        public Form1()
+        public Estadistica()
         {
             InitializeComponent();
         }

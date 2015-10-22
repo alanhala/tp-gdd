@@ -104,29 +104,29 @@
     <Compile Include="Abm Ruta\Modificar Ruta.Designer.cs">
       <DependentUpon>Modificar Ruta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Canje Millas\Consulta - Listado.cs">
+    <Compile Include="Canje Millas\Canje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Canje Millas\Consulta - Listado.Designer.cs">
-      <DependentUpon>Consulta - Listado.cs</DependentUpon>
+    <Compile Include="Canje Millas\Canje.Designer.cs">
+      <DependentUpon>Canje.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra\Form1.cs">
+    <Compile Include="Compra\compra de pasaje o encomienda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compra\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Compra\compra de pasaje o encomienda.Designer.cs">
+      <DependentUpon>compra de pasaje o encomienda.cs</DependentUpon>
     </Compile>
-    <Compile Include="Consulta Millas\Form1.cs">
+    <Compile Include="Consulta Millas\consulta millas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Consulta Millas\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Consulta Millas\consulta millas.Designer.cs">
+      <DependentUpon>consulta millas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Devolucion\Form1.cs">
+    <Compile Include="Devolucion\Baja.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Devolucion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Devolucion\Baja.Designer.cs">
+      <DependentUpon>Baja.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -134,31 +134,31 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generacion Viaje\Form1.cs">
+    <Compile Include="Generacion Viaje\Ata viaje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generacion Viaje\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Generacion Viaje\Ata viaje.Designer.cs">
+      <DependentUpon>Ata viaje.cs</DependentUpon>
     </Compile>
-    <Compile Include="Listado Estadistico\Form1.cs">
+    <Compile Include="Listado Estadistico\Estadistica.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Listado Estadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Listado Estadistico\Estadistica.Designer.cs">
+      <DependentUpon>Estadistica.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registro de Usuario\Form1.cs">
+    <Compile Include="Registro de Usuario\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registro de Usuario\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registro de Usuario\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registro Llegada Destino\Form1.cs">
+    <Compile Include="Registro Llegada Destino\Registro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registro Llegada Destino\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registro Llegada Destino\Registro.Designer.cs">
+      <DependentUpon>Registro.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Abm Aeronave\Alta.resx">
       <DependentUpon>Alta.cs</DependentUpon>
@@ -187,23 +187,26 @@
     <EmbeddedResource Include="Abm Ruta\Modificar Ruta.resx">
       <DependentUpon>Modificar Ruta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Canje Millas\Consulta - Listado.resx">
-      <DependentUpon>Consulta - Listado.cs</DependentUpon>
+    <EmbeddedResource Include="Canje Millas\Canje.resx">
+      <DependentUpon>Canje.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Consulta Millas\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Compra\compra de pasaje o encomienda.resx">
+      <DependentUpon>compra de pasaje o encomienda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Devolucion\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Consulta Millas\consulta millas.resx">
+      <DependentUpon>consulta millas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Devolucion\Baja.resx">
+      <DependentUpon>Baja.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Generacion Viaje\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Generacion Viaje\Ata viaje.resx">
+      <DependentUpon>Ata viaje.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Listado Estadistico\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Listado Estadistico\Estadistica.resx">
+      <DependentUpon>Estadistica.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -214,11 +217,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Registro de Usuario\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Registro de Usuario\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Registro Llegada Destino\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Registro Llegada Destino\Registro.resx">
+      <DependentUpon>Registro.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

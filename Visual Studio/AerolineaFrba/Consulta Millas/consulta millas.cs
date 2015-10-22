@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AerolineaFrba.Canje_Millas
+namespace AerolineaFrba.Consulta_Millas
 {
     public partial class Form1 : Form
     {
@@ -17,25 +17,24 @@ namespace AerolineaFrba.Canje_Millas
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
 
         }
-
-      }
+    }
 }

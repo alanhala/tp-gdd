@@ -33,10 +33,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -47,12 +47,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -110,23 +110,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de la ruta";
             // 
-            // label2
+            // label5
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Ciudad Origen";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 50);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Ciudad Destino";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(229, 50);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "label5";
             // 
             // label4
             // 
@@ -138,14 +129,23 @@
             this.label4.Text = "label4";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
-            // label5
+            // label3
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(229, 50);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "label5";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(21, 50);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(79, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Ciudad Destino";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Ciudad Origen";
             // 
             // groupBox2
             // 
@@ -253,30 +253,19 @@
             this.groupBox3.Text = "Datos del vuelo";
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
-            // dateTimePicker1
+            // dateTimePicker3
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(158, 20);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dateTimePicker3.Location = new System.Drawing.Point(158, 79);
+            this.dateTimePicker3.Name = "dateTimePicker3";
+            this.dateTimePicker3.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker3.TabIndex = 17;
             // 
-            // label9
+            // dateTimePicker2
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(17, 25);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(69, 13);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Fecha Salida";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(17, 55);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(78, 13);
-            this.label10.TabIndex = 14;
-            this.label10.Text = "Fecha Llegada";
+            this.dateTimePicker2.Location = new System.Drawing.Point(158, 49);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker2.TabIndex = 16;
             // 
             // label11
             // 
@@ -287,19 +276,30 @@
             this.label11.TabIndex = 15;
             this.label11.Text = "Fecha Llegada Estimada";
             // 
-            // dateTimePicker2
+            // label10
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(158, 49);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 16;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(17, 55);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(78, 13);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Fecha Llegada";
             // 
-            // dateTimePicker3
+            // label9
             // 
-            this.dateTimePicker3.Location = new System.Drawing.Point(158, 79);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker3.TabIndex = 17;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(17, 25);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(69, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Fecha Salida";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(158, 20);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 0;
             // 
             // button4
             // 
@@ -312,6 +312,7 @@
             // 
             // button5
             // 
+            this.button5.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button5.Location = new System.Drawing.Point(360, 406);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
@@ -321,8 +322,10 @@
             // 
             // Form1
             // 
+            this.AcceptButton = this.button4;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.button5;
             this.ClientSize = new System.Drawing.Size(542, 445);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button5);
@@ -333,8 +336,9 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
+            this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Viaje";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

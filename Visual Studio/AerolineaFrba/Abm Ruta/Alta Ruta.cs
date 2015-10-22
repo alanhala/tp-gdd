@@ -36,5 +36,10 @@ namespace AerolineaFrba.Abm_Ruta
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
