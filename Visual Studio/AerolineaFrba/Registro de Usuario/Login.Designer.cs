@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
@@ -52,14 +52,19 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
-            // label9
+            // textBox2
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(39, 32);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(43, 13);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Usuario";
+            this.textBox2.Location = new System.Drawing.Point(116, 59);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 16;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(116, 29);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 15;
             // 
             // label10
             // 
@@ -70,19 +75,14 @@
             this.label10.TabIndex = 14;
             this.label10.Text = "Contraseña";
             // 
-            // textBox1
+            // label9
             // 
-            this.textBox1.Location = new System.Drawing.Point(116, 29);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 15;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(116, 59);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 16;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(39, 32);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(43, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Usuario";
             // 
             // button1
             // 
@@ -92,6 +92,7 @@
             this.button1.TabIndex = 15;
             this.button1.Text = "Iniciar sesión";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 

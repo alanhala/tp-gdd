@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace AerolineaFrba.Registro_de_Usuario
 {
     public partial class Login : Form
@@ -20,6 +21,11 @@ namespace AerolineaFrba.Registro_de_Usuario
         private void groupBox3_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Server server = Server.getInstance();
         }
     }
 }
