@@ -43,7 +43,6 @@ namespace AerolineaFrba
                 cont++;
             return cont;
         }
-        
 
         public void conectar()
         {

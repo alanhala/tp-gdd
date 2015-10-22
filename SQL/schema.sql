@@ -72,8 +72,8 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ci
 
 GO
 
-if EXISTS (SELECT * FROM sys.views WHERE name = 'rutasDeLaMaestra')
-	drop view JUST_DO_IT.rutasDeLaMaestra
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'#rutasDeLaMaestra'))
+	drop table JUST_DO_IT.#rutasDeLaMaestra
 
 GO
 
@@ -233,15 +233,6 @@ CREATE TABLE JUST_DO_IT.Butacas(
 
 GO
 
-/******VIEWS******/
-
-CREATE VIEW JUST_DO_IT.rutasDeLaMaestra
-AS 
-	SELECT rutas.id AS id, rutas.codigo AS codigo, ciudades1.nombre AS origen, ciudades2.nombre AS destino
-		FROM JUST_DO_IT.Rutas AS rutas, JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2
-			WHERE rutas.ciu_id_origen = ciudades1.id AND rutas.ciu_id_destino = ciudades2.id
-GO
-
 /******NORMALIZACION******/
 
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
@@ -267,6 +258,20 @@ INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_or
 			WHERE ciudades1.nombre = maestra.Ruta_Ciudad_Origen AND ciudades2.nombre = maestra.Ruta_Ciudad_Destino 
 				 GROUP BY Ruta_Codigo, ciudades1.id, ciudades2.id
 
+/******TABLA AUXILIAR******/
+CREATE TABLE #rutasDeLaMaestra(
+	id NUMERIC(18,0),
+	codigo NUMERIC(18,0),
+	origen VARCHAR(255),
+	destino VARCHAR(255)
+)
+
+INSERT INTO #rutasDeLaMaestra(id, codigo, origen, destino)
+	SELECT rutas.id AS id, rutas.codigo AS codigo, ciudades1.nombre AS origen, ciudades2.nombre AS destino
+		FROM JUST_DO_IT.Rutas AS rutas, JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2
+			WHERE rutas.ciu_id_origen = ciudades1.id AND rutas.ciu_id_destino = ciudades2.id
+/*************************/
+
 INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo)
 	SELECT DISTINCT Butaca_Nro, Butaca_Piso, Butaca_Tipo 
 		FROM gd_esquema.Maestra
@@ -274,12 +279,12 @@ INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo)
 
 INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id)
 	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.rutasDeLaMaestra AS rutas
+		FROM gd_esquema.Maestra AS maestra, #rutasDeLaMaestra AS rutas
 			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
 
 INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, comprador) 
 	SELECT DISTINCT maestra.Pasaje_Codigo, maestra.Pasaje_FechaCompra, maestra.Pasaje_Precio, vuelos.id, usuarios.id, usuarios.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos, JUST_DO_IT.rutasDeLaMaestra AS rutas
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas
 			WHERE maestra.Pasaje_Codigo <> 0 
 				AND maestra.Cli_Dni = usuarios.dni AND maestra.Cli_Apellido = usuarios.apellido AND maestra.Cli_Nombre =  usuarios.nombre
 				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
@@ -295,7 +300,7 @@ INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
 	
 INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
 	SELECT DISTINCT maestra.Paquete_Codigo, maestra.Paquete_FechaCompra, maestra.Paquete_KG, maestra.Paquete_Precio, vuelos.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Vuelos AS vuelos, JUST_DO_IT.rutasDeLaMaestra AS rutas
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas
 			WHERE maestra.Paquete_Codigo <> 0 
 				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
 				AND maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
