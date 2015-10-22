@@ -12,11 +12,6 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ro
 
 GO
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Roles'))
-	drop table JUST_DO_IT.Roles
-
-GO
-
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Butacas'))
 	drop table JUST_DO_IT.Butacas
 
@@ -47,6 +42,16 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Pa
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Usuarios'))
+	drop table JUST_DO_IT.Usuarios
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Roles'))
+	drop table JUST_DO_IT.Roles
+
+GO
+
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Vuelos'))
 	drop table JUST_DO_IT.Vuelos
 
@@ -54,11 +59,6 @@ GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Rutas'))
 	drop table JUST_DO_IT.Rutas
-
-GO
-
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Usuarios'))
-	drop table JUST_DO_IT.Usuarios
 
 GO
 
@@ -101,8 +101,18 @@ CREATE TABLE JUST_DO_IT.Rutas(
 
 GO
 
+CREATE TABLE JUST_DO_IT.Roles(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	nombre varchar(50) NOT NULL,
+	PRIMARY KEY (id)
+)
+
+GO
+
 CREATE TABLE JUST_DO_IT.Usuarios(
 	id NUMERIC(18,0) IDENTITY(1,1),
+	username NVARCHAR(255),
+	pass NVARCHAR(255), /* Falta encriptar por SHA256 */
 	dni NUMERIC(18,0) NOT NULL,
 	nombre NVARCHAR(255) NOT NULL,
 	apellido NVARCHAR(255) NOT NULL,
@@ -110,7 +120,9 @@ CREATE TABLE JUST_DO_IT.Usuarios(
 	telefono NUMERIC(18,0) NOT NULL,
 	mail NVARCHAR(255) NOT NULL,
 	fecha_nacimiento DATETIME NOT NULL,
-	PRIMARY KEY(id)
+	rol NUMERIC(18,0) NOT NULL DEFAULT 2,
+	PRIMARY KEY(id),
+	FOREIGN KEY(rol) REFERENCES JUST_DO_IT.Roles
 )
 
 GO
@@ -184,14 +196,6 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 
 GO
 
-CREATE TABLE JUST_DO_IT.Roles(
-	id NUMERIC(18,0) IDENTITY(1,1),
-	nombre varchar(50) NOT NULL,
-	PRIMARY KEY (id)
-)
-
-GO
-
 CREATE TABLE JUST_DO_IT.Funcionalidades(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	descripcion NVARCHAR(255),
@@ -240,6 +244,10 @@ GO
 
 /******NORMALIZACION******/
 
+INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
+
+INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
+
 INSERT INTO JUST_DO_IT.Usuarios(nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento) 
 	SELECT  DISTINCT Cli_Nombre, Cli_Apellido, Cli_Dni, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
 		FROM gd_esquema.Maestra
@@ -278,29 +286,17 @@ INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero,
 				AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino AND maestra.Ruta_Codigo = rutas.codigo
 				AND vuelos.ruta_id = rutas.id
 
-INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
-
-INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
+INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
+	VALUES('admin', 'w23e', 'administrador', 'administrador', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede acceder al logueo')
 
-INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUEs (1, 1)
-
-173074
-
-GO
-CREATE FUNCTION vueloCorrespondiente(@salida DATETIME, @llegada DATETIME, @estimada DATETIME, @origen VARCHAR(255), @destino VARCHAR(255), @codigo NUMERIC(18,0))
-RETURNS TABLE
-AS RETURN
-	SELECT vuelos.id FROM JUST_DO_IT.rutasDeLaMaestra AS rutas, JUST_DO_IT.Vuelos AS vuelos
-		WHERE vuelos.fecha_salida = @salida AND vuelos.fecha_llegada_estimada = @estimada AND vuelos.fecha_llegada = @llegada
-				AND rutas.origen = @origen AND rutas.destino = @destino AND rutas.codigo = @codigo
-				AND vuelos.ruta_id = rutas.id
-GO		
+INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
+	
 INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
-	SELECT distinct maestra.Paquete_Codigo, maestra.Paquete_FechaCompra, maestra.Paquete_KG, maestra.Paquete_Precio, vuelos.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.vue
+	SELECT DISTINCT maestra.Paquete_Codigo, maestra.Paquete_FechaCompra, maestra.Paquete_KG, maestra.Paquete_Precio, vuelos.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Vuelos AS vuelos, JUST_DO_IT.rutasDeLaMaestra AS rutas
 			WHERE maestra.Paquete_Codigo <> 0 
-
-GO 
-
+				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
+				AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino AND maestra.Ruta_Codigo = rutas.codigo
+				AND vuelos.ruta_id = rutas.id
