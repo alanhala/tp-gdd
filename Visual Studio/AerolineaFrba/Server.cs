@@ -17,11 +17,7 @@ namespace AerolineaFrba
         const string password = "gestiondedatos";
         public static Server server;
         private SqlConnection connection;
-
-        public SqlConnection getConnection()
-        {
-            return this.connection;
-        }
+        private SqlDataReader reader;
 
         public static Server getInstance()
         {
@@ -33,6 +29,22 @@ namespace AerolineaFrba
             return server;
         }
 
+        public SqlDataReader query(string query)
+        {
+            SqlCommand command = new SqlCommand(query, this.connection);
+            this.reader = command.ExecuteReader();
+            return this.reader;
+        }
+
+        public int rowsLastQuery()
+        {
+            int cont = 0;
+            while (this.reader.Read())
+                cont++;
+            return cont;
+        }
+        
+
         public void conectar()
         {
             try
@@ -40,7 +52,6 @@ namespace AerolineaFrba
                 connection = new SqlConnection("Data Source=" + servidor +
                     ";Initial Catalog=" + db + ";Integrated Security=False;User ID=" + user + ";Password=" + password);
                 connection.Open();
-                MessageBox.Show("sii");
             }
             catch (Exception ex)
             {

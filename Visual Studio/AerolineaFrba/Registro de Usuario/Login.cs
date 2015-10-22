@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 
 namespace AerolineaFrba.Registro_de_Usuario
@@ -26,6 +27,17 @@ namespace AerolineaFrba.Registro_de_Usuario
         private void button1_Click(object sender, EventArgs e)
         {
             Server server = Server.getInstance();
+            string queryLogueo = "SELECT * FROM JUST_DO_IT.Usuarios WHERE username='"+username.Text+"' AND pass='"+password.Text+"'";
+            SqlDataReader reader = server.query(queryLogueo);
+            if (server.rowsLastQuery() == 1)
+            {
+                MessageBox.Show("si");
+            }
+            else 
+            {
+                MessageBox.Show("no");
+            }
+            reader.Close();
         }
     }
 }

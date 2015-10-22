@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.password = new System.Windows.Forms.TextBox();
+            this.username = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -41,8 +41,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.password);
+            this.groupBox3.Controls.Add(this.username);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Location = new System.Drawing.Point(63, 76);
@@ -52,19 +52,20 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
-            // textBox2
+            // password
             // 
-            this.textBox2.Location = new System.Drawing.Point(116, 59);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 16;
+            this.password.Location = new System.Drawing.Point(116, 59);
+            this.password.Name = "password";
+            this.password.PasswordChar = '*';
+            this.password.Size = new System.Drawing.Size(100, 20);
+            this.password.TabIndex = 16;
             // 
-            // textBox1
+            // username
             // 
-            this.textBox1.Location = new System.Drawing.Point(116, 29);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 15;
+            this.username.Location = new System.Drawing.Point(116, 29);
+            this.username.Name = "username";
+            this.username.Size = new System.Drawing.Size(100, 20);
+            this.username.TabIndex = 15;
             // 
             // label10
             // 
@@ -129,8 +130,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox password;
+        private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
     }
