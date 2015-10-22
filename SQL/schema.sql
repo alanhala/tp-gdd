@@ -72,8 +72,8 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ci
 
 GO
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'#rutasDeLaMaestra'))
-	drop table JUST_DO_IT.#rutasDeLaMaestra
+IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
+	drop table #rutasDeLaMaestra
 
 GO
 
