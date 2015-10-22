@@ -44,11 +44,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abm Aeronave\Form1.cs">
+    <Compile Include="Abm Aeronave\Alta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Aeronave\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Aeronave\Alta.Designer.cs">
+      <DependentUpon>Alta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Aeronave\Baja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Aeronave\Baja.Designer.cs">
+      <DependentUpon>Baja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Aeronave\Modificar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Aeronave\Modificar.Designer.cs">
+      <DependentUpon>Modificar.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Ciudad\Form1.cs">
       <SubType>Form</SubType>
@@ -56,23 +68,47 @@
     <Compile Include="Abm Ciudad\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rol\Form1.cs">
+    <Compile Include="Abm Rol\Alta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Rol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Rol\Alta.Designer.cs">
+      <DependentUpon>Alta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Ruta\Form1.cs">
+    <Compile Include="Abm Rol\Baja.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Ruta\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Rol\Baja.Designer.cs">
+      <DependentUpon>Baja.cs</DependentUpon>
     </Compile>
-    <Compile Include="Canje Millas\Form1.cs">
+    <Compile Include="Abm Rol\Modificar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Canje Millas\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Rol\Modificar.Designer.cs">
+      <DependentUpon>Modificar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Ruta\Alta Ruta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Ruta\Alta Ruta.Designer.cs">
+      <DependentUpon>Alta Ruta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Ruta\Baja Ruta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Ruta\Baja Ruta.Designer.cs">
+      <DependentUpon>Baja Ruta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Ruta\Modificar Ruta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Ruta\Modificar Ruta.Designer.cs">
+      <DependentUpon>Modificar Ruta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Canje Millas\Consulta - Listado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Canje Millas\Consulta - Listado.Designer.cs">
+      <DependentUpon>Consulta - Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="Compra\Form1.cs">
       <SubType>Form</SubType>
@@ -124,13 +160,43 @@
     <Compile Include="Registro Llegada Destino\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Abm Aeronave\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Aeronave\Alta.resx">
+      <DependentUpon>Alta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Aeronave\Baja.resx">
+      <DependentUpon>Baja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Aeronave\Modificar.resx">
+      <DependentUpon>Modificar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\Alta.resx">
+      <DependentUpon>Alta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\Baja.resx">
+      <DependentUpon>Baja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\Modificar.resx">
+      <DependentUpon>Modificar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Ruta\Alta Ruta.resx">
+      <DependentUpon>Alta Ruta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Ruta\Baja Ruta.resx">
+      <DependentUpon>Baja Ruta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Ruta\Modificar Ruta.resx">
+      <DependentUpon>Modificar Ruta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Canje Millas\Consulta - Listado.resx">
+      <DependentUpon>Consulta - Listado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Consulta Millas\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Devolucion\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generacion Viaje\Form1.resx">
