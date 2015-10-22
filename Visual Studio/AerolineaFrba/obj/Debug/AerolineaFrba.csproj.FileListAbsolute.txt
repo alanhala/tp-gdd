@@ -42,3 +42,5 @@ C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Listado_Estadistico.Estadistica.resources
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Registro_de_Usuario.Login.resources
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Registro_Llegada_Destino.Registro.resources
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.exe
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
