@@ -30,18 +30,18 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbCuotasDisponiblesTarjetaCredito = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.tbTipoTarjetaCredito = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.tbFechaVencimiento = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.tbCodigoSeguridad = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.tbNumeroTarjetaCredito = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,15 +57,15 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.cbCuotasDisponiblesTarjetaCredito);
             this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.textBox10);
+            this.groupBox2.Controls.Add(this.tbTipoTarjetaCredito);
             this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.textBox7);
+            this.groupBox2.Controls.Add(this.tbFechaVencimiento);
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.textBox8);
+            this.groupBox2.Controls.Add(this.tbCodigoSeguridad);
             this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.textBox9);
+            this.groupBox2.Controls.Add(this.tbNumeroTarjetaCredito);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Location = new System.Drawing.Point(57, 68);
             this.groupBox2.Name = "groupBox2";
@@ -74,13 +74,13 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos de la Tarjeta de Crédito";
             // 
-            // comboBox1
+            // cbCuotasDisponiblesTarjetaCredito
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(223, 122);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(127, 21);
-            this.comboBox1.TabIndex = 41;
+            this.cbCuotasDisponiblesTarjetaCredito.FormattingEnabled = true;
+            this.cbCuotasDisponiblesTarjetaCredito.Location = new System.Drawing.Point(223, 122);
+            this.cbCuotasDisponiblesTarjetaCredito.Name = "cbCuotasDisponiblesTarjetaCredito";
+            this.cbCuotasDisponiblesTarjetaCredito.Size = new System.Drawing.Size(127, 21);
+            this.cbCuotasDisponiblesTarjetaCredito.TabIndex = 41;
             // 
             // label13
             // 
@@ -91,12 +91,12 @@
             this.label13.TabIndex = 40;
             this.label13.Text = "Cuotas Disponibles";
             // 
-            // textBox10
+            // tbTipoTarjetaCredito
             // 
-            this.textBox10.Location = new System.Drawing.Point(222, 97);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(128, 20);
-            this.textBox10.TabIndex = 39;
+            this.tbTipoTarjetaCredito.Location = new System.Drawing.Point(222, 97);
+            this.tbTipoTarjetaCredito.Name = "tbTipoTarjetaCredito";
+            this.tbTipoTarjetaCredito.Size = new System.Drawing.Size(128, 20);
+            this.tbTipoTarjetaCredito.TabIndex = 39;
             // 
             // label12
             // 
@@ -107,12 +107,12 @@
             this.label12.TabIndex = 38;
             this.label12.Text = "Tipo de Tarjeta";
             // 
-            // textBox7
+            // tbFechaVencimiento
             // 
-            this.textBox7.Location = new System.Drawing.Point(222, 72);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(128, 20);
-            this.textBox7.TabIndex = 37;
+            this.tbFechaVencimiento.Location = new System.Drawing.Point(222, 72);
+            this.tbFechaVencimiento.Name = "tbFechaVencimiento";
+            this.tbFechaVencimiento.Size = new System.Drawing.Size(128, 20);
+            this.tbFechaVencimiento.TabIndex = 37;
             // 
             // label9
             // 
@@ -123,12 +123,12 @@
             this.label9.TabIndex = 36;
             this.label9.Text = "Fecha de Vencimiento";
             // 
-            // textBox8
+            // tbCodigoSeguridad
             // 
-            this.textBox8.Location = new System.Drawing.Point(222, 47);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(128, 20);
-            this.textBox8.TabIndex = 35;
+            this.tbCodigoSeguridad.Location = new System.Drawing.Point(222, 47);
+            this.tbCodigoSeguridad.Name = "tbCodigoSeguridad";
+            this.tbCodigoSeguridad.Size = new System.Drawing.Size(128, 20);
+            this.tbCodigoSeguridad.TabIndex = 35;
             // 
             // label10
             // 
@@ -139,12 +139,12 @@
             this.label10.TabIndex = 34;
             this.label10.Text = "Código de Seguridad";
             // 
-            // textBox9
+            // tbNumeroTarjetaCredito
             // 
-            this.textBox9.Location = new System.Drawing.Point(222, 22);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(128, 20);
-            this.textBox9.TabIndex = 33;
+            this.tbNumeroTarjetaCredito.Location = new System.Drawing.Point(222, 22);
+            this.tbNumeroTarjetaCredito.Name = "tbNumeroTarjetaCredito";
+            this.tbNumeroTarjetaCredito.Size = new System.Drawing.Size(128, 20);
+            this.tbNumeroTarjetaCredito.TabIndex = 33;
             // 
             // label11
             // 
@@ -155,35 +155,35 @@
             this.label11.TabIndex = 32;
             this.label11.Text = "Número";
             // 
-            // button4
+            // btnAceptar
             // 
-            this.button4.Location = new System.Drawing.Point(235, 249);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 30;
-            this.button4.Text = "Aceptar";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnAceptar.Location = new System.Drawing.Point(235, 249);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.TabIndex = 30;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnLimpiar
             // 
-            this.button5.Location = new System.Drawing.Point(141, 249);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 29;
-            this.button5.Text = "Limpiar";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Location = new System.Drawing.Point(141, 249);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 29;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
             // Form5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(471, 284);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btnAceptar);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
             this.Name = "Form5";
-            this.Text = "Form5";
+            this.Text = "Pago con Tarjeta de Crédito";
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -195,17 +195,17 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbCuotasDisponiblesTarjetaCredito;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox tbTipoTarjetaCredito;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox tbFechaVencimiento;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox tbCodigoSeguridad;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox tbNumeroTarjetaCredito;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }

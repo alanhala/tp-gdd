@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace AerolineaFrba.Compra
 {
-    public partial class Form2 : Form
+    public partial class Pagar : Form
     {
-        public Form2()
+        public Pagar()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void groupBox2_Enter(object sender, EventArgs e)
         {
 
         }

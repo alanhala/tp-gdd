@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AerolineaFrba.Compra
 {
-    public partial class Form3 : Form
+    public partial class RegistrarEncomienda : Form
     {
-        public Form3()
+        public RegistrarEncomienda()
         {
             InitializeComponent();
         }

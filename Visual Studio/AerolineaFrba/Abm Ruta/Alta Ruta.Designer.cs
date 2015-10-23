@@ -29,40 +29,40 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Alta));
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbPrecioBasePorKg = new System.Windows.Forms.ComboBox();
+            this.cbTipoServicio = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.tbPrecioBasePorPasaje = new System.Windows.Forms.TextBox();
+            this.tbCiudadDestino = new System.Windows.Forms.TextBox();
+            this.tbCiudadOrigen = new System.Windows.Forms.TextBox();
+            this.tbCodigoRuta = new System.Windows.Forms.TextBox();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // comboBox2
+            // cbPrecioBasePorKg
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(161, 87);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(100, 21);
-            this.comboBox2.TabIndex = 27;
+            this.cbPrecioBasePorKg.FormattingEnabled = true;
+            this.cbPrecioBasePorKg.Location = new System.Drawing.Point(161, 87);
+            this.cbPrecioBasePorKg.Name = "cbPrecioBasePorKg";
+            this.cbPrecioBasePorKg.Size = new System.Drawing.Size(100, 21);
+            this.cbPrecioBasePorKg.TabIndex = 27;
             // 
-            // comboBox1
+            // cbTipoServicio
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(440, 29);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(100, 21);
-            this.comboBox1.TabIndex = 26;
+            this.cbTipoServicio.FormattingEnabled = true;
+            this.cbTipoServicio.Location = new System.Drawing.Point(440, 29);
+            this.cbTipoServicio.Name = "cbTipoServicio";
+            this.cbTipoServicio.Size = new System.Drawing.Size(100, 21);
+            this.cbTipoServicio.TabIndex = 26;
             // 
             // label4
             // 
@@ -120,42 +120,42 @@
             this.label1.TabIndex = 20;
             this.label1.Text = "Còdigo de ruta";
             // 
-            // textBox4
+            // tbPrecioBasePorPasaje
             // 
-            this.textBox4.Location = new System.Drawing.Point(440, 87);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 19;
+            this.tbPrecioBasePorPasaje.Location = new System.Drawing.Point(440, 87);
+            this.tbPrecioBasePorPasaje.Name = "tbPrecioBasePorPasaje";
+            this.tbPrecioBasePorPasaje.Size = new System.Drawing.Size(100, 20);
+            this.tbPrecioBasePorPasaje.TabIndex = 19;
             // 
-            // textBox5
+            // tbCiudadDestino
             // 
-            this.textBox5.Location = new System.Drawing.Point(440, 58);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 18;
+            this.tbCiudadDestino.Location = new System.Drawing.Point(440, 58);
+            this.tbCiudadDestino.Name = "tbCiudadDestino";
+            this.tbCiudadDestino.Size = new System.Drawing.Size(100, 20);
+            this.tbCiudadDestino.TabIndex = 18;
             // 
-            // textBox2
+            // tbCiudadOrigen
             // 
-            this.textBox2.Location = new System.Drawing.Point(161, 58);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 17;
+            this.tbCiudadOrigen.Location = new System.Drawing.Point(161, 58);
+            this.tbCiudadOrigen.Name = "tbCiudadOrigen";
+            this.tbCiudadOrigen.Size = new System.Drawing.Size(100, 20);
+            this.tbCiudadOrigen.TabIndex = 17;
             // 
-            // textBox1
+            // tbCodigoRuta
             // 
-            this.textBox1.Location = new System.Drawing.Point(161, 32);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 16;
+            this.tbCodigoRuta.Location = new System.Drawing.Point(161, 32);
+            this.tbCodigoRuta.Name = "tbCodigoRuta";
+            this.tbCodigoRuta.Size = new System.Drawing.Size(100, 20);
+            this.tbCodigoRuta.TabIndex = 16;
             // 
-            // button2
+            // btnLimpiar
             // 
-            this.button2.Location = new System.Drawing.Point(12, 209);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 29;
-            this.button2.Text = "Limpiar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Location = new System.Drawing.Point(12, 209);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 29;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -169,12 +169,12 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox5);
-            this.groupBox1.Controls.Add(this.comboBox2);
-            this.groupBox1.Controls.Add(this.textBox4);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.tbCodigoRuta);
+            this.groupBox1.Controls.Add(this.tbCiudadOrigen);
+            this.groupBox1.Controls.Add(this.tbCiudadDestino);
+            this.groupBox1.Controls.Add(this.cbPrecioBasePorKg);
+            this.groupBox1.Controls.Add(this.tbPrecioBasePorPasaje);
+            this.groupBox1.Controls.Add(this.cbTipoServicio);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label2);
@@ -207,7 +207,7 @@
             this.ClientSize = new System.Drawing.Size(686, 244);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Alta";
@@ -222,19 +222,19 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbPrecioBasePorKg;
+        private System.Windows.Forms.ComboBox cbTipoServicio;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox tbPrecioBasePorPasaje;
+        private System.Windows.Forms.TextBox tbCiudadDestino;
+        private System.Windows.Forms.TextBox tbCiudadOrigen;
+        private System.Windows.Forms.TextBox tbCodigoRuta;
+        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label7;

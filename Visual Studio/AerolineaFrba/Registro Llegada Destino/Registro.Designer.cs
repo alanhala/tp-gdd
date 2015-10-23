@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Registro));
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaYHoraLlegada = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.lblFabricanteAeronave = new System.Windows.Forms.Label();
+            this.lblModeloAeronave = new System.Windows.Forms.Label();
+            this.lblFechaAltaAeronave = new System.Windows.Forms.Label();
+            this.lblCantButacasAeronave = new System.Windows.Forms.Label();
+            this.lblKgEncomiendasAeronave = new System.Windows.Forms.Label();
+            this.lblTipoServicioAeronave = new System.Windows.Forms.Label();
+            this.lblMatriculaAeronave = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -52,23 +52,23 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tBoxAeropuertoOrigen = new System.Windows.Forms.TextBox();
+            this.tBoxAeropuertoDestino = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
+            this.btnBuscarAeronave = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dateTimePicker1
+            // dtpFechaYHoraLlegada
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(9, 140);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 0;
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            this.dtpFechaYHoraLlegada.Location = new System.Drawing.Point(9, 140);
+            this.dtpFechaYHoraLlegada.Name = "dtpFechaYHoraLlegada";
+            this.dtpFechaYHoraLlegada.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaYHoraLlegada.TabIndex = 0;
+            this.dtpFechaYHoraLlegada.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label1
             // 
@@ -92,13 +92,13 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label21);
-            this.groupBox1.Controls.Add(this.label20);
-            this.groupBox1.Controls.Add(this.label19);
-            this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Controls.Add(this.label17);
-            this.groupBox1.Controls.Add(this.label16);
-            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.lblFabricanteAeronave);
+            this.groupBox1.Controls.Add(this.lblModeloAeronave);
+            this.groupBox1.Controls.Add(this.lblFechaAltaAeronave);
+            this.groupBox1.Controls.Add(this.lblCantButacasAeronave);
+            this.groupBox1.Controls.Add(this.lblKgEncomiendasAeronave);
+            this.groupBox1.Controls.Add(this.lblTipoServicioAeronave);
+            this.groupBox1.Controls.Add(this.lblMatriculaAeronave);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.label12);
@@ -117,69 +117,69 @@
             this.groupBox1.Text = "Datos de la Aeronave";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // label21
+            // lblFabricanteAeronave
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(215, 175);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(41, 13);
-            this.label21.TabIndex = 28;
-            this.label21.Text = "label21";
+            this.lblFabricanteAeronave.AutoSize = true;
+            this.lblFabricanteAeronave.Location = new System.Drawing.Point(215, 175);
+            this.lblFabricanteAeronave.Name = "lblFabricanteAeronave";
+            this.lblFabricanteAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblFabricanteAeronave.TabIndex = 28;
+            this.lblFabricanteAeronave.Text = "label21";
             // 
-            // label20
+            // lblModeloAeronave
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(215, 150);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(41, 13);
-            this.label20.TabIndex = 27;
-            this.label20.Text = "label20";
+            this.lblModeloAeronave.AutoSize = true;
+            this.lblModeloAeronave.Location = new System.Drawing.Point(215, 150);
+            this.lblModeloAeronave.Name = "lblModeloAeronave";
+            this.lblModeloAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblModeloAeronave.TabIndex = 27;
+            this.lblModeloAeronave.Text = "label20";
             // 
-            // label19
+            // lblFechaAltaAeronave
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(215, 125);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(41, 13);
-            this.label19.TabIndex = 26;
-            this.label19.Text = "label19";
+            this.lblFechaAltaAeronave.AutoSize = true;
+            this.lblFechaAltaAeronave.Location = new System.Drawing.Point(215, 125);
+            this.lblFechaAltaAeronave.Name = "lblFechaAltaAeronave";
+            this.lblFechaAltaAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblFechaAltaAeronave.TabIndex = 26;
+            this.lblFechaAltaAeronave.Text = "label19";
             // 
-            // label18
+            // lblCantButacasAeronave
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(215, 100);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(41, 13);
-            this.label18.TabIndex = 25;
-            this.label18.Text = "label18";
+            this.lblCantButacasAeronave.AutoSize = true;
+            this.lblCantButacasAeronave.Location = new System.Drawing.Point(215, 100);
+            this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
+            this.lblCantButacasAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblCantButacasAeronave.TabIndex = 25;
+            this.lblCantButacasAeronave.Text = "label18";
             // 
-            // label17
+            // lblKgEncomiendasAeronave
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(215, 75);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(41, 13);
-            this.label17.TabIndex = 24;
-            this.label17.Text = "label17";
+            this.lblKgEncomiendasAeronave.AutoSize = true;
+            this.lblKgEncomiendasAeronave.Location = new System.Drawing.Point(215, 75);
+            this.lblKgEncomiendasAeronave.Name = "lblKgEncomiendasAeronave";
+            this.lblKgEncomiendasAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblKgEncomiendasAeronave.TabIndex = 24;
+            this.lblKgEncomiendasAeronave.Text = "label17";
             // 
-            // label16
+            // lblTipoServicioAeronave
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(215, 50);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(41, 13);
-            this.label16.TabIndex = 23;
-            this.label16.Text = "label16";
+            this.lblTipoServicioAeronave.AutoSize = true;
+            this.lblTipoServicioAeronave.Location = new System.Drawing.Point(215, 50);
+            this.lblTipoServicioAeronave.Name = "lblTipoServicioAeronave";
+            this.lblTipoServicioAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblTipoServicioAeronave.TabIndex = 23;
+            this.lblTipoServicioAeronave.Text = "label16";
             // 
-            // label15
+            // lblMatriculaAeronave
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(215, 25);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(41, 13);
-            this.label15.TabIndex = 12;
-            this.label15.Text = "label15";
-            this.label15.Click += new System.EventHandler(this.label15_Click);
+            this.lblMatriculaAeronave.AutoSize = true;
+            this.lblMatriculaAeronave.Location = new System.Drawing.Point(215, 25);
+            this.lblMatriculaAeronave.Name = "lblMatriculaAeronave";
+            this.lblMatriculaAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblMatriculaAeronave.TabIndex = 12;
+            this.lblMatriculaAeronave.Text = "label15";
+            this.lblMatriculaAeronave.Click += new System.EventHandler(this.label15_Click);
             // 
             // label14
             // 
@@ -289,26 +289,26 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "Aeropuerto Origen";
             // 
-            // textBox2
+            // tBoxAeropuertoOrigen
             // 
-            this.textBox2.Location = new System.Drawing.Point(9, 40);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 7;
+            this.tBoxAeropuertoOrigen.Location = new System.Drawing.Point(9, 40);
+            this.tBoxAeropuertoOrigen.Name = "tBoxAeropuertoOrigen";
+            this.tBoxAeropuertoOrigen.Size = new System.Drawing.Size(100, 20);
+            this.tBoxAeropuertoOrigen.TabIndex = 7;
             // 
-            // textBox3
+            // tBoxAeropuertoDestino
             // 
-            this.textBox3.Location = new System.Drawing.Point(9, 90);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 8;
+            this.tBoxAeropuertoDestino.Location = new System.Drawing.Point(9, 90);
+            this.tBoxAeropuertoDestino.Name = "tBoxAeropuertoDestino";
+            this.tBoxAeropuertoDestino.Size = new System.Drawing.Size(100, 20);
+            this.tBoxAeropuertoDestino.TabIndex = 8;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Controls.Add(this.dateTimePicker1);
+            this.groupBox2.Controls.Add(this.tBoxAeropuertoDestino);
+            this.groupBox2.Controls.Add(this.dtpFechaYHoraLlegada);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.tBoxAeropuertoOrigen);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(325, 71);
@@ -318,45 +318,45 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos del Vuelo";
             // 
-            // button1
+            // btnLimpiar
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(380, 347);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Limpiar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnLimpiar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnLimpiar.Location = new System.Drawing.Point(380, 347);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 10;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnGuardar
             // 
-            this.button2.Location = new System.Drawing.Point(474, 347);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "Guardar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnGuardar.Location = new System.Drawing.Point(474, 347);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(75, 23);
+            this.btnGuardar.TabIndex = 11;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnBuscarAeronave
             // 
-            this.button3.AccessibleName = "buscarAeronave";
-            this.button3.Location = new System.Drawing.Point(101, 336);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(84, 34);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Buscar Aeronave";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnBuscarAeronave.AccessibleName = "buscarAeronave";
+            this.btnBuscarAeronave.Location = new System.Drawing.Point(101, 336);
+            this.btnBuscarAeronave.Name = "btnBuscarAeronave";
+            this.btnBuscarAeronave.Size = new System.Drawing.Size(84, 34);
+            this.btnBuscarAeronave.TabIndex = 9;
+            this.btnBuscarAeronave.Text = "Buscar Aeronave";
+            this.btnBuscarAeronave.UseVisualStyleBackColor = true;
             // 
             // Registro
             // 
-            this.AcceptButton = this.button2;
+            this.AcceptButton = this.btnGuardar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.button1;
+            this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(561, 382);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnBuscarAeronave);
+            this.Controls.Add(this.btnGuardar);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -376,19 +376,19 @@
 
         #endregion
 
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpFechaYHoraLlegada;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tBoxAeropuertoOrigen;
+        private System.Windows.Forms.TextBox tBoxAeropuertoDestino;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.Button btnBuscarAeronave;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label7;
@@ -397,13 +397,13 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label lblMatriculaAeronave;
+        private System.Windows.Forms.Label lblFabricanteAeronave;
+        private System.Windows.Forms.Label lblModeloAeronave;
+        private System.Windows.Forms.Label lblCantButacasAeronave;
+        private System.Windows.Forms.Label lblKgEncomiendasAeronave;
+        private System.Windows.Forms.Label lblTipoServicioAeronave;
+        private System.Windows.Forms.Label lblFechaAltaAeronave;
         private System.Windows.Forms.Label label12;
     }
 }

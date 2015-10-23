@@ -29,32 +29,32 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSeleccionarRuta = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnSeleccionarAeronave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblCiudadDestino = new System.Windows.Forms.Label();
+            this.lblCiudadOrigen = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.lblModeloAeronave = new System.Windows.Forms.Label();
+            this.lblCantButacasAeronave = new System.Windows.Forms.Label();
+            this.lblKgDisponiblesEncomiendasAeronave = new System.Windows.Forms.Label();
+            this.lblTipoServicioAeronave = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaLlegadaEstimadaVuelo = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaLlegadaVuelo = new System.Windows.Forms.DateTimePicker();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.dtpFechaSalidaVuelo = new System.Windows.Forms.DateTimePicker();
+            this.btnGuardar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -70,14 +70,14 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Generar Viaje";
             // 
-            // button1
+            // btnSeleccionarRuta
             // 
-            this.button1.Location = new System.Drawing.Point(398, 202);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(131, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Seleccionar ruta";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSeleccionarRuta.Location = new System.Drawing.Point(398, 202);
+            this.btnSeleccionarRuta.Name = "btnSeleccionarRuta";
+            this.btnSeleccionarRuta.Size = new System.Drawing.Size(131, 23);
+            this.btnSeleccionarRuta.TabIndex = 8;
+            this.btnSeleccionarRuta.Text = "Seleccionar ruta";
+            this.btnSeleccionarRuta.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -88,19 +88,19 @@
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnSeleccionarAeronave
             // 
-            this.button3.Location = new System.Drawing.Point(398, 280);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(131, 23);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Seleccionar aeronave";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnSeleccionarAeronave.Location = new System.Drawing.Point(398, 280);
+            this.btnSeleccionarAeronave.Name = "btnSeleccionarAeronave";
+            this.btnSeleccionarAeronave.Size = new System.Drawing.Size(131, 23);
+            this.btnSeleccionarAeronave.TabIndex = 10;
+            this.btnSeleccionarAeronave.Text = "Seleccionar aeronave";
+            this.btnSeleccionarAeronave.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.lblCiudadDestino);
+            this.groupBox1.Controls.Add(this.lblCiudadOrigen);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(17, 187);
@@ -110,24 +110,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de la ruta";
             // 
-            // label5
+            // lblCiudadDestino
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(229, 50);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "label5";
+            this.lblCiudadDestino.AutoSize = true;
+            this.lblCiudadDestino.Location = new System.Drawing.Point(229, 50);
+            this.lblCiudadDestino.Name = "lblCiudadDestino";
+            this.lblCiudadDestino.Size = new System.Drawing.Size(35, 13);
+            this.lblCiudadDestino.TabIndex = 14;
+            this.lblCiudadDestino.Text = "label5";
             // 
-            // label4
+            // lblCiudadOrigen
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(229, 28);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "label4";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.lblCiudadOrigen.AutoSize = true;
+            this.lblCiudadOrigen.Location = new System.Drawing.Point(229, 28);
+            this.lblCiudadOrigen.Name = "lblCiudadOrigen";
+            this.lblCiudadOrigen.Size = new System.Drawing.Size(35, 13);
+            this.lblCiudadOrigen.TabIndex = 13;
+            this.lblCiudadOrigen.Text = "label4";
+            this.lblCiudadOrigen.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -149,10 +149,10 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label20);
-            this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.lblModeloAeronave);
+            this.groupBox2.Controls.Add(this.lblCantButacasAeronave);
+            this.groupBox2.Controls.Add(this.lblKgDisponiblesEncomiendasAeronave);
+            this.groupBox2.Controls.Add(this.lblTipoServicioAeronave);
             this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
@@ -164,42 +164,42 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos de la aeronave";
             // 
-            // label20
+            // lblModeloAeronave
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(226, 100);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(41, 13);
-            this.label20.TabIndex = 35;
-            this.label20.Text = "label20";
+            this.lblModeloAeronave.AutoSize = true;
+            this.lblModeloAeronave.Location = new System.Drawing.Point(226, 100);
+            this.lblModeloAeronave.Name = "lblModeloAeronave";
+            this.lblModeloAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblModeloAeronave.TabIndex = 35;
+            this.lblModeloAeronave.Text = "label20";
             // 
-            // label18
+            // lblCantButacasAeronave
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(226, 75);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(41, 13);
-            this.label18.TabIndex = 34;
-            this.label18.Text = "label18";
+            this.lblCantButacasAeronave.AutoSize = true;
+            this.lblCantButacasAeronave.Location = new System.Drawing.Point(226, 75);
+            this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
+            this.lblCantButacasAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblCantButacasAeronave.TabIndex = 34;
+            this.lblCantButacasAeronave.Text = "label18";
             // 
-            // label17
+            // lblKgDisponiblesEncomiendasAeronave
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(226, 50);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(41, 13);
-            this.label17.TabIndex = 33;
-            this.label17.Text = "label17";
-            this.label17.Click += new System.EventHandler(this.label17_Click);
+            this.lblKgDisponiblesEncomiendasAeronave.AutoSize = true;
+            this.lblKgDisponiblesEncomiendasAeronave.Location = new System.Drawing.Point(226, 50);
+            this.lblKgDisponiblesEncomiendasAeronave.Name = "lblKgDisponiblesEncomiendasAeronave";
+            this.lblKgDisponiblesEncomiendasAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblKgDisponiblesEncomiendasAeronave.TabIndex = 33;
+            this.lblKgDisponiblesEncomiendasAeronave.Text = "label17";
+            this.lblKgDisponiblesEncomiendasAeronave.Click += new System.EventHandler(this.label17_Click);
             // 
-            // label16
+            // lblTipoServicioAeronave
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(226, 31);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(41, 13);
-            this.label16.TabIndex = 32;
-            this.label16.Text = "label16";
+            this.lblTipoServicioAeronave.AutoSize = true;
+            this.lblTipoServicioAeronave.Location = new System.Drawing.Point(226, 31);
+            this.lblTipoServicioAeronave.Name = "lblTipoServicioAeronave";
+            this.lblTipoServicioAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblTipoServicioAeronave.TabIndex = 32;
+            this.lblTipoServicioAeronave.Text = "label16";
             // 
             // label13
             // 
@@ -239,12 +239,12 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.dateTimePicker3);
-            this.groupBox3.Controls.Add(this.dateTimePicker2);
+            this.groupBox3.Controls.Add(this.dtpFechaLlegadaEstimadaVuelo);
+            this.groupBox3.Controls.Add(this.dtpFechaLlegadaVuelo);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.dateTimePicker1);
+            this.groupBox3.Controls.Add(this.dtpFechaSalidaVuelo);
             this.groupBox3.Location = new System.Drawing.Point(17, 71);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(364, 110);
@@ -253,19 +253,19 @@
             this.groupBox3.Text = "Datos del vuelo";
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
-            // dateTimePicker3
+            // dtpFechaLlegadaEstimadaVuelo
             // 
-            this.dateTimePicker3.Location = new System.Drawing.Point(158, 79);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker3.TabIndex = 17;
+            this.dtpFechaLlegadaEstimadaVuelo.Location = new System.Drawing.Point(158, 79);
+            this.dtpFechaLlegadaEstimadaVuelo.Name = "dtpFechaLlegadaEstimadaVuelo";
+            this.dtpFechaLlegadaEstimadaVuelo.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaLlegadaEstimadaVuelo.TabIndex = 17;
             // 
-            // dateTimePicker2
+            // dtpFechaLlegadaVuelo
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(158, 49);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 16;
+            this.dtpFechaLlegadaVuelo.Location = new System.Drawing.Point(158, 49);
+            this.dtpFechaLlegadaVuelo.Name = "dtpFechaLlegadaVuelo";
+            this.dtpFechaLlegadaVuelo.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaLlegadaVuelo.TabIndex = 16;
             // 
             // label11
             // 
@@ -294,47 +294,47 @@
             this.label9.TabIndex = 1;
             this.label9.Text = "Fecha Salida";
             // 
-            // dateTimePicker1
+            // dtpFechaSalidaVuelo
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(158, 20);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dtpFechaSalidaVuelo.Location = new System.Drawing.Point(158, 20);
+            this.dtpFechaSalidaVuelo.Name = "dtpFechaSalidaVuelo";
+            this.dtpFechaSalidaVuelo.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaSalidaVuelo.TabIndex = 0;
             // 
-            // button4
+            // btnGuardar
             // 
-            this.button4.Location = new System.Drawing.Point(454, 406);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "Guardar";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnGuardar.Location = new System.Drawing.Point(454, 406);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(75, 23);
+            this.btnGuardar.TabIndex = 15;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnLimpiar
             // 
-            this.button5.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button5.Location = new System.Drawing.Point(360, 406);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 14;
-            this.button5.Text = "Limpiar";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnLimpiar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnLimpiar.Location = new System.Drawing.Point(360, 406);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 14;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            this.AcceptButton = this.button4;
+            this.AcceptButton = this.btnGuardar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.button5;
+            this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(542, 445);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btnGuardar);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnSeleccionarAeronave);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSeleccionarRuta);
             this.Controls.Add(this.label1);
             this.KeyPreview = true;
             this.Name = "Form1";
@@ -353,31 +353,31 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSeleccionarRuta;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnSeleccionarAeronave;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblCiudadOrigen;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblCiudadDestino;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblModeloAeronave;
+        private System.Windows.Forms.Label lblCantButacasAeronave;
+        private System.Windows.Forms.Label lblKgDisponiblesEncomiendasAeronave;
+        private System.Windows.Forms.Label lblTipoServicioAeronave;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dtpFechaSalidaVuelo;
+        private System.Windows.Forms.DateTimePicker dtpFechaLlegadaEstimadaVuelo;
+        private System.Windows.Forms.DateTimePicker dtpFechaLlegadaVuelo;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }

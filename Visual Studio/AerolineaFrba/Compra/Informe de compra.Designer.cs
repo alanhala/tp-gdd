@@ -30,11 +30,11 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblNumeroCompraPNR = new System.Windows.Forms.Label();
+            this.lblMontoAAbonar = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,8 +50,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.lblNumeroCompraPNR);
+            this.groupBox2.Controls.Add(this.lblMontoAAbonar);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Location = new System.Drawing.Point(38, 67);
@@ -60,6 +60,24 @@
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos de la Compra";
+            // 
+            // lblNumeroCompraPNR
+            // 
+            this.lblNumeroCompraPNR.AutoSize = true;
+            this.lblNumeroCompraPNR.Location = new System.Drawing.Point(271, 50);
+            this.lblNumeroCompraPNR.Name = "lblNumeroCompraPNR";
+            this.lblNumeroCompraPNR.Size = new System.Drawing.Size(35, 13);
+            this.lblNumeroCompraPNR.TabIndex = 36;
+            this.lblNumeroCompraPNR.Text = "label3";
+            // 
+            // lblMontoAAbonar
+            // 
+            this.lblMontoAAbonar.AutoSize = true;
+            this.lblMontoAAbonar.Location = new System.Drawing.Point(271, 25);
+            this.lblMontoAAbonar.Name = "lblMontoAAbonar";
+            this.lblMontoAAbonar.Size = new System.Drawing.Size(35, 13);
+            this.lblMontoAAbonar.TabIndex = 35;
+            this.lblMontoAAbonar.Text = "label2";
             // 
             // label10
             // 
@@ -79,43 +97,25 @@
             this.label11.TabIndex = 32;
             this.label11.Text = "Monto a Abonar";
             // 
-            // button1
+            // btnAceptar
             // 
-            this.button1.Location = new System.Drawing.Point(174, 148);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 30;
-            this.button1.Text = "Aceptar";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(271, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 35;
-            this.label2.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(271, 50);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 36;
-            this.label3.Text = "label3";
+            this.btnAceptar.Location = new System.Drawing.Point(174, 148);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.TabIndex = 30;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
             // 
             // Form6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(439, 183);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
             this.Name = "Form6";
-            this.Text = "Form6";
+            this.Text = "Informe de Compra";
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -127,10 +127,10 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblNumeroCompraPNR;
+        private System.Windows.Forms.Label lblMontoAAbonar;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAceptar;
     }
 }

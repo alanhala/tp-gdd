@@ -31,17 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaLlegadaVuelo = new System.Windows.Forms.DateTimePicker();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaSalidaVuelo = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbCiudadDestino = new System.Windows.Forms.TextBox();
+            this.tbCiudadOrigen = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvViajesDisponibles = new System.Windows.Forms.DataGridView();
             this.viajeDisponible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantButacasLibres = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kgDisponibles = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,11 +49,11 @@
             this.cantPasajesAComprar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kgAEnviar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comprarPasaje = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvViajesDisponibles)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -68,10 +68,10 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.dateTimePicker2);
+            this.groupBox3.Controls.Add(this.dtpFechaLlegadaVuelo);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.dateTimePicker1);
+            this.groupBox3.Controls.Add(this.dtpFechaSalidaVuelo);
             this.groupBox3.Location = new System.Drawing.Point(212, 72);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(364, 79);
@@ -79,12 +79,12 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Datos del vuelo";
             // 
-            // dateTimePicker2
+            // dtpFechaLlegadaVuelo
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(158, 49);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 16;
+            this.dtpFechaLlegadaVuelo.Location = new System.Drawing.Point(158, 49);
+            this.dtpFechaLlegadaVuelo.Name = "dtpFechaLlegadaVuelo";
+            this.dtpFechaLlegadaVuelo.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaLlegadaVuelo.TabIndex = 16;
             // 
             // label10
             // 
@@ -104,17 +104,17 @@
             this.label9.TabIndex = 1;
             this.label9.Text = "Fecha Salida";
             // 
-            // dateTimePicker1
+            // dtpFechaSalidaVuelo
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(158, 20);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dtpFechaSalidaVuelo.Location = new System.Drawing.Point(158, 20);
+            this.dtpFechaSalidaVuelo.Name = "dtpFechaSalidaVuelo";
+            this.dtpFechaSalidaVuelo.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaSalidaVuelo.TabIndex = 0;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.tbCiudadDestino);
+            this.groupBox1.Controls.Add(this.tbCiudadOrigen);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(212, 157);
@@ -124,19 +124,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de la ruta";
             // 
-            // textBox2
+            // tbCiudadDestino
             // 
-            this.textBox2.Location = new System.Drawing.Point(230, 43);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(128, 20);
-            this.textBox2.TabIndex = 14;
+            this.tbCiudadDestino.Location = new System.Drawing.Point(230, 43);
+            this.tbCiudadDestino.Name = "tbCiudadDestino";
+            this.tbCiudadDestino.Size = new System.Drawing.Size(128, 20);
+            this.tbCiudadDestino.TabIndex = 14;
             // 
-            // textBox1
+            // tbCiudadOrigen
             // 
-            this.textBox1.Location = new System.Drawing.Point(230, 18);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(128, 20);
-            this.textBox1.TabIndex = 13;
+            this.tbCiudadOrigen.Location = new System.Drawing.Point(230, 18);
+            this.tbCiudadOrigen.Name = "tbCiudadOrigen";
+            this.tbCiudadOrigen.Size = new System.Drawing.Size(128, 20);
+            this.tbCiudadOrigen.TabIndex = 13;
             // 
             // label3
             // 
@@ -165,12 +165,12 @@
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dgvViajesDisponibles
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvViajesDisponibles.AllowUserToAddRows = false;
+            this.dgvViajesDisponibles.AllowUserToDeleteRows = false;
+            this.dgvViajesDisponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvViajesDisponibles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.viajeDisponible,
             this.cantButacasLibres,
             this.kgDisponibles,
@@ -178,11 +178,11 @@
             this.cantPasajesAComprar,
             this.kgAEnviar,
             this.comprarPasaje});
-            this.dataGridView1.Location = new System.Drawing.Point(27, 256);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(744, 133);
-            this.dataGridView1.TabIndex = 18;
+            this.dgvViajesDisponibles.Location = new System.Drawing.Point(27, 256);
+            this.dgvViajesDisponibles.Name = "dgvViajesDisponibles";
+            this.dgvViajesDisponibles.ReadOnly = true;
+            this.dgvViajesDisponibles.Size = new System.Drawing.Size(744, 133);
+            this.dgvViajesDisponibles.TabIndex = 18;
             // 
             // viajeDisponible
             // 
@@ -226,32 +226,32 @@
             this.comprarPasaje.Name = "comprarPasaje";
             this.comprarPasaje.ReadOnly = true;
             // 
-            // button4
+            // btnSiguiente
             // 
-            this.button4.Location = new System.Drawing.Point(696, 401);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 20;
-            this.button4.Text = "Siguiente";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Location = new System.Drawing.Point(696, 401);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(75, 23);
+            this.btnSiguiente.TabIndex = 20;
+            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnLimpiar
             // 
-            this.button5.Location = new System.Drawing.Point(602, 401);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 19;
-            this.button5.Text = "Limpiar";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Location = new System.Drawing.Point(602, 401);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 19;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 436);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.btnSiguiente);
+            this.Controls.Add(this.btnLimpiar);
+            this.Controls.Add(this.dgvViajesDisponibles);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
@@ -263,7 +263,7 @@
             this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvViajesDisponibles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,17 +273,17 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dtpFechaLlegadaVuelo;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpFechaSalidaVuelo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox tbCiudadDestino;
+        private System.Windows.Forms.TextBox tbCiudadOrigen;
+        private System.Windows.Forms.DataGridView dgvViajesDisponibles;
         private System.Windows.Forms.DataGridViewTextBoxColumn viajeDisponible;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantButacasLibres;
         private System.Windows.Forms.DataGridViewTextBoxColumn kgDisponibles;
@@ -291,7 +291,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cantPasajesAComprar;
         private System.Windows.Forms.DataGridViewTextBoxColumn kgAEnviar;
         private System.Windows.Forms.DataGridViewButtonColumn comprarPasaje;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnSiguiente;
+        private System.Windows.Forms.Button btnLimpiar;
     }
 }

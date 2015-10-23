@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AerolineaFrba.Abm_Rol
 {
-    public partial class Form2 : Form
+    public partial class ModificarRol : Form
     {
-        public Form2()
+        public ModificarRol()
         {
             InitializeComponent();
         }
@@ -23,11 +23,6 @@ namespace AerolineaFrba.Abm_Rol
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
         {
 
         }

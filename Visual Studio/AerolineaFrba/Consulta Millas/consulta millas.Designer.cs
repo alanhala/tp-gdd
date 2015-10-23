@@ -30,18 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbDNICliente = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.lblMillas = new System.Windows.Forms.Label();
+            this.dgvDetalleMillas = new System.Windows.Forms.DataGridView();
             this.puntos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaAcumulacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.canjeRealizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleMillas)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,12 +55,12 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Consulta de Millas de Pasajero Frecuente";
             // 
-            // textBox1
+            // tbDNICliente
             // 
-            this.textBox1.Location = new System.Drawing.Point(151, 30);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(128, 20);
-            this.textBox1.TabIndex = 11;
+            this.tbDNICliente.Location = new System.Drawing.Point(151, 30);
+            this.tbDNICliente.Name = "tbDNICliente";
+            this.tbDNICliente.Size = new System.Drawing.Size(128, 20);
+            this.tbDNICliente.TabIndex = 11;
             // 
             // label2
             // 
@@ -81,29 +81,29 @@
             this.label3.Text = "Millas acumuladas";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // label4
+            // lblMillas
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(148, 63);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "label4";
+            this.lblMillas.AutoSize = true;
+            this.lblMillas.Location = new System.Drawing.Point(148, 63);
+            this.lblMillas.Name = "lblMillas";
+            this.lblMillas.Size = new System.Drawing.Size(35, 13);
+            this.lblMillas.TabIndex = 13;
+            this.lblMillas.Text = "label4";
             // 
-            // dataGridView1
+            // dgvDetalleMillas
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvDetalleMillas.AllowUserToAddRows = false;
+            this.dgvDetalleMillas.AllowUserToDeleteRows = false;
+            this.dgvDetalleMillas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDetalleMillas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.puntos,
             this.fechaAcumulacion,
             this.canjeRealizado});
-            this.dataGridView1.Location = new System.Drawing.Point(65, 190);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(339, 193);
-            this.dataGridView1.TabIndex = 14;
+            this.dgvDetalleMillas.Location = new System.Drawing.Point(65, 190);
+            this.dgvDetalleMillas.Name = "dgvDetalleMillas";
+            this.dgvDetalleMillas.ReadOnly = true;
+            this.dgvDetalleMillas.Size = new System.Drawing.Size(339, 193);
+            this.dgvDetalleMillas.TabIndex = 14;
             // 
             // puntos
             // 
@@ -123,33 +123,33 @@
             this.canjeRealizado.Name = "canjeRealizado";
             this.canjeRealizado.ReadOnly = true;
             // 
-            // button4
+            // btnAceptar
             // 
-            this.button4.Location = new System.Drawing.Point(381, 398);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 17;
-            this.button4.Text = "Aceptar";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.btnAceptar.Location = new System.Drawing.Point(381, 398);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.TabIndex = 17;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button5
+            // btnLimpiar
             // 
-            this.button5.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button5.Location = new System.Drawing.Point(12, 399);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 16;
-            this.button5.Text = "Limpiar";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.btnLimpiar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnLimpiar.Location = new System.Drawing.Point(12, 399);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 16;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.button5_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.tbDNICliente);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.lblMillas);
             this.groupBox1.Location = new System.Drawing.Point(93, 68);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(292, 103);
@@ -160,21 +160,21 @@
             // 
             // Form1
             // 
-            this.AcceptButton = this.button4;
+            this.AcceptButton = this.btnAceptar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.button5;
+            this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(468, 434);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.btnAceptar);
+            this.Controls.Add(this.btnLimpiar);
+            this.Controls.Add(this.dgvDetalleMillas);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Pasajero frecuente";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleMillas)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -185,16 +185,16 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbDNICliente;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label lblMillas;
+        private System.Windows.Forms.DataGridView dgvDetalleMillas;
         private System.Windows.Forms.DataGridViewTextBoxColumn puntos;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaAcumulacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn canjeRealizado;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.GroupBox groupBox1;
     }
 }

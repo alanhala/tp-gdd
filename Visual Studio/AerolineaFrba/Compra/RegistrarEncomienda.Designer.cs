@@ -1,6 +1,6 @@
 ﻿namespace AerolineaFrba.Compra
 {
-    partial class Form3
+    partial class RegistrarEncomienda
     {
         /// <summary>
         /// Required designer variable.
@@ -28,56 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaNacimientoPasajero = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.tbMailPasajero = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.tbTelefonoPasajero = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tbDireccionPasajero = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tbApellidoPasajero = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbNombrePasajero = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbDNI = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.tbKgAEnviarEncomienda = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // btnAnterior
             // 
-            this.button1.Location = new System.Drawing.Point(261, 323);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 31;
-            this.button1.Text = "Anterior";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAnterior.Location = new System.Drawing.Point(261, 323);
+            this.btnAnterior.Name = "btnAnterior";
+            this.btnAnterior.Size = new System.Drawing.Size(75, 23);
+            this.btnAnterior.TabIndex = 31;
+            this.btnAnterior.Text = "Anterior";
+            this.btnAnterior.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnSiguiente
             // 
-            this.button4.Location = new System.Drawing.Point(167, 323);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 30;
-            this.button4.Text = "Siguiente";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Location = new System.Drawing.Point(167, 323);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(75, 23);
+            this.btnSiguiente.TabIndex = 30;
+            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnLimpiar
             // 
-            this.button5.Location = new System.Drawing.Point(73, 323);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 29;
-            this.button5.Text = "Limpiar";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Location = new System.Drawing.Point(73, 323);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 29;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -90,19 +90,19 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
+            this.groupBox1.Controls.Add(this.dtpFechaNacimientoPasajero);
             this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.textBox6);
+            this.groupBox1.Controls.Add(this.tbMailPasajero);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.textBox5);
+            this.groupBox1.Controls.Add(this.tbTelefonoPasajero);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.textBox4);
+            this.groupBox1.Controls.Add(this.tbDireccionPasajero);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.tbApellidoPasajero);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.tbNombrePasajero);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.tbDNI);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(25, 71);
             this.groupBox1.Name = "groupBox1";
@@ -111,12 +111,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Pasajero";
             // 
-            // dateTimePicker1
+            // dtpFechaNacimientoPasajero
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(150, 169);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 39;
+            this.dtpFechaNacimientoPasajero.Location = new System.Drawing.Point(150, 169);
+            this.dtpFechaNacimientoPasajero.Name = "dtpFechaNacimientoPasajero";
+            this.dtpFechaNacimientoPasajero.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaNacimientoPasajero.TabIndex = 39;
             // 
             // label8
             // 
@@ -127,12 +127,12 @@
             this.label8.TabIndex = 38;
             this.label8.Text = "Fecha de Nacimiento";
             // 
-            // textBox6
+            // tbMailPasajero
             // 
-            this.textBox6.Location = new System.Drawing.Point(222, 147);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(128, 20);
-            this.textBox6.TabIndex = 37;
+            this.tbMailPasajero.Location = new System.Drawing.Point(222, 147);
+            this.tbMailPasajero.Name = "tbMailPasajero";
+            this.tbMailPasajero.Size = new System.Drawing.Size(128, 20);
+            this.tbMailPasajero.TabIndex = 37;
             // 
             // label7
             // 
@@ -143,12 +143,12 @@
             this.label7.TabIndex = 36;
             this.label7.Text = "Mail";
             // 
-            // textBox5
+            // tbTelefonoPasajero
             // 
-            this.textBox5.Location = new System.Drawing.Point(222, 122);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(128, 20);
-            this.textBox5.TabIndex = 35;
+            this.tbTelefonoPasajero.Location = new System.Drawing.Point(222, 122);
+            this.tbTelefonoPasajero.Name = "tbTelefonoPasajero";
+            this.tbTelefonoPasajero.Size = new System.Drawing.Size(128, 20);
+            this.tbTelefonoPasajero.TabIndex = 35;
             // 
             // label6
             // 
@@ -159,12 +159,12 @@
             this.label6.TabIndex = 34;
             this.label6.Text = "Teléfono";
             // 
-            // textBox4
+            // tbDireccionPasajero
             // 
-            this.textBox4.Location = new System.Drawing.Point(222, 97);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(128, 20);
-            this.textBox4.TabIndex = 33;
+            this.tbDireccionPasajero.Location = new System.Drawing.Point(222, 97);
+            this.tbDireccionPasajero.Name = "tbDireccionPasajero";
+            this.tbDireccionPasajero.Size = new System.Drawing.Size(128, 20);
+            this.tbDireccionPasajero.TabIndex = 33;
             // 
             // label5
             // 
@@ -175,12 +175,12 @@
             this.label5.TabIndex = 32;
             this.label5.Text = "Dirección";
             // 
-            // textBox3
+            // tbApellidoPasajero
             // 
-            this.textBox3.Location = new System.Drawing.Point(222, 72);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(128, 20);
-            this.textBox3.TabIndex = 31;
+            this.tbApellidoPasajero.Location = new System.Drawing.Point(222, 72);
+            this.tbApellidoPasajero.Name = "tbApellidoPasajero";
+            this.tbApellidoPasajero.Size = new System.Drawing.Size(128, 20);
+            this.tbApellidoPasajero.TabIndex = 31;
             // 
             // label4
             // 
@@ -191,12 +191,12 @@
             this.label4.TabIndex = 30;
             this.label4.Text = "Apellido";
             // 
-            // textBox2
+            // tbNombrePasajero
             // 
-            this.textBox2.Location = new System.Drawing.Point(222, 47);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(128, 20);
-            this.textBox2.TabIndex = 29;
+            this.tbNombrePasajero.Location = new System.Drawing.Point(222, 47);
+            this.tbNombrePasajero.Name = "tbNombrePasajero";
+            this.tbNombrePasajero.Size = new System.Drawing.Size(128, 20);
+            this.tbNombrePasajero.TabIndex = 29;
             // 
             // label3
             // 
@@ -207,12 +207,12 @@
             this.label3.TabIndex = 28;
             this.label3.Text = "Nombre";
             // 
-            // textBox1
+            // tbDNI
             // 
-            this.textBox1.Location = new System.Drawing.Point(222, 22);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(128, 20);
-            this.textBox1.TabIndex = 27;
+            this.tbDNI.Location = new System.Drawing.Point(222, 22);
+            this.tbDNI.Name = "tbDNI";
+            this.tbDNI.Size = new System.Drawing.Size(128, 20);
+            this.tbDNI.TabIndex = 27;
             // 
             // label2
             // 
@@ -233,27 +233,27 @@
             this.label1.TabIndex = 24;
             this.label1.Text = "Registrar Encomienda";
             // 
-            // textBox7
+            // tbKgAEnviarEncomienda
             // 
-            this.textBox7.Location = new System.Drawing.Point(247, 285);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(128, 20);
-            this.textBox7.TabIndex = 36;
+            this.tbKgAEnviarEncomienda.Location = new System.Drawing.Point(247, 285);
+            this.tbKgAEnviarEncomienda.Name = "tbKgAEnviarEncomienda";
+            this.tbKgAEnviarEncomienda.Size = new System.Drawing.Size(128, 20);
+            this.tbKgAEnviarEncomienda.TabIndex = 36;
             // 
-            // Form3
+            // RegistrarEncomienda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(391, 358);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.tbKgAEnviarEncomienda);
+            this.Controls.Add(this.btnAnterior);
+            this.Controls.Add(this.btnSiguiente);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
-            this.Name = "Form3";
-            this.Text = "Form3";
+            this.Name = "RegistrarEncomienda";
+            this.Text = "Registrar Encomienda";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -263,26 +263,26 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.Button btnSiguiente;
+        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpFechaNacimientoPasajero;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox tbMailPasajero;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox tbTelefonoPasajero;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tbDireccionPasajero;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tbApellidoPasajero;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbNombrePasajero;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbDNI;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox tbKgAEnviarEncomienda;
     }
 }
