@@ -1,0 +1,2 @@
+/AerolineaFrba/bin
+/AerolineaFrba/obj

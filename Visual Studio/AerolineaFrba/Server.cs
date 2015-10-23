@@ -13,8 +13,8 @@ namespace AerolineaFrba
     {
         const string servidor = "localhost\\SQLSERVER2012";
         const string db = "GD2C2015";
-        const string user = "sa";
-        const string password = "gestiondedatos";
+        const string user = "gd";
+        const string password = "gd2015";
         public static Server server;
         private SqlConnection connection;
         private SqlDataReader reader;
