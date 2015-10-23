@@ -16,6 +16,7 @@ namespace AerolineaFrba
         const string user = "gd";
         const string password = "gd2015";
         public static Server server;
+        private string username;
         private SqlConnection connection;
         private SqlDataReader reader;
 
@@ -31,20 +32,45 @@ namespace AerolineaFrba
 
         public SqlDataReader query(string query)
         {
-            SqlCommand command = new SqlCommand(query, this.connection);
-            this.reader = command.ExecuteReader();
-            return this.reader;
+            try
+            {
+                SqlCommand command = new SqlCommand(query, this.connection);
+                this.reader = command.ExecuteReader();
+                return this.reader;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
         }
 
-        public int rowsLastQuery()
+        public int successfullLog()
         {
             int cont = 0;
             while (this.reader.Read())
+            {
+                this.username = this.reader["username"].ToString();
                 cont++;
-            return cont;
+            }
+            reader.Close();
+            if (cont == 1)
+                return cont;
+
+            return 0;
         }
 
-        public void conectar()
+        public void setUser(string username)
+        {
+            this.username = username;
+        }
+
+        public string getUser()
+        {
+            return this.username;
+        }
+
+        private void conectar()
         {
             try
             {

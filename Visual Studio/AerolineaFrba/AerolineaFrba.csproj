@@ -110,35 +110,35 @@
     <Compile Include="Canje Millas\Canje.Designer.cs">
       <DependentUpon>Canje.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra\Form2.cs">
+    <Compile Include="Compra\Agregar pasajero.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compra\Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="Compra\Agregar pasajero.Designer.cs">
+      <DependentUpon>Agregar pasajero.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra\Form3.cs">
+    <Compile Include="Compra\Informe de compra.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compra\Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Compra\Informe de compra.Designer.cs">
+      <DependentUpon>Informe de compra.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra\Form4.cs">
+    <Compile Include="Compra\Pagar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compra\Form4.Designer.cs">
-      <DependentUpon>Form4.cs</DependentUpon>
+    <Compile Include="Compra\Pagar.Designer.cs">
+      <DependentUpon>Pagar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra\Form5.cs">
+    <Compile Include="Compra\Pago con tarjeta de credito.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compra\Form5.Designer.cs">
-      <DependentUpon>Form5.cs</DependentUpon>
+    <Compile Include="Compra\Pago con tarjeta de credito.Designer.cs">
+      <DependentUpon>Pago con tarjeta de credito.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra\Form6.cs">
+    <Compile Include="Compra\RegistrarEncomienda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compra\Form6.Designer.cs">
-      <DependentUpon>Form6.cs</DependentUpon>
+    <Compile Include="Compra\RegistrarEncomienda.Designer.cs">
+      <DependentUpon>RegistrarEncomienda.cs</DependentUpon>
     </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="Compra\compra de pasaje o encomienda.cs">
@@ -221,23 +221,23 @@
     <EmbeddedResource Include="Canje Millas\Canje.resx">
       <DependentUpon>Canje.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Compra\Agregar pasajero.resx">
+      <DependentUpon>Agregar pasajero.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Compra\compra de pasaje o encomienda.resx">
       <DependentUpon>compra de pasaje o encomienda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compra\Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="Compra\Informe de compra.resx">
+      <DependentUpon>Informe de compra.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compra\Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="Compra\Pagar.resx">
+      <DependentUpon>Pagar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compra\Form4.resx">
-      <DependentUpon>Form4.cs</DependentUpon>
+    <EmbeddedResource Include="Compra\Pago con tarjeta de credito.resx">
+      <DependentUpon>Pago con tarjeta de credito.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Compra\Form5.resx">
-      <DependentUpon>Form5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Compra\Form6.resx">
-      <DependentUpon>Form6.cs</DependentUpon>
+    <EmbeddedResource Include="Compra\RegistrarEncomienda.resx">
+      <DependentUpon>RegistrarEncomienda.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Consulta Millas\consulta millas.resx">
       <DependentUpon>consulta millas.cs</DependentUpon>

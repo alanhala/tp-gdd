@@ -28,16 +28,16 @@ namespace AerolineaFrba.Registro_de_Usuario
         {
             Server server = Server.getInstance();
             string queryLogueo = "SELECT * FROM JUST_DO_IT.Usuarios WHERE username='"+username.Text+"' AND pass='"+password.Text+"'";
-            SqlDataReader reader = server.query(queryLogueo);
-            if (server.rowsLastQuery() == 1)
+            server.query(queryLogueo);
+            if (server.successfullLog() == 1)
             {
-                MessageBox.Show("si");
+                this.Hide();
+                new Listado_Estadistico.Estadistica().Show();
             }
             else 
             {
-                MessageBox.Show("no");
+                MessageBox.Show("Usuario o contraseña invalidos");
             }
-            reader.Close();
         }
     }
 }

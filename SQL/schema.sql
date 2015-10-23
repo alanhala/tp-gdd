@@ -292,7 +292,7 @@ INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero,
 				AND vuelos.ruta_id = rutas.id
 
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
-	VALUES('admin', 'w23e', 'administrador', 'administrador', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
+	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
 
