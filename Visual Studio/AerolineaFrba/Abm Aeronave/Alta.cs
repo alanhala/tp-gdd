@@ -15,6 +15,7 @@ namespace AerolineaFrba.Abm_Aeronave
     {
         public SqlDataReader respuesta;
 
+
         public Alta()
         {
             InitializeComponent();
@@ -93,18 +94,18 @@ namespace AerolineaFrba.Abm_Aeronave
 
         }
 
-        public void cargarComboBox(string entidad, string atributo, ComboBox comboBox) {
+        public void cargarComboBox(string entidad, string atributo, ComboBox comboBox)
+        {
             Server server = Server.getInstance();
-            string queryCombo = "SELECT DISTINCT "+atributo+" FROM JUST_DO_IT."+entidad+" AS "+entidad;
+            string queryCombo = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " AS " + entidad;
             respuesta = server.query(queryCombo);
 
-            int i = 0;
             while (respuesta.Read())
             {
                 comboBox.Items.Add(respuesta[atributo].ToString());
-                i++;
             }
             respuesta.Close();
         }
+
     }
 }

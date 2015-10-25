@@ -307,15 +307,12 @@ INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
 				AND vuelos.ruta_id = rutas.id
 
 
-SELECT DISTINCT aeronave.matricula, butaca.piso
-FROM JUST_DO_IT.Aeronaves AS aeronave, JUST_DO_IT.Butacas AS butaca
-WHERE aeronave.matricula = butaca.matricula_aeronave AND butaca.piso = 2
-GROUP BY aeronave.matricula, butaca.piso
+
 
 SELECT *
-FROM JUST_DO_IT.Usuarios
+FROM JUST_DO_IT.Aeronaves
 
-SELECT fabricante FROM JUST_DO_IT.Aeronaves AS Aeronaves
+SELECT DISTINCT fabricante FROM JUST_DO_IT.Aeronaves AS Aeronaves
 
 
 
