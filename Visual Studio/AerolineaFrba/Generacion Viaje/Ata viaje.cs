@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AerolineaFrba.Generacion_Viaje
 {
-    public partial class Form1 : Form
+    public partial class Alta_Viaje : Form
     {
-        public Form1()
+        public Alta_Viaje()
         {
             InitializeComponent();
         }
@@ -28,6 +28,11 @@ namespace AerolineaFrba.Generacion_Viaje
         }
 
         private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Alta_Viaje_Load(object sender, EventArgs e)
         {
 
         }

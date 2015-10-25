@@ -39,5 +39,10 @@ namespace AerolineaFrba.Registro_de_Usuario
                 MessageBox.Show("Usuario o contraseña invalidos");
             }
         }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

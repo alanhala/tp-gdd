@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AerolineaFrba.Registro_de_Usuario;
+using AerolineaFrba.Abm_Aeronave;
 
 namespace AerolineaFrba
 {
@@ -17,7 +18,7 @@ namespace AerolineaFrba
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+            Application.Run(new Alta());
         }
     }
 }

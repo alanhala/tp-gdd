@@ -1,6 +1,6 @@
 ﻿namespace AerolineaFrba.Generacion_Viaje
 {
-    partial class Form1
+    partial class Alta_Viaje
     {
         /// <summary>
         /// Required designer variable.
@@ -320,7 +320,7 @@
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // Alta_Viaje
             // 
             this.AcceptButton = this.btnGuardar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -337,8 +337,9 @@
             this.Controls.Add(this.btnSeleccionarRuta);
             this.Controls.Add(this.label1);
             this.KeyPreview = true;
-            this.Name = "Form1";
+            this.Name = "Alta_Viaje";
             this.Text = "Viaje";
+            this.Load += new System.EventHandler(this.Alta_Viaje_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

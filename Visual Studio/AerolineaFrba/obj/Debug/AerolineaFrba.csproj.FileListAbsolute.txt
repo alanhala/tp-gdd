@@ -9,7 +9,6 @@ C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Stu
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.exe
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Consulta_Millas.Form1.resources
-C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Generacion_Viaje.Form1.resources
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\bin\Debug\AerolineaFrba.exe.config
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.exe
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
@@ -66,15 +65,11 @@ C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Stu
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.modificarAeronave.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.Form1.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.Baja.resources
-C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.Form2.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ruta.Alta.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ruta.Baja_Ruta.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ruta.Modificar_Ruta.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Canje_Millas.Form1.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Form1.resources
-C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Form2.resources
-C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Form3.resources
-C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Form4.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Form5.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Form6.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Devolucion.Baja.resources
@@ -88,3 +83,8 @@ C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Pagar.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Form5.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.RegistrarEncomienda.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.ModificarRol.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.AgregarPasajero.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.Pagar.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.RegistrarEncomienda.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Generacion_Viaje.Alta_Viaje.resources

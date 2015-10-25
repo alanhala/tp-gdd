@@ -228,7 +228,7 @@ CREATE TABLE JUST_DO_IT.Butacas(
 	numero INT,
 	piso NUMERIC(18,0),
 	tipo nvarchar(10) CHECK (tipo in ('Pasillo', 'Ventanilla')),
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
 )
 
 GO
@@ -305,3 +305,19 @@ INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
 				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
 				AND maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
 				AND vuelos.ruta_id = rutas.id
+
+
+SELECT DISTINCT aeronave.matricula, butaca.piso
+FROM JUST_DO_IT.Aeronaves AS aeronave, JUST_DO_IT.Butacas AS butaca
+WHERE aeronave.matricula = butaca.matricula_aeronave AND butaca.piso = 2
+GROUP BY aeronave.matricula, butaca.piso
+
+SELECT *
+FROM JUST_DO_IT.Usuarios
+
+SELECT fabricante FROM JUST_DO_IT.Aeronaves AS Aeronaves
+
+
+
+
+

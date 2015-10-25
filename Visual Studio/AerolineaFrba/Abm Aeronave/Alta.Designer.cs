@@ -55,6 +55,7 @@
             this.tbNumeroMatricula.Name = "tbNumeroMatricula";
             this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
             this.tbNumeroMatricula.TabIndex = 0;
+            this.tbNumeroMatricula.TextChanged += new System.EventHandler(this.tbNumeroMatricula_TextChanged);
             // 
             // tbModelo
             // 
@@ -62,6 +63,7 @@
             this.tbModelo.Name = "tbModelo";
             this.tbModelo.Size = new System.Drawing.Size(100, 20);
             this.tbModelo.TabIndex = 1;
+            this.tbModelo.TextChanged += new System.EventHandler(this.tbModelo_TextChanged);
             // 
             // tbEspacioTotalParaEncomiendas
             // 
@@ -69,6 +71,7 @@
             this.tbEspacioTotalParaEncomiendas.Name = "tbEspacioTotalParaEncomiendas";
             this.tbEspacioTotalParaEncomiendas.Size = new System.Drawing.Size(100, 20);
             this.tbEspacioTotalParaEncomiendas.TabIndex = 5;
+            this.tbEspacioTotalParaEncomiendas.TextChanged += new System.EventHandler(this.tbEspacioTotalParaEncomiendas_TextChanged);
             // 
             // tbCantButacas
             // 
@@ -143,6 +146,7 @@
             this.cbTipoServicio.Name = "cbTipoServicio";
             this.cbTipoServicio.Size = new System.Drawing.Size(100, 21);
             this.cbTipoServicio.TabIndex = 12;
+            this.cbTipoServicio.SelectedIndexChanged += new System.EventHandler(this.cbTipoServicio_SelectedIndexChanged);
             // 
             // btnGuardar
             // 
@@ -172,6 +176,7 @@
             this.cbFabricante.Name = "cbFabricante";
             this.cbFabricante.Size = new System.Drawing.Size(100, 21);
             this.cbFabricante.TabIndex = 15;
+            this.cbFabricante.SelectedIndexChanged += new System.EventHandler(this.cbFabricante_SelectedIndexChanged);
             // 
             // process1
             // 

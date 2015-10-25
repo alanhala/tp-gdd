@@ -119,6 +119,7 @@
             this.KeyPreview = true;
             this.Name = "Login";
             this.Text = "Acceso al sistema";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
