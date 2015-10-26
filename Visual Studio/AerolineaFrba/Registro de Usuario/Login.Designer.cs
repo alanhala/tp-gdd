@@ -36,6 +36,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnConsultaMillas = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,6 +106,16 @@
             this.button2.Text = "Cancelar";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // btnConsultaMillas
+            // 
+            this.btnConsultaMillas.Location = new System.Drawing.Point(13, 233);
+            this.btnConsultaMillas.Name = "btnConsultaMillas";
+            this.btnConsultaMillas.Size = new System.Drawing.Size(89, 23);
+            this.btnConsultaMillas.TabIndex = 19;
+            this.btnConsultaMillas.Text = "Consultar millas";
+            this.btnConsultaMillas.UseVisualStyleBackColor = true;
+            this.btnConsultaMillas.Click += new System.EventHandler(this.btnConsultaMillas_Click);
+            // 
             // Login
             // 
             this.AcceptButton = this.button1;
@@ -112,6 +123,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(386, 268);
+            this.Controls.Add(this.btnConsultaMillas);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
@@ -135,5 +147,6 @@
         private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnConsultaMillas;
     }
 }
