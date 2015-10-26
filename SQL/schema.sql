@@ -183,7 +183,7 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	modelo NVARCHAR(255) NOT NULL,
 	kgs_disponibles NUMERIC(18,0) NOT NULL,
 	fabricante NVARCHAR(255) NOT NULL,
-	tipo_servicio NVARCHAR(255) CHECK (tipo_servicio in ('Semi-Cama', 'Cama', 'Premium', 'Ejecutivo', 'Común')),
+	tipo_servicio NVARCHAR(255) CHECK (tipo_servicio in ('Semi-Cama', 'Cama', 'Premium', 'Ejecutivo', 'Común', 'Primera Clase', 'Turista')),
 	fecha_alta DATETIME,
 	numero NUMERIC(18,0),
 	baja_fuera_servicio BINARY,
