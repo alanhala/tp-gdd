@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tcEstadisticas = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tablaDestinosMasComprados = new System.Windows.Forms.TabPage();
             this.dgvDestinosMasPasajesComprados = new System.Windows.Forms.DataGridView();
             this.ciudad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pasajesComprados = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,7 +54,7 @@
             this.cantidadDiasFueraDeServicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnVolver = new System.Windows.Forms.Button();
             this.tcEstadisticas.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tablaDestinosMasComprados.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDestinosMasPasajesComprados)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDestinosConAeronavesMasVacias)).BeginInit();
@@ -88,7 +88,7 @@
             // 
             // tcEstadisticas
             // 
-            this.tcEstadisticas.Controls.Add(this.tabPage1);
+            this.tcEstadisticas.Controls.Add(this.tablaDestinosMasComprados);
             this.tcEstadisticas.Controls.Add(this.tabPage2);
             this.tcEstadisticas.Controls.Add(this.tabPage3);
             this.tcEstadisticas.Controls.Add(this.tabPage4);
@@ -99,16 +99,16 @@
             this.tcEstadisticas.Size = new System.Drawing.Size(521, 184);
             this.tcEstadisticas.TabIndex = 8;
             // 
-            // tabPage1
+            // tablaDestinosMasComprados
             // 
-            this.tabPage1.Controls.Add(this.dgvDestinosMasPasajesComprados);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(513, 158);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Distinos con más pasajes comprados";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tablaDestinosMasComprados.Controls.Add(this.dgvDestinosMasPasajesComprados);
+            this.tablaDestinosMasComprados.Location = new System.Drawing.Point(4, 22);
+            this.tablaDestinosMasComprados.Name = "tablaDestinosMasComprados";
+            this.tablaDestinosMasComprados.Padding = new System.Windows.Forms.Padding(3);
+            this.tablaDestinosMasComprados.Size = new System.Drawing.Size(513, 158);
+            this.tablaDestinosMasComprados.TabIndex = 0;
+            this.tablaDestinosMasComprados.Text = "Distinos con más pasajes comprados";
+            this.tablaDestinosMasComprados.UseVisualStyleBackColor = true;
             // 
             // dgvDestinosMasPasajesComprados
             // 
@@ -121,7 +121,7 @@
             this.dgvDestinosMasPasajesComprados.Location = new System.Drawing.Point(6, 6);
             this.dgvDestinosMasPasajesComprados.Name = "dgvDestinosMasPasajesComprados";
             this.dgvDestinosMasPasajesComprados.ReadOnly = true;
-            this.dgvDestinosMasPasajesComprados.Size = new System.Drawing.Size(245, 76);
+            this.dgvDestinosMasPasajesComprados.Size = new System.Drawing.Size(245, 146);
             this.dgvDestinosMasPasajesComprados.TabIndex = 0;
             // 
             // ciudad
@@ -307,8 +307,9 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Estadistica";
             this.Text = "Estadísticas";
+            this.Load += new System.EventHandler(this.Estadistica_Load);
             this.tcEstadisticas.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tablaDestinosMasComprados.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDestinosMasPasajesComprados)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDestinosConAeronavesMasVacias)).EndInit();
@@ -328,7 +329,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TabControl tcEstadisticas;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tablaDestinosMasComprados;
         private System.Windows.Forms.DataGridView dgvDestinosMasPasajesComprados;
         private System.Windows.Forms.DataGridViewTextBoxColumn ciudad;
         private System.Windows.Forms.DataGridViewTextBoxColumn pasajesComprados;

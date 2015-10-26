@@ -56,6 +56,7 @@ namespace AerolineaFrba.Consulta_Millas
                 }
                 if (cont == 0)
                     MessageBox.Show("El usuario ingresado no existe o no posee millas");
+                reader.Close();
             }
         }
 
