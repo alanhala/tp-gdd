@@ -310,6 +310,3 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, vuelos.fecha_salida), pasajes.comprador
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Vuelos AS vuelos
 			WHERE pasajes.vuelo_id = vuelos.id 
-
-
-			select * from JUST_DO_IT.Puntos ORDER BY usuario_id
