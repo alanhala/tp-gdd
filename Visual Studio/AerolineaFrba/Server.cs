@@ -53,11 +53,16 @@ namespace AerolineaFrba
                 this.username = this.reader["username"].ToString();
                 cont++;
             }
-            reader.Close();
+            this.reader.Close();
             if (cont == 1)
                 return cont;
 
             return 0;
+        }
+
+        public void closeReader()
+        {
+            this.reader.Close();
         }
 
         public void setUser(string username)

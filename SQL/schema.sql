@@ -315,6 +315,5 @@ FROM JUST_DO_IT.Aeronaves
 SELECT DISTINCT fabricante FROM JUST_DO_IT.Aeronaves AS Aeronaves
 
 
-
-
+SELECT fabricante FROM JUST_DO_IT.Aeronaves WHERE matricula = 'DNU-850'
 

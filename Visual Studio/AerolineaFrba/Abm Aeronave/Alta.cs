@@ -65,8 +65,10 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             Server server = Server.getInstance();
-            string altaAeronave = "INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles) VALUES ("+tbNumeroMatricula.Text+", "+tbModelo.Text+", "+cbFabricante.Text+", "+cbTipoServicio.Text+", "+tbEspacioTotalParaEncomiendas.Text+")";
+            string altaAeronave = "INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles)"+
+            " VALUES (" + tbNumeroMatricula.Text + " , " + tbModelo.Text + " , 'cbFabricante.Text','Ejecutivo', 123 )";
             server.query(altaAeronave);
+            server.closeReader();
         }
 
         private void tbNumeroMatricula_TextChanged(object sender, EventArgs e)
