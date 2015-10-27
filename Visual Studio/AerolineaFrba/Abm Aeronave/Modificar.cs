@@ -66,38 +66,33 @@ namespace AerolineaFrba.Abm_Aeronave
 
         public void autoCompletarCombo(string entidad, string atributo, ComboBox comboBox, string condicion) {
             Server server = Server.getInstance();
-            string queryComboBox = "SELECT " + atributo + " FROM JUST_DO_IT." + entidad + " WHERE " + condicion;
+            string queryComboBox = "SELECT " + atributo + " AS atributo FROM JUST_DO_IT." + entidad + " WHERE " + condicion;
             respuesta = server.query(queryComboBox);
             respuesta.Read();
-            string fabricante = respuesta.GetString(1);
-            int idFabricante = 4;
-            if (fabricante == "Airbus") {
-                idFabricante = 0;
+            string nombreAtributo = respuesta["atributo"].ToString();
+            respuesta.Close();
+
+            int idAtributo = 0;
+            respuesta = server.query("SELECT DISTINCT " + atributo + " AS atributo FROM JUST_DO_IT." + entidad);
+            while (respuesta.Read()){
+                if (String.CompareOrdinal(nombreAtributo, respuesta["atributo"].ToString()) == 0){
+                    break;
+                }
+                idAtributo++;
             }
-            else if (fabricante == "Boeing")
-            {
-                idFabricante = 1;
-            }
-            else if (fabricante == "Bombardier") {
-                idFabricante = 2;
-            }
-            else if (fabricante == "Embraer")
-            {
-                idFabricante = 3;
-            }
-            comboBox.SelectedIndex = idFabricante;
+            comboBox.SelectedIndex = idAtributo;
             respuesta.Close();
         }
 
         public void cargarDatos()
         {
             this.cargarComboBox("Aeronaves", "fabricante", cbFabricante);
-            this.autoCompletarCombo("Aeronaves", "fabricante", cbFabricante, "'tbNumeroMatricula' = 'Aeronaves.matricula'");
-            
             this.cargarComboBox("Aeronaves", "tipo_servicio", cbTipoServicio);
             this.cargarTextBox("Aeronaves", "matricula", tbNumeroMatricula);
             this.cargarTextBox("Aeronaves", "modelo", tbModelo);
             this.cargarTextBox("Aeronaves", "kgs_disponibles", tbEspacioTotalParaEncomiendas);
+            this.autoCompletarCombo("Aeronaves", "fabricante", cbFabricante, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
+            this.autoCompletarCombo("Aeronaves", "tipo_servicio", cbTipoServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
         }
     }
 }

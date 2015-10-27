@@ -316,4 +316,4 @@ SELECT DISTINCT fabricante FROM JUST_DO_IT.Aeronaves AS Aeronaves
 
 
 SELECT fabricante FROM JUST_DO_IT.Aeronaves WHERE matricula = 'DNU-850'
-
+SELECT tipo_servicio AS atributo FROM JUST_DO_IT.Aeronaves WHERE Aeronaves.matricula = 'BJX-148'
