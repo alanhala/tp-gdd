@@ -306,21 +306,7 @@ INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
 				AND maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
 				AND vuelos.ruta_id = rutas.id
 
-<<<<<<< HEAD
-
-
-
-SELECT *
-FROM JUST_DO_IT.Aeronaves
-
-SELECT DISTINCT fabricante FROM JUST_DO_IT.Aeronaves AS Aeronaves
-
-
-SELECT fabricante FROM JUST_DO_IT.Aeronaves WHERE matricula = 'DNU-850'
-SELECT tipo_servicio AS atributo FROM JUST_DO_IT.Aeronaves WHERE Aeronaves.matricula = 'BJX-148'
-=======
 INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, vuelos.fecha_salida), pasajes.comprador
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Vuelos AS vuelos
 			WHERE pasajes.vuelo_id = vuelos.id 
->>>>>>> 1f357b878f65c0be02d7aed52f5c9bd09b1945e9
