@@ -330,4 +330,3 @@ SELECT * FROM JUST_DO_IT.Aeronaves WHERE Aeronaves.matricula = 'BJX-148'
 UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '1234';
 
 UPDATE JUST_DO_IT.Aeronaves SET baja_fuera_servicio = 1, fecha_fuera_servicio = '25/10/2015' , fecha_reinicio_servicio = '27/10/2015' WHERE matricula = '1234'
-

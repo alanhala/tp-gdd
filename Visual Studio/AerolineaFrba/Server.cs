@@ -75,6 +75,12 @@ namespace AerolineaFrba
             return this.username;
         }
 
+        public void realizarQuery(string query) {
+            Server server = Server.getInstance();
+            server.query(query);
+            server.closeReader();
+        }
+
         private void conectar()
         {
             try

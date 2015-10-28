@@ -24,14 +24,15 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void btnDarDeBaja_Click(object sender, EventArgs e)
         {
-            Server server = Server.getInstance();
-            string bajaAeronave = "UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '" + tbNumeroMatricula.Text + "'";
-            server.query(bajaAeronave);
-            server.closeReader();
+            new Server().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '" + tbNumeroMatricula.Text + "'");
+            this.chequearYProcederFrenteARutasProgramadas();
         }
 
         private void tbNumeroMatricula_TextChanged(object sender, EventArgs e)
         {
+
+        }
+        private void chequearYProcederFrenteARutasProgramadas() {
 
         }
     }
