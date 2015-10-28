@@ -17,42 +17,18 @@ namespace AerolineaFrba.Abm_Aeronave
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
+            new BajaFinVidaUtil().Show();
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            new BajaFueraDeServicio().Show();
         }
 
-        private void Baja_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
 
         }

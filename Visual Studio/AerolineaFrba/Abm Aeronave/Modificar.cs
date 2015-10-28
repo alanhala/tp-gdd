@@ -84,6 +84,17 @@ namespace AerolineaFrba.Abm_Aeronave
             respuesta.Close();
         }
 
+        public void cargarDateTimePicker(string entidad, string atributo, DateTimePicker dateTimePicker, string condicion)
+        {
+            Server server = Server.getInstance();
+            string queryDateTimePicker = "SELECT " + atributo + " AS atributo FROM JUST_DO_IT." + entidad + " WHERE " + condicion;
+            respuesta = server.query(queryDateTimePicker);
+            respuesta.Read();
+            string nombreAtributo = respuesta["atributo"].ToString();
+            dateTimePicker.Text = nombreAtributo;
+            respuesta.Close();
+        }
+
         public void cargarDatos()
         {
             this.cargarComboBox("Aeronaves", "fabricante", cbFabricante);
@@ -93,6 +104,17 @@ namespace AerolineaFrba.Abm_Aeronave
             this.cargarTextBox("Aeronaves", "kgs_disponibles", tbEspacioTotalParaEncomiendas);
             this.autoCompletarCombo("Aeronaves", "fabricante", cbFabricante, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
             this.autoCompletarCombo("Aeronaves", "tipo_servicio", cbTipoServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
+            this.cargarDateTimePicker("Aeronaves", "fecha_reinicio_servicio", dtpFechaReinicioDeServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
+        }
+
+        private void dtpFechaReinicioDeServicio_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbNumeroMatricula_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

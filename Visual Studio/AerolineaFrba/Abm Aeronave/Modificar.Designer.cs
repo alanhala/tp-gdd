@@ -36,19 +36,19 @@
             this.dtpFechaFueraDeServicio = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaReinicioDeServicio = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbFabricante = new System.Windows.Forms.ComboBox();
-            this.tbNumeroMatricula = new System.Windows.Forms.TextBox();
-            this.tbModelo = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.tbCantButacas = new System.Windows.Forms.TextBox();
             this.cbTipoServicio = new System.Windows.Forms.ComboBox();
             this.tbEspacioTotalParaEncomiendas = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbFabricante = new System.Windows.Forms.ComboBox();
+            this.tbNumeroMatricula = new System.Windows.Forms.TextBox();
+            this.tbModelo = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,6 +104,7 @@
             this.dtpFechaReinicioDeServicio.Name = "dtpFechaReinicioDeServicio";
             this.dtpFechaReinicioDeServicio.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaReinicioDeServicio.TabIndex = 34;
+            this.dtpFechaReinicioDeServicio.ValueChanged += new System.EventHandler(this.dtpFechaReinicioDeServicio_ValueChanged);
             // 
             // groupBox1
             // 
@@ -129,65 +130,6 @@
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(307, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(162, 22);
-            this.label9.TabIndex = 39;
-            this.label9.Text = "Modificar aeronave";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 13);
-            this.label1.TabIndex = 38;
-            this.label1.Text = "Número de matrícula";
-            // 
-            // cbFabricante
-            // 
-            this.cbFabricante.FormattingEnabled = true;
-            this.cbFabricante.Location = new System.Drawing.Point(121, 90);
-            this.cbFabricante.Name = "cbFabricante";
-            this.cbFabricante.Size = new System.Drawing.Size(100, 21);
-            this.cbFabricante.TabIndex = 41;
-            // 
-            // tbNumeroMatricula
-            // 
-            this.tbNumeroMatricula.Location = new System.Drawing.Point(121, 35);
-            this.tbNumeroMatricula.Name = "tbNumeroMatricula";
-            this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
-            this.tbNumeroMatricula.TabIndex = 36;
-            // 
-            // tbModelo
-            // 
-            this.tbModelo.Location = new System.Drawing.Point(121, 61);
-            this.tbModelo.Name = "tbModelo";
-            this.tbModelo.Size = new System.Drawing.Size(100, 20);
-            this.tbModelo.TabIndex = 37;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 13);
-            this.label2.TabIndex = 39;
-            this.label2.Text = "Modelo";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 91);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 13);
-            this.label3.TabIndex = 40;
-            this.label3.Text = "Fabricante";
             // 
             // tbCantButacas
             // 
@@ -237,6 +179,66 @@
             this.label6.Size = new System.Drawing.Size(82, 13);
             this.label6.TabIndex = 44;
             this.label6.Text = "Tipo de servicio";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(106, 13);
+            this.label1.TabIndex = 38;
+            this.label1.Text = "Número de matrícula";
+            // 
+            // cbFabricante
+            // 
+            this.cbFabricante.FormattingEnabled = true;
+            this.cbFabricante.Location = new System.Drawing.Point(121, 90);
+            this.cbFabricante.Name = "cbFabricante";
+            this.cbFabricante.Size = new System.Drawing.Size(100, 21);
+            this.cbFabricante.TabIndex = 41;
+            // 
+            // tbNumeroMatricula
+            // 
+            this.tbNumeroMatricula.Location = new System.Drawing.Point(121, 35);
+            this.tbNumeroMatricula.Name = "tbNumeroMatricula";
+            this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
+            this.tbNumeroMatricula.TabIndex = 36;
+            this.tbNumeroMatricula.TextChanged += new System.EventHandler(this.tbNumeroMatricula_TextChanged);
+            // 
+            // tbModelo
+            // 
+            this.tbModelo.Location = new System.Drawing.Point(121, 61);
+            this.tbModelo.Name = "tbModelo";
+            this.tbModelo.Size = new System.Drawing.Size(100, 20);
+            this.tbModelo.TabIndex = 37;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 13);
+            this.label2.TabIndex = 39;
+            this.label2.Text = "Modelo";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 91);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.TabIndex = 40;
+            this.label3.Text = "Fabricante";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(307, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(162, 22);
+            this.label9.TabIndex = 39;
+            this.label9.Text = "Modificar aeronave";
             // 
             // modificarAeronave
             // 

@@ -50,11 +50,23 @@
     <Compile Include="Abm Aeronave\Alta.Designer.cs">
       <DependentUpon>Alta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Aeronave\BajaFueraDeServicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Aeronave\BajaFueraDeServicio.Designer.cs">
+      <DependentUpon>BajaFueraDeServicio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Aeronave\Baja.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Abm Aeronave\Baja.Designer.cs">
       <DependentUpon>Baja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Aeronave\BajaFinVidaUtil.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Aeronave\BajaFinVidaUtil.Designer.cs">
+      <DependentUpon>BajaFinVidaUtil.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Aeronave\Modificar.cs">
       <SubType>Form</SubType>
@@ -196,6 +208,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Aeronave\Baja.resx">
       <DependentUpon>Baja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Aeronave\BajaFinVidaUtil.resx">
+      <DependentUpon>BajaFinVidaUtil.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Aeronave\BajaFueraDeServicio.resx">
+      <DependentUpon>BajaFueraDeServicio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Aeronave\Modificar.resx">
       <DependentUpon>Modificar.cs</DependentUpon>

@@ -8,7 +8,6 @@ C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Stu
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.csproj.GenerateResource.Cache
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.exe
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
-C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Consulta_Millas.Form1.resources
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\bin\Debug\AerolineaFrba.exe.config
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.exe
 C:\Users\Max Power\Desktop\aerolinea1\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
@@ -88,3 +87,6 @@ C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Stu
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Generacion_Viaje.Alta_Viaje.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Consulta_Millas.ConsultaMillas.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Generacion_Viaje.Alta_Viaje.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Consulta_Millas.ConsultaMillas.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.BajaFinVidaUtil.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.BajaFueraDeServicio.resources
