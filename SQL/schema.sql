@@ -139,6 +139,13 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 
 GO
 
+CREATE TABLE JUST_DO_IT.TiposServicios(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	nombre VARCHAR(255)
+)
+
+GO
+
 CREATE TABLE JUST_DO_IT.Pasajes(
 	codigo NUMERIC(18,0),
 	precio NUMERIC(18,0) NOT NULL,
@@ -235,6 +242,10 @@ GO
 
 /******NORMALIZACION******/
 
+INSERT INTO JUST_DO_IT.TiposServicios(nombre) VALUES('Ejecutivo')
+INSERT INTO JUST_DO_IT.TiposServicios(nombre) VALUES('Primera Clase') 
+INSERT INTO JUST_DO_IT.TiposServicios(nombre) VALUES('Turista')
+
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
 
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
@@ -312,21 +323,3 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 			WHERE pasajes.vuelo_id = vuelos.id 
 
 
-
-
-
-
-SELECT *
-FROM JUST_DO_IT.Aeronaves
-
-SELECT DISTINCT fabricante FROM JUST_DO_IT.Aeronaves AS Aeronaves
-
-
-SELECT fabricante FROM JUST_DO_IT.Aeronaves WHERE matricula = 'DNU-850'
-SELECT tipo_servicio AS atributo FROM JUST_DO_IT.Aeronaves WHERE Aeronaves.matricula = 'BJX-148'
-SELECT fecha_reinicio_servicio AS atributo FROM JUST_DO_IT.Aeronaves WHERE Aeronaves.matricula = 'BJX-148'
-SELECT * FROM JUST_DO_IT.Aeronaves WHERE Aeronaves.matricula = 'BJX-148'
-
-UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '1234';
-
-UPDATE JUST_DO_IT.Aeronaves SET baja_fuera_servicio = 1, fecha_fuera_servicio = '25/10/2015' , fecha_reinicio_servicio = '27/10/2015' WHERE matricula = '1234'

@@ -23,8 +23,8 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.cargarComboBox("Aeronaves", "fabricante", cbFabricante);
-            this.cargarComboBox("Aeronaves", "tipo_servicio", cbTipoServicio);
+            Commons.getInstance().cargarComboBox("Aeronaves", "fabricante", cbFabricante);
+            Commons.getInstance().cargarComboBox("Aeronaves", "tipo_servicio", cbTipoServicio);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -94,19 +94,6 @@ namespace AerolineaFrba.Abm_Aeronave
         private void cbFabricante_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-        }
-
-        public void cargarComboBox(string entidad, string atributo, ComboBox comboBox)
-        {
-            Server server = Server.getInstance();
-            string queryCombo = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " AS " + entidad;
-            respuesta = server.query(queryCombo);
-
-            while (respuesta.Read())
-            {
-                comboBox.Items.Add(respuesta[atributo].ToString());
-            }
-            respuesta.Close();
         }
 
     }

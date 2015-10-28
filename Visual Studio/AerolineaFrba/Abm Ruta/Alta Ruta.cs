@@ -10,16 +10,18 @@ using System.Windows.Forms;
 
 namespace AerolineaFrba.Abm_Ruta
 {
-    public partial class Alta : Form
+    public partial class Alta_Ruta : Form
     {
-        public Alta()
+        public Alta_Ruta()
         {
             InitializeComponent();
         }
 
         private void Alta_Load(object sender, EventArgs e)
         {
-
+            Commons.getInstance().cargarComboBox("TiposServicios", "nombre", cmbTipoServicio);
+            Commons.getInstance().cargarComboBox("Ciudades", "nombre", cmbOrigen);
+            Commons.getInstance().cargarComboBox("Ciudades", "nombre", cmbDestino);
         }
 
         private void label3_Click(object sender, EventArgs e)

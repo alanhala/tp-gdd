@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AerolineaFrba.Registro_de_Usuario;
 using AerolineaFrba.Abm_Aeronave;
+using AerolineaFrba.Abm_Ruta;
 
 namespace AerolineaFrba
 {
@@ -18,7 +19,7 @@ namespace AerolineaFrba
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Baja());
+            Application.Run(new Login());
         }
     }
 }

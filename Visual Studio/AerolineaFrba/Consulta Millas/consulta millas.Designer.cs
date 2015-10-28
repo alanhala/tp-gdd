@@ -35,6 +35,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblMillas = new System.Windows.Forms.Label();
             this.dgvDetalleMillas = new System.Windows.Forms.DataGridView();
+            this.puntos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaAcumulacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.canjeRealizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -42,9 +45,6 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.canjeRealizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaAcumulacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.puntos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleMillas)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -108,6 +108,25 @@
             this.dgvDetalleMillas.ReadOnly = true;
             this.dgvDetalleMillas.Size = new System.Drawing.Size(339, 193);
             this.dgvDetalleMillas.TabIndex = 14;
+            this.dgvDetalleMillas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDetalleMillas_CellContentClick);
+            // 
+            // puntos
+            // 
+            this.puntos.HeaderText = "Puntos";
+            this.puntos.Name = "puntos";
+            this.puntos.ReadOnly = true;
+            // 
+            // fechaAcumulacion
+            // 
+            this.fechaAcumulacion.HeaderText = "Vencimiento";
+            this.fechaAcumulacion.Name = "fechaAcumulacion";
+            this.fechaAcumulacion.ReadOnly = true;
+            // 
+            // canjeRealizado
+            // 
+            this.canjeRealizado.HeaderText = "Canje realizado";
+            this.canjeRealizado.Name = "canjeRealizado";
+            this.canjeRealizado.ReadOnly = true;
             // 
             // btnAceptar
             // 
@@ -180,24 +199,6 @@
             this.label4.TabIndex = 14;
             this.label4.Text = "Ingresar nombre del cliente";
             this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // canjeRealizado
-            // 
-            this.canjeRealizado.HeaderText = "Canje realizado";
-            this.canjeRealizado.Name = "canjeRealizado";
-            this.canjeRealizado.ReadOnly = true;
-            // 
-            // fechaAcumulacion
-            // 
-            this.fechaAcumulacion.HeaderText = "Vencimiento";
-            this.fechaAcumulacion.Name = "fechaAcumulacion";
-            this.fechaAcumulacion.ReadOnly = true;
-            // 
-            // puntos
-            // 
-            this.puntos.HeaderText = "Puntos";
-            this.puntos.Name = "puntos";
-            this.puntos.ReadOnly = true;
             // 
             // ConsultaMillas
             // 

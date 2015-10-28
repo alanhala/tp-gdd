@@ -64,5 +64,10 @@ namespace AerolineaFrba.Consulta_Millas
         {
 
         }
+
+        private void dgvDetalleMillas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
