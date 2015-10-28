@@ -79,9 +79,9 @@ namespace AerolineaFrba
         {
             try
             {
-                connection = new SqlConnection("Data Source=" + servidor +
+                this.connection = new SqlConnection("Data Source=" + servidor +
                     ";Initial Catalog=" + db + ";Integrated Security=False;User ID=" + user + ";Password=" + password);
-                connection.Open();
+                this.connection.Open();
             }
             catch (Exception ex)
             {
