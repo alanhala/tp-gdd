@@ -35,5 +35,15 @@ namespace AerolineaFrba
             }
             respuesta.Close();
         }
+
+        public int obtenerIDCiudad(string nombre)
+        {
+            SqlDataReader reader;
+            reader = Server.getInstance().query("SELECT JUST_DO_IT.obtenerIDCiudad('%" + nombre + "%') AS id");
+            reader.Read();
+            int id = int.Parse(reader["id"].ToString());
+            reader.Close();
+            return id;
+        }
     }
 }

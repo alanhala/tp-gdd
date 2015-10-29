@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -41,7 +42,16 @@ namespace AerolineaFrba.Abm_Ruta
 
         private void button1_Click(object sender, EventArgs e)
         {
+            int codigo = int.Parse(txtCodigo.Text);
+            float kgs = float.Parse(txtPrecioBasePorKg.Text);
+            float pasaje = float.Parse(txtPrecioBasePorPasaje.Text);
+            int destino = Commons.getInstance().obtenerIDCiudad(cmbDestino.Text);
+            int origen = Commons.getInstance().obtenerIDCiudad(cmbOrigen.Text);
+            string servicio = cmbTipoServicio.Text;
 
+            string query = "JUST_DO_IT.almacenarRuta(" + codigo + ", " + kgs + ", " + pasaje + ", " + origen + ", " +
+                destino + ", " + servicio + ")";
+            Server.getInstance().realizarQuery(query);  
         }
     }
 }

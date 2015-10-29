@@ -12,11 +12,6 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ro
 
 GO
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Butacas'))
-	drop table JUST_DO_IT.Butacas
-
-GO
-
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Funcionalidades'))
 	drop table JUST_DO_IT.Funcionalidades
 
@@ -77,9 +72,22 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ti
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Butacas'))
+	drop table JUST_DO_IT.Butacas
+
+GO
+
 IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
 	drop table #rutasDeLaMaestra
 
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.JUST_DO_IT.almacenarRuta') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarRuta;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.obtenerIDCiudad') IS NOT NULL
+    drop function JUST_DO_IT.obtenerIDCiudad;
 GO
 
 /******CREACION DE TABLAS******/
@@ -300,13 +308,15 @@ INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimad
 		FROM gd_esquema.Maestra AS maestra, #rutasDeLaMaestra AS rutas
 			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
 
-INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, comprador) 
-	SELECT DISTINCT maestra.Pasaje_Codigo, maestra.Pasaje_FechaCompra, maestra.Pasaje_Precio, vuelos.id, usuarios.id, usuarios.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas
+INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, comprador, butaca) 
+	SELECT DISTINCT maestra.Pasaje_Codigo, maestra.Pasaje_FechaCompra, maestra.Pasaje_Precio, vuelos.id, usuarios.id, usuarios.id, butacas.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas,
+			JUST_DO_IT.Butacas AS butacas
 			WHERE maestra.Pasaje_Codigo <> 0 
 				AND maestra.Cli_Dni = usuarios.dni AND maestra.Cli_Apellido = usuarios.apellido AND maestra.Cli_Nombre =  usuarios.nombre
 				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
 				AND maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
+				AND butacas.id = 1
 				AND vuelos.ruta_id = rutas.id
 		
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
@@ -329,3 +339,28 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Vuelos AS vuelos
 			WHERE pasajes.vuelo_id = vuelos.id 
 
+GO
+
+CREATE FUNCTION JUST_DO_IT.obtenerIDCiudad(@Ciudad varchar(255))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @id int;
+    SELECT @id = id
+	FROM JUST_DO_IT.Ciudades 
+    WHERE nombre LIKE @Ciudad
+    RETURN @id;
+END;
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.almacenarRuta(@Codigo NUMERIC(18,0), @PrecioKgs NUMERIC(18,2), @PrecioPasaje NUMERIC(18,2),
+	@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @TipoServicio NUMERIC(18,0))
+AS BEGIN
+	INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_origen, ciu_id_destino) 
+		VALUES(@Codigo, @PrecioKgs, @PrecioPasaje, @Origen, @Destino)
+
+END
+
+GO
+			

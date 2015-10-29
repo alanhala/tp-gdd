@@ -39,12 +39,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPrecioBasePorPasaje = new System.Windows.Forms.TextBox();
             this.txtPrecioBasePorKg = new System.Windows.Forms.TextBox();
-            this.tbCodigoRuta = new System.Windows.Forms.TextBox();
+            this.txtCodigo = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.cmbDestino = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,12 +134,12 @@
             this.txtPrecioBasePorKg.Size = new System.Drawing.Size(100, 20);
             this.txtPrecioBasePorKg.TabIndex = 17;
             // 
-            // tbCodigoRuta
+            // txtCodigo
             // 
-            this.tbCodigoRuta.Location = new System.Drawing.Point(161, 32);
-            this.tbCodigoRuta.Name = "tbCodigoRuta";
-            this.tbCodigoRuta.Size = new System.Drawing.Size(100, 20);
-            this.tbCodigoRuta.TabIndex = 16;
+            this.txtCodigo.Location = new System.Drawing.Point(161, 32);
+            this.txtCodigo.Name = "txtCodigo";
+            this.txtCodigo.Size = new System.Drawing.Size(100, 20);
+            this.txtCodigo.TabIndex = 16;
             // 
             // btnLimpiar
             // 
@@ -163,7 +163,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.cmbDestino);
-            this.groupBox1.Controls.Add(this.tbCodigoRuta);
+            this.groupBox1.Controls.Add(this.txtCodigo);
             this.groupBox1.Controls.Add(this.txtPrecioBasePorKg);
             this.groupBox1.Controls.Add(this.cmbOrigen);
             this.groupBox1.Controls.Add(this.txtPrecioBasePorPasaje);
@@ -181,6 +181,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
             // 
+            // cmbDestino
+            // 
+            this.cmbDestino.FormattingEnabled = true;
+            this.cmbDestino.Location = new System.Drawing.Point(440, 61);
+            this.cmbDestino.Name = "cmbDestino";
+            this.cmbDestino.Size = new System.Drawing.Size(100, 21);
+            this.cmbDestino.TabIndex = 55;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -190,14 +198,6 @@
             this.label7.Size = new System.Drawing.Size(98, 22);
             this.label7.TabIndex = 54;
             this.label7.Text = "Crear Ruta";
-            // 
-            // cmbDestino
-            // 
-            this.cmbDestino.FormattingEnabled = true;
-            this.cmbDestino.Location = new System.Drawing.Point(440, 61);
-            this.cmbDestino.Name = "cmbDestino";
-            this.cmbDestino.Size = new System.Drawing.Size(100, 21);
-            this.cmbDestino.TabIndex = 55;
             // 
             // Alta_Ruta
             // 
@@ -233,7 +233,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPrecioBasePorPasaje;
         private System.Windows.Forms.TextBox txtPrecioBasePorKg;
-        private System.Windows.Forms.TextBox tbCodigoRuta;
+        private System.Windows.Forms.TextBox txtCodigo;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
