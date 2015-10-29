@@ -32,17 +32,9 @@ namespace AerolineaFrba
 
         public SqlDataReader query(string query)
         {
-            try
-            {
-                SqlCommand command = new SqlCommand(query, this.connection);
-                this.reader = command.ExecuteReader();
-                return this.reader;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return null;
+            SqlCommand command = new SqlCommand(query, this.connection);
+            this.reader = command.ExecuteReader();
+            return this.reader;
         }
 
         public int successfullLog()

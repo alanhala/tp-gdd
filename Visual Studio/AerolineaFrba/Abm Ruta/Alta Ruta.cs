@@ -42,16 +42,32 @@ namespace AerolineaFrba.Abm_Ruta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int codigo = int.Parse(txtCodigo.Text);
-            float kgs = float.Parse(txtPrecioBasePorKg.Text);
-            float pasaje = float.Parse(txtPrecioBasePorPasaje.Text);
-            int destino = Commons.getInstance().obtenerIDCiudad(cmbDestino.Text);
-            int origen = Commons.getInstance().obtenerIDCiudad(cmbOrigen.Text);
-            string servicio = cmbTipoServicio.Text;
+            if (txtCodigo.Text.Trim() != "" && txtPrecioBasePorKg.Text.Trim() != "" && txtPrecioBasePorPasaje.Text.Trim() != ""
+                && cmbDestino.Text.Trim() != "" && cmbOrigen.Text.Trim() != "" && cmbTipoServicio.Text.Trim() != "")
+            {
+                int codigo = int.Parse(txtCodigo.Text);
+                float kgs = float.Parse(txtPrecioBasePorKg.Text);
+                float pasaje = float.Parse(txtPrecioBasePorPasaje.Text);
+                int destino = Ciudades.obtenerID(cmbDestino.Text);
+                int origen = Ciudades.obtenerID(cmbOrigen.Text);
+                int servicio = TiposServicios.obtenerID(cmbTipoServicio.Text);
 
-            string query = "JUST_DO_IT.almacenarRuta(" + codigo + ", " + kgs + ", " + pasaje + ", " + origen + ", " +
-                destino + ", " + servicio + ")";
-            Server.getInstance().realizarQuery(query);  
+                string query = "EXEC JUST_DO_IT.almacenarRuta " + codigo + ", " + kgs + ", " + pasaje + ", " + origen + ", " +
+                    destino + ", " + servicio;
+                try
+                {
+                    Server.getInstance().realizarQuery(query);
+                    MessageBox.Show("La ruta se agrego satisfactoriamente");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe completar todos los campos");
+            }
         }
     }
 }

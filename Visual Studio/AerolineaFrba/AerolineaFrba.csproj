@@ -122,6 +122,8 @@
     <Compile Include="Canje Millas\Canje.Designer.cs">
       <DependentUpon>Canje.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ciudades.cs" />
+    <Compile Include="TiposServicios.cs" />
     <Compile Include="Commons.cs" />
     <Compile Include="Compra\Agregar pasajero.cs">
       <SubType>Form</SubType>

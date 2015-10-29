@@ -54,7 +54,7 @@
             this.cmbOrigen.Location = new System.Drawing.Point(161, 58);
             this.cmbOrigen.Name = "cmbOrigen";
             this.cmbOrigen.Size = new System.Drawing.Size(100, 21);
-            this.cmbOrigen.TabIndex = 27;
+            this.cmbOrigen.TabIndex = 3;
             // 
             // cmbTipoServicio
             // 
@@ -62,7 +62,7 @@
             this.cmbTipoServicio.Location = new System.Drawing.Point(440, 29);
             this.cmbTipoServicio.Name = "cmbTipoServicio";
             this.cmbTipoServicio.Size = new System.Drawing.Size(100, 21);
-            this.cmbTipoServicio.TabIndex = 26;
+            this.cmbTipoServicio.TabIndex = 2;
             // 
             // label4
             // 
@@ -125,28 +125,28 @@
             this.txtPrecioBasePorPasaje.Location = new System.Drawing.Point(440, 87);
             this.txtPrecioBasePorPasaje.Name = "txtPrecioBasePorPasaje";
             this.txtPrecioBasePorPasaje.Size = new System.Drawing.Size(100, 20);
-            this.txtPrecioBasePorPasaje.TabIndex = 19;
+            this.txtPrecioBasePorPasaje.TabIndex = 6;
             // 
             // txtPrecioBasePorKg
             // 
             this.txtPrecioBasePorKg.Location = new System.Drawing.Point(161, 87);
             this.txtPrecioBasePorKg.Name = "txtPrecioBasePorKg";
             this.txtPrecioBasePorKg.Size = new System.Drawing.Size(100, 20);
-            this.txtPrecioBasePorKg.TabIndex = 17;
+            this.txtPrecioBasePorKg.TabIndex = 5;
             // 
             // txtCodigo
             // 
             this.txtCodigo.Location = new System.Drawing.Point(161, 32);
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(100, 20);
-            this.txtCodigo.TabIndex = 16;
+            this.txtCodigo.TabIndex = 1;
             // 
             // btnLimpiar
             // 
             this.btnLimpiar.Location = new System.Drawing.Point(12, 209);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.btnLimpiar.TabIndex = 29;
+            this.btnLimpiar.TabIndex = 8;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
@@ -155,7 +155,7 @@
             this.button1.Location = new System.Drawing.Point(599, 209);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 28;
+            this.button1.TabIndex = 7;
             this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -187,7 +187,7 @@
             this.cmbDestino.Location = new System.Drawing.Point(440, 61);
             this.cmbDestino.Name = "cmbDestino";
             this.cmbDestino.Size = new System.Drawing.Size(100, 21);
-            this.cmbDestino.TabIndex = 55;
+            this.cmbDestino.TabIndex = 4;
             // 
             // label7
             // 

@@ -36,10 +36,11 @@ namespace AerolineaFrba
             respuesta.Close();
         }
 
-        public int obtenerIDCiudad(string nombre)
+        public int getIDFrom(string function, string atributo)
         {
             SqlDataReader reader;
-            reader = Server.getInstance().query("SELECT JUST_DO_IT.obtenerIDCiudad('%" + nombre + "%') AS id");
+            string query = "SELECT JUST_DO_IT." + function + "('%" + atributo + "%') AS id";
+            reader = Server.getInstance().query(query);
             reader.Read();
             int id = int.Parse(reader["id"].ToString());
             reader.Close();

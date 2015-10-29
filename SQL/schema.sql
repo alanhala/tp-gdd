@@ -82,12 +82,16 @@ IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
 
 GO
 
-IF OBJECT_ID (N'JUST_DO_IT.JUST_DO_IT.almacenarRuta') IS NOT NULL
+IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRuta;
 GO
 
-IF OBJECT_ID (N'JUST_DO_IT.obtenerIDCiudad') IS NOT NULL
-    drop function JUST_DO_IT.obtenerIDCiudad;
+IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
+    drop function JUST_DO_IT.IDCiudad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
+    drop function JUST_DO_IT.IDTipoDeServicio;
 GO
 
 /******CREACION DE TABLAS******/
@@ -265,6 +269,10 @@ INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
 
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
 
+INSERT INTO JUST_DO_IT.TiposServicios(nombre)
+	SELECT DISTINCT Tipo_Servicio
+		FROM gd_esquema.Maestra
+
 INSERT INTO JUST_DO_IT.Usuarios(nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento) 
 	SELECT  DISTINCT Cli_Nombre, Cli_Apellido, Cli_Dni, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
 		FROM gd_esquema.Maestra
@@ -342,13 +350,7 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 
 GO
 
-INSERT INTO JUST_DO_IT.TiposServicios(nombre)
-	SELECT DISTINCT Tipo_Servicio
-		FROM gd_esquema.Maestra
-
-GO
-
-CREATE FUNCTION JUST_DO_IT.obtenerIDCiudad(@Ciudad varchar(255))
+CREATE FUNCTION JUST_DO_IT.IDCiudad(@Ciudad varchar(255))
 RETURNS int 
 AS
 BEGIN
@@ -357,17 +359,37 @@ BEGIN
 	FROM JUST_DO_IT.Ciudades 
     WHERE nombre LIKE @Ciudad
     RETURN @id;
-END;
+END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.IDTipoDeServicio(@Nombre varchar(255))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @id int;
+    SELECT @id = id
+	FROM JUST_DO_IT.TiposServicios 
+    WHERE nombre LIKE @Nombre
+    RETURN @id;
+END
 
 GO
 
 CREATE PROCEDURE JUST_DO_IT.almacenarRuta(@Codigo NUMERIC(18,0), @PrecioKgs NUMERIC(18,2), @PrecioPasaje NUMERIC(18,2),
 	@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @TipoServicio NUMERIC(18,0))
 AS BEGIN
-	INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_origen, ciu_id_destino) 
-		VALUES(@Codigo, @PrecioKgs, @PrecioPasaje, @Origen, @Destino)
+	
+	IF (@PrecioKgs >= 0 AND  @PrecioPasaje >= 0 AND @Origen <> @Destino)
+		IF (NOT EXISTS (SELECT * FROM JUST_DO_IT.Rutas 
+			WHERE codigo = @Codigo AND precio_baseKG = @PrecioKgs AND precio_basePasaje = @PrecioPasaje 
+				AND ciu_id_origen = @Origen AND ciu_id_destino = @Destino AND tipo_servicio = @TipoServicio))
+		BEGIN
+			INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_origen, ciu_id_destino, tipo_servicio) 
+				VALUES(@Codigo, @PrecioKgs, @PrecioPasaje, @Origen, @Destino, @TipoServicio)
+		END ELSE
+			RAISERROR('La ruta ingresada ya existe',16,217) WITH SETERROR
+	ELSE 
+		RAISERROR('No se pudo agregar la ruta',16,217) WITH SETERROR
 
 END
-
-GO
-			
