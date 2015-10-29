@@ -72,6 +72,11 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ci
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.TiposServicios'))
+	drop table JUST_DO_IT.TiposServicios
+
+GO
+
 IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
 	drop table #rutasDeLaMaestra
 
@@ -146,14 +151,26 @@ CREATE TABLE JUST_DO_IT.TiposServicios(
 
 GO
 
+CREATE TABLE JUST_DO_IT.Butacas(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	numero INT,
+	piso NUMERIC(18,0),
+	tipo nvarchar(10) CHECK (tipo in ('Pasillo', 'Ventanilla')),
+	PRIMARY KEY (id),
+)
+
+GO
+
 CREATE TABLE JUST_DO_IT.Pasajes(
 	codigo NUMERIC(18,0),
 	precio NUMERIC(18,0) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
 	pasajero NUMERIC(18,0) NOT NULL,
-	comprador NUMERIC(18,0) NOT NULL
+	comprador NUMERIC(18,0) NOT NULL,
+	butaca NUMERIC(18,0) NOT NULL
 	PRIMARY KEY (codigo)
+	FOREIGN KEY (butaca) REFERENCEs JUST_DO_IT.Butacas,
 	FOREIGN KEY (vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
 	FOREIGN KEY (pasajero) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios
@@ -230,16 +247,6 @@ CREATE TABLE JUST_DO_IT.Compras(
 
 GO
 
-CREATE TABLE JUST_DO_IT.Butacas(
-	id NUMERIC(18,0) IDENTITY(1,1),
-	numero INT,
-	piso NUMERIC(18,0),
-	tipo nvarchar(10) CHECK (tipo in ('Pasillo', 'Ventanilla')),
-	PRIMARY KEY (id),
-)
-
-GO
-
 /******NORMALIZACION******/
 
 INSERT INTO JUST_DO_IT.TiposServicios(nombre) VALUES('Ejecutivo')
@@ -301,7 +308,7 @@ INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero,
 				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
 				AND maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
 				AND vuelos.ruta_id = rutas.id
-
+		
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 

@@ -24,7 +24,7 @@ namespace AerolineaFrba.Abm_Aeronave
         private void Form1_Load(object sender, EventArgs e)
         {
             Commons.getInstance().cargarComboBox("Aeronaves", "fabricante", cbFabricante);
-            Commons.getInstance().cargarComboBox("Aeronaves", "tipo_servicio", cbTipoServicio);
+            Commons.getInstance().cargarComboBox("TiposServicios", "nombre", cbTipoServicio);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -66,9 +66,8 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             Server server = Server.getInstance();
             string altaAeronave = "INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles)"+
-            " VALUES (" + tbNumeroMatricula.Text + " , " + tbModelo.Text + " , 'cbFabricante.Text','Ejecutivo', 123 )";
+            " VALUES ('" + tbNumeroMatricula.Text + "' , '" + tbModelo.Text + "' , '" + cbFabricante.Text + "','Ejecutivo', 123 )";
             server.query(altaAeronave);
-            server.closeReader();
         }
 
         private void tbNumeroMatricula_TextChanged(object sender, EventArgs e)

@@ -29,8 +29,9 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             Server server = Server.getInstance();
-            string altaAeronave = "UPDATE JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles) VALUES (" + tbNumeroMatricula.Text + ", " + tbModelo.Text + ", " + cbFabricante.Text + ", " + cbTipoServicio.Text + ", " + tbEspacioTotalParaEncomiendas.Text + ")";
+            string altaAeronave = "UPDATE JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles) VALUES ('" + tbNumeroMatricula.Text + "', '" + tbModelo.Text + "', '" + cbFabricante.Text + "', '" + cbTipoServicio.Text + "', " + tbEspacioTotalParaEncomiendas.Text + ")";
             server.query(altaAeronave);
+            server.closeReader();
         }
 
         private void button2_Click(object sender, EventArgs e)

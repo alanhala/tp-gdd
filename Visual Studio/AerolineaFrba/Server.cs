@@ -76,9 +76,8 @@ namespace AerolineaFrba
         }
 
         public void realizarQuery(string query) {
-            Server server = Server.getInstance();
-            server.query(query);
-            server.closeReader();
+            this.query(query);
+            this.closeReader();
         }
 
         private void conectar()
