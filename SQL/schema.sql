@@ -100,6 +100,14 @@ CREATE TABLE JUST_DO_IT.Ciudades(
 
 GO
 
+CREATE TABLE JUST_DO_IT.TiposServicios(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	nombre VARCHAR(255),
+	PRIMARY KEY (id)
+)
+
+GO
+
 CREATE TABLE JUST_DO_IT.Rutas(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	codigo NUMERIC(18,0) NOT NULL,
@@ -107,9 +115,11 @@ CREATE TABLE JUST_DO_IT.Rutas(
 	precio_basePasaje NUMERIC(18,2) NOT NULL,
 	ciu_id_origen NUMERIC(18,0) NOT NULL,
 	ciu_id_destino NUMERIC(18,0) NOT NULL,
+	tipo_servicio NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY(id),
 	FOREIGN KEY (ciu_id_origen) REFERENCES JUST_DO_IT.Ciudades,
-	FOREIGN KEY (ciu_id_destino) REFERENCES JUST_DO_IT.Ciudades
+	FOREIGN KEY (ciu_id_destino) REFERENCES JUST_DO_IT.Ciudades,
+	FOREIGN KEY (tipo_servicio) REFERENCES JUST_DO_IT.TiposServicios
 ) 
 
 GO
@@ -148,13 +158,6 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 	ruta_id NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (ruta_id) references JUST_DO_IT.Rutas
-)
-
-GO
-
-CREATE TABLE JUST_DO_IT.TiposServicios(
-	id NUMERIC(18,0) IDENTITY(1,1),
-	nombre VARCHAR(255)
 )
 
 GO
@@ -215,7 +218,7 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	modelo NVARCHAR(255) NOT NULL,
 	kgs_disponibles NUMERIC(18,0) NOT NULL,
 	fabricante NVARCHAR(255) NOT NULL,
-	tipo_servicio NVARCHAR(255) CHECK (tipo_servicio in ('Semi-Cama', 'Cama', 'Premium', 'Ejecutivo', 'Común', 'Primera Clase', 'Turista')),
+	tipo_servicio NUMERIC(18,0) NOT NULL,
 	fecha_alta DATETIME,
 	numero NUMERIC(18,0),
 	baja_fuera_servicio BINARY,
@@ -223,7 +226,8 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	fecha_fuera_servicio DATETIME,
 	fecha_reinicio_servicio DATETIME,
 	fecha_baja_definitiva DATETIME,
-	PRIMARY KEY(matricula)
+	PRIMARY KEY(matricula),
+	FOREIGN KEY (tipo_servicio) REFERENCES JUST_DO_IT.TiposServicios
 )
 
 GO
@@ -257,10 +261,6 @@ GO
 
 /******NORMALIZACION******/
 
-INSERT INTO JUST_DO_IT.TiposServicios(nombre) VALUES('Ejecutivo')
-INSERT INTO JUST_DO_IT.TiposServicios(nombre) VALUES('Primera Clase') 
-INSERT INTO JUST_DO_IT.TiposServicios(nombre) VALUES('Turista')
-
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
 
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
@@ -275,14 +275,15 @@ INSERT INTO JUST_DO_IT.Ciudades(nombre)
 	SELECT DISTINCT Ruta_Ciudad_Destino As Ciudad FROM gd_esquema.Maestra
 
 INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, fabricante, tipo_servicio)
-	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, Aeronave_Fabricante, Tipo_Servicio
-		FROM gd_esquema.Maestra
+	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, Aeronave_Fabricante, servicios.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.TiposServicios AS servicios
+			WHERE maestra.Tipo_Servicio = servicios.nombre
 
-INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_origen, ciu_id_destino)
-	SELECT Ruta_Codigo, MAX(Ruta_Precio_BaseKG), MAX(Ruta_Precio_BasePasaje), ciudades1.id, ciudades2.id
-		FROM JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2, gd_esquema.Maestra AS maestra
-			WHERE ciudades1.nombre = maestra.Ruta_Ciudad_Origen AND ciudades2.nombre = maestra.Ruta_Ciudad_Destino 
-				 GROUP BY Ruta_Codigo, ciudades1.id, ciudades2.id
+INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_origen, ciu_id_destino, tipo_servicio)
+	SELECT Ruta_Codigo, MAX(Ruta_Precio_BaseKG), MAX(Ruta_Precio_BasePasaje), ciudades1.id, ciudades2.id, servicios.id
+		FROM JUST_DO_IT.Ciudades AS ciudades1, JUST_DO_IT.Ciudades AS ciudades2, gd_esquema.Maestra AS maestra, JUST_DO_IT.TiposServicios AS servicios
+			WHERE ciudades1.nombre = maestra.Ruta_Ciudad_Origen AND ciudades2.nombre = maestra.Ruta_Ciudad_Destino AND maestra.Tipo_Servicio = servicios.nombre
+				 GROUP BY Ruta_Codigo, ciudades1.id, ciudades2.id, servicios.id
 
 /******TABLA AUXILIAR******/
 CREATE TABLE #rutasDeLaMaestra(
@@ -338,6 +339,12 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, vuelos.fecha_salida), pasajes.comprador
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Vuelos AS vuelos
 			WHERE pasajes.vuelo_id = vuelos.id 
+
+GO
+
+INSERT INTO JUST_DO_IT.TiposServicios(nombre)
+	SELECT DISTINCT Tipo_Servicio
+		FROM gd_esquema.Maestra
 
 GO
 
