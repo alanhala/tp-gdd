@@ -32,12 +32,12 @@
             this.btnDarDeBaja = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.dtpFechaReinicioServicio = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dtpFechaFueraServicio = new System.Windows.Forms.DateTimePicker();
             this.tbNumeroMatricula = new System.Windows.Forms.TextBox();
+            this.dtpFechaFueraServicio = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dtpFechaReinicioServicio = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,33 +78,23 @@
             this.groupBox1.Text = "Complete los siguientes campos";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // label5
+            // tbNumeroMatricula
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(266, 33);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(133, 13);
-            this.label5.TabIndex = 24;
-            this.label5.Text = "Fecha de fuera de servicio";
+            this.tbNumeroMatricula.Location = new System.Drawing.Point(131, 30);
+            this.tbNumeroMatricula.Name = "tbNumeroMatricula";
+            this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
+            this.tbNumeroMatricula.TabIndex = 35;
+            this.tbNumeroMatricula.TextChanged += new System.EventHandler(this.tbNumeroMatricula_TextChanged);
             // 
-            // label6
+            // dtpFechaFueraServicio
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(266, 59);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(142, 13);
-            this.label6.TabIndex = 23;
-            this.label6.Text = "Fecha de reinicio de servicio";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
-            // 
-            // dtpFechaReinicioServicio
-            // 
-            this.dtpFechaReinicioServicio.CustomFormat = "dd/MM/yyyy";
-            this.dtpFechaReinicioServicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFechaReinicioServicio.Location = new System.Drawing.Point(414, 56);
-            this.dtpFechaReinicioServicio.Name = "dtpFechaReinicioServicio";
-            this.dtpFechaReinicioServicio.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaReinicioServicio.TabIndex = 32;
+            this.dtpFechaFueraServicio.CustomFormat = "dd/MM/yyyy";
+            this.dtpFechaFueraServicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFechaFueraServicio.Location = new System.Drawing.Point(414, 30);
+            this.dtpFechaFueraServicio.Name = "dtpFechaFueraServicio";
+            this.dtpFechaFueraServicio.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaFueraServicio.TabIndex = 33;
+            this.dtpFechaFueraServicio.ValueChanged += new System.EventHandler(this.dtpFechaFueraServicio_ValueChanged);
             // 
             // label1
             // 
@@ -116,22 +106,33 @@
             this.label1.Text = "Número de matrícula";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // dtpFechaFueraServicio
+            // dtpFechaReinicioServicio
             // 
-            this.dtpFechaFueraServicio.CustomFormat = "dd/MM/yyyy";
-            this.dtpFechaFueraServicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFechaFueraServicio.Location = new System.Drawing.Point(414, 30);
-            this.dtpFechaFueraServicio.Name = "dtpFechaFueraServicio";
-            this.dtpFechaFueraServicio.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaFueraServicio.TabIndex = 33;
+            this.dtpFechaReinicioServicio.CustomFormat = "dd/MM/yyyy";
+            this.dtpFechaReinicioServicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFechaReinicioServicio.Location = new System.Drawing.Point(414, 56);
+            this.dtpFechaReinicioServicio.Name = "dtpFechaReinicioServicio";
+            this.dtpFechaReinicioServicio.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaReinicioServicio.TabIndex = 32;
             // 
-            // tbNumeroMatricula
+            // label6
             // 
-            this.tbNumeroMatricula.Location = new System.Drawing.Point(131, 30);
-            this.tbNumeroMatricula.Name = "tbNumeroMatricula";
-            this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
-            this.tbNumeroMatricula.TabIndex = 35;
-            this.tbNumeroMatricula.TextChanged += new System.EventHandler(this.tbNumeroMatricula_TextChanged);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(266, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(142, 13);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Fecha de reinicio de servicio";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(266, 33);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(133, 13);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Fecha de fuera de servicio";
             // 
             // BajaFueraDeServicio
             // 

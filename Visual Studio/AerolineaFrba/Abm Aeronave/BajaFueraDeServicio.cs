@@ -41,7 +41,7 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             Server server = Server.getInstance();
-            string bajaAeronave = "UPDATE JUST_DO_IT.Aeronaves SET baja_fuera_servicio = 1, fecha_fuera_servicio = '" + dtpFechaFueraServicio.Value.Date + "' , fecha_reinicio_servicio = '" + dtpFechaReinicioServicio.Value.Date + "' WHERE matricula = '" + tbNumeroMatricula.Text + "'";
+            string bajaAeronave = "UPDATE JUST_DO_IT.Aeronaves SET baja_fuera_servicio = 1, fecha_fuera_servicio = '" + dtpFechaFueraServicio.Value.ToString("yyyy-dd-MM") + "' , fecha_reinicio_servicio = '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "' WHERE matricula = '" + tbNumeroMatricula.Text + "'";
             server.query(bajaAeronave);
             server.closeReader();
         }
@@ -62,6 +62,11 @@ namespace AerolineaFrba.Abm_Aeronave
         }
 
         private void tbNumeroMatricula_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaFueraServicio_ValueChanged(object sender, EventArgs e)
         {
 
         }

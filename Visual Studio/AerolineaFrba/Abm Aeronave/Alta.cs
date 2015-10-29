@@ -65,8 +65,8 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             Server server = Server.getInstance();
-            string altaAeronave = "INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles)"+
-            " VALUES ('" + tbNumeroMatricula.Text + "' , '" + tbModelo.Text + "' , '" + cbFabricante.Text + "','Ejecutivo', 123 )";
+            string altaAeronave = "INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles, fecha_reinicio_servicio)"+
+            " VALUES ('" + tbNumeroMatricula.Text + "' , '" + tbModelo.Text + "' , '" + cbFabricante.Text + "','Ejecutivo', 123, '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "')";
             server.query(altaAeronave);
         }
 
@@ -91,6 +91,11 @@ namespace AerolineaFrba.Abm_Aeronave
         }
 
         private void cbFabricante_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
 
         }
