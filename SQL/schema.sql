@@ -2,8 +2,8 @@ USE [GD2C2015]
 GO
 
 /****** Object:  Schema [JUST_DO_IT]    Script Date: 10/5/2015 3:43:38 PM ******/
-CREATE SCHEMA [JUST_DO_IT]
-GO
+/*CREATE SCHEMA [JUST_DO_IT]
+GO*/
 
 /******DROP TABLES******/
 
@@ -112,6 +112,27 @@ CREATE TABLE JUST_DO_IT.TiposServicios(
 
 GO
 
+CREATE TABLE JUST_DO_IT.Aeronaves(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	matricula NVARCHAR(255) UNIQUE NOT NULL,
+	modelo NVARCHAR(255) NOT NULL,
+	kgs_disponibles NUMERIC(18,0) NOT NULL,
+	butacas_totales NUMERIC(18,0) NOT NULL,
+	fabricante NVARCHAR(255) NOT NULL,
+	tipo_servicio NUMERIC(18,0) NOT NULL,
+	fecha_alta DATETIME,
+	numero NUMERIC(18,0),
+	baja_fuera_servicio BINARY,
+	baja_vida_util BINARY,
+	fecha_fuera_servicio DATETIME,
+	fecha_reinicio_servicio DATETIME,
+	fecha_baja_definitiva DATETIME,
+	PRIMARY KEY(id),
+	FOREIGN KEY (tipo_servicio) REFERENCES JUST_DO_IT.TiposServicios
+)
+
+GO
+
 CREATE TABLE JUST_DO_IT.Rutas(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	codigo NUMERIC(18,0) NOT NULL,
@@ -160,8 +181,10 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 	fecha_llegada DATETIME,
 	fecha_llegada_estimada DATETIME NOT NULL,
 	ruta_id NUMERIC(18,0) NOT NULL,
+	aeronave_id NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (ruta_id) references JUST_DO_IT.Rutas
+	FOREIGN KEY (ruta_id) REFERENCES JUST_DO_IT.Rutas,
+	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
 )
 
 GO
@@ -213,25 +236,6 @@ CREATE TABLE JUST_DO_IT.Puntos(
 	usuario_id NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY(id),
 	FOREIGN KEY(usuario_id) REFERENCES JUST_DO_IT.Usuarios
-)
-
-GO
-
-CREATE TABLE JUST_DO_IT.Aeronaves(
-	matricula NVARCHAR(255) UNIQUE NOT NULL,
-	modelo NVARCHAR(255) NOT NULL,
-	kgs_disponibles NUMERIC(18,0) NOT NULL,
-	fabricante NVARCHAR(255) NOT NULL,
-	tipo_servicio NUMERIC(18,0) NOT NULL,
-	fecha_alta DATETIME,
-	numero NUMERIC(18,0),
-	baja_fuera_servicio BINARY,
-	baja_vida_util BINARY,
-	fecha_fuera_servicio DATETIME,
-	fecha_reinicio_servicio DATETIME,
-	fecha_baja_definitiva DATETIME,
-	PRIMARY KEY(matricula),
-	FOREIGN KEY (tipo_servicio) REFERENCES JUST_DO_IT.TiposServicios
 )
 
 GO
@@ -312,10 +316,11 @@ INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo)
 		FROM gd_esquema.Maestra
 			WHERE Butaca_Tipo <> '0'
 
-INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id)
-	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id
-		FROM gd_esquema.Maestra AS maestra, #rutasDeLaMaestra AS rutas
+INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id, aeronave_id)
+	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id, aeronaves.id
+		FROM gd_esquema.Maestra AS maestra, #rutasDeLaMaestra AS rutas, JUST_DO_IT.Aeronaves AS aeronaves
 			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
+				AND maestra.Aeronave_Matricula = aeronaves.matricula
 
 INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, comprador, butaca) 
 	SELECT DISTINCT maestra.Pasaje_Codigo, maestra.Pasaje_FechaCompra, maestra.Pasaje_Precio, vuelos.id, usuarios.id, usuarios.id, butacas.id
