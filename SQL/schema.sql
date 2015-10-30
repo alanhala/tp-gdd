@@ -117,7 +117,7 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	matricula NVARCHAR(255) UNIQUE NOT NULL,
 	modelo NVARCHAR(255) NOT NULL,
 	kgs_disponibles NUMERIC(18,0) NOT NULL,
-	butacas_totales NUMERIC(18,0) NOT NULL,
+	/*butacas_totales NUMERIC(18,0) NOT NULL,  TODO AGREGAR AL INSERT*/
 	fabricante NVARCHAR(255) NOT NULL,
 	tipo_servicio NUMERIC(18,0) NOT NULL,
 	fecha_alta DATETIME,
@@ -193,8 +193,10 @@ CREATE TABLE JUST_DO_IT.Butacas(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	numero INT,
 	piso NUMERIC(18,0),
-	tipo nvarchar(10) CHECK (tipo in ('Pasillo', 'Ventanilla')),
+	tipo NVARCHAR(10) CHECK (tipo in ('Pasillo', 'Ventanilla')),
+	aeronave_id NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (id),
+	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
 )
 
 GO
@@ -311,10 +313,10 @@ INSERT INTO #rutasDeLaMaestra(id, codigo, origen, destino)
 			WHERE rutas.ciu_id_origen = ciudades1.id AND rutas.ciu_id_destino = ciudades2.id
 /*************************/
 
-INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo)
-	SELECT DISTINCT Butaca_Nro, Butaca_Piso, Butaca_Tipo 
-		FROM gd_esquema.Maestra
-			WHERE Butaca_Tipo <> '0'
+INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo, aeronave_id)
+	SELECT DISTINCT Butaca_Nro, Butaca_Piso, Butaca_Tipo, aeronaves.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Aeronaves AS aeronaves
+			WHERE maestra.Butaca_Tipo <> '0' AND maestra.Aeronave_Matricula = aeronaves.matricula 
 
 INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id, aeronave_id)
 	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id, aeronaves.id
