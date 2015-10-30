@@ -32,25 +32,34 @@ namespace AerolineaFrba.Abm_Aeronave
             string altaAeronave = "UPDATE JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles) VALUES ('" + tbNumeroMatricula.Text + "', '" + tbModelo.Text + "', '" + cbFabricante.Text + "', '" + cbTipoServicio.Text + "', " + tbEspacioTotalParaEncomiendas.Text + ")";
             server.query(altaAeronave);
             server.closeReader();
+
+
+            if (this.validarCampos())
+            {
+                string matricula = tbNumeroMatricula.Text;
+                string modelo = tbModelo.Text;
+                string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
+                int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
+                int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
+                string fechaFueraServicio = dtpFechaFueraDeServicio.Value.ToString("yyyy-dd-MM");
+                string fechaReinicioServicio = dtpFechaReinicioDeServicio.Value.ToString("yyyy-dd-MM");
+
+                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave " + matricula + ", " + modelo + ", " + fabricante + ", " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + fechaReinicioServicio + ", " + fechaFueraServicio;
+                try
+                {
+                    Server.getInstance().realizarQuery(modificarAeronave);
+                    MessageBox.Show("La aeronave se modifico satisfactoriamente");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
 
-        }
-
-
-        public void cargarComboBox(string entidad, string atributo, ComboBox comboBox)
-        {
-            Server server = Server.getInstance();
-            string queryCombo = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " AS " + entidad;
-            respuesta = server.query(queryCombo);
-
-            while (respuesta.Read())
-            {
-                comboBox.Items.Add(respuesta[atributo].ToString());
-            }
-            respuesta.Close();
         }
 
         public void cargarTextBox(string entidad, string atributo, TextBox textbox)
@@ -98,14 +107,34 @@ namespace AerolineaFrba.Abm_Aeronave
 
         public void cargarDatos()
         {
-            this.cargarComboBox("Aeronaves", "fabricante", cbFabricante);
-            this.cargarComboBox("Aeronaves", "tipo_servicio", cbTipoServicio);
+            Commons.getInstance().cargarComboBox("Aeronaves", "fabricante", cbFabricante);
+            Commons.getInstance().cargarComboBox("Aeronaves", "tipo_servicio", cbTipoServicio);
             this.cargarTextBox("Aeronaves", "matricula", tbNumeroMatricula);
             this.cargarTextBox("Aeronaves", "modelo", tbModelo);
             this.cargarTextBox("Aeronaves", "kgs_disponibles", tbEspacioTotalParaEncomiendas);
             this.autoCompletarCombo("Aeronaves", "fabricante", cbFabricante, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
             this.autoCompletarCombo("Aeronaves", "tipo_servicio", cbTipoServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
             this.cargarDateTimePicker("Aeronaves", "fecha_reinicio_servicio", dtpFechaReinicioDeServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
+        }
+
+        private bool validarCampos()
+        {
+            return (tbNumeroMatricula.Text.Trim() != "" && tbModelo.Text.Trim() != ""
+                && cbFabricante.Text.Trim() != "" && cbTipoServicio.Text.Trim() != "" &&
+                 tbEspacioTotalParaEncomiendas.Text.Trim() != "");
+        }
+
+        public string buscarSegunPosicion(int posicion, string entidad, string atributo)
+        {
+            Server server = Server.getInstance();
+            SqlDataReader respuesta = server.query("SELECT DISTINCT " + atributo + " AS atributo FROM JUST_DO_IT." + entidad);
+            for (int i = 0; i <= posicion; i++)
+            {
+                respuesta.Read();
+            }
+            string fabricante = respuesta["atributo"].ToString();
+            respuesta.Close();
+            return fabricante;
         }
 
         private void dtpFechaReinicioDeServicio_ValueChanged(object sender, EventArgs e)

@@ -414,12 +414,22 @@ AS BEGIN
 END 
 
 GO
-         
+    
 
+CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
+AS BEGIN
+	IF (@kgs_disponibles >= 0)
+		BEGIN
+			UPDATE JUST_DO_IT.Aeronaves
+				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
+				kgs_disponibles = @kgs_disponibles, fecha_fuera_servicio = @fecha_fuera_servicio, fecha_reinicio_servicio = @fecha_reinicio_servicio
+		END
+	ELSE 
+		RAISERROR('La cantidad de kilogramos disponibles no puede ser menor a cero, no se actualizo la aeronave',16,217) WITH SETERROR
 
+END 
 
-
-
-
+GO
 
 
