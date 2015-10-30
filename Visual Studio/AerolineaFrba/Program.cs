@@ -19,7 +19,7 @@ namespace AerolineaFrba
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Alta_Ruta());
+            Application.Run(new Alta());
         }
     }
 }

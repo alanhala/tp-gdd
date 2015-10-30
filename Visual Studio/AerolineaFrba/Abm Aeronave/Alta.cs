@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 
 namespace AerolineaFrba.Abm_Aeronave
 {
@@ -64,10 +64,23 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Server server = Server.getInstance();
-            string altaAeronave = "INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles, fecha_reinicio_servicio)"+
-            " VALUES ('" + tbNumeroMatricula.Text + "' , '" + tbModelo.Text + "' , '" + cbFabricante.Text + "','Ejecutivo', 123, '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "')";
-            server.query(altaAeronave);
+            if (this.validarCampos()) {
+                string matricula = tbNumeroMatricula .Text;
+                string modelo = tbModelo.Text;
+                string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
+                int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
+                int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
+
+                string altaAeronave = "EXEC JUST_DO_IT.almacenarAeronave " + matricula + ", " + modelo + ", " + fabricante + ", " + tipoDeServicio + ", " + espacioParaEncomiendas;
+                try {
+                    Server.getInstance().realizarQuery(altaAeronave);
+                    MessageBox.Show("La aeronave se agrego satisfactoriamente");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void tbNumeroMatricula_TextChanged(object sender, EventArgs e)
@@ -99,6 +112,25 @@ namespace AerolineaFrba.Abm_Aeronave
         {
 
         }
+        private bool validarCampos() {
+            return (tbNumeroMatricula.Text.Trim() != "" && tbModelo.Text.Trim() != ""
+                && cbFabricante.Text.Trim() != "" && cbTipoServicio.Text.Trim() != "" &&
+                tbCantButacas.Text.Trim() != "" && tbEspacioTotalParaEncomiendas.Text.Trim() != "");
+        }
+
+        public string buscarSegunPosicion(int posicion, string entidad, string atributo)
+        {
+            Server server = Server.getInstance();
+            SqlDataReader respuesta = server.query("SELECT DISTINCT " + atributo + " AS atributo FROM JUST_DO_IT." + entidad);
+            for (int i = 0; i <= posicion; i++)
+            {
+                respuesta.Read();
+            }
+            string fabricante = respuesta["atributo"].ToString(); 
+            respuesta.Close();
+            return fabricante;
+        }
+
 
     }
 }

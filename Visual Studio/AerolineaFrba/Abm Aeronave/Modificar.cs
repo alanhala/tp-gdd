@@ -117,5 +117,10 @@ namespace AerolineaFrba.Abm_Aeronave
         {
 
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
