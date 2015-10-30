@@ -400,3 +400,43 @@ AS BEGIN
 		RAISERROR('No se pudo agregar la ruta',16,217) WITH SETERROR
 
 END
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.almacenarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0))
+AS BEGIN
+	IF (@kgs_disponibles >= 0)
+		IF (NOT EXISTS (SELECT * FROM JUST_DO_IT.Aeronaves
+			WHERE matricula = matricula AND modelo = @modelo AND fabricante = @fabricante AND tipo_servicio = @tipo_servicio
+				AND kgs_disponibles = @kgs_disponibles))
+		BEGIN
+			INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles)
+				VALUES(@matricula, @modelo, @fabricante, @tipo_servicio, @kgs_disponibles)
+		END ELSE
+			RAISERROR('La aeronave ingresada ya existe',16,217) WITH SETERROR
+	ELSE 
+		RAISERROR('No se pudo agregar la aeronave',16,217) WITH SETERROR
+
+END 
+
+GO
+    
+
+CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
+AS BEGIN
+	IF (@kgs_disponibles >= 0)
+		BEGIN
+			UPDATE JUST_DO_IT.Aeronaves
+				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
+				kgs_disponibles = @kgs_disponibles, fecha_fuera_servicio = @fecha_fuera_servicio, fecha_reinicio_servicio = @fecha_reinicio_servicio
+		END
+	ELSE 
+		RAISERROR('La cantidad de kilogramos disponibles no puede ser menor a cero, no se actualizo la aeronave',16,217) WITH SETERROR
+
+END 
+
+GO
+
+

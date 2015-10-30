@@ -45,7 +45,6 @@
             this.cbFabricante = new System.Windows.Forms.ComboBox();
             this.process1 = new System.Diagnostics.Process();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dtpFechaReinicioServicio = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -191,7 +190,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dtpFechaReinicioServicio);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.cbFabricante);
             this.groupBox1.Controls.Add(this.tbNumeroMatricula);
@@ -211,16 +209,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // dtpFechaReinicioServicio
-            // 
-            this.dtpFechaReinicioServicio.CustomFormat = "";
-            this.dtpFechaReinicioServicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaReinicioServicio.Location = new System.Drawing.Point(284, 107);
-            this.dtpFechaReinicioServicio.Name = "dtpFechaReinicioServicio";
-            this.dtpFechaReinicioServicio.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaReinicioServicio.TabIndex = 16;
-            this.dtpFechaReinicioServicio.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label7
             // 
@@ -273,6 +261,5 @@
         private System.Diagnostics.Process process1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DateTimePicker dtpFechaReinicioServicio;
     }
 }
