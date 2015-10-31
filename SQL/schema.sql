@@ -57,8 +57,6 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ro
 
 GO
 
-<<<<<<< HEAD
-=======
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves'))
 	drop table JUST_DO_IT.Aeronaves
 
@@ -69,26 +67,11 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Vu
 
 GO
 
->>>>>>> 475d42272a00714f666b0de2983b409ddaef0dc9
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Rutas'))
 	drop table JUST_DO_IT.Rutas
 
 GO
 
-<<<<<<< HEAD
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves'))
-	drop table JUST_DO_IT.Aeronaves
-
-GO
-
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.TiposServicios'))
-	drop table JUST_DO_IT.TiposServicios
-
-GO
-
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ciudades'))
-	drop table JUST_DO_IT.Ciudades
-=======
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ciudades'))
 	drop table JUST_DO_IT.Ciudades
 
@@ -101,7 +84,6 @@ GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.TiposServicios'))
 	drop table JUST_DO_IT.TiposServicios
->>>>>>> 475d42272a00714f666b0de2983b409ddaef0dc9
 
 GO
 
@@ -116,10 +98,6 @@ GO
 
 IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
-    drop function JUST_DO_IT.IDTipoDeServicio;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
@@ -371,7 +349,7 @@ INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimad
 				AND maestra.Aeronave_Matricula = aeronaves.matricula
 
 INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, comprador, butaca) 
-	SELECT DISTINCT maestra.Pasaje_Codigo, maestra.Pasaje_FechaCompra, maestra.Pasaje_Precio, vuelos.id, usuarios.id, usuarios.id, butacas.id
+	SELECT maestra.Pasaje_Codigo, maestra.Pasaje_FechaCompra, maestra.Pasaje_Precio, vuelos.id, usuarios.id, usuarios.id, butacas.id
 		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas,
 			JUST_DO_IT.Butacas AS butacas, JUST_DO_IT.Aeronaves AS aeronaves
 			WHERE maestra.Pasaje_Codigo <> 0 AND maestra.Aeronave_Matricula = aeronaves.matricula
