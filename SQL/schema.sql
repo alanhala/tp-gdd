@@ -57,11 +57,25 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ro
 
 GO
 
+<<<<<<< HEAD
+=======
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves'))
+	drop table JUST_DO_IT.Aeronaves
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Vuelos'))
+	drop table JUST_DO_IT.Vuelos
+
+GO
+
+>>>>>>> 475d42272a00714f666b0de2983b409ddaef0dc9
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Rutas'))
 	drop table JUST_DO_IT.Rutas
 
 GO
 
+<<<<<<< HEAD
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves'))
 	drop table JUST_DO_IT.Aeronaves
 
@@ -74,6 +88,20 @@ GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ciudades'))
 	drop table JUST_DO_IT.Ciudades
+=======
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ciudades'))
+	drop table JUST_DO_IT.Ciudades
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Butacas'))
+	drop table JUST_DO_IT.Butacas
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.TiposServicios'))
+	drop table JUST_DO_IT.TiposServicios
+>>>>>>> 475d42272a00714f666b0de2983b409ddaef0dc9
 
 GO
 
@@ -93,6 +121,23 @@ GO
 IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
     drop function JUST_DO_IT.IDTipoDeServicio;
 GO
+
+IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
+    drop function JUST_DO_IT.IDTipoDeServicio;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.modificarAeronave') IS NOT NULL
+    drop procedure JUST_DO_IT.modificarAeronave;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarAeronave') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarAeronave;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarFuncionalidad') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarFuncionalidad;
+GO
+
 
 /******CREACION DE TABLAS******/
 
@@ -244,7 +289,7 @@ GO
 
 CREATE TABLE JUST_DO_IT.Funcionalidades(
 	id NUMERIC(18,0) IDENTITY(1,1),
-	descripcion NVARCHAR(255),
+	descripcion NVARCHAR(255) NOT NULL UNIQUE,
 	PRIMARY KEY (id)
 )
 GO
@@ -441,3 +486,15 @@ END
 GO
 
 
+CREATE PROCEDURE JUST_DO_IT.almacenarFuncionalidad(@Descripcion VARCHAR(255))
+AS BEGIN
+		BEGIN TRY
+			INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) 
+				VALUES(@Descripcion)
+		END TRY
+		BEGIN CATCH
+			RAISERROR('La  ingresada ya existe',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
