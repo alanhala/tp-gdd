@@ -140,11 +140,10 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	matricula NVARCHAR(255) UNIQUE NOT NULL,
 	modelo NVARCHAR(255) NOT NULL,
 	kgs_disponibles NUMERIC(18,0) NOT NULL,
-	/*butacas_totales NUMERIC(18,0) NOT NULL,  TODO AGREGAR AL INSERT*/
+	butacas_totales NUMERIC(18,0) NOT NULL,
 	fabricante NVARCHAR(255) NOT NULL,
 	tipo_servicio NUMERIC(18,0) NOT NULL,
 	fecha_alta DATETIME,
-	numero NUMERIC(18,0),
 	baja_fuera_servicio BINARY,
 	baja_vida_util BINARY,
 	fecha_fuera_servicio DATETIME,
@@ -311,8 +310,8 @@ INSERT INTO JUST_DO_IT.Ciudades(nombre)
 	UNION
 	SELECT DISTINCT Ruta_Ciudad_Destino As Ciudad FROM gd_esquema.Maestra
 
-INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, fabricante, tipo_servicio)
-	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, Aeronave_Fabricante, servicios.id
+INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, butacas_totales, fabricante, tipo_servicio)
+	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, JUST_DO_IT.cantidadButacas(maestra.Aeronave_Matricula), Aeronave_Fabricante, servicios.id
 		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.TiposServicios AS servicios
 			WHERE maestra.Tipo_Servicio = servicios.nombre
 
@@ -406,6 +405,25 @@ BEGIN
 END
 
 GO
+
+CREATE FUNCTION JUST_DO_IT.cantidadButacas(@Matricula NVARCHAR(2500))
+RETURNS NUMERIC(18,0)
+AS
+BEGIN
+	DECLARE @cantidadButacas NUMERIC(18,0);
+	DECLARE @butacas NUMERIC(18,0);
+	SELECT DISTINCT @butacas = Butaca_Nro
+	FROM gd_esquema.Maestra
+	WHERE Pasaje_Codigo <> 0 AND Aeronave_Matricula = @Matricula
+	SELECT @cantidadButacas = @@ROWCOUNT
+	RETURN @cantidadButacas;
+END
+
+GO
+SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, JUST_DO_IT.cantidadButacas(maestra.Aeronave_Matricula), Aeronave_Fabricante, servicios.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.TiposServicios AS servicios
+			WHERE maestra.Tipo_Servicio = servicios.nombre
+			go
 
 CREATE PROCEDURE JUST_DO_IT.almacenarRuta(@Codigo NUMERIC(18,0), @PrecioKgs NUMERIC(18,2), @PrecioPasaje NUMERIC(18,2),
 	@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @TipoServicio NUMERIC(18,0))
