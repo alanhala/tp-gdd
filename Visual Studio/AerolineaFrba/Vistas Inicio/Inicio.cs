@@ -22,9 +22,25 @@ namespace AerolineaFrba
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void invitado_CheckedChanged(object sender, EventArgs e)
+        {
+            new Vistas_Inicio.Menu_Invitado().Show();
+
+        }
+
+        private void administrador_CheckedChanged(object sender, EventArgs e)
+        {
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
     }
 }

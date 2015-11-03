@@ -8,34 +8,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AerolineaFrba.Abm_Aeronave
+namespace AerolineaFrba.Vistas_Inicio
 {
-    public partial class Baja : Form
+    public partial class Menu_Invitado : Form
     {
-        public Baja()
+        public Menu_Invitado()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new BajaFinVidaUtil().Show();
-
+            new Consulta_Millas.ConsultaMillas().Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            new BajaFueraDeServicio().Show();
+            new Canje_Millas.Form1().Show();
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
+
+        private void button4_Click(object sender, EventArgs e)
         {
-
+            new Compra.Form1().Show();
         }
 
-        private void Baja_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

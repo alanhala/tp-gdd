@@ -98,6 +98,7 @@
             this.Controls.Add(this.btnCancelar);
             this.Name = "Baja";
             this.Text = "Suspender Aeronave";
+            this.Load += new System.EventHandler(this.Baja_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
