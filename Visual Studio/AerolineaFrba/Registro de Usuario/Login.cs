@@ -14,9 +14,14 @@ namespace AerolineaFrba.Registro_de_Usuario
 {
     public partial class Login : Form
     {
-        public Login()
+        Form previous;
+
+        public Login() { }
+
+        public Login(Form p)
         {
             InitializeComponent();
+            this.previous = p;
         }
 
         private void groupBox3_Enter(object sender, EventArgs e)
@@ -32,7 +37,8 @@ namespace AerolineaFrba.Registro_de_Usuario
             if (server.successfullLog() == 1)
             {
                 this.Hide();
-                new Listado_Estadistico.Estadistica().Show();
+                this.previous.Hide();
+                new Vistas_Inicio.Inicio_Admin().Show();
             }
             else 
             {

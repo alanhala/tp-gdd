@@ -32,15 +32,15 @@ namespace AerolineaFrba
 
         }
 
-        private void invitado_CheckedChanged(object sender, EventArgs e)
+        private void btnInvitado_Click(object sender, EventArgs e)
         {
+            this.Hide();
             new Vistas_Inicio.Menu_Invitado().Show();
-
         }
 
-        private void administrador_CheckedChanged(object sender, EventArgs e)
+        private void btnAdministrador_Click(object sender, EventArgs e)
         {
-            new Vistas_Inicio.Inicio_Admin().Show();
+            new Registro_de_Usuario.Login(this).Show();
         }
     }
 }

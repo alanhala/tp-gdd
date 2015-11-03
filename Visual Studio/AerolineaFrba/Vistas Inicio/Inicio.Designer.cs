@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio));
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.administrador = new System.Windows.Forms.CheckBox();
-            this.invitado = new System.Windows.Forms.CheckBox();
+            this.btnInvitado = new System.Windows.Forms.Button();
+            this.btnAdministrador = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -52,37 +52,37 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(283, 240);
+            this.label3.Location = new System.Drawing.Point(284, 248);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(125, 25);
             this.label3.TabIndex = 4;
             this.label3.Text = "Ingrese como";
             // 
-            // administrador
+            // btnInvitado
             // 
-            this.administrador.AutoSize = true;
-            this.administrador.BackColor = System.Drawing.Color.Transparent;
-            this.administrador.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.administrador.Location = new System.Drawing.Point(288, 309);
-            this.administrador.Name = "administrador";
-            this.administrador.Size = new System.Drawing.Size(117, 23);
-            this.administrador.TabIndex = 5;
-            this.administrador.Text = "Administrador";
-            this.administrador.UseVisualStyleBackColor = false;
-            this.administrador.CheckedChanged += new System.EventHandler(this.administrador_CheckedChanged);
+            this.btnInvitado.BackColor = System.Drawing.Color.OliveDrab;
+            this.btnInvitado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInvitado.ForeColor = System.Drawing.Color.White;
+            this.btnInvitado.Location = new System.Drawing.Point(139, 310);
+            this.btnInvitado.Name = "btnInvitado";
+            this.btnInvitado.Size = new System.Drawing.Size(186, 33);
+            this.btnInvitado.TabIndex = 7;
+            this.btnInvitado.Text = "Invitado";
+            this.btnInvitado.UseVisualStyleBackColor = false;
+            this.btnInvitado.Click += new System.EventHandler(this.btnInvitado_Click);
             // 
-            // invitado
+            // btnAdministrador
             // 
-            this.invitado.AutoSize = true;
-            this.invitado.BackColor = System.Drawing.Color.Transparent;
-            this.invitado.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invitado.Location = new System.Drawing.Point(288, 286);
-            this.invitado.Name = "invitado";
-            this.invitado.Size = new System.Drawing.Size(79, 23);
-            this.invitado.TabIndex = 6;
-            this.invitado.Text = "Invitado";
-            this.invitado.UseVisualStyleBackColor = false;
-            this.invitado.CheckedChanged += new System.EventHandler(this.invitado_CheckedChanged);
+            this.btnAdministrador.BackColor = System.Drawing.Color.OliveDrab;
+            this.btnAdministrador.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdministrador.ForeColor = System.Drawing.Color.White;
+            this.btnAdministrador.Location = new System.Drawing.Point(364, 310);
+            this.btnAdministrador.Name = "btnAdministrador";
+            this.btnAdministrador.Size = new System.Drawing.Size(186, 33);
+            this.btnAdministrador.TabIndex = 8;
+            this.btnAdministrador.Text = "Administrador";
+            this.btnAdministrador.UseVisualStyleBackColor = false;
+            this.btnAdministrador.Click += new System.EventHandler(this.btnAdministrador_Click);
             // 
             // Inicio
             // 
@@ -91,9 +91,9 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(644, 426);
-            this.Controls.Add(this.invitado);
-            this.Controls.Add(this.administrador);
+            this.ClientSize = new System.Drawing.Size(644, 397);
+            this.Controls.Add(this.btnAdministrador);
+            this.Controls.Add(this.btnInvitado);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -112,8 +112,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox administrador;
-        private System.Windows.Forms.CheckBox invitado;
+        private System.Windows.Forms.Button btnInvitado;
+        private System.Windows.Forms.Button btnAdministrador;
     }
 }
 
