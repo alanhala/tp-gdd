@@ -89,7 +89,10 @@ GO
 
 IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
 	drop table #rutasDeLaMaestra
+GO
 
+IF OBJECT_ID('tempdb..#cantidadDeButacas') IS NOT NULL
+	drop table #cantidadDeButacas
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
@@ -116,7 +119,9 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarFuncionalidad') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarFuncionalidad;
 GO
 
-
+IF OBJECT_ID (N'JUST_DO_IT.cantidadButacas') IS NOT NULL
+    drop function JUST_DO_IT.cantidadButacas;
+GO
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -291,6 +296,21 @@ CREATE TABLE JUST_DO_IT.Compras(
 
 GO
 
+/******TABLA AUXILIAR******/
+CREATE TABLE #cantidadDeButacas(
+	matricula VARCHAR(255),
+	cantidad NUMERIC(18,0)
+)
+
+INSERT INTO #cantidadDeButacas(matricula, cantidad)
+	SELECT Aeronave_Matricula, COUNT (DISTINCT Butaca_Nro)
+		FROM  gd_esquema.Maestra
+			WHERE Pasaje_Codigo <> 0
+				GROUP BY Aeronave_Matricula
+/*************************/
+
+
+
 /******NORMALIZACION******/
 
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
@@ -311,9 +331,12 @@ INSERT INTO JUST_DO_IT.Ciudades(nombre)
 	SELECT DISTINCT Ruta_Ciudad_Destino As Ciudad FROM gd_esquema.Maestra
 
 INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, butacas_totales, fabricante, tipo_servicio)
-	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, JUST_DO_IT.cantidadButacas(maestra.Aeronave_Matricula), Aeronave_Fabricante, servicios.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.TiposServicios AS servicios
-			WHERE maestra.Tipo_Servicio = servicios.nombre
+	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, cantidad, Aeronave_Fabricante, servicios.id
+		FROM gd_esquema.Maestra AS maestra
+		INNER JOIN JUST_DO_IT.TiposServicios AS servicios
+		ON maestra.Tipo_Servicio = servicios.nombre 
+		INNER JOIN #cantidadDeButacas AS cantidad
+		ON cantidad.matricula = Aeronave_Matricula
 
 INSERT INTO JUST_DO_IT.Rutas(codigo, precio_baseKG, precio_basePasaje, ciu_id_origen, ciu_id_destino, tipo_servicio)
 	SELECT Ruta_Codigo, MAX(Ruta_Precio_BaseKG), MAX(Ruta_Precio_BasePasaje), ciudades1.id, ciudades2.id, servicios.id
@@ -406,20 +429,6 @@ END
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.cantidadButacas(@Matricula NVARCHAR(2500))
-RETURNS NUMERIC(18,0)
-AS
-BEGIN
-	DECLARE @cantidadButacas NUMERIC(18,0);
-	DECLARE @butacas NUMERIC(18,0);
-	SELECT DISTINCT @butacas = Butaca_Nro
-	FROM gd_esquema.Maestra
-	WHERE Pasaje_Codigo <> 0 AND Aeronave_Matricula = @Matricula
-	SELECT @cantidadButacas = @@ROWCOUNT
-	RETURN @cantidadButacas;
-END
-
-GO
 SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, JUST_DO_IT.cantidadButacas(maestra.Aeronave_Matricula), Aeronave_Fabricante, servicios.id
 		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.TiposServicios AS servicios
 			WHERE maestra.Tipo_Servicio = servicios.nombre
