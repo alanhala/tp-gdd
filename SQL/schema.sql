@@ -87,41 +87,6 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ti
 
 GO
 
-IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
-	drop table #rutasDeLaMaestra
-GO
-
-IF OBJECT_ID('tempdb..#cantidadDeButacas') IS NOT NULL
-	drop table #cantidadDeButacas
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
-    drop procedure JUST_DO_IT.almacenarRuta;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
-    drop function JUST_DO_IT.IDCiudad;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
-    drop function JUST_DO_IT.IDTipoDeServicio;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.modificarAeronave') IS NOT NULL
-    drop procedure JUST_DO_IT.modificarAeronave;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.almacenarAeronave') IS NOT NULL
-    drop procedure JUST_DO_IT.almacenarAeronave;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.almacenarFuncionalidad') IS NOT NULL
-    drop procedure JUST_DO_IT.almacenarFuncionalidad;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.cantidadButacas') IS NOT NULL
-    drop function JUST_DO_IT.cantidadButacas;
-GO
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -274,6 +239,7 @@ CREATE TABLE JUST_DO_IT.Funcionalidades(
 	descripcion NVARCHAR(255) NOT NULL UNIQUE,
 	PRIMARY KEY (id)
 )
+
 GO
 
 CREATE TABLE JUST_DO_IT.Rol_Funcionalidad(
@@ -362,25 +328,85 @@ INSERT INTO #rutasDeLaMaestra(id, codigo, origen, destino, tipo_servicio)
 INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo, aeronave_id)
 	SELECT DISTINCT Butaca_Nro, Butaca_Piso, Butaca_Tipo, aeronaves.id
 		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Aeronaves AS aeronaves
-			WHERE maestra.Butaca_Nro <> 0 AND maestra.Aeronave_Matricula = aeronaves.matricula 
+			WHERE maestra.Butaca_Piso <> 0 AND maestra.Aeronave_Matricula = aeronaves.matricula 
 
 INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id, aeronave_id)
 	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id, aeronaves.id
 		FROM gd_esquema.Maestra AS maestra, #rutasDeLaMaestra AS rutas, JUST_DO_IT.Aeronaves AS aeronaves
-			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino AND maestra.Tipo_Servicio = rutas.tipo_servicio
-				AND maestra.Aeronave_Matricula = aeronaves.matricula
+			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen 
+				AND maestra.Ruta_Ciudad_Destino = rutas.destino AND maestra.Tipo_Servicio = rutas.tipo_servicio
+				AND maestra.Aeronave_Matricula = aeronaves.matricula AND maestra.Aeronave_Fabricante = aeronaves.fabricante
+
+/******TABLAS AUXILIARES PARA EL PASAJE******/
+CREATE TABLE #temporalPasajes(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	codigo NUMERIC (18,0),
+	fecha_compra DATETIME,
+	precio NUMERIC(18,2), 
+	cli_dni NUMERIC(18,0),
+	cli_nombre NVARCHAR(255),
+	cli_apellido NVARCHAR(255),
+	fechaSalida DATETIME,
+	fechaLlegadaEstimada DATETIME,
+	fechaLlegada DATETIME,
+	ciudadOrigen NVARCHAR(255),
+	ciudadDestino NVARCHAR(255),
+	tipo_servicio NVARCHAR(255),
+	aeronave_matricula NVARCHAR(255),
+	aeronave_fabricante NVARCHAR(255),
+	butaca_nro NUMERIC(18,0),
+	butaca_tipo NVARCHAR(255)
+)
+
+INSERT INTO #temporalPasajes(codigo, fecha_compra, precio, cli_dni, cli_nombre, cli_apellido,
+							fechaSalida, fechaLlegada, fechaLlegadaEstimada, ciudadOrigen, ciudadDestino, tipo_servicio,
+							aeronave_matricula, aeronave_fabricante, butaca_nro, butaca_tipo)
+	SELECT Pasaje_Codigo, Pasaje_FechaCompra, Pasaje_Precio, Cli_Dni, Cli_Nombre, Cli_Apellido, 
+			FechaSalida, FechaLLegada, Fecha_LLegada_Estimada, Ruta_Ciudad_Origen, Ruta_Ciudad_Destino, Tipo_Servicio,
+			Aeronave_Matricula, Aeronave_Fabricante,Butaca_Nro, Butaca_Tipo
+		FROM gd_esquema.Maestra
+		WHERE Pasaje_Codigo <> 0
+
+CREATE TABLE #temporalUsuarios(
+	temporalPasaje_id NUMERIC(18,0),
+	usuario_id NUMERIC(18,0)
+)
+
+INSERT INTO #temporalUsuarios(temporalPasaje_id, usuario_id)
+	SELECT temporal.id, usuarios.id
+		FROM #temporalPasajes AS temporal, JUST_DO_IT.Usuarios AS usuarios
+		WHERE temporal.Cli_Dni = usuarios.dni AND temporal.Cli_Apellido = usuarios.apellido 
+		AND temporal.Cli_Nombre =  usuarios.nombre
+
+CREATE TABLE #temporalParaPasaje(
+	temporalPasaje_id NUMERIC(18,0),
+	codigo NUMERIC(18,0),
+	fecha_compra DATETIME,
+	precio NUMERIC(18,2),
+	vuelo_id NUMERIC(18,0),
+	butaca_id NUMERIC(18,0)
+)
+
+INSERT INTO #temporalParaPasaje(temporalPasaje_id, codigo, fecha_compra, precio, vuelo_id, butaca_id)
+	SELECT temporal.id, temporal.codigo, temporal.fecha_compra, temporal.precio, vuelos.id
+		FROM #temporalPasajes AS temporal
+		JOIN #rutasDeLaMaestra AS rutas
+		ON rutas.origen = temporal.ciudadOrigen AND rutas.destino = temporal.ciudadDestino 
+		AND temporal.tipo_servicio = rutas.tipo_servicio 
+		JOIN JUST_DO_IT.Aeronaves AS aeronaves
+		ON temporal.aeronave_matricula = aeronaves.matricula AND temporal.aeronave_fabricante = aeronaves.fabricante
+		JOIN JUST_DO_IT.Vuelos AS vuelos
+		ON temporal.fechaLlegada = vuelos.fecha_llegada AND temporal.fechaSalida = vuelos.fecha_salida AND vuelos.aeronave_id = aeronaves.id AND rutas.id = vuelos.ruta_id 
+		JOIN JUST_DO_IT.Butacas AS butacas
+		ON aeronaves.id = butacas.aeronave_id AND temporal.butaca_tipo = butacas.tipo AND temporal.butaca_nro = butacas.numero
+/*************************/
 
 INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, comprador, butaca) 
-	SELECT maestra.Pasaje_Codigo, maestra.Pasaje_FechaCompra, maestra.Pasaje_Precio, vuelos.id, usuarios.id, usuarios.id, butacas.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas,
-			JUST_DO_IT.Butacas AS butacas, JUST_DO_IT.Aeronaves AS aeronaves
-			WHERE maestra.Pasaje_Codigo <> 0 AND maestra.Aeronave_Matricula = aeronaves.matricula
-				AND maestra.Cli_Dni = usuarios.dni AND maestra.Cli_Apellido = usuarios.apellido AND maestra.Cli_Nombre =  usuarios.nombre
-				AND maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino AND maestra.Tipo_Servicio = rutas.tipo_servicio
-				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
-				AND rutas.id = vuelos.ruta_id AND aeronaves.id = vuelos.aeronave_id
-				AND aeronaves.id = butacas.aeronave_id AND maestra.Butaca_Nro = butacas.numero
-		
+	SELECT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t2.usuario_id, t1.butaca_id
+		FROM #temporalParaPasaje t1
+		JOIN #temporalUsuarios t2
+		ON t1.temporalPasaje_id = t2.temporalPasaje_id
+
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
@@ -397,9 +423,8 @@ INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
 				AND rutas.id = vuelos.ruta_id AND aeronaves.id = vuelos.aeronave_id
 
 INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
-	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, vuelos.fecha_salida), pasajes.comprador
-		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Vuelos AS vuelos
-			WHERE pasajes.vuelo_id = vuelos.id 
+	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), pasajes.comprador
+		FROM JUST_DO_IT.Pasajes AS pasajes
 
 GO
 
@@ -428,11 +453,6 @@ BEGIN
 END
 
 GO
-
-SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, JUST_DO_IT.cantidadButacas(maestra.Aeronave_Matricula), Aeronave_Fabricante, servicios.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.TiposServicios AS servicios
-			WHERE maestra.Tipo_Servicio = servicios.nombre
-			go
 
 CREATE PROCEDURE JUST_DO_IT.almacenarRuta(@Codigo NUMERIC(18,0), @PrecioKgs NUMERIC(18,2), @PrecioPasaje NUMERIC(18,2),
 	@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @TipoServicio NUMERIC(18,0))
@@ -501,5 +521,54 @@ AS BEGIN
 			RAISERROR('La  ingresada ya existe',16,217) WITH SETERROR
 		END CATCH
 END
+
+GO
+
+IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
+	drop table #rutasDeLaMaestra
+GO
+
+IF OBJECT_ID('tempdb..#temporalParaPasaje') IS NOT NULL
+	drop table #temporalParaPasaje
+GO
+
+IF OBJECT_ID('tempdb..#temporalUsuarios') IS NOT NULL
+	drop table #temporalUsuarios
+GO
+
+IF OBJECT_ID('tempdb..#temporalPasajes') IS NOT NULL
+	drop table #temporalPasajes
+GO
+
+IF OBJECT_ID('tempdb..#cantidadDeButacas') IS NOT NULL
+	drop table #cantidadDeButacas
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarRuta;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
+    drop function JUST_DO_IT.IDCiudad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
+    drop function JUST_DO_IT.IDTipoDeServicio;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.modificarAeronave') IS NOT NULL
+    drop procedure JUST_DO_IT.modificarAeronave;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarAeronave') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarAeronave;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarFuncionalidad') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarFuncionalidad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.cantidadButacas') IS NOT NULL
+    drop function JUST_DO_IT.cantidadButacas;
 
 GO
