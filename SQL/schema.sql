@@ -518,7 +518,7 @@ AS BEGIN
 				VALUES(@Descripcion)
 		END TRY
 		BEGIN CATCH
-			RAISERROR('La  ingresada ya existe',16,217) WITH SETERROR
+			RAISERROR('La funcionalidad ingresada ya existe',16,217) WITH SETERROR
 		END CATCH
 END
 
