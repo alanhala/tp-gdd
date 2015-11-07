@@ -437,7 +437,7 @@ CREATE TABLE #temporalParaPasaje(
 )
 
 INSERT INTO #temporalParaPasaje(temporalPasaje_id, codigo, fecha_compra, precio, vuelo_id, butaca_id)
-	SELECT temporal.id, temporal.codigo, temporal.fecha_compra, temporal.precio, vuelos.id
+	SELECT temporal.id, temporal.codigo, temporal.fecha_compra, temporal.precio, vuelos.id, butacas.id
 		FROM #temporalPasajes AS temporal
 		JOIN #rutasDeLaMaestra AS rutas
 		ON rutas.origen = temporal.ciudadOrigen AND rutas.destino = temporal.ciudadDestino 
