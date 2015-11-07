@@ -544,13 +544,13 @@ GO
     
 
 CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_reinicio_servicio DATETIME)
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
 			UPDATE JUST_DO_IT.Aeronaves
 				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
-				kgs_disponibles = @kgs_disponibles, fecha_fuera_servicio = @fecha_fuera_servicio, fecha_reinicio_servicio = @fecha_reinicio_servicio
+				kgs_disponibles = @kgs_disponibles,  fecha_reinicio_servicio = @fecha_reinicio_servicio
 				
 		END TRY
 		BEGIN CATCH
@@ -562,7 +562,6 @@ AS BEGIN
 END 
 
 GO
-
 
 CREATE PROCEDURE JUST_DO_IT.almacenarFuncionalidad(@Descripcion VARCHAR(255))
 AS BEGIN

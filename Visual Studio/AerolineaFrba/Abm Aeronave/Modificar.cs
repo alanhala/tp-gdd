@@ -18,13 +18,18 @@ namespace AerolineaFrba.Abm_Aeronave
         private string matriculaAModificar;
         public modificarAeronave()
         {
+            
+        }
+
+        public modificarAeronave(string matricula)
+        {
             InitializeComponent();
+            matriculaAModificar = matricula;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.cargarDatos(); 
-            //this.matriculaAModificar = ..
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,10 +42,9 @@ namespace AerolineaFrba.Abm_Aeronave
                 string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
                 int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
                 int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
-                string fechaFueraServicio = dtpFechaFueraDeServicio.Value.ToString("yyyy-dd-MM");
                 string fechaReinicioServicio = dtpFechaReinicioDeServicio.Value.ToString("yyyy-dd-MM");
 
-                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + fechaReinicioServicio + ", " + fechaFueraServicio;
+                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + fechaReinicioServicio;
                 try
                 {
                     Server.getInstance().realizarQuery(modificarAeronave);
@@ -55,13 +59,13 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         public void cargarTextBox(string entidad, string atributo, TextBox textbox)
         {
             Server server = Server.getInstance();
-            string queryTextBox = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " AS " + entidad;
+            string queryTextBox = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " AS " + entidad + " WHERE Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'";
             respuesta = server.query(queryTextBox);
 
             respuesta.Read();
@@ -90,6 +94,29 @@ namespace AerolineaFrba.Abm_Aeronave
             respuesta.Close();
         }
 
+        public void autoCompletarComboConOtraTabla(string entidad, string atributo, ComboBox comboBox, string condicionParaBuscarElTipoEspecifico, string condicionParaBuscarTodosLosTipos)
+        {
+            Server server = Server.getInstance();
+            string queryComboBox = "SELECT DISTINCT TipoServicio.nombre AS atributo FROM JUST_DO_IT.TiposServicios AS TipoServicio, JUST_DO_IT." + entidad + " AS Aeronaves WHERE " + condicionParaBuscarElTipoEspecifico;
+            respuesta = server.query(queryComboBox);
+            respuesta.Read();
+            string nombreAtributo = respuesta["atributo"].ToString();
+            respuesta.Close();
+
+            int idAtributo = 0;
+            respuesta = server.query("SELECT DISTINCT TipoServicio.nombre AS atributo FROM JUST_DO_IT.TiposServicios AS TipoServicio, JUST_DO_IT." + entidad + " AS Aeronaves WHERE " + condicionParaBuscarTodosLosTipos);
+            while (respuesta.Read())
+            {
+                if (String.CompareOrdinal(nombreAtributo, respuesta["atributo"].ToString()) == 0)
+                {
+                    break;
+                }
+                idAtributo++;
+            }
+            comboBox.SelectedIndex = idAtributo;
+            respuesta.Close();
+        }
+
         public void cargarDateTimePicker(string entidad, string atributo, DateTimePicker dateTimePicker, string condicion)
         {
             Server server = Server.getInstance();
@@ -103,13 +130,14 @@ namespace AerolineaFrba.Abm_Aeronave
 
         public void cargarDatos()
         {
+            tbNumeroMatricula.Text = this.matriculaAModificar;
             Commons.getInstance().cargarComboBox("Aeronaves", "fabricante", cbFabricante);
-            Commons.getInstance().cargarComboBox("Aeronaves", "tipo_servicio", cbTipoServicio);
-            this.cargarTextBox("Aeronaves", "matricula", tbNumeroMatricula);
+            Commons.getInstance().cargarComboBox("TiposServicios", "nombre", cbTipoServicio);
             this.cargarTextBox("Aeronaves", "modelo", tbModelo);
             this.cargarTextBox("Aeronaves", "kgs_disponibles", tbEspacioTotalParaEncomiendas);
+            this.cargarTextBox("Aeronaves", "butacas_totales", tbCantButacas);
             this.autoCompletarCombo("Aeronaves", "fabricante", cbFabricante, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
-            this.autoCompletarCombo("Aeronaves", "tipo_servicio", cbTipoServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
+            this.autoCompletarComboConOtraTabla("Aeronaves", "tipo_servicio", cbTipoServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "' AND Aeronaves.tipo_servicio = TipoServicio.id", " Aeronaves.tipo_servicio = TipoServicio.id");
             this.cargarDateTimePicker("Aeronaves", "fecha_reinicio_servicio", dtpFechaReinicioDeServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
         }
 

@@ -31,9 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(modificarAeronave));
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.dtpFechaFueraDeServicio = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaReinicioDeServicio = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbCantButacas = new System.Windows.Forms.TextBox();
@@ -55,7 +53,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(589, 266);
+            this.button2.Location = new System.Drawing.Point(589, 207);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 28;
@@ -65,22 +63,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(684, 266);
+            this.button1.Location = new System.Drawing.Point(684, 207);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 27;
             this.button1.Text = "Modificar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(298, 152);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(133, 13);
-            this.label7.TabIndex = 32;
-            this.label7.Text = "Fecha de fuera de servicio";
             // 
             // label8
             // 
@@ -90,13 +79,6 @@
             this.label8.Size = new System.Drawing.Size(142, 13);
             this.label8.TabIndex = 31;
             this.label8.Text = "Fecha de reinicio de servicio";
-            // 
-            // dtpFechaFueraDeServicio
-            // 
-            this.dtpFechaFueraDeServicio.Location = new System.Drawing.Point(460, 151);
-            this.dtpFechaFueraDeServicio.Name = "dtpFechaFueraDeServicio";
-            this.dtpFechaFueraDeServicio.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaFueraDeServicio.TabIndex = 35;
             // 
             // dtpFechaReinicioDeServicio
             // 
@@ -120,13 +102,11 @@
             this.groupBox1.Controls.Add(this.tbModelo);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.dtpFechaFueraDeServicio);
             this.groupBox1.Controls.Add(this.dtpFechaReinicioDeServicio);
-            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Location = new System.Drawing.Point(28, 47);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(715, 195);
+            this.groupBox1.Size = new System.Drawing.Size(715, 154);
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
@@ -249,7 +229,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(771, 301);
+            this.ClientSize = new System.Drawing.Size(771, 235);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
@@ -273,9 +253,7 @@
 
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DateTimePicker dtpFechaFueraDeServicio;
         private System.Windows.Forms.DateTimePicker dtpFechaReinicioDeServicio;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label9;

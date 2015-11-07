@@ -46,6 +46,7 @@
             this.process1 = new System.Diagnostics.Process();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -220,6 +221,17 @@
             this.label7.TabIndex = 38;
             this.label7.Text = "Generar aeronave";
             // 
+            // button2
+            // 
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button2.Location = new System.Drawing.Point(458, 224);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 29;
+            this.button2.Text = "Cancelar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // Alta
             // 
             this.AcceptButton = this.btnGuardar;
@@ -227,6 +239,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(642, 259);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnLimpiar);
@@ -261,5 +274,6 @@
         private System.Diagnostics.Process process1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button2;
     }
 }
