@@ -30,7 +30,7 @@ namespace AerolineaFrba.Vistas_Inicio
 
         private void button4_Click(object sender, EventArgs e)
         {
-            new Compra.Form1().Show();
+            new Compra.compraPasaje().Show();
         }
 
     }

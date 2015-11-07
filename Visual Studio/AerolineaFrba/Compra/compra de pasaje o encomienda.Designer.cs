@@ -1,6 +1,6 @@
 ﻿namespace AerolineaFrba.Compra
 {
-    partial class Form1
+    partial class compraPasaje
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(compraPasaje));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dtpFechaLlegadaVuelo = new System.Windows.Forms.DateTimePicker();
@@ -36,21 +36,18 @@
             this.label9 = new System.Windows.Forms.Label();
             this.dtpFechaSalidaVuelo = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbCiudadDestino = new System.Windows.Forms.TextBox();
-            this.tbCiudadOrigen = new System.Windows.Forms.TextBox();
+            this.cmbDestino = new System.Windows.Forms.ComboBox();
+            this.cmbOrigen = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.dgvViajesDisponibles = new System.Windows.Forms.DataGridView();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.viajeDisponible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantButacasLibres = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kgDisponibles = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoServicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantPasajesAComprar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kgAEnviar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.comprarPasaje = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.btnSiguiente = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvViajesDisponibles)).BeginInit();
@@ -85,6 +82,7 @@
             this.dtpFechaLlegadaVuelo.Name = "dtpFechaLlegadaVuelo";
             this.dtpFechaLlegadaVuelo.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaLlegadaVuelo.TabIndex = 16;
+            this.dtpFechaLlegadaVuelo.ValueChanged += new System.EventHandler(this.dtpFechaLlegadaVuelo_ValueChanged);
             // 
             // label10
             // 
@@ -110,11 +108,12 @@
             this.dtpFechaSalidaVuelo.Name = "dtpFechaSalidaVuelo";
             this.dtpFechaSalidaVuelo.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaSalidaVuelo.TabIndex = 0;
+            this.dtpFechaSalidaVuelo.ValueChanged += new System.EventHandler(this.dtpFechaSalidaVuelo_ValueChanged);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.tbCiudadDestino);
-            this.groupBox1.Controls.Add(this.tbCiudadOrigen);
+            this.groupBox1.Controls.Add(this.cmbDestino);
+            this.groupBox1.Controls.Add(this.cmbOrigen);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(212, 157);
@@ -124,19 +123,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de la ruta";
             // 
-            // tbCiudadDestino
+            // cmbDestino
             // 
-            this.tbCiudadDestino.Location = new System.Drawing.Point(230, 43);
-            this.tbCiudadDestino.Name = "tbCiudadDestino";
-            this.tbCiudadDestino.Size = new System.Drawing.Size(128, 20);
-            this.tbCiudadDestino.TabIndex = 14;
+            this.cmbDestino.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbDestino.FormattingEnabled = true;
+            this.cmbDestino.Location = new System.Drawing.Point(158, 45);
+            this.cmbDestino.Name = "cmbDestino";
+            this.cmbDestino.Size = new System.Drawing.Size(172, 21);
+            this.cmbDestino.TabIndex = 43;
+            this.cmbDestino.SelectedIndexChanged += new System.EventHandler(this.cmbDestino_SelectedIndexChanged);
             // 
-            // tbCiudadOrigen
+            // cmbOrigen
             // 
-            this.tbCiudadOrigen.Location = new System.Drawing.Point(230, 18);
-            this.tbCiudadOrigen.Name = "tbCiudadOrigen";
-            this.tbCiudadOrigen.Size = new System.Drawing.Size(128, 20);
-            this.tbCiudadOrigen.TabIndex = 13;
+            this.cmbOrigen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOrigen.FormattingEnabled = true;
+            this.cmbOrigen.Location = new System.Drawing.Point(158, 19);
+            this.cmbOrigen.Name = "cmbOrigen";
+            this.cmbOrigen.Size = new System.Drawing.Size(172, 21);
+            this.cmbOrigen.TabIndex = 42;
+            this.cmbOrigen.SelectedIndexChanged += new System.EventHandler(this.cmbOrigen_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -174,15 +179,30 @@
             this.viajeDisponible,
             this.cantButacasLibres,
             this.kgDisponibles,
-            this.tipoServicio,
-            this.cantPasajesAComprar,
-            this.kgAEnviar,
-            this.comprarPasaje});
-            this.dgvViajesDisponibles.Location = new System.Drawing.Point(27, 256);
+            this.tipoServicio});
+            this.dgvViajesDisponibles.Location = new System.Drawing.Point(184, 252);
             this.dgvViajesDisponibles.Name = "dgvViajesDisponibles";
             this.dgvViajesDisponibles.ReadOnly = true;
-            this.dgvViajesDisponibles.Size = new System.Drawing.Size(744, 133);
+            this.dgvViajesDisponibles.Size = new System.Drawing.Size(445, 133);
             this.dgvViajesDisponibles.TabIndex = 18;
+            // 
+            // btnSiguiente
+            // 
+            this.btnSiguiente.Location = new System.Drawing.Point(696, 401);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(75, 23);
+            this.btnSiguiente.TabIndex = 20;
+            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Location = new System.Drawing.Point(602, 401);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 19;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
             // viajeDisponible
             // 
@@ -208,43 +228,7 @@
             this.tipoServicio.Name = "tipoServicio";
             this.tipoServicio.ReadOnly = true;
             // 
-            // cantPasajesAComprar
-            // 
-            this.cantPasajesAComprar.HeaderText = "Cantidad de pasajes a comprar";
-            this.cantPasajesAComprar.Name = "cantPasajesAComprar";
-            this.cantPasajesAComprar.ReadOnly = true;
-            // 
-            // kgAEnviar
-            // 
-            this.kgAEnviar.HeaderText = "kg a enviar por Encomienda";
-            this.kgAEnviar.Name = "kgAEnviar";
-            this.kgAEnviar.ReadOnly = true;
-            // 
-            // comprarPasaje
-            // 
-            this.comprarPasaje.HeaderText = "Comprar Pasaje";
-            this.comprarPasaje.Name = "comprarPasaje";
-            this.comprarPasaje.ReadOnly = true;
-            // 
-            // btnSiguiente
-            // 
-            this.btnSiguiente.Location = new System.Drawing.Point(696, 401);
-            this.btnSiguiente.Name = "btnSiguiente";
-            this.btnSiguiente.Size = new System.Drawing.Size(75, 23);
-            this.btnSiguiente.TabIndex = 20;
-            this.btnSiguiente.Text = "Siguiente";
-            this.btnSiguiente.UseVisualStyleBackColor = true;
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Location = new System.Drawing.Point(602, 401);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.btnLimpiar.TabIndex = 19;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            // 
-            // Form1
+            // compraPasaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -257,8 +241,9 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "compraPasaje";
             this.Text = "Compra de pasaje/encomienda";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -281,17 +266,14 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox tbCiudadDestino;
-        private System.Windows.Forms.TextBox tbCiudadOrigen;
         private System.Windows.Forms.DataGridView dgvViajesDisponibles;
+        private System.Windows.Forms.Button btnSiguiente;
+        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.ComboBox cmbDestino;
+        private System.Windows.Forms.ComboBox cmbOrigen;
         private System.Windows.Forms.DataGridViewTextBoxColumn viajeDisponible;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantButacasLibres;
         private System.Windows.Forms.DataGridViewTextBoxColumn kgDisponibles;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoServicio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantPasajesAComprar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn kgAEnviar;
-        private System.Windows.Forms.DataGridViewButtonColumn comprarPasaje;
-        private System.Windows.Forms.Button btnSiguiente;
-        private System.Windows.Forms.Button btnLimpiar;
     }
 }

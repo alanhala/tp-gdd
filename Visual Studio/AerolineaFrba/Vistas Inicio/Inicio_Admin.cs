@@ -64,7 +64,7 @@ namespace AerolineaFrba.Vistas_Inicio
 
         private void compraPasajes_Encom_Click(object sender, EventArgs e)
         {
-            new Compra.Form1().Show();
+            new Compra.compraPasaje().Show();
         }
 
         private void crearFuncionalidad_Click(object sender, EventArgs e)

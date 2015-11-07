@@ -133,7 +133,10 @@ GO
 
 IF OBJECT_ID (N'JUST_DO_IT.cantidadButacas') IS NOT NULL
     drop function JUST_DO_IT.cantidadButacas;
+GO
 
+IF OBJECT_ID (N'JUST_DO_IT.vuelosDisponibles') IS NOT NULL
+    drop function JUST_DO_IT.vuelosDisponibles;
 GO
 
 /******CREACION DE TABLAS******/
@@ -223,6 +226,7 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 	fecha_llegada_estimada DATETIME NOT NULL,
 	ruta_id NUMERIC(18,0) NOT NULL,
 	aeronave_id NUMERIC(18,0) NOT NULL,
+	cantidadDisponible NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (ruta_id) REFERENCES JUST_DO_IT.Rutas,
 	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
@@ -314,14 +318,15 @@ GO
 /******TABLA AUXILIAR******/
 CREATE TABLE #cantidadDeButacas(
 	matricula VARCHAR(255),
-	cantidad NUMERIC(18,0)
+	cantidadTotal NUMERIC(18,0)
 )
 
-INSERT INTO #cantidadDeButacas(matricula, cantidad)
+INSERT INTO #cantidadDeButacas(matricula, cantidadTotal)
 	SELECT Aeronave_Matricula, COUNT (DISTINCT Butaca_Nro)
 		FROM  gd_esquema.Maestra
 			WHERE Pasaje_Codigo <> 0
 				GROUP BY Aeronave_Matricula
+
 /*************************/
 
 
@@ -346,7 +351,7 @@ INSERT INTO JUST_DO_IT.Ciudades(nombre)
 	SELECT DISTINCT Ruta_Ciudad_Destino As Ciudad FROM gd_esquema.Maestra
 
 INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, kgs_disponibles, butacas_totales, fabricante, tipo_servicio)
-	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, cantidad, Aeronave_Fabricante, servicios.id
+	SELECT DISTINCT Aeronave_Matricula, Aeronave_Modelo, Aeronave_KG_Disponibles, cantidadTotal, Aeronave_Fabricante, servicios.id
 		FROM gd_esquema.Maestra AS maestra
 		INNER JOIN JUST_DO_IT.TiposServicios AS servicios
 		ON maestra.Tipo_Servicio = servicios.nombre 
@@ -379,8 +384,8 @@ INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo, aeronave_id)
 		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Aeronaves AS aeronaves
 			WHERE maestra.Butaca_Piso <> 0 AND maestra.Aeronave_Matricula = aeronaves.matricula 
 
-INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id, aeronave_id)
-	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id, aeronaves.id
+INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id, aeronave_id, cantidadDisponible)
+	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id, aeronaves.id, 0
 		FROM gd_esquema.Maestra AS maestra, #rutasDeLaMaestra AS rutas, JUST_DO_IT.Aeronaves AS aeronaves
 			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen 
 				AND maestra.Ruta_Ciudad_Destino = rutas.destino AND maestra.Tipo_Servicio = rutas.tipo_servicio
@@ -503,10 +508,23 @@ END
 
 GO
 
+CREATE FUNCTION JUST_DO_IT.vuelosDisponibles(@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @Salida DATETIME, @Llegada DATETIME)
+RETURNS TABLE
+AS RETURN
+	SELECT vuelos.id AS vuelo, vuelos.cantidadDisponible AS cantidad, aeronaves.kgs_disponibles AS kgsDisponibles, tipos.nombre AS tipoServicio
+	FROM JUST_DO_IT.Vuelos vuelos
+	JOIN JUST_DO_IT.Rutas rutas
+	ON rutas.id = vuelos.ruta_id AND rutas.ciu_id_origen = @Origen AND rutas.ciu_id_destino = @Destino
+	JOIN JUST_DO_IT.Aeronaves aeronaves
+	ON aeronaves.id = vuelos.aeronave_id
+	JOIN JUST_DO_IT.TiposServicios tipos
+	ON tipos.id = aeronaves.tipo_servicio 
+
+GO
+
 CREATE PROCEDURE JUST_DO_IT.almacenarRuta(@Codigo NUMERIC(18,0), @PrecioKgs NUMERIC(18,2), @PrecioPasaje NUMERIC(18,2),
 	@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @TipoServicio NUMERIC(18,0))
 AS BEGIN
-	
 	IF (@PrecioKgs >= 0 AND  @PrecioPasaje >= 0 AND @Origen <> @Destino)
 		IF (NOT EXISTS (SELECT * FROM JUST_DO_IT.Rutas 
 			WHERE codigo = @Codigo AND precio_baseKG = @PrecioKgs AND precio_basePasaje = @PrecioPasaje 
@@ -558,7 +576,6 @@ AS BEGIN
 END 
 
 GO
-
 
 CREATE PROCEDURE JUST_DO_IT.almacenarFuncionalidad(@Descripcion VARCHAR(255))
 AS BEGIN
