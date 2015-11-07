@@ -36,6 +36,20 @@ namespace AerolineaFrba
             respuesta.Close();
         }
 
+        public void cargarComboBoxOrderBy(string entidad, string atributo, ComboBox comboBox)
+        {
+            SqlDataReader respuesta;
+            Server server = Server.getInstance();
+            string queryCombo = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " AS " + entidad + " ORDER BY " + atributo;
+            respuesta = server.query(queryCombo);
+
+            while (respuesta.Read())
+            {
+                comboBox.Items.Add(respuesta[atributo].ToString());
+            }
+            respuesta.Close();
+        }
+
         public int getIDFrom(string function, string atributo)
         {
             SqlDataReader reader;
