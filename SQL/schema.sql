@@ -87,6 +87,55 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ti
 
 GO
 
+IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
+	drop table #rutasDeLaMaestra
+GO
+
+IF OBJECT_ID('tempdb..#temporalParaPasaje') IS NOT NULL
+	drop table #temporalParaPasaje
+GO
+
+IF OBJECT_ID('tempdb..#temporalUsuarios') IS NOT NULL
+	drop table #temporalUsuarios
+GO
+
+IF OBJECT_ID('tempdb..#temporalPasajes') IS NOT NULL
+	drop table #temporalPasajes
+GO
+
+IF OBJECT_ID('tempdb..#cantidadDeButacas') IS NOT NULL
+	drop table #cantidadDeButacas
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarRuta;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
+    drop function JUST_DO_IT.IDCiudad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
+    drop function JUST_DO_IT.IDTipoDeServicio;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.modificarAeronave') IS NOT NULL
+    drop procedure JUST_DO_IT.modificarAeronave;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarAeronave') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarAeronave;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarFuncionalidad') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarFuncionalidad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.cantidadButacas') IS NOT NULL
+    drop function JUST_DO_IT.cantidadButacas;
+
+GO
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -521,54 +570,5 @@ AS BEGIN
 			RAISERROR('La funcionalidad ingresada ya existe',16,217) WITH SETERROR
 		END CATCH
 END
-
-GO
-
-IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
-	drop table #rutasDeLaMaestra
-GO
-
-IF OBJECT_ID('tempdb..#temporalParaPasaje') IS NOT NULL
-	drop table #temporalParaPasaje
-GO
-
-IF OBJECT_ID('tempdb..#temporalUsuarios') IS NOT NULL
-	drop table #temporalUsuarios
-GO
-
-IF OBJECT_ID('tempdb..#temporalPasajes') IS NOT NULL
-	drop table #temporalPasajes
-GO
-
-IF OBJECT_ID('tempdb..#cantidadDeButacas') IS NOT NULL
-	drop table #cantidadDeButacas
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
-    drop procedure JUST_DO_IT.almacenarRuta;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
-    drop function JUST_DO_IT.IDCiudad;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
-    drop function JUST_DO_IT.IDTipoDeServicio;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.modificarAeronave') IS NOT NULL
-    drop procedure JUST_DO_IT.modificarAeronave;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.almacenarAeronave') IS NOT NULL
-    drop procedure JUST_DO_IT.almacenarAeronave;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.almacenarFuncionalidad') IS NOT NULL
-    drop procedure JUST_DO_IT.almacenarFuncionalidad;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.cantidadButacas') IS NOT NULL
-    drop function JUST_DO_IT.cantidadButacas;
 
 GO
