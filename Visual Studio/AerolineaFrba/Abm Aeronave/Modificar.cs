@@ -15,7 +15,7 @@ namespace AerolineaFrba.Abm_Aeronave
     {
 
         public SqlDataReader respuesta;
-
+        private string matriculaAModificar;
         public modificarAeronave()
         {
             InitializeComponent();
@@ -24,16 +24,12 @@ namespace AerolineaFrba.Abm_Aeronave
         private void Form1_Load(object sender, EventArgs e)
         {
             this.cargarDatos(); 
+            //this.matriculaAModificar = ..
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Server server = Server.getInstance();
-            string altaAeronave = "UPDATE JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles) VALUES ('" + tbNumeroMatricula.Text + "', '" + tbModelo.Text + "', '" + cbFabricante.Text + "', '" + cbTipoServicio.Text + "', " + tbEspacioTotalParaEncomiendas.Text + ")";
-            server.query(altaAeronave);
-            server.closeReader();
-
-
             if (this.validarCampos())
             {
                 string matricula = tbNumeroMatricula.Text;
@@ -44,7 +40,7 @@ namespace AerolineaFrba.Abm_Aeronave
                 string fechaFueraServicio = dtpFechaFueraDeServicio.Value.ToString("yyyy-dd-MM");
                 string fechaReinicioServicio = dtpFechaReinicioDeServicio.Value.ToString("yyyy-dd-MM");
 
-                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave " + matricula + ", " + modelo + ", " + fabricante + ", " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + fechaReinicioServicio + ", " + fechaFueraServicio;
+                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + fechaReinicioServicio + ", " + fechaFueraServicio;
                 try
                 {
                     Server.getInstance().realizarQuery(modificarAeronave);
