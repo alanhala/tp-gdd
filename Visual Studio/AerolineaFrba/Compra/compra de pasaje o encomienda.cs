@@ -20,9 +20,7 @@ namespace AerolineaFrba.Compra
         private void Form1_Load(object sender, EventArgs e)
         {
             Commons.getInstance().cargarComboBox("ciudades", "nombre", cmbOrigen);
-            cmbOrigen.SelectedIndex = 0;
             Commons.getInstance().cargarComboBox("ciudades", "nombre", cmbDestino);
-            cmbDestino.SelectedIndex = 1;
         }
 
         private void cmbOrigen_SelectedIndexChanged(object sender, EventArgs e)

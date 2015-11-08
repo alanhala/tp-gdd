@@ -62,11 +62,6 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ae
 
 GO
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Vuelos'))
-	drop table JUST_DO_IT.Vuelos
-
-GO
-
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Rutas'))
 	drop table JUST_DO_IT.Rutas
 
@@ -74,11 +69,6 @@ GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ciudades'))
 	drop table JUST_DO_IT.Ciudades
-
-GO
-
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Butacas'))
-	drop table JUST_DO_IT.Butacas
 
 GO
 
