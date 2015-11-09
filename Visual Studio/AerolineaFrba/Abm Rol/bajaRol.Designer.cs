@@ -1,6 +1,6 @@
 ﻿namespace AerolineaFrba.Abm_Rol
 {
-    partial class ModificarRol
+    partial class bajaRol
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModificarRol));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(bajaRol));
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnModificar = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btnQuitar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,34 +45,27 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(155, 245);
+            this.btnCancelar.Location = new System.Drawing.Point(160, 225);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 39;
+            this.btnCancelar.TabIndex = 49;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.button2_Click);
             // 
-            // btnModificar
+            // btnQuitar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(250, 244);
-            this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(75, 23);
-            this.btnModificar.TabIndex = 38;
-            this.btnModificar.Text = "Modificar";
-            this.btnModificar.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(103, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(114, 22);
-            this.label5.TabIndex = 54;
-            this.label5.Text = "Modificar Rol";
+            this.btnQuitar.Location = new System.Drawing.Point(255, 224);
+            this.btnQuitar.Name = "btnQuitar";
+            this.btnQuitar.Size = new System.Drawing.Size(75, 23);
+            this.btnQuitar.TabIndex = 48;
+            this.btnQuitar.Text = "Quitar";
+            this.btnQuitar.UseVisualStyleBackColor = true;
+            this.btnQuitar.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.tbNombre);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
@@ -82,7 +74,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.cbFuncionalidad2);
             this.groupBox1.Controls.Add(this.cbFuncionalidad1);
-            this.groupBox1.Location = new System.Drawing.Point(34, 54);
+            this.groupBox1.Location = new System.Drawing.Point(37, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(269, 170);
             this.groupBox1.TabIndex = 55;
@@ -156,31 +148,28 @@
             this.cbFuncionalidad1.Size = new System.Drawing.Size(100, 21);
             this.cbFuncionalidad1.TabIndex = 37;
             // 
-            // ModificarRol
+            // bajaRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(337, 279);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(342, 260);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.btnModificar);
+            this.Controls.Add(this.btnQuitar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "ModificarRol";
-            this.Text = "Rol";
-            this.Load += new System.EventHandler(this.Form2_Load);
+            this.Name = "bajaRol";
+            this.Text = "Eliminar Rol";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.Button btnModificar;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnQuitar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.Label label1;

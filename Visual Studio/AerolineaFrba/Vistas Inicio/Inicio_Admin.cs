@@ -91,5 +91,10 @@ namespace AerolineaFrba.Vistas_Inicio
         {
             new Listado_Estadistico.Estadistica().Show();
         }
+
+        private void crearRol_Click(object sender, EventArgs e)
+        {
+            new Abm_Rol.altaRol().Show();
+        }
     }
 }

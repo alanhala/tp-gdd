@@ -133,6 +133,22 @@ IF OBJECT_ID (N'JUST_DO_IT.aeronavesDisponibles') IS NOT NULL
 	drop function JUST_DO_IT.aeronavesDisponibles;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.IDRol') IS NOT NULL
+    drop function JUST_DO_IT.IDRol;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarRol') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarRol;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.IDFuncionalidad') IS NOT NULL
+    drop function JUST_DO_IT.IDFuncionalidad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarRol_Funcionalidad') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarRol_Funcionalidad;
+GO
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -594,5 +610,60 @@ AS RETURN
 	SELECT aeronaves.* 
 		FROM JUST_DO_IT.Aeronaves AS aeronaves, (SELECT * FROM JUST_DO_IT.Vuelos WHERE (fecha_salida > @Salida AND fecha_salida < @LlegadaEstimada) OR (fecha_salida < @Salida AND fecha_llegada_estimada > @LlegadaEstimada)) AS aeronaves_no_disponibles
 		WHERE aeronaves.id <> aeronaves_no_disponibles.aeronave_id
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.IDRol(@Nombre varchar(255))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @id int;
+    SELECT @id = id
+	FROM JUST_DO_IT.Roles 
+    WHERE nombre LIKE @Nombre
+	RETURN @id;
+END
+
+GO
+
+
+CREATE PROCEDURE JUST_DO_IT.almacenarRol(@Nombre VARCHAR(50))
+AS BEGIN
+	BEGIN TRY
+		INSERT INTO JUST_DO_IT.Roles(nombre) 
+			VALUES(@Nombre)
+	END TRY
+	BEGIN CATCH
+		RAISERROR('El rol ingresado ya existe',16,217) WITH SETERROR
+	END CATCH
+END
+
+GO
+
+
+CREATE FUNCTION JUST_DO_IT.IDFuncionalidad(@Descripcion nvarchar(255))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @id int;
+    SELECT @id = id
+	FROM JUST_DO_IT.Funcionalidades
+    WHERE descripcion LIKE @Descripcion
+    RETURN @id;
+END
+
+GO
+
+
+CREATE PROCEDURE JUST_DO_IT.almacenarRol_Funcionalidad(@IdRol NUMERIC(18,0), @IdFuncionalidad NUMERIC(18,0))
+AS BEGIN
+	BEGIN TRY
+		INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_rol, id_funcionalidad)
+			VALUES(@IdRol,@IdFuncionalidad)
+	END TRY
+	BEGIN CATCH
+		RAISERROR('La funcionalidad ingresada ya existe para ese rol',16,217) WITH SETERROR
+	END CATCH
+END
 
 GO

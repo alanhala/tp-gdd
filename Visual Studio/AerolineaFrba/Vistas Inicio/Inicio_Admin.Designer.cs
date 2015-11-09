@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio_Admin));
-            this.button1 = new System.Windows.Forms.Button();
+            this.crearRol = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.altaRuta = new System.Windows.Forms.Button();
@@ -50,20 +50,22 @@
             this.crearFuncionalidad = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.modificarRuta = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // crearRol
             // 
-            this.button1.BackColor = System.Drawing.Color.Orange;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(12, 18);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(178, 43);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Crear Rol";
-            this.button1.UseVisualStyleBackColor = false;
+            this.crearRol.BackColor = System.Drawing.Color.Orange;
+            this.crearRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.crearRol.ForeColor = System.Drawing.Color.White;
+            this.crearRol.Location = new System.Drawing.Point(12, 18);
+            this.crearRol.Name = "crearRol";
+            this.crearRol.Size = new System.Drawing.Size(178, 43);
+            this.crearRol.TabIndex = 1;
+            this.crearRol.Text = "Crear Rol";
+            this.crearRol.UseVisualStyleBackColor = false;
+            this.crearRol.Click += new System.EventHandler(this.crearRol_Click);
             // 
             // button3
             // 
@@ -297,7 +299,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(657, 144);
+            this.pictureBox1.Location = new System.Drawing.Point(652, 178);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(166, 250);
             this.pictureBox1.TabIndex = 30;
@@ -317,12 +319,25 @@
             this.modificarRuta.UseVisualStyleBackColor = false;
             this.modificarRuta.Click += new System.EventHandler(this.modificarRuta_Click);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Tomato;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(645, 140);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(178, 43);
+            this.button1.TabIndex = 32;
+            this.button1.Text = "Canje de millas";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
             // Inicio_Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(835, 397);
+            this.ClientSize = new System.Drawing.Size(835, 431);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.modificarRuta);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bajaFuncionalidad);
@@ -343,7 +358,7 @@
             this.Controls.Add(this.altaRuta);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.crearRol);
             this.Name = "Inicio_Admin";
             this.Text = "Incorporar Aeronave";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -353,7 +368,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button crearRol;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button altaRuta;
@@ -374,5 +389,6 @@
         private System.Windows.Forms.Button crearFuncionalidad;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button modificarRuta;
+        private System.Windows.Forms.Button button1;
     }
 }

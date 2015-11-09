@@ -75,3 +75,6 @@ C:\Users\Alan\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\Aerol
 C:\Users\Alan\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Vistas_Inicio.Inicio_Admin.resources
 C:\Users\Alan\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.csproj.GenerateResource.Cache
 C:\Users\Alan\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.Listado_Aeronaves.resources
+C:\Users\Maca\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\bin\Debug\AerolineaFrba.exe.config
+C:\Users\Maca\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.exe
+C:\Users\Maca\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
