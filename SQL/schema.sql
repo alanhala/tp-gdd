@@ -592,7 +592,7 @@ CREATE FUNCTION JUST_DO_IT.aeronavesDisponibles(@Salida DATETIME, @LlegadaEstima
 RETURNS TABLE
 AS RETURN
 	SELECT aeronaves.* 
-		FROM JUST_DO_IT.Aeronaves AS aeronaves, (SELECT * FROM JUST_DO_IT.Vuelos WHERE (@Salida < fecha_salida AND @LlegadaEstimada < fecha_salida) OR (@Salida > fecha_llegada_estimada AND @LlegadaEstimada > fecha_salida )) AS aeronaves_disponibles
-		WHERE aeronaves.id = aeronaves_disponibles.aeronave_id
+		FROM JUST_DO_IT.Aeronaves AS aeronaves, (SELECT * FROM JUST_DO_IT.Vuelos WHERE (fecha_salida > @Salida AND fecha_salida < @LlegadaEstimada) OR (fecha_salida < @Salida AND fecha_llegada_estimada > @LlegadaEstimada)) AS aeronaves_no_disponibles
+		WHERE aeronaves.id <> aeronaves_no_disponibles.aeronave_id
 
 GO
