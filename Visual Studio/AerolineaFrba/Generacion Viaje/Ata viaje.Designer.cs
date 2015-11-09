@@ -1,4 +1,6 @@
-﻿namespace AerolineaFrba.Generacion_Viaje
+﻿using System.Windows.Forms;
+
+namespace AerolineaFrba.Generacion_Viaje
 {
     partial class Alta_Viaje
     {
@@ -48,9 +50,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dtpFechaLlegadaEstimadaVuelo = new System.Windows.Forms.DateTimePicker();
-            this.dtpFechaLlegadaVuelo = new System.Windows.Forms.DateTimePicker();
             this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.dtpFechaSalidaVuelo = new System.Windows.Forms.DateTimePicker();
             this.btnGuardar = new System.Windows.Forms.Button();
@@ -78,6 +78,7 @@
             this.btnSeleccionarRuta.TabIndex = 8;
             this.btnSeleccionarRuta.Text = "Seleccionar ruta";
             this.btnSeleccionarRuta.UseVisualStyleBackColor = true;
+            this.btnSeleccionarRuta.Click += new System.EventHandler(this.btnSeleccionarRuta_Click);
             // 
             // button2
             // 
@@ -96,6 +97,7 @@
             this.btnSeleccionarAeronave.TabIndex = 10;
             this.btnSeleccionarAeronave.Text = "Seleccionar aeronave";
             this.btnSeleccionarAeronave.UseVisualStyleBackColor = true;
+            this.btnSeleccionarAeronave.Click += new System.EventHandler(this.btnSeleccionarAeronave_Click);
             // 
             // groupBox1
             // 
@@ -240,9 +242,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dtpFechaLlegadaEstimadaVuelo);
-            this.groupBox3.Controls.Add(this.dtpFechaLlegadaVuelo);
             this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.dtpFechaSalidaVuelo);
             this.groupBox3.Location = new System.Drawing.Point(17, 71);
@@ -255,17 +255,12 @@
             // 
             // dtpFechaLlegadaEstimadaVuelo
             // 
+            this.dtpFechaLlegadaEstimadaVuelo.CustomFormat = "dd/MM/yyy - HH:mm:ss";
+            this.dtpFechaLlegadaEstimadaVuelo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFechaLlegadaEstimadaVuelo.Location = new System.Drawing.Point(158, 79);
             this.dtpFechaLlegadaEstimadaVuelo.Name = "dtpFechaLlegadaEstimadaVuelo";
             this.dtpFechaLlegadaEstimadaVuelo.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaLlegadaEstimadaVuelo.TabIndex = 17;
-            // 
-            // dtpFechaLlegadaVuelo
-            // 
-            this.dtpFechaLlegadaVuelo.Location = new System.Drawing.Point(158, 49);
-            this.dtpFechaLlegadaVuelo.Name = "dtpFechaLlegadaVuelo";
-            this.dtpFechaLlegadaVuelo.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaLlegadaVuelo.TabIndex = 16;
             // 
             // label11
             // 
@@ -275,15 +270,6 @@
             this.label11.Size = new System.Drawing.Size(124, 13);
             this.label11.TabIndex = 15;
             this.label11.Text = "Fecha Llegada Estimada";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(17, 55);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(78, 13);
-            this.label10.TabIndex = 14;
-            this.label10.Text = "Fecha Llegada";
             // 
             // label9
             // 
@@ -296,6 +282,8 @@
             // 
             // dtpFechaSalidaVuelo
             // 
+            this.dtpFechaSalidaVuelo.CustomFormat = "dd/MM/yyy - HH:mm:ss";
+            this.dtpFechaSalidaVuelo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFechaSalidaVuelo.Location = new System.Drawing.Point(158, 20);
             this.dtpFechaSalidaVuelo.Name = "dtpFechaSalidaVuelo";
             this.dtpFechaSalidaVuelo.Size = new System.Drawing.Size(200, 20);
@@ -374,9 +362,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DateTimePicker dtpFechaSalidaVuelo;
         private System.Windows.Forms.DateTimePicker dtpFechaLlegadaEstimadaVuelo;
-        private System.Windows.Forms.DateTimePicker dtpFechaLlegadaVuelo;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnLimpiar;

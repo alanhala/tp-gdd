@@ -129,6 +129,10 @@ IF OBJECT_ID (N'JUST_DO_IT.vuelosDisponibles') IS NOT NULL
     drop function JUST_DO_IT.vuelosDisponibles;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.aeronavesDisponibles') IS NOT NULL
+	drop function JUST_DO_IT.aeronavesDisponibles;
+GO
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -581,5 +585,14 @@ AS BEGIN
 			RAISERROR('La funcionalidad ingresada ya existe',16,217) WITH SETERROR
 		END CATCH
 END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.aeronavesDisponibles(@Salida DATETIME, @LlegadaEstimada DATETIME)
+RETURNS TABLE
+AS RETURN
+	SELECT aeronaves.* 
+		FROM JUST_DO_IT.Aeronaves AS aeronaves, (SELECT * FROM JUST_DO_IT.Vuelos WHERE (@Salida < fecha_salida AND @LlegadaEstimada < fecha_salida) OR (@Salida > fecha_llegada_estimada AND @LlegadaEstimada > fecha_salida )) AS aeronaves_disponibles
+		WHERE aeronaves.id = aeronaves_disponibles.aeronave_id
 
 GO

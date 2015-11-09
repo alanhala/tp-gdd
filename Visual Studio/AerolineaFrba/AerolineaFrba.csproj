@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abm Aeronave\Aeronave.cs" />
     <Compile Include="Abm Aeronave\Alta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +74,12 @@
     </Compile>
     <Compile Include="Abm Aeronave\AeronaveAModificar.Designer.cs">
       <DependentUpon>AeronaveAModificar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Aeronave\Listado Aeronaves.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Aeronave\Listado Aeronaves.Designer.cs">
+      <DependentUpon>Listado Aeronaves.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Aeronave\Modificar.cs">
       <SubType>Form</SubType>
@@ -128,12 +135,19 @@
     <Compile Include="Abm Ruta\Baja Ruta.Designer.cs">
       <DependentUpon>Baja Ruta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Ruta\Listado Rutas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Ruta\Listado Rutas.Designer.cs">
+      <DependentUpon>Listado Rutas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Ruta\Modificar Ruta.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Abm Ruta\Modificar Ruta.Designer.cs">
       <DependentUpon>Modificar Ruta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Ruta\Ruta.cs" />
     <Compile Include="Canje Millas\Canje.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -251,6 +265,9 @@
     <EmbeddedResource Include="Abm Aeronave\BajaFueraDeServicio.resx">
       <DependentUpon>BajaFueraDeServicio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Aeronave\Listado Aeronaves.resx">
+      <DependentUpon>Listado Aeronaves.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Aeronave\Modificar.resx">
       <DependentUpon>Modificar.cs</DependentUpon>
     </EmbeddedResource>
@@ -274,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Ruta\Baja Ruta.resx">
       <DependentUpon>Baja Ruta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Ruta\Listado Rutas.resx">
+      <DependentUpon>Listado Rutas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Ruta\Modificar Ruta.resx">
       <DependentUpon>Modificar Ruta.cs</DependentUpon>
