@@ -105,24 +105,6 @@
     <Compile Include="Abm Funcionalidad\bajaFunc.Designer.cs">
       <DependentUpon>bajaFunc.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rol\Alta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Rol\Alta.Designer.cs">
-      <DependentUpon>Alta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Rol\Baja.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Rol\Baja.Designer.cs">
-      <DependentUpon>Baja.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Rol\Modificar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Rol\Modificar.Designer.cs">
-      <DependentUpon>Modificar.cs</DependentUpon>
-    </Compile>
     <Compile Include="Abm Ruta\Alta Ruta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +137,8 @@
       <DependentUpon>Canje.cs</DependentUpon>
     </Compile>
     <Compile Include="Ciudades.cs" />
+    <Compile Include="Funcionalidad.cs" />
+    <Compile Include="Rol.cs" />
     <Compile Include="TiposServicios.cs" />
     <Compile Include="Commons.cs" />
     <Compile Include="Compra\Agregar pasajero.cs">
@@ -276,15 +260,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Funcionalidad\bajaFunc.resx">
       <DependentUpon>bajaFunc.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\Alta.resx">
-      <DependentUpon>Alta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\Baja.resx">
-      <DependentUpon>Baja.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\Modificar.resx">
-      <DependentUpon>Modificar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Ruta\Alta Ruta.resx">
       <DependentUpon>Alta Ruta.cs</DependentUpon>

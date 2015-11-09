@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -45,13 +46,24 @@ namespace AerolineaFrba.Compra
 
         private void actualizarTabla()
         {
-            int origen = Ciudades.obtenerID(cmbOrigen.Text);
-            int destino = Ciudades.obtenerID(cmbDestino.Text);
-            string query = "SELECT JUST_DO_IT.vuelosDisponibles(" + origen + ", " + destino + ", '" +
-                dtpFechaSalidaVuelo.Value.ToString("yyyy-dd-MM") + "', '" +
-                dtpFechaLlegadaVuelo.Value.ToString("yyyy-dd-MM") + "')";
-            Server.getInstance().query(query);
-
+            if (cmbOrigen.Text == "" || cmbDestino.Text == "")
+            {
+            }
+            else
+            {
+                int origen = Ciudades.obtenerID(cmbOrigen.Text);
+                int destino = Ciudades.obtenerID(cmbDestino.Text);
+                string query = "SELECT * FROM JUST_DO_IT.vuelosDisponibles(" + origen + ", " + destino + ", '" +
+                    dtpFechaSalidaVuelo.Value.ToString("yyyy-dd-MM") + "')";
+                SqlDataReader reader = Server.getInstance().query(query);
+                while (reader.Read())
+                {
+                    dgvViajesDisponibles.Rows.Add(reader["vuelo"].ToString(), reader["cantidad"].ToString(),
+                            reader["kgsDisponibles"].ToString(), reader["salida"].ToString(), reader["llegada"].ToString(),
+                            reader["tipoServicio"].ToString());
+                }
+                reader.Close();
+            }
         }
 
     }

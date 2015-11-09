@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(compraPasaje));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dtpFechaLlegadaVuelo = new System.Windows.Forms.DateTimePicker();
-            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.dtpFechaSalidaVuelo = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -47,6 +45,8 @@
             this.viajeDisponible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantButacasLibres = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kgDisponibles = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.horaSalida = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.horaLlegada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoServicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -65,33 +65,14 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.dtpFechaLlegadaVuelo);
-            this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.dtpFechaSalidaVuelo);
             this.groupBox3.Location = new System.Drawing.Point(212, 72);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(364, 79);
+            this.groupBox3.Size = new System.Drawing.Size(364, 53);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Datos del vuelo";
-            // 
-            // dtpFechaLlegadaVuelo
-            // 
-            this.dtpFechaLlegadaVuelo.Location = new System.Drawing.Point(158, 49);
-            this.dtpFechaLlegadaVuelo.Name = "dtpFechaLlegadaVuelo";
-            this.dtpFechaLlegadaVuelo.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaLlegadaVuelo.TabIndex = 16;
-            this.dtpFechaLlegadaVuelo.ValueChanged += new System.EventHandler(this.dtpFechaLlegadaVuelo_ValueChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(17, 55);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(78, 13);
-            this.label10.TabIndex = 14;
-            this.label10.Text = "Fecha Llegada";
             // 
             // label9
             // 
@@ -116,7 +97,7 @@
             this.groupBox1.Controls.Add(this.cmbOrigen);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(212, 157);
+            this.groupBox1.Location = new System.Drawing.Point(212, 146);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(364, 72);
             this.groupBox1.TabIndex = 16;
@@ -179,11 +160,13 @@
             this.viajeDisponible,
             this.cantButacasLibres,
             this.kgDisponibles,
+            this.horaSalida,
+            this.horaLlegada,
             this.tipoServicio});
-            this.dgvViajesDisponibles.Location = new System.Drawing.Point(184, 252);
+            this.dgvViajesDisponibles.Location = new System.Drawing.Point(118, 238);
             this.dgvViajesDisponibles.Name = "dgvViajesDisponibles";
             this.dgvViajesDisponibles.ReadOnly = true;
-            this.dgvViajesDisponibles.Size = new System.Drawing.Size(445, 133);
+            this.dgvViajesDisponibles.Size = new System.Drawing.Size(644, 133);
             this.dgvViajesDisponibles.TabIndex = 18;
             // 
             // btnSiguiente
@@ -212,7 +195,7 @@
             // 
             // cantButacasLibres
             // 
-            this.cantButacasLibres.HeaderText = "Cantidad de butacas libres";
+            this.cantButacasLibres.HeaderText = "Cantidad de Butacas Libres";
             this.cantButacasLibres.Name = "cantButacasLibres";
             this.cantButacasLibres.ReadOnly = true;
             // 
@@ -221,6 +204,18 @@
             this.kgDisponibles.HeaderText = "Kg disponibles para Encomienda";
             this.kgDisponibles.Name = "kgDisponibles";
             this.kgDisponibles.ReadOnly = true;
+            // 
+            // horaSalida
+            // 
+            this.horaSalida.HeaderText = "Hora de Salida";
+            this.horaSalida.Name = "horaSalida";
+            this.horaSalida.ReadOnly = true;
+            // 
+            // horaLlegada
+            // 
+            this.horaLlegada.HeaderText = "Hora de Llegada";
+            this.horaLlegada.Name = "horaLlegada";
+            this.horaLlegada.ReadOnly = true;
             // 
             // tipoServicio
             // 
@@ -258,8 +253,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DateTimePicker dtpFechaLlegadaVuelo;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dtpFechaSalidaVuelo;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -274,6 +267,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn viajeDisponible;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantButacasLibres;
         private System.Windows.Forms.DataGridViewTextBoxColumn kgDisponibles;
+        private System.Windows.Forms.DataGridViewTextBoxColumn horaSalida;
+        private System.Windows.Forms.DataGridViewTextBoxColumn horaLlegada;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoServicio;
     }
 }

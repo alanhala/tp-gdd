@@ -9,9 +9,6 @@ C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.modificarAeronave.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Funcionalidades.Alta.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Funcionalidades.bajaFunc.resources
-C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.Form1.resources
-C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.Baja.resources
-C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.ModificarRol.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ruta.Alta_Ruta.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ruta.Baja_Ruta.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ruta.Modificar_Ruta.resources
@@ -78,3 +75,6 @@ C:\Users\Alan\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\Aerol
 C:\Users\Maca\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\bin\Debug\AerolineaFrba.exe.config
 C:\Users\Maca\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.exe
 C:\Users\Maca\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.csprojResolveAssemblyReference.cache
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.Listado_Aeronaves.resources
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ruta.Listado_Rutas.resources

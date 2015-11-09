@@ -53,7 +53,7 @@ namespace AerolineaFrba
         public int getIDFrom(string function, string atributo)
         {
             SqlDataReader reader;
-            string query = "SELECT * FROM JUST_DO_IT." + function + "('%" + atributo + "%') AS id";
+            string query = "SELECT JUST_DO_IT." + function + "('%" + atributo + "%') AS id";
             reader = Server.getInstance().query(query);
             reader.Read();
             int id = int.Parse(reader["id"].ToString());

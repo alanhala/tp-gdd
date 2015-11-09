@@ -518,13 +518,15 @@ END
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.vuelosDisponibles(@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @Salida DATETIME, @Llegada DATETIME)
+CREATE FUNCTION JUST_DO_IT.vuelosDisponibles(@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @Salida DATETIME)
 RETURNS TABLE
 AS RETURN
-	SELECT vuelos.id AS vuelo, vuelos.cantidadDisponible AS cantidad, aeronaves.kgs_disponibles AS kgsDisponibles, tipos.nombre AS tipoServicio
+	SELECT vuelos.id AS vuelo, vuelos.cantidadDisponible AS cantidad, aeronaves.kgs_disponibles AS kgsDisponibles, 
+	vuelos.fecha_salida AS salida, vuelos.fecha_llegada_estimada AS llegada, tipos.nombre AS tipoServicio
 	FROM JUST_DO_IT.Vuelos vuelos
 	JOIN JUST_DO_IT.Rutas rutas
-	ON rutas.id = vuelos.ruta_id AND rutas.ciu_id_origen = @Origen AND rutas.ciu_id_destino = @Destino
+	ON rutas.id = vuelos.ruta_id AND rutas.ciu_id_origen = @Origen AND rutas.ciu_id_destino = @Destino 
+		AND CAST(vuelos.fecha_salida AS date) = @Salida
 	JOIN JUST_DO_IT.Aeronaves aeronaves
 	ON aeronaves.id = vuelos.aeronave_id
 	JOIN JUST_DO_IT.TiposServicios tipos
