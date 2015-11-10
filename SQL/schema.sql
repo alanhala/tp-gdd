@@ -149,6 +149,10 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarRol_Funcionalidad') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRol_Funcionalidad;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.butacaSLibres') IS NOT NULL
+    drop function JUST_DO_IT.butacaSLibres;
+GO
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -642,6 +646,17 @@ END
 
 GO
 
+CREATE FUNCTION JUST_DO_IT.butacaSLibres(@Vuelo NUMERIC(18,0))
+RETURNS TABLE
+AS RETURN
+	SELECT butacas.numero numero
+		FROM JUST_DO_IT.Butacas butacas
+		JOIN JUST_DO_IT.Pasajes pasajes
+		ON pasajes.vuelo_id = @Vuelo 
+		JOIN JUST_DO_IT.Vuelos vuelos
+		ON vuelos.id = @Vuelo AND vuelos.aeronave_id = butacas.aeronave_id 
+		AND butacas.id <> pasajes.butaca
+GO
 
 CREATE FUNCTION JUST_DO_IT.IDFuncionalidad(@Descripcion nvarchar(255))
 RETURNS int 

@@ -45,7 +45,7 @@
             this.txtDNI = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.cbSeleccionarButaca = new System.Windows.Forms.ComboBox();
+            this.cmbButacas = new System.Windows.Forms.ComboBox();
             this.lblVentanillaOPasillo = new System.Windows.Forms.Label();
             this.btnSiguiente = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
@@ -209,13 +209,13 @@
             this.label9.TabIndex = 13;
             this.label9.Text = "Seleccionar Butaca";
             // 
-            // cbSeleccionarButaca
+            // cmbButacas
             // 
-            this.cbSeleccionarButaca.FormattingEnabled = true;
-            this.cbSeleccionarButaca.Location = new System.Drawing.Point(143, 322);
-            this.cbSeleccionarButaca.Name = "cbSeleccionarButaca";
-            this.cbSeleccionarButaca.Size = new System.Drawing.Size(121, 21);
-            this.cbSeleccionarButaca.TabIndex = 14;
+            this.cmbButacas.FormattingEnabled = true;
+            this.cmbButacas.Location = new System.Drawing.Point(143, 322);
+            this.cmbButacas.Name = "cmbButacas";
+            this.cmbButacas.Size = new System.Drawing.Size(121, 21);
+            this.cmbButacas.TabIndex = 14;
             // 
             // lblVentanillaOPasillo
             // 
@@ -273,7 +273,7 @@
             this.Controls.Add(this.btnSiguiente);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.lblVentanillaOPasillo);
-            this.Controls.Add(this.cbSeleccionarButaca);
+            this.Controls.Add(this.cmbButacas);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -306,7 +306,7 @@
         private System.Windows.Forms.TextBox txtDNI;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox cbSeleccionarButaca;
+        private System.Windows.Forms.ComboBox cmbButacas;
         private System.Windows.Forms.Label lblVentanillaOPasillo;
         private System.Windows.Forms.Button btnSiguiente;
         private System.Windows.Forms.Button btnLimpiar;

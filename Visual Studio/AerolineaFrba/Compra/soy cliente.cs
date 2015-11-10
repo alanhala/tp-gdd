@@ -50,7 +50,8 @@ namespace AerolineaFrba.Compra
                                                     reader["apellido"].ToString(),
                                                     reader["direccion"].ToString(),
                                                     reader["telefono"].ToString(),
-                                                    reader["mail"].ToString());
+                                                    reader["mail"].ToString(),
+                                                    reader["fecha_nacimiento"].ToString());
                     this.Hide();
                 }
                 else
