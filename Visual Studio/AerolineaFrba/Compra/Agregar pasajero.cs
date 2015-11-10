@@ -70,5 +70,12 @@ namespace AerolineaFrba.Compra
         {
             new SoyCliente(this).Show();
         }
+
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            if (this.clienteNuevo)
+                MessageBox.Show("El alta de usuario no era requerida, ingrese soy cliente y entre con uno existente");
+
+        }
     }
 }

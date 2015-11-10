@@ -240,7 +240,7 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 	fecha_llegada_estimada DATETIME NOT NULL,
 	ruta_id NUMERIC(18,0) NOT NULL,
 	aeronave_id NUMERIC(18,0) NOT NULL,
-	cantidadDisponible NUMERIC(18,0) NOT NULL,
+	cantidadDisponible NUMERIC(18,0) NOT NULL DEFAULT 0,
 	PRIMARY KEY (id),
 	FOREIGN KEY (ruta_id) REFERENCES JUST_DO_IT.Rutas,
 	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
@@ -398,13 +398,14 @@ INSERT INTO JUST_DO_IT.Butacas(numero, piso, tipo, aeronave_id)
 		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Aeronaves AS aeronaves
 			WHERE maestra.Butaca_Piso <> 0 AND maestra.Aeronave_Matricula = aeronaves.matricula 
 
-INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id, aeronave_id, cantidadDisponible)
-	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id, aeronaves.id, 0
+INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimada, ruta_id, aeronave_id)
+	SELECT DISTINCT maestra.FechaSalida, maestra.FechaLLegada, maestra.Fecha_LLegada_Estimada, rutas.id, aeronaves.id
 		FROM gd_esquema.Maestra AS maestra, #rutasDeLaMaestra AS rutas, JUST_DO_IT.Aeronaves AS aeronaves
 			WHERE maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen 
 				AND maestra.Ruta_Ciudad_Destino = rutas.destino AND maestra.Tipo_Servicio = rutas.tipo_servicio
 				AND maestra.Aeronave_Matricula = aeronaves.matricula AND maestra.Aeronave_Fabricante = aeronaves.fabricante
 
+GO
 /******TABLAS AUXILIARES PARA EL PASAJE******/
 CREATE TABLE #temporalPasajes(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -493,6 +494,26 @@ INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
 INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), pasajes.comprador
 		FROM JUST_DO_IT.Pasajes AS pasajes
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.butacaSLibres(@Vuelo NUMERIC(18,0))
+RETURNS TABLE
+AS RETURN
+	SELECT DISTINCT butacas.numero numero, butacas.aeronave_id aeronave
+		FROM JUST_DO_IT.Butacas butacas
+		JOIN JUST_DO_IT.Vuelos vuelos
+		ON vuelos.id = @Vuelo AND vuelos.aeronave_id = butacas.aeronave_id 
+		AND butacas.id NOT IN (SELECT pasajes.butaca
+								 FROM JUST_DO_IT.Pasajes pasajes
+								 WHERE pasajes.vuelo_id = @Vuelo)
+
+GO
+
+UPDATE JUST_DO_IT.Vuelos 
+SET cantidadDisponible = (SELECT COUNT(butacas.numero) 
+						FROM JUST_DO_IT.butacasLibres(JUST_DO_IT.Vuelos.id) butacas
+						GROUP BY butacas.aeronave)
 
 GO
 
@@ -646,16 +667,7 @@ END
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.butacaSLibres(@Vuelo NUMERIC(18,0))
-RETURNS TABLE
-AS RETURN
-	SELECT butacas.numero numero
-		FROM JUST_DO_IT.Butacas butacas
-		JOIN JUST_DO_IT.Pasajes pasajes
-		ON pasajes.vuelo_id = @Vuelo 
-		JOIN JUST_DO_IT.Vuelos vuelos
-		ON vuelos.id = @Vuelo AND vuelos.aeronave_id = butacas.aeronave_id 
-		AND butacas.id <> pasajes.butaca
+
 GO
 
 CREATE FUNCTION JUST_DO_IT.IDFuncionalidad(@Descripcion nvarchar(255))
