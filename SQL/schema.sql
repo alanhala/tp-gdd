@@ -166,6 +166,7 @@ GO
 CREATE TABLE JUST_DO_IT.TiposServicios(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	nombre VARCHAR(255),
+	costo_adicional NUMERIC(18,2) DEFAULT 1,
 	PRIMARY KEY (id)
 )
 
@@ -344,7 +345,6 @@ INSERT INTO #cantidadDeButacas(matricula, cantidadTotal)
 /*************************/
 
 
-
 /******NORMALIZACION******/
 
 INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Administrativo')
@@ -354,6 +354,9 @@ INSERT INTO JUST_DO_IT.Roles(nombre) VALUES ('Cliente')
 INSERT INTO JUST_DO_IT.TiposServicios(nombre)
 	SELECT DISTINCT Tipo_Servicio
 		FROM gd_esquema.Maestra
+
+UPDATE JUST_DO_IT.TiposServicios SET costo_adicional = 1.10 WHERE nombre = 'Ejecutivo'
+UPDATE JUST_DO_IT.TiposServicios SET costo_adicional = 1.15 WHERE nombre = 'Primera Clase'
 
 INSERT INTO JUST_DO_IT.Usuarios(nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento) 
 	SELECT  DISTINCT Cli_Nombre, Cli_Apellido, Cli_Dni, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
@@ -500,7 +503,7 @@ GO
 CREATE FUNCTION JUST_DO_IT.butacaSLibres(@Vuelo NUMERIC(18,0))
 RETURNS TABLE
 AS RETURN
-	SELECT DISTINCT butacas.numero numero, butacas.aeronave_id aeronave
+	SELECT DISTINCT butacas.id id, butacas.numero numero, butacas.tipo tipo, butacas.aeronave_id aeronave
 		FROM JUST_DO_IT.Butacas butacas
 		JOIN JUST_DO_IT.Vuelos vuelos
 		ON vuelos.id = @Vuelo AND vuelos.aeronave_id = butacas.aeronave_id 
@@ -508,7 +511,7 @@ AS RETURN
 								 FROM JUST_DO_IT.Pasajes pasajes
 								 WHERE pasajes.vuelo_id = @Vuelo)
 
-GO
+GO 
 
 UPDATE JUST_DO_IT.Vuelos 
 SET cantidadDisponible = (SELECT COUNT(butacas.numero) 
@@ -547,7 +550,8 @@ CREATE FUNCTION JUST_DO_IT.vuelosDisponibles(@Origen NUMERIC(18,0), @Destino NUM
 RETURNS TABLE
 AS RETURN
 	SELECT vuelos.id AS vuelo, vuelos.cantidadDisponible AS cantidad, aeronaves.kgs_disponibles AS kgsDisponibles, 
-	vuelos.fecha_salida AS salida, vuelos.fecha_llegada_estimada AS llegada, tipos.nombre AS tipoServicio
+	vuelos.fecha_salida AS salida, vuelos.fecha_llegada_estimada AS llegada, tipos.nombre AS tipoServicio, (rutas.precio_basePasaje * tipos.costo_adicional) AS costoViaje,
+	rutas.precio_baseKG AS costoEncomienda
 	FROM JUST_DO_IT.Vuelos vuelos
 	JOIN JUST_DO_IT.Rutas rutas
 	ON rutas.id = vuelos.ruta_id AND rutas.ciu_id_origen = @Origen AND rutas.ciu_id_destino = @Destino 

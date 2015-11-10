@@ -105,6 +105,24 @@
     <Compile Include="Abm Funcionalidad\bajaFunc.Designer.cs">
       <DependentUpon>bajaFunc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Rol\altaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\altaRol.Designer.cs">
+      <DependentUpon>altaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\bajaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\bajaRol.Designer.cs">
+      <DependentUpon>bajaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\modificarRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\modificarRol.Designer.cs">
+      <DependentUpon>modificarRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Ruta\Alta Ruta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +155,13 @@
       <DependentUpon>Canje.cs</DependentUpon>
     </Compile>
     <Compile Include="Ciudades.cs" />
+    <Compile Include="ComboBoxItem.cs" />
+    <Compile Include="Compra\Pasajeros.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra\Pasajeros.Designer.cs">
+      <DependentUpon>Pasajeros.cs</DependentUpon>
+    </Compile>
     <Compile Include="Compra\soy cliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -268,6 +293,15 @@
     <EmbeddedResource Include="Abm Funcionalidad\bajaFunc.resx">
       <DependentUpon>bajaFunc.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\altaRol.resx">
+      <DependentUpon>altaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\bajaRol.resx">
+      <DependentUpon>bajaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\modificarRol.resx">
+      <DependentUpon>modificarRol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Ruta\Alta Ruta.resx">
       <DependentUpon>Alta Ruta.cs</DependentUpon>
     </EmbeddedResource>
@@ -288,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Compra\compra de pasaje o encomienda.resx">
       <DependentUpon>compra de pasaje o encomienda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra\Pasajeros.resx">
+      <DependentUpon>Pasajeros.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Compra\Informe de compra.resx">
       <DependentUpon>Informe de compra.cs</DependentUpon>

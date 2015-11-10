@@ -8,6 +8,6 @@ namespace AerolineaFrba
 {
     public partial interface ClienteParaPasaje
     {
-        void cargarCliente(string dni, string nombre, string apellido, string direccion, string telefono, string mail, string fecha);
+        void cargarCliente(int id, string dni, string nombre, string apellido, string direccion, string telefono, string mail, string fecha);
     }
 }

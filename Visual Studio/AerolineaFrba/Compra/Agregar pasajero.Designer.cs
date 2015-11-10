@@ -46,10 +46,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbButacas = new System.Windows.Forms.ComboBox();
-            this.lblVentanillaOPasillo = new System.Windows.Forms.Label();
             this.btnSiguiente = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
-            this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnCerrar = new System.Windows.Forms.Button();
             this.btnSoyCliente = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -217,42 +215,25 @@
             this.cmbButacas.Size = new System.Drawing.Size(121, 21);
             this.cmbButacas.TabIndex = 14;
             // 
-            // lblVentanillaOPasillo
-            // 
-            this.lblVentanillaOPasillo.AutoSize = true;
-            this.lblVentanillaOPasillo.Location = new System.Drawing.Point(12, 355);
-            this.lblVentanillaOPasillo.Name = "lblVentanillaOPasillo";
-            this.lblVentanillaOPasillo.Size = new System.Drawing.Size(192, 13);
-            this.lblVentanillaOPasillo.TabIndex = 15;
-            this.lblVentanillaOPasillo.Text = "Label que indica si es ventana o pasillo";
-            // 
             // btnSiguiente
             // 
-            this.btnSiguiente.Location = new System.Drawing.Point(156, 392);
+            this.btnSiguiente.Location = new System.Drawing.Point(221, 361);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(75, 23);
             this.btnSiguiente.TabIndex = 22;
-            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.Text = "Aceptar";
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
             // 
-            // btnLimpiar
+            // btnCerrar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(62, 392);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.btnLimpiar.TabIndex = 21;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            // 
-            // btnAnterior
-            // 
-            this.btnAnterior.Location = new System.Drawing.Point(250, 392);
-            this.btnAnterior.Name = "btnAnterior";
-            this.btnAnterior.Size = new System.Drawing.Size(75, 23);
-            this.btnAnterior.TabIndex = 23;
-            this.btnAnterior.Text = "Anterior";
-            this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnCerrar.Location = new System.Drawing.Point(92, 361);
+            this.btnCerrar.Name = "btnCerrar";
+            this.btnCerrar.Size = new System.Drawing.Size(75, 23);
+            this.btnCerrar.TabIndex = 23;
+            this.btnCerrar.Text = "Cerrar";
+            this.btnCerrar.UseVisualStyleBackColor = true;
+            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
             // btnSoyCliente
             // 
@@ -268,12 +249,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 422);
+            this.ClientSize = new System.Drawing.Size(389, 392);
             this.Controls.Add(this.btnSoyCliente);
-            this.Controls.Add(this.btnAnterior);
+            this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.btnSiguiente);
-            this.Controls.Add(this.btnLimpiar);
-            this.Controls.Add(this.lblVentanillaOPasillo);
             this.Controls.Add(this.cmbButacas);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox1);
@@ -308,10 +287,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbButacas;
-        private System.Windows.Forms.Label lblVentanillaOPasillo;
         private System.Windows.Forms.Button btnSiguiente;
-        private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.Button btnSoyCliente;
     }
 }

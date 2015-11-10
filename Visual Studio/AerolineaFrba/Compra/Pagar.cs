@@ -22,7 +22,7 @@ namespace AerolineaFrba.Compra
 
         }
 
-        public void cargarCliente(string dni, string nombre, string apellido, string direccion, string telefono, string mail, string fecha)
+        public void cargarCliente(int id, string dni, string nombre, string apellido, string direccion, string telefono, string mail, string fecha)
         {
 
         }

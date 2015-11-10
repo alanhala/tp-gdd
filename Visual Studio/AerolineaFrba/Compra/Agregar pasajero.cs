@@ -13,17 +13,17 @@ namespace AerolineaFrba.Compra
 {
     public partial class AgregarPasajero : Form, ClienteParaPasaje
     {
-        private int vuelo_id;
         private bool clienteNuevo;
+        private int vuelo_id;
+        private int usuario_id;
+        private Pasajeros form_pasajeros;
+        public AgregarPasajero() {}
 
-        public AgregarPasajero()
-        {
-        }
-
-        public AgregarPasajero(int id)
+        public AgregarPasajero(int id, Pasajeros pasajeros)
         {
             InitializeComponent();
             this.vuelo_id = id;
+            this.form_pasajeros = pasajeros;
             this.clienteNuevo = true;
         }
 
@@ -36,19 +36,24 @@ namespace AerolineaFrba.Compra
         {
             SqlDataReader respuesta;
             Server server = Server.getInstance();
-            string queryCombo = "SELECT DISTINCT numero FROM JUST_DO_IT.butacasLibres(" + this.vuelo_id + ")";
+            string queryCombo = "SELECT id, numero, tipo FROM JUST_DO_IT.butacasLibres(" + this.vuelo_id + ") ORDER BY numero";
             respuesta = server.query(queryCombo);
-            int cont = 0;
+            ComboBoxItem item = new ComboBoxItem();
+            item.bindCombobox(cmbButacas);
             while (respuesta.Read())
             {
-                cmbButacas.Items.Add(respuesta["numero"].ToString());
+                item.Value = respuesta["id"].ToString();
+                item.Text = respuesta["numero"].ToString() + " - " + respuesta["tipo"].ToString();
+                cmbButacas.Items.Add (item);
             }
+
             respuesta.Close();
         }
 
-        public void cargarCliente(string dni, string nombre, string apellido, string direccion, string telefono, string mail, string fecha)
+        public void cargarCliente(int id, string dni, string nombre, string apellido, string direccion, string telefono, string mail, string fecha)
         {
             this.clienteNuevo = false;
+            this.usuario_id = id;
 
             this.txtDNI.Text = dni;
             this.txtDNI.Enabled = false;
@@ -73,9 +78,23 @@ namespace AerolineaFrba.Compra
 
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
-            if (this.clienteNuevo)
-                MessageBox.Show("El alta de usuario no era requerida, ingrese soy cliente y entre con uno existente");
+           if (this.clienteNuevo)
+                MessageBox.Show("El alta de usuario no era requerida, ingrese en soy cliente y entre con uno existente");
+           else if (cmbButacas.Text == "")
+               MessageBox.Show("Debe seleccionar una butaca");
+           else
+           {
+               this.form_pasajeros.agregarPasajero(txtApellidoPasajero.Text + ", " + txtNombrePasajero.Text,
+                                                   this.usuario_id,
+                                                   ((ComboBoxItem)cmbButacas.SelectedItem).Value.ToString());
+               this.Hide();
+           }
 
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

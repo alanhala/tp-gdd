@@ -45,7 +45,8 @@ namespace AerolineaFrba.Compra
                 reader.Read();
                 if (reader.HasRows)
                 {
-                    this.formOrigen.cargarCliente(reader["dni"].ToString(),
+                    this.formOrigen.cargarCliente(int.Parse(reader["id"].ToString()),
+                                                    reader["dni"].ToString(),
                                                     reader["nombre"].ToString(),
                                                     reader["apellido"].ToString(),
                                                     reader["direccion"].ToString(),
