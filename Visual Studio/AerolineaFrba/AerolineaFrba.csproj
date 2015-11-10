@@ -137,7 +137,14 @@
       <DependentUpon>Canje.cs</DependentUpon>
     </Compile>
     <Compile Include="Ciudades.cs" />
+    <Compile Include="Compra\soy cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra\soy cliente.Designer.cs">
+      <DependentUpon>soy cliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Funcionalidad.cs" />
+    <Compile Include="ClienteParaPasaje.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="TiposServicios.cs" />
     <Compile Include="Commons.cs" />
@@ -293,6 +300,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Compra\RegistrarEncomienda.resx">
       <DependentUpon>RegistrarEncomienda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra\soy cliente.resx">
+      <DependentUpon>soy cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Consulta Millas\consulta millas.resx">
       <DependentUpon>consulta millas.cs</DependentUpon>

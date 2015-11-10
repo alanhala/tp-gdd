@@ -46,6 +46,8 @@ namespace AerolineaFrba.Compra
 
         private void actualizarTabla()
         {
+            dgvViajesDisponibles.Rows.Clear();
+            dgvViajesDisponibles.Refresh();
             if (cmbOrigen.Text == "" || cmbDestino.Text == "")
             {
             }
@@ -64,6 +66,14 @@ namespace AerolineaFrba.Compra
                 }
                 reader.Close();
             }
+        }
+
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvViajesDisponibles);
+            int vuelo_id = int.Parse(row.Cells[0].Value.ToString());
+            new AgregarPasajero(vuelo_id).Show();
+            this.Hide();
         }
 
     }

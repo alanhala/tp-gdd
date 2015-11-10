@@ -78,3 +78,4 @@ C:\Users\Maca\Desktop\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\Aerol
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.csprojResolveAssemblyReference.cache
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.Listado_Aeronaves.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ruta.Listado_Rutas.resources
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\Visual Studio\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.SoyCliente.resources

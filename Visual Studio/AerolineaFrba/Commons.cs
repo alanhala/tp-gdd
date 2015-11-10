@@ -60,5 +60,13 @@ namespace AerolineaFrba
             reader.Close();
             return id;
         }
+
+        public DataGridViewRow getSelectedRow(DataGridView dataGrid)
+        {
+            foreach (DataGridViewRow row in dataGrid.SelectedRows)
+                return row;
+
+            return null;
+        }
     }
 }

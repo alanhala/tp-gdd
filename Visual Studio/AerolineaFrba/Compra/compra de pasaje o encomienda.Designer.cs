@@ -164,8 +164,10 @@
             this.horaLlegada,
             this.tipoServicio});
             this.dgvViajesDisponibles.Location = new System.Drawing.Point(118, 238);
+            this.dgvViajesDisponibles.MultiSelect = false;
             this.dgvViajesDisponibles.Name = "dgvViajesDisponibles";
             this.dgvViajesDisponibles.ReadOnly = true;
+            this.dgvViajesDisponibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvViajesDisponibles.Size = new System.Drawing.Size(644, 133);
             this.dgvViajesDisponibles.TabIndex = 18;
             // 
@@ -177,6 +179,7 @@
             this.btnSiguiente.TabIndex = 20;
             this.btnSiguiente.Text = "Siguiente";
             this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
             // 
             // btnLimpiar
             // 
@@ -216,6 +219,7 @@
             this.horaLlegada.HeaderText = "Hora de Llegada";
             this.horaLlegada.Name = "horaLlegada";
             this.horaLlegada.ReadOnly = true;
+            this.horaLlegada.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // tipoServicio
             // 

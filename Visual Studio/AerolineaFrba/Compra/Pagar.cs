@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace AerolineaFrba.Compra
 {
-    public partial class Pagar : Form
+    public partial class Pagar : Form, ClienteParaPasaje
     {
         public Pagar()
         {
@@ -18,6 +18,11 @@ namespace AerolineaFrba.Compra
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        public void cargarCliente(string dni, string nombre, string apellido, string direccion, string telefono, string mail)
         {
 
         }

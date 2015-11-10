@@ -32,17 +32,17 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dtpFechaNacimientoPasajero = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
-            this.tbMailPasajero = new System.Windows.Forms.TextBox();
+            this.txtMailPasajero = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.tbTelefonoPasajero = new System.Windows.Forms.TextBox();
+            this.txtTelefonoPasajero = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.tbDireccionPasajero = new System.Windows.Forms.TextBox();
+            this.txtDireccionPasajero = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.tbApellidoPasajero = new System.Windows.Forms.TextBox();
+            this.txtApellidoPasajero = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.tbNombrePasajero = new System.Windows.Forms.TextBox();
+            this.txtNombrePasajero = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.tbDNI = new System.Windows.Forms.TextBox();
+            this.txtDNI = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cbSeleccionarButaca = new System.Windows.Forms.ComboBox();
@@ -50,6 +50,7 @@
             this.btnSiguiente = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnSoyCliente = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,17 +69,17 @@
             // 
             this.groupBox1.Controls.Add(this.dtpFechaNacimientoPasajero);
             this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.tbMailPasajero);
+            this.groupBox1.Controls.Add(this.txtMailPasajero);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.tbTelefonoPasajero);
+            this.groupBox1.Controls.Add(this.txtTelefonoPasajero);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.tbDireccionPasajero);
+            this.groupBox1.Controls.Add(this.txtDireccionPasajero);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.tbApellidoPasajero);
+            this.groupBox1.Controls.Add(this.txtApellidoPasajero);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.tbNombrePasajero);
+            this.groupBox1.Controls.Add(this.txtNombrePasajero);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.tbDNI);
+            this.groupBox1.Controls.Add(this.txtDNI);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 72);
             this.groupBox1.Name = "groupBox1";
@@ -103,12 +104,12 @@
             this.label8.TabIndex = 38;
             this.label8.Text = "Fecha de Nacimiento";
             // 
-            // tbMailPasajero
+            // txtMailPasajero
             // 
-            this.tbMailPasajero.Location = new System.Drawing.Point(222, 147);
-            this.tbMailPasajero.Name = "tbMailPasajero";
-            this.tbMailPasajero.Size = new System.Drawing.Size(128, 20);
-            this.tbMailPasajero.TabIndex = 37;
+            this.txtMailPasajero.Location = new System.Drawing.Point(222, 147);
+            this.txtMailPasajero.Name = "txtMailPasajero";
+            this.txtMailPasajero.Size = new System.Drawing.Size(128, 20);
+            this.txtMailPasajero.TabIndex = 37;
             // 
             // label7
             // 
@@ -119,12 +120,12 @@
             this.label7.TabIndex = 36;
             this.label7.Text = "Mail";
             // 
-            // tbTelefonoPasajero
+            // txtTelefonoPasajero
             // 
-            this.tbTelefonoPasajero.Location = new System.Drawing.Point(222, 122);
-            this.tbTelefonoPasajero.Name = "tbTelefonoPasajero";
-            this.tbTelefonoPasajero.Size = new System.Drawing.Size(128, 20);
-            this.tbTelefonoPasajero.TabIndex = 35;
+            this.txtTelefonoPasajero.Location = new System.Drawing.Point(222, 122);
+            this.txtTelefonoPasajero.Name = "txtTelefonoPasajero";
+            this.txtTelefonoPasajero.Size = new System.Drawing.Size(128, 20);
+            this.txtTelefonoPasajero.TabIndex = 35;
             // 
             // label6
             // 
@@ -135,12 +136,12 @@
             this.label6.TabIndex = 34;
             this.label6.Text = "Teléfono";
             // 
-            // tbDireccionPasajero
+            // txtDireccionPasajero
             // 
-            this.tbDireccionPasajero.Location = new System.Drawing.Point(222, 97);
-            this.tbDireccionPasajero.Name = "tbDireccionPasajero";
-            this.tbDireccionPasajero.Size = new System.Drawing.Size(128, 20);
-            this.tbDireccionPasajero.TabIndex = 33;
+            this.txtDireccionPasajero.Location = new System.Drawing.Point(222, 97);
+            this.txtDireccionPasajero.Name = "txtDireccionPasajero";
+            this.txtDireccionPasajero.Size = new System.Drawing.Size(128, 20);
+            this.txtDireccionPasajero.TabIndex = 33;
             // 
             // label5
             // 
@@ -151,12 +152,12 @@
             this.label5.TabIndex = 32;
             this.label5.Text = "Dirección";
             // 
-            // tbApellidoPasajero
+            // txtApellidoPasajero
             // 
-            this.tbApellidoPasajero.Location = new System.Drawing.Point(222, 72);
-            this.tbApellidoPasajero.Name = "tbApellidoPasajero";
-            this.tbApellidoPasajero.Size = new System.Drawing.Size(128, 20);
-            this.tbApellidoPasajero.TabIndex = 31;
+            this.txtApellidoPasajero.Location = new System.Drawing.Point(222, 72);
+            this.txtApellidoPasajero.Name = "txtApellidoPasajero";
+            this.txtApellidoPasajero.Size = new System.Drawing.Size(128, 20);
+            this.txtApellidoPasajero.TabIndex = 31;
             // 
             // label4
             // 
@@ -167,12 +168,12 @@
             this.label4.TabIndex = 30;
             this.label4.Text = "Apellido";
             // 
-            // tbNombrePasajero
+            // txtNombrePasajero
             // 
-            this.tbNombrePasajero.Location = new System.Drawing.Point(222, 47);
-            this.tbNombrePasajero.Name = "tbNombrePasajero";
-            this.tbNombrePasajero.Size = new System.Drawing.Size(128, 20);
-            this.tbNombrePasajero.TabIndex = 29;
+            this.txtNombrePasajero.Location = new System.Drawing.Point(222, 47);
+            this.txtNombrePasajero.Name = "txtNombrePasajero";
+            this.txtNombrePasajero.Size = new System.Drawing.Size(128, 20);
+            this.txtNombrePasajero.TabIndex = 29;
             // 
             // label3
             // 
@@ -183,12 +184,12 @@
             this.label3.TabIndex = 28;
             this.label3.Text = "Nombre";
             // 
-            // tbDNI
+            // txtDNI
             // 
-            this.tbDNI.Location = new System.Drawing.Point(222, 22);
-            this.tbDNI.Name = "tbDNI";
-            this.tbDNI.Size = new System.Drawing.Size(128, 20);
-            this.tbDNI.TabIndex = 27;
+            this.txtDNI.Location = new System.Drawing.Point(222, 22);
+            this.txtDNI.Name = "txtDNI";
+            this.txtDNI.Size = new System.Drawing.Size(128, 20);
+            this.txtDNI.TabIndex = 27;
             // 
             // label2
             // 
@@ -202,7 +203,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 289);
+            this.label9.Location = new System.Drawing.Point(12, 326);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(100, 13);
             this.label9.TabIndex = 13;
@@ -211,7 +212,7 @@
             // cbSeleccionarButaca
             // 
             this.cbSeleccionarButaca.FormattingEnabled = true;
-            this.cbSeleccionarButaca.Location = new System.Drawing.Point(143, 285);
+            this.cbSeleccionarButaca.Location = new System.Drawing.Point(143, 322);
             this.cbSeleccionarButaca.Name = "cbSeleccionarButaca";
             this.cbSeleccionarButaca.Size = new System.Drawing.Size(121, 21);
             this.cbSeleccionarButaca.TabIndex = 14;
@@ -219,7 +220,7 @@
             // lblVentanillaOPasillo
             // 
             this.lblVentanillaOPasillo.AutoSize = true;
-            this.lblVentanillaOPasillo.Location = new System.Drawing.Point(12, 318);
+            this.lblVentanillaOPasillo.Location = new System.Drawing.Point(12, 355);
             this.lblVentanillaOPasillo.Name = "lblVentanillaOPasillo";
             this.lblVentanillaOPasillo.Size = new System.Drawing.Size(192, 13);
             this.lblVentanillaOPasillo.TabIndex = 15;
@@ -227,7 +228,7 @@
             // 
             // btnSiguiente
             // 
-            this.btnSiguiente.Location = new System.Drawing.Point(156, 355);
+            this.btnSiguiente.Location = new System.Drawing.Point(156, 392);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(75, 23);
             this.btnSiguiente.TabIndex = 22;
@@ -236,7 +237,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(62, 355);
+            this.btnLimpiar.Location = new System.Drawing.Point(62, 392);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btnLimpiar.TabIndex = 21;
@@ -245,18 +246,29 @@
             // 
             // btnAnterior
             // 
-            this.btnAnterior.Location = new System.Drawing.Point(250, 355);
+            this.btnAnterior.Location = new System.Drawing.Point(250, 392);
             this.btnAnterior.Name = "btnAnterior";
             this.btnAnterior.Size = new System.Drawing.Size(75, 23);
             this.btnAnterior.TabIndex = 23;
             this.btnAnterior.Text = "Anterior";
             this.btnAnterior.UseVisualStyleBackColor = true;
             // 
+            // btnSoyCliente
+            // 
+            this.btnSoyCliente.Location = new System.Drawing.Point(143, 284);
+            this.btnSoyCliente.Name = "btnSoyCliente";
+            this.btnSoyCliente.Size = new System.Drawing.Size(121, 23);
+            this.btnSoyCliente.TabIndex = 24;
+            this.btnSoyCliente.Text = "Ya soy cliente";
+            this.btnSoyCliente.UseVisualStyleBackColor = true;
+            this.btnSoyCliente.Click += new System.EventHandler(this.btnSoyCliente_Click);
+            // 
             // AgregarPasajero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 390);
+            this.ClientSize = new System.Drawing.Size(389, 422);
+            this.Controls.Add(this.btnSoyCliente);
             this.Controls.Add(this.btnAnterior);
             this.Controls.Add(this.btnSiguiente);
             this.Controls.Add(this.btnLimpiar);
@@ -267,6 +279,7 @@
             this.Controls.Add(this.label1);
             this.Name = "AgregarPasajero";
             this.Text = "Agregar Pasajero";
+            this.Load += new System.EventHandler(this.AgregarPasajero_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -280,17 +293,17 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DateTimePicker dtpFechaNacimientoPasajero;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox tbMailPasajero;
+        private System.Windows.Forms.TextBox txtMailPasajero;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tbTelefonoPasajero;
+        private System.Windows.Forms.TextBox txtTelefonoPasajero;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tbDireccionPasajero;
+        private System.Windows.Forms.TextBox txtDireccionPasajero;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbApellidoPasajero;
+        private System.Windows.Forms.TextBox txtApellidoPasajero;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbNombrePasajero;
+        private System.Windows.Forms.TextBox txtNombrePasajero;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbDNI;
+        private System.Windows.Forms.TextBox txtDNI;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cbSeleccionarButaca;
@@ -298,5 +311,6 @@
         private System.Windows.Forms.Button btnSiguiente;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.Button btnSoyCliente;
     }
 }
