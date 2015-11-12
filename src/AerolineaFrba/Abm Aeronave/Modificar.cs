@@ -43,8 +43,9 @@ namespace AerolineaFrba.Abm_Aeronave
                 int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
                 int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
                 string fechaReinicioServicio = dtpFechaReinicioDeServicio.Value.ToString("yyyy-dd-MM");
+                int cantidadButacas = int.Parse(tbCantButacas.Text);
 
-                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + fechaReinicioServicio;
+                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", '" + fechaReinicioServicio + "', " + cantidadButacas;
                 try
                 {
                     Server.getInstance().realizarQuery(modificarAeronave);

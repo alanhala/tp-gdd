@@ -582,16 +582,15 @@ END
 
 GO
 
-CREATE PROCEDURE JUST_DO_IT.almacenarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0))
+CREATE PROCEDURE JUST_DO_IT.almacenarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255), @tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		IF (NOT EXISTS (SELECT * FROM JUST_DO_IT.Aeronaves
 			WHERE matricula = matricula AND modelo = @modelo AND fabricante = @fabricante AND tipo_servicio = @tipo_servicio
-				AND kgs_disponibles = @kgs_disponibles))
+				AND kgs_disponibles = @kgs_disponibles AND butacas_totales = @cant_butacas))
 		BEGIN
-			INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles)
-				VALUES(@matricula, @modelo, @fabricante, @tipo_servicio, @kgs_disponibles)
+			INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles, butacas_totales)
+				VALUES(@matricula, @modelo, @fabricante, @tipo_servicio, @kgs_disponibles, @cant_butacas)
 		END ELSE
 			RAISERROR('La aeronave ingresada ya existe',16,217) WITH SETERROR
 	ELSE 
@@ -603,17 +602,17 @@ GO
     
 
 CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_reinicio_servicio DATETIME)
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_reinicio_servicio DATETIME, @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
 			UPDATE JUST_DO_IT.Aeronaves
 				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
-				kgs_disponibles = @kgs_disponibles,  fecha_reinicio_servicio = @fecha_reinicio_servicio
-				
+				kgs_disponibles = @kgs_disponibles,  fecha_reinicio_servicio = @fecha_reinicio_servicio, butacas_totales = @cant_butacas
+				WHERE Aeronaves.matricula = @matricula
 		END TRY
 		BEGIN CATCH
-			RAISERROR('Ya existe una aeronave con la matricula ingresada',16,217) WITH SETERROR
+			RAISERROR('Fallo la actualización de la aeronave',16,217) WITH SETERROR
 		END CATCH
 	ELSE 
 		RAISERROR('La cantidad de kilogramos disponibles no puede ser menor a cero, no se actualizo la aeronave',16,217) WITH SETERROR

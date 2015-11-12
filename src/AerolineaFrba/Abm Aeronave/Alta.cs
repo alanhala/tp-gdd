@@ -70,8 +70,9 @@ namespace AerolineaFrba.Abm_Aeronave
                 string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
                 int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
                 int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
+                int cantidadButacas = int.Parse(tbCantButacas.Text);
 
-                string altaAeronave = "EXEC JUST_DO_IT.almacenarAeronave " + matricula + ", " + modelo + ", " + fabricante + ", " + tipoDeServicio + ", " + espacioParaEncomiendas;
+                string altaAeronave = "EXEC JUST_DO_IT.almacenarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + cantidadButacas;
                 try {
                     Server.getInstance().realizarQuery(altaAeronave);
                     MessageBox.Show("La aeronave se agrego satisfactoriamente");
