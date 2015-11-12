@@ -86,6 +86,7 @@
             this.btnLimpiar.TabIndex = 50;
             this.btnLimpiar.Text = "Cancelar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnGuardar
             // 
