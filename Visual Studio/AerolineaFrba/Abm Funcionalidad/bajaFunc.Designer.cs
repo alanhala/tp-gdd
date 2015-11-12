@@ -71,7 +71,7 @@
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(65, 23);
             this.btnGuardar.TabIndex = 59;
-            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.Text = "Aceptar";
             this.btnGuardar.UseVisualStyleBackColor = true;
             // 
             // cancelar

@@ -69,5 +69,10 @@ namespace AerolineaFrba.Abm_Ruta
                 MessageBox.Show("Debe completar todos los campos");
             }
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

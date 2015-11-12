@@ -37,16 +37,18 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnConsultaMillas = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox3
             // 
+            this.groupBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox3.BackgroundImage")));
             this.groupBox3.Controls.Add(this.password);
             this.groupBox3.Controls.Add(this.username);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Location = new System.Drawing.Point(63, 76);
+            this.groupBox3.Location = new System.Drawing.Point(158, 99);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(258, 105);
             this.groupBox3.TabIndex = 14;
@@ -63,7 +65,7 @@
             // 
             // username
             // 
-            this.username.Location = new System.Drawing.Point(116, 29);
+            this.username.Location = new System.Drawing.Point(116, 25);
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(100, 20);
             this.username.TabIndex = 15;
@@ -88,7 +90,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(295, 233);
+            this.button1.Location = new System.Drawing.Point(358, 261);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(79, 23);
             this.button1.TabIndex = 15;
@@ -99,7 +101,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(204, 233);
+            this.button2.Location = new System.Drawing.Point(267, 261);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 16;
@@ -108,7 +110,7 @@
             // 
             // btnConsultaMillas
             // 
-            this.btnConsultaMillas.Location = new System.Drawing.Point(13, 233);
+            this.btnConsultaMillas.Location = new System.Drawing.Point(12, 261);
             this.btnConsultaMillas.Name = "btnConsultaMillas";
             this.btnConsultaMillas.Size = new System.Drawing.Size(89, 23);
             this.btnConsultaMillas.TabIndex = 19;
@@ -116,13 +118,26 @@
             this.btnConsultaMillas.UseVisualStyleBackColor = true;
             this.btnConsultaMillas.Click += new System.EventHandler(this.btnConsultaMillas_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 16F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
+            this.label1.Location = new System.Drawing.Point(183, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(133, 30);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "¡Bienvenido!";
+            // 
             // Login
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(386, 268);
+            this.ClientSize = new System.Drawing.Size(449, 301);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnConsultaMillas);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -135,6 +150,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -148,5 +164,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnConsultaMillas;
+        private System.Windows.Forms.Label label1;
     }
 }

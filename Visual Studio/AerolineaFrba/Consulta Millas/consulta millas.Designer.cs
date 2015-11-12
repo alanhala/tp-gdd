@@ -53,7 +53,8 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(61, 30);
+            this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
+            this.label1.Location = new System.Drawing.Point(61, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(343, 22);
             this.label1.TabIndex = 9;
@@ -88,7 +89,7 @@
             // lblMillas
             // 
             this.lblMillas.AutoSize = true;
-            this.lblMillas.Location = new System.Drawing.Point(148, 136);
+            this.lblMillas.Location = new System.Drawing.Point(158, 136);
             this.lblMillas.Name = "lblMillas";
             this.lblMillas.Size = new System.Drawing.Size(94, 13);
             this.lblMillas.TabIndex = 13;
@@ -151,6 +152,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.txtApellido);
             this.groupBox1.Controls.Add(this.txtNombre);
             this.groupBox1.Controls.Add(this.label5);
@@ -159,7 +161,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.lblMillas);
-            this.groupBox1.Location = new System.Drawing.Point(93, 68);
+            this.groupBox1.Location = new System.Drawing.Point(93, 66);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(292, 164);
             this.groupBox1.TabIndex = 53;
@@ -205,6 +207,7 @@
             this.AcceptButton = this.btnAceptar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(468, 472);
             this.Controls.Add(this.groupBox1);

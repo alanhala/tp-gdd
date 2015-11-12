@@ -59,7 +59,7 @@
             this.btnQuitar.Name = "btnQuitar";
             this.btnQuitar.Size = new System.Drawing.Size(75, 23);
             this.btnQuitar.TabIndex = 48;
-            this.btnQuitar.Text = "Quitar";
+            this.btnQuitar.Text = "Aceptar";
             this.btnQuitar.UseVisualStyleBackColor = true;
             this.btnQuitar.Click += new System.EventHandler(this.button1_Click);
             // 

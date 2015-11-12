@@ -44,14 +44,14 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(31, 32);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(269, 109);
+            this.groupBox1.Size = new System.Drawing.Size(269, 92);
             this.groupBox1.TabIndex = 56;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Complete los siguientes campos";
+            this.groupBox1.Text = "Complete el siguiente campo";
             // 
             // tbNombre
             // 
-            this.tbNombre.Location = new System.Drawing.Point(139, 32);
+            this.tbNombre.Location = new System.Drawing.Point(123, 36);
             this.tbNombre.Name = "tbNombre";
             this.tbNombre.Size = new System.Drawing.Size(100, 20);
             this.tbNombre.TabIndex = 36;
@@ -60,7 +60,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 35);
+            this.label1.Location = new System.Drawing.Point(36, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 32;
@@ -68,11 +68,11 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(255, 159);
+            this.btnGuardar.Location = new System.Drawing.Point(255, 158);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(65, 23);
             this.btnGuardar.TabIndex = 55;
-            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.Text = "Aceptar";
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 

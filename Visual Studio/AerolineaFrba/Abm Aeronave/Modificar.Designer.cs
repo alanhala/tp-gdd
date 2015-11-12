@@ -46,14 +46,13 @@
             this.tbModelo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(589, 207);
+            this.button2.Location = new System.Drawing.Point(589, 187);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 28;
@@ -63,11 +62,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(684, 207);
+            this.button1.Location = new System.Drawing.Point(684, 187);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 27;
-            this.button1.Text = "Modificar";
+            this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -90,6 +89,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.tbCantButacas);
             this.groupBox1.Controls.Add(this.cbTipoServicio);
             this.groupBox1.Controls.Add(this.tbEspacioTotalParaEncomiendas);
@@ -104,7 +104,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.dtpFechaReinicioDeServicio);
             this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Location = new System.Drawing.Point(28, 47);
+            this.groupBox1.Location = new System.Drawing.Point(26, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(715, 154);
             this.groupBox1.TabIndex = 36;
@@ -211,16 +211,6 @@
             this.label3.TabIndex = 40;
             this.label3.Text = "Fabricante";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(307, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(162, 22);
-            this.label9.TabIndex = 39;
-            this.label9.Text = "Modificar aeronave";
-            // 
             // modificarAeronave
             // 
             this.AcceptButton = this.button1;
@@ -228,9 +218,9 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(771, 235);
-            this.Controls.Add(this.label9);
+            this.ClientSize = new System.Drawing.Size(771, 222);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -239,13 +229,12 @@
             this.KeyPreview = true;
             this.Location = global::AerolineaFrba.Properties.Settings.Default.pruebaModifAer;
             this.Name = "modificarAeronave";
-            this.Text = "Aeronave";
+            this.Text = "Modificar Aeronave";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -256,7 +245,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DateTimePicker dtpFechaReinicioDeServicio;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbFabricante;
         private System.Windows.Forms.TextBox tbNumeroMatricula;

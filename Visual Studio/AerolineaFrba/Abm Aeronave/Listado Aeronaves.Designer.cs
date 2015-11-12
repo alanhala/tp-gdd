@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Listado_Aeronaves));
             this.listadoAeronaves = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.listadoAeronaves)).BeginInit();
             this.SuspendLayout();
@@ -47,6 +48,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1046, 569);
             this.Controls.Add(this.listadoAeronaves);
             this.Name = "Listado_Aeronaves";

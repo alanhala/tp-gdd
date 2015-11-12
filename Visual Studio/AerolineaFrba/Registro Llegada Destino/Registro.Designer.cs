@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Registro));
             this.dtpFechaYHoraLlegada = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblFabricanteAeronave = new System.Windows.Forms.Label();
@@ -70,17 +69,6 @@
             this.dtpFechaYHoraLlegada.TabIndex = 0;
             this.dtpFechaYHoraLlegada.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(165, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(231, 22);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Registro de llegada Destino";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -92,6 +80,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.lblFabricanteAeronave);
             this.groupBox1.Controls.Add(this.lblModeloAeronave);
             this.groupBox1.Controls.Add(this.lblFechaAltaAeronave);
@@ -109,7 +98,7 @@
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(12, 71);
+            this.groupBox1.Location = new System.Drawing.Point(12, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(307, 250);
             this.groupBox1.TabIndex = 3;
@@ -305,13 +294,14 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox2.BackgroundImage")));
             this.groupBox2.Controls.Add(this.tBoxAeropuertoDestino);
             this.groupBox2.Controls.Add(this.dtpFechaYHoraLlegada);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.tBoxAeropuertoOrigen);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Location = new System.Drawing.Point(325, 71);
+            this.groupBox2.Location = new System.Drawing.Point(325, 16);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(224, 250);
             this.groupBox2.TabIndex = 9;
@@ -321,7 +311,7 @@
             // btnLimpiar
             // 
             this.btnLimpiar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnLimpiar.Location = new System.Drawing.Point(380, 347);
+            this.btnLimpiar.Location = new System.Drawing.Point(380, 289);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btnLimpiar.TabIndex = 10;
@@ -330,7 +320,7 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(474, 347);
+            this.btnGuardar.Location = new System.Drawing.Point(474, 289);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 11;
@@ -340,7 +330,7 @@
             // btnBuscarAeronave
             // 
             this.btnBuscarAeronave.AccessibleName = "buscarAeronave";
-            this.btnBuscarAeronave.Location = new System.Drawing.Point(101, 336);
+            this.btnBuscarAeronave.Location = new System.Drawing.Point(101, 278);
             this.btnBuscarAeronave.Name = "btnBuscarAeronave";
             this.btnBuscarAeronave.Size = new System.Drawing.Size(84, 34);
             this.btnBuscarAeronave.TabIndex = 9;
@@ -352,32 +342,30 @@
             this.AcceptButton = this.btnGuardar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnLimpiar;
-            this.ClientSize = new System.Drawing.Size(561, 382);
+            this.ClientSize = new System.Drawing.Size(561, 324);
             this.Controls.Add(this.btnBuscarAeronave);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Registro";
-            this.Text = "Llegada";
+            this.Text = "Registro de llegada a destino";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.DateTimePicker dtpFechaYHoraLlegada;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label5;

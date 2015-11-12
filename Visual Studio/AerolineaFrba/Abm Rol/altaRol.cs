@@ -42,18 +42,25 @@ namespace AerolineaFrba.Abm_Rol
                 string nombre = tbNombre.Text;
                 string func1 = cbFuncionalidad1.Text;
                 string query_rol = "EXEC JUST_DO_IT.almacenarRol'" + nombre + "'";
+                try
+                {
+                    Server.getInstance().realizarQuery(query_rol);
+                    MessageBox.Show("El rol se agrego satisfactoriamente");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
                 int IdRol = Rol.obtenerID(nombre);
                 int IdFuncionalidad1 = Funcionalidad.obtenerID(func1);
 
-                string query_rol_Funcionalidad1 = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad'" + IdRol + "," + IdFuncionalidad1 + "'";
-                                
+                string queryRol_Funcionalidad1 = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + IdRol + "," + IdFuncionalidad1;
+                
                 try
                 {
-                    Server.getInstance().realizarQuery(query_rol);
-                    Server.getInstance().realizarQuery(query_rol_Funcionalidad1);
-
-                    MessageBox.Show("El rol se agrego satisfactoriamente");
+                    Server.getInstance().realizarQuery(queryRol_Funcionalidad1);
+                    MessageBox.Show("rol-funcionalidad agregado -> OK");
                 }
                 catch (Exception ex)
                 {
@@ -61,6 +68,12 @@ namespace AerolineaFrba.Abm_Rol
                 }
             }
         }
+
+//       private void validar_que_no_exista_el_rol(string nombre)
+//       {
+//            string rolExiste = "SELECT nombre FROM JUST_DO_IT.validarRolSinRepetidos '" + nombre + "'";
+//            Server.getInstance().realizarQuery(rolExiste);
+//        }
 
          private void tbNombre_TextChanged(object sender, EventArgs e)
         {

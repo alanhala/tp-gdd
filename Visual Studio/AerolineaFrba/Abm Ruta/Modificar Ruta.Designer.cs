@@ -44,13 +44,12 @@
             this.label12 = new System.Windows.Forms.Label();
             this.tbPrecioBasePorPasaje = new System.Windows.Forms.TextBox();
             this.tbCodigoRuta = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(426, 227);
+            this.btnCancelar.Location = new System.Drawing.Point(435, 194);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 43;
@@ -59,7 +58,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(521, 226);
+            this.btnAceptar.Location = new System.Drawing.Point(530, 193);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 42;
@@ -68,6 +67,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.cbCiudadDestino);
             this.groupBox1.Controls.Add(this.tbPrecioBasePorKg);
             this.groupBox1.Controls.Add(this.cbcCiudadOrigen);
@@ -80,7 +80,7 @@
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.tbPrecioBasePorPasaje);
             this.groupBox1.Controls.Add(this.tbCodigoRuta);
-            this.groupBox1.Location = new System.Drawing.Point(19, 67);
+            this.groupBox1.Location = new System.Drawing.Point(21, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(577, 142);
             this.groupBox1.TabIndex = 47;
@@ -186,33 +186,22 @@
             this.tbCodigoRuta.Size = new System.Drawing.Size(100, 20);
             this.tbCodigoRuta.TabIndex = 47;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(242, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 22);
-            this.label1.TabIndex = 56;
-            this.label1.Text = "Modificar Ruta";
-            // 
             // Modificar_Ruta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(617, 265);
-            this.Controls.Add(this.label1);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(617, 227);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Modificar_Ruta";
-            this.Text = "Ruta";
+            this.Text = "Modificar ruta";
             this.Load += new System.EventHandler(this.Modificar_Ruta_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -233,6 +222,5 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox tbPrecioBasePorPasaje;
         private System.Windows.Forms.TextBox tbCodigoRuta;
-        private System.Windows.Forms.Label label1;
     }
 }

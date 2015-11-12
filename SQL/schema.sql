@@ -210,7 +210,7 @@ GO
 
 CREATE TABLE JUST_DO_IT.Roles(
 	id NUMERIC(18,0) IDENTITY(1,1),
-	nombre varchar(50) NOT NULL,
+	nombre varchar(50) UNIQUE NOT NULL,
 	PRIMARY KEY (id)
 )
 

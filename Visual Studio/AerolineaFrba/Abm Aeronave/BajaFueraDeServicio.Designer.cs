@@ -44,17 +44,17 @@
             // btnDarDeBaja
             // 
             this.btnDarDeBaja.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnDarDeBaja.Location = new System.Drawing.Point(624, 245);
+            this.btnDarDeBaja.Location = new System.Drawing.Point(624, 154);
             this.btnDarDeBaja.Name = "btnDarDeBaja";
             this.btnDarDeBaja.Size = new System.Drawing.Size(75, 23);
             this.btnDarDeBaja.TabIndex = 27;
-            this.btnDarDeBaja.Text = "Dar de baja";
+            this.btnDarDeBaja.Text = "Aceptar";
             this.btnDarDeBaja.UseVisualStyleBackColor = true;
             this.btnDarDeBaja.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(529, 245);
+            this.btnCancelar.Location = new System.Drawing.Point(529, 154);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 28;
@@ -64,15 +64,16 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.tbNumeroMatricula);
             this.groupBox1.Controls.Add(this.dtpFechaFueraServicio);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.dtpFechaReinicioServicio);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(33, 75);
+            this.groupBox1.Location = new System.Drawing.Point(23, 33);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(653, 142);
+            this.groupBox1.Size = new System.Drawing.Size(653, 104);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
@@ -139,15 +140,16 @@
             this.AcceptButton = this.btnDarDeBaja;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnDarDeBaja;
-            this.ClientSize = new System.Drawing.Size(711, 278);
+            this.ClientSize = new System.Drawing.Size(711, 192);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnDarDeBaja);
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BajaFueraDeServicio";
-            this.Text = "Aeronave";
+            this.Text = "Suspención de aeronave por estar fuera de servicio";
             this.Load += new System.EventHandler(this.Baja_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

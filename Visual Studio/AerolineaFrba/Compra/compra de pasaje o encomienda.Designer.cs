@@ -40,7 +40,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.dgvViajesDisponibles = new System.Windows.Forms.DataGridView();
-            this.btnViajar = new System.Windows.Forms.Button();
             this.viajeDisponible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantButacasLibres = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kgDisponibles = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +48,7 @@
             this.tipoServicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.costoViaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.costoEncomienda = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnViajar = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvViajesDisponibles)).BeginInit();
@@ -58,7 +58,8 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(257, 26);
+            this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
+            this.label1.Location = new System.Drawing.Point(257, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(262, 22);
             this.label1.TabIndex = 10;
@@ -66,9 +67,10 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox3.BackgroundImage")));
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.dtpFechaSalidaVuelo);
-            this.groupBox3.Location = new System.Drawing.Point(212, 72);
+            this.groupBox3.Location = new System.Drawing.Point(212, 67);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(364, 53);
             this.groupBox3.TabIndex = 17;
@@ -94,6 +96,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.cmbDestino);
             this.groupBox1.Controls.Add(this.cmbOrigen);
             this.groupBox1.Controls.Add(this.label3);
@@ -174,16 +177,6 @@
             this.dgvViajesDisponibles.Size = new System.Drawing.Size(845, 133);
             this.dgvViajesDisponibles.TabIndex = 18;
             // 
-            // btnViajar
-            // 
-            this.btnViajar.Location = new System.Drawing.Point(598, 401);
-            this.btnViajar.Name = "btnViajar";
-            this.btnViajar.Size = new System.Drawing.Size(75, 23);
-            this.btnViajar.TabIndex = 20;
-            this.btnViajar.Text = "Viajar";
-            this.btnViajar.UseVisualStyleBackColor = true;
-            this.btnViajar.Click += new System.EventHandler(this.btnSiguiente_Click);
-            // 
             // viajeDisponible
             // 
             this.viajeDisponible.HeaderText = "Viajes Disponibles";
@@ -239,10 +232,21 @@
             this.costoEncomienda.Name = "costoEncomienda";
             this.costoEncomienda.ReadOnly = true;
             // 
+            // btnViajar
+            // 
+            this.btnViajar.Location = new System.Drawing.Point(598, 401);
+            this.btnViajar.Name = "btnViajar";
+            this.btnViajar.Size = new System.Drawing.Size(75, 23);
+            this.btnViajar.TabIndex = 20;
+            this.btnViajar.Text = "Viajar";
+            this.btnViajar.UseVisualStyleBackColor = true;
+            this.btnViajar.Click += new System.EventHandler(this.btnSiguiente_Click);
+            // 
             // compraPasaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(863, 436);
             this.Controls.Add(this.btnViajar);
             this.Controls.Add(this.dgvViajesDisponibles);

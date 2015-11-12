@@ -30,6 +30,7 @@ namespace AerolineaFrba.Abm_Ruta
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Listado_Rutas));
             this.listadoDeRutas = new System.Windows.Forms.DataGridView();
             this.seleccionarRuta = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.listadoDeRutas)).BeginInit();
@@ -61,11 +62,12 @@ namespace AerolineaFrba.Abm_Ruta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1017, 618);
             this.Controls.Add(this.seleccionarRuta);
             this.Controls.Add(this.listadoDeRutas);
             this.Name = "Listado_Rutas";
-            this.Text = "Listado_Rutas";
+            this.Text = "Listado de rutas aéreas";
             this.Load += new System.EventHandler(this.Listado_Rutas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.listadoDeRutas)).EndInit();
             this.ResumeLayout(false);

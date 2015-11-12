@@ -48,7 +48,8 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 27);
+            this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
+            this.label1.Location = new System.Drawing.Point(12, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(407, 22);
             this.label1.TabIndex = 8;
@@ -56,6 +57,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.tbMotivoCancelacionPasajeOEncomienda);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.tbCodigoPasajeOEncomienda);
@@ -64,7 +66,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.dtpFechaDevolucionPasajeOEncomienda);
-            this.groupBox1.Location = new System.Drawing.Point(26, 62);
+            this.groupBox1.Location = new System.Drawing.Point(30, 67);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(381, 204);
             this.groupBox1.TabIndex = 9;
@@ -160,6 +162,7 @@
             this.AcceptButton = this.btnGuardar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(440, 335);
             this.Controls.Add(this.btnGuardar);

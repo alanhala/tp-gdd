@@ -35,12 +35,12 @@
             this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaAcumulacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbMillasCliente = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbDNICliente = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMillasPorProducto)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -92,24 +92,14 @@
             this.fechaAcumulacion.Name = "fechaAcumulacion";
             this.fechaAcumulacion.ReadOnly = true;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(131, 22);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(132, 22);
-            this.label3.TabIndex = 37;
-            this.label3.Text = "Canje de Millas";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.tbMillasCliente);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.cbDNICliente);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(65, 65);
+            this.groupBox1.Location = new System.Drawing.Point(65, 66);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(292, 103);
             this.groupBox1.TabIndex = 54;
@@ -149,11 +139,24 @@
             this.label5.TabIndex = 37;
             this.label5.Text = "DNI del cliente";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Image = ((System.Drawing.Image)(resources.GetObject("label3.Image")));
+            this.label3.Location = new System.Drawing.Point(131, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(132, 22);
+            this.label3.TabIndex = 37;
+            this.label3.Text = "Canje de Millas";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnAceptar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(412, 380);
             this.Controls.Add(this.groupBox1);
@@ -184,11 +187,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Producto;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaAcumulacion;
         private System.Windows.Forms.HelpProvider helpProvider1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbMillasCliente;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbDNICliente;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3;
     }
 }

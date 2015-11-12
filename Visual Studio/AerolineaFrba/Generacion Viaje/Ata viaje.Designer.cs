@@ -30,7 +30,7 @@ namespace AerolineaFrba.Generacion_Viaje
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Alta_Viaje));
             this.btnSeleccionarRuta = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnSeleccionarAeronave = new System.Windows.Forms.Button();
@@ -60,19 +60,9 @@ namespace AerolineaFrba.Generacion_Viaje
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(207, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 22);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Generar Viaje";
-            // 
             // btnSeleccionarRuta
             // 
-            this.btnSeleccionarRuta.Location = new System.Drawing.Point(398, 202);
+            this.btnSeleccionarRuta.Location = new System.Drawing.Point(398, 176);
             this.btnSeleccionarRuta.Name = "btnSeleccionarRuta";
             this.btnSeleccionarRuta.Size = new System.Drawing.Size(131, 23);
             this.btnSeleccionarRuta.TabIndex = 8;
@@ -82,7 +72,7 @@ namespace AerolineaFrba.Generacion_Viaje
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(288, 224);
+            this.button2.Location = new System.Drawing.Point(288, 191);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(8, 8);
             this.button2.TabIndex = 9;
@@ -91,7 +81,7 @@ namespace AerolineaFrba.Generacion_Viaje
             // 
             // btnSeleccionarAeronave
             // 
-            this.btnSeleccionarAeronave.Location = new System.Drawing.Point(398, 280);
+            this.btnSeleccionarAeronave.Location = new System.Drawing.Point(398, 270);
             this.btnSeleccionarAeronave.Name = "btnSeleccionarAeronave";
             this.btnSeleccionarAeronave.Size = new System.Drawing.Size(131, 23);
             this.btnSeleccionarAeronave.TabIndex = 10;
@@ -101,11 +91,12 @@ namespace AerolineaFrba.Generacion_Viaje
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.lblCiudadDestino);
             this.groupBox1.Controls.Add(this.lblCiudadOrigen);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(17, 187);
+            this.groupBox1.Location = new System.Drawing.Point(17, 163);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(364, 72);
             this.groupBox1.TabIndex = 11;
@@ -151,6 +142,7 @@ namespace AerolineaFrba.Generacion_Viaje
             // 
             // groupBox2
             // 
+            this.groupBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox2.BackgroundImage")));
             this.groupBox2.Controls.Add(this.lblModeloAeronave);
             this.groupBox2.Controls.Add(this.lblCantButacasAeronave);
             this.groupBox2.Controls.Add(this.lblKgDisponiblesEncomiendasAeronave);
@@ -159,7 +151,7 @@ namespace AerolineaFrba.Generacion_Viaje
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Location = new System.Drawing.Point(17, 265);
+            this.groupBox2.Location = new System.Drawing.Point(17, 245);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(364, 120);
             this.groupBox2.TabIndex = 12;
@@ -241,11 +233,12 @@ namespace AerolineaFrba.Generacion_Viaje
             // 
             // groupBox3
             // 
+            this.groupBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox3.BackgroundImage")));
             this.groupBox3.Controls.Add(this.dtpFechaLlegadaEstimadaVuelo);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.dtpFechaSalidaVuelo);
-            this.groupBox3.Location = new System.Drawing.Point(17, 71);
+            this.groupBox3.Location = new System.Drawing.Point(17, 33);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(364, 110);
             this.groupBox3.TabIndex = 13;
@@ -291,7 +284,7 @@ namespace AerolineaFrba.Generacion_Viaje
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(454, 406);
+            this.btnGuardar.Location = new System.Drawing.Point(454, 373);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 15;
@@ -301,7 +294,7 @@ namespace AerolineaFrba.Generacion_Viaje
             // btnLimpiar
             // 
             this.btnLimpiar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnLimpiar.Location = new System.Drawing.Point(360, 406);
+            this.btnLimpiar.Location = new System.Drawing.Point(360, 373);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btnLimpiar.TabIndex = 14;
@@ -313,6 +306,7 @@ namespace AerolineaFrba.Generacion_Viaje
             this.AcceptButton = this.btnGuardar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(542, 445);
             this.Controls.Add(this.btnGuardar);
@@ -323,10 +317,9 @@ namespace AerolineaFrba.Generacion_Viaje
             this.Controls.Add(this.btnSeleccionarAeronave);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnSeleccionarRuta);
-            this.Controls.Add(this.label1);
             this.KeyPreview = true;
             this.Name = "Alta_Viaje";
-            this.Text = "Viaje";
+            this.Text = "Generar viaje";
             this.Load += new System.EventHandler(this.Alta_Viaje_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -335,13 +328,11 @@ namespace AerolineaFrba.Generacion_Viaje
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSeleccionarRuta;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnSeleccionarAeronave;

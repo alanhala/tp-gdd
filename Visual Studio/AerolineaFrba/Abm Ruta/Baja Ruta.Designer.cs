@@ -40,13 +40,12 @@
             this.label8 = new System.Windows.Forms.Label();
             this.tbCiudadDestino = new System.Windows.Forms.TextBox();
             this.tbCiudadOrigen = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(369, 182);
+            this.btnCancelar.Location = new System.Drawing.Point(373, 144);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 43;
@@ -55,7 +54,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(464, 182);
+            this.btnAceptar.Location = new System.Drawing.Point(468, 144);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 42;
@@ -64,6 +63,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.cbCodigoRuta);
             this.groupBox1.Controls.Add(this.cbTipoServicio);
             this.groupBox1.Controls.Add(this.label3);
@@ -72,7 +72,7 @@
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.tbCiudadDestino);
             this.groupBox1.Controls.Add(this.tbCiudadOrigen);
-            this.groupBox1.Location = new System.Drawing.Point(17, 68);
+            this.groupBox1.Location = new System.Drawing.Point(17, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(522, 94);
             this.groupBox1.TabIndex = 45;
@@ -145,32 +145,21 @@
             this.tbCiudadOrigen.Size = new System.Drawing.Size(100, 20);
             this.tbCiudadOrigen.TabIndex = 45;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(205, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 22);
-            this.label1.TabIndex = 55;
-            this.label1.Text = "Eliminar Ruta";
-            // 
             // Baja_Ruta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(555, 218);
-            this.Controls.Add(this.label1);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(555, 181);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Baja_Ruta";
-            this.Text = "Ruta";
+            this.Text = "Eiminar Ruta";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -187,6 +176,5 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tbCiudadDestino;
         private System.Windows.Forms.TextBox tbCiudadOrigen;
-        private System.Windows.Forms.Label label1;
     }
 }
