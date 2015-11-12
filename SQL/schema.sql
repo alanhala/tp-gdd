@@ -129,8 +129,8 @@ IF OBJECT_ID (N'JUST_DO_IT.vuelosDisponibles') IS NOT NULL
     drop function JUST_DO_IT.vuelosDisponibles;
 GO
 
-IF OBJECT_ID (N'JUST_DO_IT.aeronavesDisponibles') IS NOT NULL
-	drop function JUST_DO_IT.aeronavesDisponibles;
+IF OBJECT_ID (N'JUST_DO_IT.aeronavesNoDisponibles') IS NOT NULL
+	drop function JUST_DO_IT.aeronavesNoDisponibles;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.IDRol') IS NOT NULL
@@ -147,6 +147,10 @@ GO
 
 IF OBJECT_ID (N'JUST_DO_IT.almacenarRol_Funcionalidad') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRol_Funcionalidad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarVuelo') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarVuelo;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.butacaSLibres') IS NOT NULL
@@ -244,7 +248,8 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 	cantidadDisponible NUMERIC(18,0) NOT NULL DEFAULT 0,
 	PRIMARY KEY (id),
 	FOREIGN KEY (ruta_id) REFERENCES JUST_DO_IT.Rutas,
-	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
+	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves,
+	CONSTRAINT CK_Fecha CHECK(fecha_salida < fecha_llegada_estimada)
 )
 
 GO
@@ -635,12 +640,11 @@ END
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.aeronavesDisponibles(@Salida DATETIME, @LlegadaEstimada DATETIME)
+CREATE FUNCTION JUST_DO_IT.aeronavesNoDisponibles(@Salida DATETIME, @LlegadaEstimada DATETIME)
 RETURNS TABLE
 AS RETURN
-	SELECT aeronaves.* 
-		FROM JUST_DO_IT.Aeronaves AS aeronaves, (SELECT * FROM JUST_DO_IT.Vuelos WHERE (fecha_salida > @Salida AND fecha_salida < @LlegadaEstimada) OR (fecha_salida < @Salida AND fecha_llegada_estimada > @LlegadaEstimada)) AS aeronaves_no_disponibles
-		WHERE aeronaves.id <> aeronaves_no_disponibles.aeronave_id
+	SELECT aeronaves.* FROM JUST_DO_IT.Aeronaves AS aeronaves WHERE aeronaves.id NOT IN 
+		(SELECT aeronave_id FROM JUST_DO_IT.Vuelos WHERE ((@Salida > fecha_salida AND @Salida < fecha_llegada_estimada) OR (@LlegadaEstimada > fecha_salida AND @LlegadaEstimada < fecha_llegada_estimada)) GROUP BY aeronave_id)
 
 GO
 
@@ -700,3 +704,17 @@ AS BEGIN
 END
 
 GO
+
+CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255))
+AS BEGIN
+	IF @AeronaveTipo = @RutaTipo
+		BEGIN
+			INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada_estimada, ruta_id, aeronave_id, cantidadDisponible)
+				VALUES(@FechaSalida, @FechaLlegadaEstimada, @RutaID, @AeronaveId, @CantidadDisponible)
+		END
+	ELSE
+		RAISERROR('El servicio de la ruta debe ser el mismo que el de la aeronave',16,217) WITH SETERROR
+END
+
+GO
+	

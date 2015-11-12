@@ -40,8 +40,12 @@ namespace AerolineaFrba.Generacion_Viaje
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblFabricanteAeronave = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblMatriculaAeronave = new System.Windows.Forms.Label();
             this.lblModeloAeronave = new System.Windows.Forms.Label();
             this.lblCantButacasAeronave = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblKgDisponiblesEncomiendasAeronave = new System.Windows.Forms.Label();
             this.lblTipoServicioAeronave = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -54,7 +58,6 @@ namespace AerolineaFrba.Generacion_Viaje
             this.label9 = new System.Windows.Forms.Label();
             this.dtpFechaSalidaVuelo = new System.Windows.Forms.DateTimePicker();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -96,7 +99,7 @@ namespace AerolineaFrba.Generacion_Viaje
             this.groupBox1.Controls.Add(this.lblCiudadOrigen);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(17, 163);
+            this.groupBox1.Location = new System.Drawing.Point(17, 130);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(364, 72);
             this.groupBox1.TabIndex = 11;
@@ -108,19 +111,16 @@ namespace AerolineaFrba.Generacion_Viaje
             this.lblCiudadDestino.AutoSize = true;
             this.lblCiudadDestino.Location = new System.Drawing.Point(229, 50);
             this.lblCiudadDestino.Name = "lblCiudadDestino";
-            this.lblCiudadDestino.Size = new System.Drawing.Size(35, 13);
+            this.lblCiudadDestino.Size = new System.Drawing.Size(0, 13);
             this.lblCiudadDestino.TabIndex = 14;
-            this.lblCiudadDestino.Text = "label5";
             // 
             // lblCiudadOrigen
             // 
             this.lblCiudadOrigen.AutoSize = true;
             this.lblCiudadOrigen.Location = new System.Drawing.Point(229, 28);
             this.lblCiudadOrigen.Name = "lblCiudadOrigen";
-            this.lblCiudadOrigen.Size = new System.Drawing.Size(35, 13);
+            this.lblCiudadOrigen.Size = new System.Drawing.Size(0, 13);
             this.lblCiudadOrigen.TabIndex = 13;
-            this.lblCiudadOrigen.Text = "label4";
-            this.lblCiudadOrigen.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -143,62 +143,95 @@ namespace AerolineaFrba.Generacion_Viaje
             // groupBox2
             // 
             this.groupBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox2.BackgroundImage")));
+            this.groupBox2.Controls.Add(this.lblFabricanteAeronave);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.lblMatriculaAeronave);
             this.groupBox2.Controls.Add(this.lblModeloAeronave);
             this.groupBox2.Controls.Add(this.lblCantButacasAeronave);
+            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.lblKgDisponiblesEncomiendasAeronave);
             this.groupBox2.Controls.Add(this.lblTipoServicioAeronave);
             this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Location = new System.Drawing.Point(17, 245);
+            this.groupBox2.Location = new System.Drawing.Point(17, 232);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(364, 120);
+            this.groupBox2.Size = new System.Drawing.Size(364, 201);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos de la aeronave";
             // 
+            // lblFabricanteAeronave
+            // 
+            this.lblFabricanteAeronave.AutoSize = true;
+            this.lblFabricanteAeronave.Location = new System.Drawing.Point(226, 162);
+            this.lblFabricanteAeronave.Name = "lblFabricanteAeronave";
+            this.lblFabricanteAeronave.Size = new System.Drawing.Size(0, 13);
+            this.lblFabricanteAeronave.TabIndex = 38;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(17, 162);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.TabIndex = 37;
+            this.label4.Text = "Fabricante";
+            // 
+            // lblMatriculaAeronave
+            // 
+            this.lblMatriculaAeronave.AutoSize = true;
+            this.lblMatriculaAeronave.Location = new System.Drawing.Point(226, 105);
+            this.lblMatriculaAeronave.Name = "lblMatriculaAeronave";
+            this.lblMatriculaAeronave.Size = new System.Drawing.Size(0, 13);
+            this.lblMatriculaAeronave.TabIndex = 36;
+            // 
             // lblModeloAeronave
             // 
             this.lblModeloAeronave.AutoSize = true;
-            this.lblModeloAeronave.Location = new System.Drawing.Point(226, 100);
+            this.lblModeloAeronave.Location = new System.Drawing.Point(226, 133);
             this.lblModeloAeronave.Name = "lblModeloAeronave";
-            this.lblModeloAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblModeloAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblModeloAeronave.TabIndex = 35;
-            this.lblModeloAeronave.Text = "label20";
             // 
             // lblCantButacasAeronave
             // 
             this.lblCantButacasAeronave.AutoSize = true;
             this.lblCantButacasAeronave.Location = new System.Drawing.Point(226, 75);
             this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
-            this.lblCantButacasAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblCantButacasAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblCantButacasAeronave.TabIndex = 34;
-            this.lblCantButacasAeronave.Text = "label18";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(17, 105);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "Matrícula";
             // 
             // lblKgDisponiblesEncomiendasAeronave
             // 
             this.lblKgDisponiblesEncomiendasAeronave.AutoSize = true;
             this.lblKgDisponiblesEncomiendasAeronave.Location = new System.Drawing.Point(226, 50);
             this.lblKgDisponiblesEncomiendasAeronave.Name = "lblKgDisponiblesEncomiendasAeronave";
-            this.lblKgDisponiblesEncomiendasAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblKgDisponiblesEncomiendasAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblKgDisponiblesEncomiendasAeronave.TabIndex = 33;
-            this.lblKgDisponiblesEncomiendasAeronave.Text = "label17";
-            this.lblKgDisponiblesEncomiendasAeronave.Click += new System.EventHandler(this.label17_Click);
             // 
             // lblTipoServicioAeronave
             // 
             this.lblTipoServicioAeronave.AutoSize = true;
-            this.lblTipoServicioAeronave.Location = new System.Drawing.Point(226, 31);
+            this.lblTipoServicioAeronave.Location = new System.Drawing.Point(226, 25);
             this.lblTipoServicioAeronave.Name = "lblTipoServicioAeronave";
-            this.lblTipoServicioAeronave.Size = new System.Drawing.Size(41, 13);
+            this.lblTipoServicioAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblTipoServicioAeronave.TabIndex = 32;
-            this.lblTipoServicioAeronave.Text = "label16";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(17, 100);
+            this.label13.Location = new System.Drawing.Point(17, 133);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(42, 13);
             this.label13.TabIndex = 31;
@@ -216,7 +249,7 @@ namespace AerolineaFrba.Generacion_Viaje
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(17, 50);
+            this.label6.Location = new System.Drawing.Point(20, 50);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(168, 13);
             this.label6.TabIndex = 29;
@@ -240,25 +273,25 @@ namespace AerolineaFrba.Generacion_Viaje
             this.groupBox3.Controls.Add(this.dtpFechaSalidaVuelo);
             this.groupBox3.Location = new System.Drawing.Point(17, 33);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(364, 110);
+            this.groupBox3.Size = new System.Drawing.Size(364, 91);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Datos del vuelo";
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // dtpFechaLlegadaEstimadaVuelo
             // 
             this.dtpFechaLlegadaEstimadaVuelo.CustomFormat = "dd/MM/yyy - HH:mm:ss";
             this.dtpFechaLlegadaEstimadaVuelo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFechaLlegadaEstimadaVuelo.Location = new System.Drawing.Point(158, 79);
+            this.dtpFechaLlegadaEstimadaVuelo.Location = new System.Drawing.Point(158, 64);
             this.dtpFechaLlegadaEstimadaVuelo.Name = "dtpFechaLlegadaEstimadaVuelo";
             this.dtpFechaLlegadaEstimadaVuelo.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaLlegadaEstimadaVuelo.TabIndex = 17;
+            this.dtpFechaLlegadaEstimadaVuelo.ValueChanged += new System.EventHandler(this.dtpFechaLlegadaEstimadaVuelo_ValueChanged);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(17, 85);
+            this.label11.Location = new System.Drawing.Point(17, 64);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(124, 13);
             this.label11.TabIndex = 15;
@@ -281,25 +314,17 @@ namespace AerolineaFrba.Generacion_Viaje
             this.dtpFechaSalidaVuelo.Name = "dtpFechaSalidaVuelo";
             this.dtpFechaSalidaVuelo.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaSalidaVuelo.TabIndex = 0;
+            this.dtpFechaSalidaVuelo.ValueChanged += new System.EventHandler(this.dtpFechaSalidaVuelo_ValueChanged);
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(454, 373);
+            this.btnGuardar.Location = new System.Drawing.Point(417, 384);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 15;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnLimpiar.Location = new System.Drawing.Point(360, 373);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.btnLimpiar.TabIndex = 14;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // Alta_Viaje
             // 
@@ -307,10 +332,8 @@ namespace AerolineaFrba.Generacion_Viaje
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.CancelButton = this.btnLimpiar;
             this.ClientSize = new System.Drawing.Size(542, 445);
             this.Controls.Add(this.btnGuardar);
-            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -320,7 +343,6 @@ namespace AerolineaFrba.Generacion_Viaje
             this.KeyPreview = true;
             this.Name = "Alta_Viaje";
             this.Text = "Generar viaje";
-            this.Load += new System.EventHandler(this.Alta_Viaje_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -356,6 +378,9 @@ namespace AerolineaFrba.Generacion_Viaje
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.Button btnLimpiar;
+        private Label lblMatriculaAeronave;
+        private Label label1;
+        private Label lblFabricanteAeronave;
+        private Label label4;
     }
 }

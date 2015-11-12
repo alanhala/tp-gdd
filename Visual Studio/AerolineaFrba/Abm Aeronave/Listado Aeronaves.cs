@@ -28,6 +28,7 @@ namespace AerolineaFrba.Abm_Aeronave
             aeronaves = new ObservableCollection<Aeronave>();
             this.cargarAeronaves();
             this.listadoAeronaves.DataSource = aeronaves;
+            listadoAeronaves.Columns["id"].Visible = false;
         }
 
         private void Listado_Aeronaves_Load(object sender, EventArgs e)
@@ -39,7 +40,7 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             string query = 
                 "SELECT aeronaves.id, matricula, modelo, kgs_disponibles, butacas_totales, fabricante , servicios.nombre AS tipo_servicio " +
-                "FROM JUST_DO_IT.aeronavesDisponibles('" + fecha_salida.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + fecha_estimada_llegada.ToString("yyyy-MM-dd hh:mm:ss") + "') AS aeronaves, JUST_DO_IT.TiposServicios AS servicios " +
+                "FROM JUST_DO_IT.aeronavesNoDisponibles('" + fecha_salida.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + fecha_estimada_llegada.ToString("yyyy-MM-dd hh:mm:ss") + "') AS aeronaves, JUST_DO_IT.TiposServicios AS servicios " +
                 "WHERE aeronaves.tipo_servicio = servicios.id " +
                 "ORDER BY aeronaves.id";
             SqlDataReader reader = Server.getInstance().query(query);
@@ -58,6 +59,13 @@ namespace AerolineaFrba.Abm_Aeronave
                 
             }
             reader.Close();
+        }
+
+        private void seleccionarAeronave_Click(object sender, EventArgs e)
+        {
+            Aeronave aeronave= (Aeronave)listadoAeronaves.CurrentRow.DataBoundItem;
+            owner.cargarLabelsAeronave(aeronave);
+            this.Close();
         }
     }
 }

@@ -59,7 +59,7 @@ namespace AerolineaFrba.Abm_Ruta
         private void seleccionarRuta_Click(object sender, EventArgs e)
         {
             Ruta ruta = (Ruta) listadoDeRutas.CurrentRow.DataBoundItem;
-            owner.cargarLabels(ruta);
+            owner.cargarLabelsRuta(ruta);
             this.Close();
         }
     }
