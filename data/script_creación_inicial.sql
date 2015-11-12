@@ -2,8 +2,8 @@ USE [GD2C2015]
 GO
 
 /****** Object:  Schema [JUST_DO_IT]    Script Date: 10/5/2015 3:43:38 PM ******/
-/*CREATE SCHEMA [JUST_DO_IT]
-GO*/
+--CREATE SCHEMA [JUST_DO_IT]
+GO
 
 /******DROP TABLES******/
 
@@ -74,6 +74,14 @@ GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.TiposServicios'))
 	drop table JUST_DO_IT.TiposServicios
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.MediosDePago'))
+	drop table JUST_DO_IT.MediosDePago
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.ButacasReservadas'))
+	drop table JUST_DO_IT.ButacasReservadas
 
 GO
 
@@ -153,9 +161,12 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarVuelo') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarVuelo;
 GO
 
-IF OBJECT_ID (N'JUST_DO_IT.butacaSLibres') IS NOT NULL
-    drop function JUST_DO_IT.butacaSLibres;
+IF OBJECT_ID (N'JUST_DO_IT.butacasLibres') IS NOT NULL
+    drop function JUST_DO_IT.butacasLibres;
 GO
+
+IF OBJECT_ID (N'JUST_DO_IT.reservarButaca') IS NOT NULL
+    drop procedure JUST_DO_IT.reservarButaca;
 
 /******CREACION DE TABLAS******/
 
@@ -324,13 +335,39 @@ CREATE TABLE JUST_DO_IT.Rol_Funcionalidad(
 )
 GO
 
+CREATE TABLE JUST_DO_IT.MediosDePago(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	nombre NVARCHAR(255) NOT NULL UNIQUE,
+	cuotas NUMERIC(18,0),
+	PRIMARY KEY (id)
+)
+
+GO
+
 CREATE TABLE JUST_DO_IT.Compras(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	fecha_devolucion DATETIME,
 	codigo_pasaje NUMERIC(18,0) NOT NULL,
 	motivo_cancelacion NVARCHAR(255),
+	medio_de_pago NUMERIC(18,0),
+	numero_tarjeta NUMERIC(18,0),
+	vencimiento NUMERIC(18,0),
+	codigo_seguridad NUMERIC(18,0),
+	cuotas NUMERIC(18,0),
 	PRIMARY KEY (id),
-	FOREIGN KEY (codigo_pasaje) REFERENCES JUST_DO_IT.Pasajes
+	FOREIGN KEY (codigo_pasaje) REFERENCES JUST_DO_IT.Pasajes,
+	FOREIGN KEY (medio_de_pago) REFERENCES JUST_DO_IT.MediosDePago
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.ButacasReservadas(
+	usuario_id NUMERIC(18,0),
+	butaca_id NUMERIC(18,0),
+	vuelo_id NUMERIC(18,0),
+	FOREIGN KEY (usuario_id) REFERENCES JUST_DO_IT.Usuarios,
+	FOREIGN KEY (butaca_id) REFERENCES JUST_DO_IT.Butacas,
+	FOREIGN KEY (vuelo_id) REFERENCES JUST_DO_IT.Vuelos
 )
 
 GO
@@ -414,6 +451,7 @@ INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimad
 				AND maestra.Aeronave_Matricula = aeronaves.matricula AND maestra.Aeronave_Fabricante = aeronaves.fabricante
 
 GO
+
 /******TABLAS AUXILIARES PARA EL PASAJE******/
 CREATE TABLE #temporalPasajes(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -490,7 +528,7 @@ INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
 
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
-	
+
 INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
 	SELECT DISTINCT maestra.Paquete_Codigo, maestra.Paquete_FechaCompra, maestra.Paquete_KG, maestra.Paquete_Precio, vuelos.id
 		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas, JUST_DO_IT.Aeronaves
@@ -505,23 +543,40 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.butacaSLibres(@Vuelo NUMERIC(18,0))
+INSERT INTO JUST_DO_IT.MediosDePago(nombre) VALUES('Efectivo');
+INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('VISA', 6);
+INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('Master Card', 1);
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.butacasLibres(@Vuelo NUMERIC(18,0))
 RETURNS TABLE
 AS RETURN
 	SELECT DISTINCT butacas.id id, butacas.numero numero, butacas.tipo tipo, butacas.aeronave_id aeronave
 		FROM JUST_DO_IT.Butacas butacas
 		JOIN JUST_DO_IT.Vuelos vuelos
 		ON vuelos.id = @Vuelo AND vuelos.aeronave_id = butacas.aeronave_id 
-		AND butacas.id NOT IN (SELECT pasajes.butaca
-								 FROM JUST_DO_IT.Pasajes pasajes
-								 WHERE pasajes.vuelo_id = @Vuelo)
-
+		AND NOT EXISTS (SELECT @Vuelo
+							FROM JUST_DO_IT.Pasajes pasajes
+							LEFT JOIN JUST_DO_IT.ButacasReservadas reservadas
+							ON pasajes.vuelo_id = reservadas.vuelo_id 
+							WHERE pasajes.vuelo_id = @Vuelo
+								AND (pasajes.butaca = butacas.id OR reservadas.butaca_id = butacas.id))
+								
 GO 
 
 UPDATE JUST_DO_IT.Vuelos 
 SET cantidadDisponible = (SELECT COUNT(butacas.numero) 
 						FROM JUST_DO_IT.butacasLibres(JUST_DO_IT.Vuelos.id) butacas
 						GROUP BY butacas.aeronave)
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.reservarButaca(@usuario NUMERIC(18,0), @vuelo NUMERIC(18,0), @butaca NUMERIC(18,0))
+AS BEGIN
+	INSERT INTO JUST_DO_IT.ButacasReservadas(usuario_id, vuelo_id, butaca_id)
+		VALUES(@usuario, @vuelo, @butaca)
+END
 
 GO
 

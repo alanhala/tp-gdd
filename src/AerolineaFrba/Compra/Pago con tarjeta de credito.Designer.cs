@@ -1,6 +1,6 @@
 ﻿namespace AerolineaFrba.Compra
 {
-    partial class Form5
+    partial class pagoTarjeta
     {
         /// <summary>
         /// Required designer variable.
@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form5));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pagoTarjeta));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cbCuotasDisponiblesTarjetaCredito = new System.Windows.Forms.ComboBox();
+            this.cmbCuotas = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.tbTipoTarjetaCredito = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.tbFechaVencimiento = new System.Windows.Forms.TextBox();
+            this.txtVencimiento = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.tbCodigoSeguridad = new System.Windows.Forms.TextBox();
+            this.txtCodigo = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.tbNumeroTarjetaCredito = new System.Windows.Forms.TextBox();
+            this.txtNumero = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.cmbTipo = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,15 +60,15 @@
             // groupBox2
             // 
             this.groupBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox2.BackgroundImage")));
-            this.groupBox2.Controls.Add(this.cbCuotasDisponiblesTarjetaCredito);
+            this.groupBox2.Controls.Add(this.cmbTipo);
+            this.groupBox2.Controls.Add(this.cmbCuotas);
             this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.tbTipoTarjetaCredito);
             this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.tbFechaVencimiento);
+            this.groupBox2.Controls.Add(this.txtVencimiento);
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.tbCodigoSeguridad);
+            this.groupBox2.Controls.Add(this.txtCodigo);
             this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.tbNumeroTarjetaCredito);
+            this.groupBox2.Controls.Add(this.txtNumero);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Location = new System.Drawing.Point(58, 66);
             this.groupBox2.Name = "groupBox2";
@@ -77,13 +77,13 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos de la Tarjeta de Crédito";
             // 
-            // cbCuotasDisponiblesTarjetaCredito
+            // cmbCuotas
             // 
-            this.cbCuotasDisponiblesTarjetaCredito.FormattingEnabled = true;
-            this.cbCuotasDisponiblesTarjetaCredito.Location = new System.Drawing.Point(223, 122);
-            this.cbCuotasDisponiblesTarjetaCredito.Name = "cbCuotasDisponiblesTarjetaCredito";
-            this.cbCuotasDisponiblesTarjetaCredito.Size = new System.Drawing.Size(127, 21);
-            this.cbCuotasDisponiblesTarjetaCredito.TabIndex = 41;
+            this.cmbCuotas.FormattingEnabled = true;
+            this.cmbCuotas.Location = new System.Drawing.Point(223, 122);
+            this.cmbCuotas.Name = "cmbCuotas";
+            this.cmbCuotas.Size = new System.Drawing.Size(127, 21);
+            this.cmbCuotas.TabIndex = 41;
             // 
             // label13
             // 
@@ -94,13 +94,6 @@
             this.label13.TabIndex = 40;
             this.label13.Text = "Cuotas Disponibles";
             // 
-            // tbTipoTarjetaCredito
-            // 
-            this.tbTipoTarjetaCredito.Location = new System.Drawing.Point(222, 97);
-            this.tbTipoTarjetaCredito.Name = "tbTipoTarjetaCredito";
-            this.tbTipoTarjetaCredito.Size = new System.Drawing.Size(128, 20);
-            this.tbTipoTarjetaCredito.TabIndex = 39;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -110,12 +103,12 @@
             this.label12.TabIndex = 38;
             this.label12.Text = "Tipo de Tarjeta";
             // 
-            // tbFechaVencimiento
+            // txtVencimiento
             // 
-            this.tbFechaVencimiento.Location = new System.Drawing.Point(222, 72);
-            this.tbFechaVencimiento.Name = "tbFechaVencimiento";
-            this.tbFechaVencimiento.Size = new System.Drawing.Size(128, 20);
-            this.tbFechaVencimiento.TabIndex = 37;
+            this.txtVencimiento.Location = new System.Drawing.Point(222, 72);
+            this.txtVencimiento.Name = "txtVencimiento";
+            this.txtVencimiento.Size = new System.Drawing.Size(128, 20);
+            this.txtVencimiento.TabIndex = 37;
             // 
             // label9
             // 
@@ -126,12 +119,12 @@
             this.label9.TabIndex = 36;
             this.label9.Text = "Fecha de Vencimiento";
             // 
-            // tbCodigoSeguridad
+            // txtCodigo
             // 
-            this.tbCodigoSeguridad.Location = new System.Drawing.Point(222, 47);
-            this.tbCodigoSeguridad.Name = "tbCodigoSeguridad";
-            this.tbCodigoSeguridad.Size = new System.Drawing.Size(128, 20);
-            this.tbCodigoSeguridad.TabIndex = 35;
+            this.txtCodigo.Location = new System.Drawing.Point(222, 47);
+            this.txtCodigo.Name = "txtCodigo";
+            this.txtCodigo.Size = new System.Drawing.Size(128, 20);
+            this.txtCodigo.TabIndex = 35;
             // 
             // label10
             // 
@@ -142,12 +135,12 @@
             this.label10.TabIndex = 34;
             this.label10.Text = "Código de Seguridad";
             // 
-            // tbNumeroTarjetaCredito
+            // txtNumero
             // 
-            this.tbNumeroTarjetaCredito.Location = new System.Drawing.Point(222, 22);
-            this.tbNumeroTarjetaCredito.Name = "tbNumeroTarjetaCredito";
-            this.tbNumeroTarjetaCredito.Size = new System.Drawing.Size(128, 20);
-            this.tbNumeroTarjetaCredito.TabIndex = 33;
+            this.txtNumero.Location = new System.Drawing.Point(222, 22);
+            this.txtNumero.Name = "txtNumero";
+            this.txtNumero.Size = new System.Drawing.Size(128, 20);
+            this.txtNumero.TabIndex = 33;
             // 
             // label11
             // 
@@ -166,6 +159,7 @@
             this.btnAceptar.TabIndex = 30;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnLimpiar
             // 
@@ -176,7 +170,16 @@
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
-            // Form5
+            // cmbTipo
+            // 
+            this.cmbTipo.FormattingEnabled = true;
+            this.cmbTipo.Location = new System.Drawing.Point(222, 98);
+            this.cmbTipo.Name = "cmbTipo";
+            this.cmbTipo.Size = new System.Drawing.Size(127, 21);
+            this.cmbTipo.TabIndex = 42;
+            this.cmbTipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipo_SelectedIndexChanged);
+            // 
+            // pagoTarjeta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -186,8 +189,9 @@
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
-            this.Name = "Form5";
+            this.Name = "pagoTarjeta";
             this.Text = "Pago con Tarjeta de Crédito";
+            this.Load += new System.EventHandler(this.pagoTarjeta_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -199,17 +203,17 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox cbCuotasDisponiblesTarjetaCredito;
+        private System.Windows.Forms.ComboBox cmbCuotas;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox tbTipoTarjetaCredito;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox tbFechaVencimiento;
+        private System.Windows.Forms.TextBox txtVencimiento;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tbCodigoSeguridad;
+        private System.Windows.Forms.TextBox txtCodigo;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox tbNumeroTarjetaCredito;
+        private System.Windows.Forms.TextBox txtNumero;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.ComboBox cmbTipo;
     }
 }

@@ -14,8 +14,7 @@ namespace AerolineaFrba.Compra
     {
         private int vuelo_id;
         private float costo_viaje;
-        private List<int> usuarios;
-        public List<int> butacas;
+        private int cantidadPasajeros;
 
         public Pasajeros() { }
         public Pasajeros(int id, float costo)
@@ -23,15 +22,15 @@ namespace AerolineaFrba.Compra
             InitializeComponent();
             this.vuelo_id = id;
             this.costo_viaje = costo;
-            this.usuarios = new List<int>();
-            this.butacas = new List<int>();
+            this.cantidadPasajeros = 0;
         }
 
         public void agregarPasajero(string usuario, int usuario_id, string butaca)
         {
             lstPasajeros.Items.Add(usuario);
-            this.usuarios.Add(usuario_id);
-            this.butacas.Add(int.Parse(butaca));
+            this.cantidadPasajeros++;
+            string query = "EXEC JUST_DO_IT.reservarButaca " + usuario_id + ", " + this.vuelo_id + ", " + butaca;
+            Server.getInstance().realizarQuery(query);
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -39,6 +38,18 @@ namespace AerolineaFrba.Compra
             new AgregarPasajero(this.vuelo_id, this).Show();
         }
 
+        private void btnContinuar_Click(object sender, EventArgs e)
+        {
+            new Pagar(this.vuelo_id, this.costo_viaje * this.cantidadPasajeros).Show();
+            this.Hide();
+        }
 
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            string query = "DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id=" + this.vuelo_id;
+            Server.getInstance().realizarQuery(query);
+            new compraPasaje().Show();
+            this.Hide();
+        }
     }
 }

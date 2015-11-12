@@ -240,7 +240,7 @@
             // 
             // btnSoyCliente
             // 
-            this.btnSoyCliente.Location = new System.Drawing.Point(143, 281);
+            this.btnSoyCliente.Location = new System.Drawing.Point(132, 281);
             this.btnSoyCliente.Name = "btnSoyCliente";
             this.btnSoyCliente.Size = new System.Drawing.Size(121, 23);
             this.btnSoyCliente.TabIndex = 24;

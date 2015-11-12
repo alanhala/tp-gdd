@@ -44,11 +44,9 @@ namespace AerolineaFrba.Compra
             {
                 item = new ComboBoxItem();
                 item.Value = respuesta["id"].ToString();
-                if (!this.form_pasajeros.butacas.Contains(int.Parse(item.Value.ToString()))){
-                    item.Value = respuesta["id"].ToString();
-                    item.Text = respuesta["numero"].ToString() + " - " + respuesta["tipo"].ToString();
-                    cmbButacas.Items.Add (item);
-                }
+                item.Value = respuesta["id"].ToString();
+                item.Text = respuesta["numero"].ToString() + " - " + respuesta["tipo"].ToString();
+                cmbButacas.Items.Add (item);
             }
             item.bindCombobox(cmbButacas);
             respuesta.Close();
@@ -66,11 +64,8 @@ namespace AerolineaFrba.Compra
             this.txtApellidoPasajero.Text = apellido;
             this.txtApellidoPasajero.Enabled = false;
             this.txtDireccionPasajero.Text = direccion;
-            this.txtDireccionPasajero.Enabled = false;
             this.txtTelefonoPasajero.Text = telefono;
-            this.txtTelefonoPasajero.Enabled = false;
             this.txtMailPasajero.Text = mail;
-            this.txtMailPasajero.Enabled = false;
             this.dtpFechaNacimientoPasajero.Text = fecha;
             this.dtpFechaNacimientoPasajero.Enabled = false;
         }
