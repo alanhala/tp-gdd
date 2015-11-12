@@ -15,7 +15,7 @@ namespace AerolineaFrba.Compra
         private int vuelo_id;
         private float costo_viaje;
         private List<int> usuarios;
-        private List<int> butacas;
+        public List<int> butacas;
 
         public Pasajeros() { }
         public Pasajeros(int id, float costo)

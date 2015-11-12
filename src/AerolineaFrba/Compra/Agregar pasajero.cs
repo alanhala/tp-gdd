@@ -38,15 +38,19 @@ namespace AerolineaFrba.Compra
             Server server = Server.getInstance();
             string queryCombo = "SELECT id, numero, tipo FROM JUST_DO_IT.butacasLibres(" + this.vuelo_id + ") ORDER BY numero";
             respuesta = server.query(queryCombo);
-            ComboBoxItem item = new ComboBoxItem();
-            item.bindCombobox(cmbButacas);
+            ComboBoxItem item;
+            item = new ComboBoxItem();
             while (respuesta.Read())
             {
+                item = new ComboBoxItem();
                 item.Value = respuesta["id"].ToString();
-                item.Text = respuesta["numero"].ToString() + " - " + respuesta["tipo"].ToString();
-                cmbButacas.Items.Add (item);
+                if (!this.form_pasajeros.butacas.Contains(int.Parse(item.Value.ToString()))){
+                    item.Value = respuesta["id"].ToString();
+                    item.Text = respuesta["numero"].ToString() + " - " + respuesta["tipo"].ToString();
+                    cmbButacas.Items.Add (item);
+                }
             }
-
+            item.bindCombobox(cmbButacas);
             respuesta.Close();
         }
 
