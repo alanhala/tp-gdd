@@ -29,21 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BajaFinVidaUtil));
-            this.tbNumeroMatricula = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnDarDeBaja = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbMatricula = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tbNumeroMatricula
-            // 
-            this.tbNumeroMatricula.Location = new System.Drawing.Point(128, 37);
-            this.tbNumeroMatricula.Name = "tbNumeroMatricula";
-            this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
-            this.tbNumeroMatricula.TabIndex = 35;
-            this.tbNumeroMatricula.TextChanged += new System.EventHandler(this.tbNumeroMatricula_TextChanged);
             // 
             // label1
             // 
@@ -78,7 +70,7 @@
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.tbNumeroMatricula);
+            this.groupBox1.Controls.Add(this.cbMatricula);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(31, 17);
             this.groupBox1.Name = "groupBox1";
@@ -86,6 +78,14 @@
             this.groupBox1.TabIndex = 54;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
+            // 
+            // cbMatricula
+            // 
+            this.cbMatricula.FormattingEnabled = true;
+            this.cbMatricula.Location = new System.Drawing.Point(128, 37);
+            this.cbMatricula.Name = "cbMatricula";
+            this.cbMatricula.Size = new System.Drawing.Size(121, 21);
+            this.cbMatricula.TabIndex = 21;
             // 
             // BajaFinVidaUtil
             // 
@@ -98,6 +98,7 @@
             this.Controls.Add(this.btnDarDeBaja);
             this.Name = "BajaFinVidaUtil";
             this.Text = "Suspender Aeronave por fin de vida útil";
+            this.Load += new System.EventHandler(this.BajaFinVidaUtil_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -106,10 +107,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox tbNumeroMatricula;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnDarDeBaja;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox cbMatricula;
     }
 }
