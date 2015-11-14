@@ -14,7 +14,6 @@ namespace AerolineaFrba.Compra
     {
         private int vuelo_id;
         private float costo_viaje;
-        private int cantidadPasajeros;
 
         public Pasajeros() { }
         public Pasajeros(int id, float costo)
@@ -22,13 +21,11 @@ namespace AerolineaFrba.Compra
             InitializeComponent();
             this.vuelo_id = id;
             this.costo_viaje = costo;
-            this.cantidadPasajeros = 0;
         }
 
         public void agregarPasajero(string usuario, int usuario_id, string butaca)
         {
             lstPasajeros.Items.Add(usuario);
-            this.cantidadPasajeros++;
             string query = "EXEC JUST_DO_IT.reservarButaca " + usuario_id + ", " + this.vuelo_id + ", " + butaca;
             Server.getInstance().realizarQuery(query);
         }
@@ -40,7 +37,7 @@ namespace AerolineaFrba.Compra
 
         private void btnContinuar_Click(object sender, EventArgs e)
         {
-            new Pagar(this.vuelo_id, this.costo_viaje * this.cantidadPasajeros).Show();
+            new Pagar(this.vuelo_id, this.costo_viaje).Show();
             this.Hide();
         }
 

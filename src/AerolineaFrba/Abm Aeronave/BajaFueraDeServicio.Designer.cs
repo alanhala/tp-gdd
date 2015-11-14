@@ -32,12 +32,12 @@
             this.btnDarDeBaja = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbNumeroMatricula = new System.Windows.Forms.TextBox();
             this.dtpFechaFueraServicio = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpFechaReinicioServicio = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbMatricula = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +65,7 @@
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.tbNumeroMatricula);
+            this.groupBox1.Controls.Add(this.cbMatricula);
             this.groupBox1.Controls.Add(this.dtpFechaFueraServicio);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.dtpFechaReinicioServicio);
@@ -78,14 +78,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // tbNumeroMatricula
-            // 
-            this.tbNumeroMatricula.Location = new System.Drawing.Point(131, 30);
-            this.tbNumeroMatricula.Name = "tbNumeroMatricula";
-            this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
-            this.tbNumeroMatricula.TabIndex = 35;
-            this.tbNumeroMatricula.TextChanged += new System.EventHandler(this.tbNumeroMatricula_TextChanged);
             // 
             // dtpFechaFueraServicio
             // 
@@ -135,6 +127,14 @@
             this.label5.TabIndex = 24;
             this.label5.Text = "Fecha de fuera de servicio";
             // 
+            // cbMatricula
+            // 
+            this.cbMatricula.FormattingEnabled = true;
+            this.cbMatricula.Location = new System.Drawing.Point(131, 30);
+            this.cbMatricula.Name = "cbMatricula";
+            this.cbMatricula.Size = new System.Drawing.Size(121, 21);
+            this.cbMatricula.TabIndex = 34;
+            // 
             // BajaFueraDeServicio
             // 
             this.AcceptButton = this.btnDarDeBaja;
@@ -162,12 +162,12 @@
         private System.Windows.Forms.Button btnDarDeBaja;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tbNumeroMatricula;
         private System.Windows.Forms.DateTimePicker dtpFechaFueraServicio;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dtpFechaReinicioServicio;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbMatricula;
 
     }
 }

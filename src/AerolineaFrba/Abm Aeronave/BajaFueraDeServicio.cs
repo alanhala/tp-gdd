@@ -40,10 +40,16 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Server server = Server.getInstance();
-            string bajaAeronave = "UPDATE JUST_DO_IT.Aeronaves SET baja_fuera_servicio = 1, fecha_fuera_servicio = '" + dtpFechaFueraServicio.Value.ToString("yyyy-dd-MM") + "' , fecha_reinicio_servicio = '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "' WHERE matricula = '" + tbNumeroMatricula.Text + "'";
-            server.query(bajaAeronave);
-            server.closeReader();
+            
+            try
+            {
+                Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_fuera_servicio = 1, fecha_fuera_servicio = '" + dtpFechaFueraServicio.Value.ToString("yyyy-dd-MM") + "' , fecha_reinicio_servicio = '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "' WHERE matricula = '" + cbMatricula.Text + "'");
+                MessageBox.Show("La aeronave se dió de baja satisfactoriamente");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -53,7 +59,7 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void Baja_Load(object sender, EventArgs e)
         {
-
+            Commons.getInstance().cargarComboBoxOrderBy("Aeronaves", "matricula", cbMatricula);
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

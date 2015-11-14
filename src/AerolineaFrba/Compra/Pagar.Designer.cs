@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pagar));
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dtpFechaNacimientoPasajero = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
@@ -52,21 +51,11 @@
             this.btnFinalizar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnSoyCliente = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblCosto = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
-            this.label1.Location = new System.Drawing.Point(146, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 22);
-            this.label1.TabIndex = 25;
-            this.label1.Text = "Pagar:";
             // 
             // groupBox1
             // 
@@ -252,6 +241,7 @@
             this.btnFinalizar.TabIndex = 33;
             this.btnFinalizar.Text = "Finalizar";
             this.btnFinalizar.UseVisualStyleBackColor = true;
+            this.btnFinalizar.Click += new System.EventHandler(this.btnFinalizar_Click);
             // 
             // btnLimpiar
             // 
@@ -271,6 +261,17 @@
             this.btnSoyCliente.Text = "Ya soy cliente";
             this.btnSoyCliente.UseVisualStyleBackColor = true;
             this.btnSoyCliente.Click += new System.EventHandler(this.btnSoyCliente_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
+            this.label1.Location = new System.Drawing.Point(146, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 22);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "Pagar:";
             // 
             // lblCosto
             // 
@@ -308,7 +309,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DateTimePicker dtpFechaNacimientoPasajero;
         private System.Windows.Forms.Label label8;
@@ -331,6 +331,7 @@
         private System.Windows.Forms.Button btnFinalizar;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnSoyCliente;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblCosto;
     }
 }

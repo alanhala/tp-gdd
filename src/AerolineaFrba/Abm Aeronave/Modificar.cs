@@ -29,7 +29,7 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.cargarDatos(); 
+            this.cargarDatos();
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -27,10 +27,11 @@ namespace AerolineaFrba.Compra
         {
             if (txtNumero.Text.Length == 16 && txtCodigo.Text.Length > 0 && txtVencimiento.Text.Length == 4)
             {
-                this.form_pago.cargarDatos(int.Parse(txtNumero.Text),
+                this.form_pago.cargarDatosTarjeta(txtNumero.Text,
                                            int.Parse(txtCodigo.Text),
                                            int.Parse(txtVencimiento.Text),
                                            int.Parse(cmbCuotas.Text));
+                this.Hide();
             }
             else
             {

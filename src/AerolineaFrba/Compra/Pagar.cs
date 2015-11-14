@@ -15,6 +15,12 @@ namespace AerolineaFrba.Compra
         private int vuelo_id;
         private float costo_viaje;
         private int usuario_id;
+        private string numero;
+        private int codigo;
+        private int vencimiento;
+        private int cuotas;
+        private bool tarjeta;
+        private bool soyCliente;
 
         public Pagar()
         {
@@ -26,6 +32,7 @@ namespace AerolineaFrba.Compra
             this.vuelo_id = vuelo_id;
             this.costo_viaje = costo_viaje;
             lblCosto.Text = this.costo_viaje.ToString();
+            this.soyCliente = false;
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -53,6 +60,8 @@ namespace AerolineaFrba.Compra
             this.txtMailPasajero.Text = mail;
             this.dtpFechaNacimientoPasajero.Text = fecha;
             this.dtpFechaNacimientoPasajero.Enabled = false;
+
+            this.soyCliente = true;
         }
 
         private void btnPagaConTarjeta_Click(object sender, EventArgs e)
@@ -60,9 +69,37 @@ namespace AerolineaFrba.Compra
             new pagoTarjeta(this).Show();
         }
 
-        internal void cargarDatos(int numero, int codigo, int vencimiento, int cuotas)
+        internal void cargarDatosTarjeta(string numero, int codigo, int vencimiento, int cuotas)
         {
-            
+            this.numero = numero;
+            this.codigo = codigo;
+            this.vencimiento = vencimiento;
+            this.cuotas = cuotas;
+            this.tarjeta = true;
+        }
+
+        private void btnFinalizar_Click(object sender, EventArgs e)
+        {
+            if (!this.soyCliente)
+            {
+                MessageBox.Show("El alta de usuario no era requerida, ingrese en soy cliente y entre con uno existente");
+            }
+            else
+            {
+                try
+                {
+                    string query = "EXEC JUST_DO_IT.almacenarPasaje " + this.vuelo_id + ", " + this.costo_viaje + ", " +
+                                    this.usuario_id + ", " + this.numero + ", " + this.codigo + ", " + this.vencimiento + ", " + this.cuotas;
+                    Server.getInstance().realizarQuery(query);
+                    MessageBox.Show("El pasaje ha sido almacenado");
+                    new Vistas_Inicio.Inicio_Admin().Show();
+                    this.Hide();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

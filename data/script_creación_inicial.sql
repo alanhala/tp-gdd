@@ -37,6 +37,11 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Pa
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.ButacasReservadas'))
+	drop table JUST_DO_IT.ButacasReservadas
+
+GO
+
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Butacas'))
 	drop table JUST_DO_IT.Butacas
 
@@ -79,9 +84,6 @@ GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.MediosDePago'))
 	drop table JUST_DO_IT.MediosDePago
-
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.ButacasReservadas'))
-	drop table JUST_DO_IT.ButacasReservadas
 
 GO
 
@@ -167,6 +169,9 @@ GO
 
 IF OBJECT_ID (N'JUST_DO_IT.reservarButaca') IS NOT NULL
     drop procedure JUST_DO_IT.reservarButaca;
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarPasaje') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarPasaje;
 
 /******CREACION DE TABLAS******/
 
@@ -278,8 +283,8 @@ CREATE TABLE JUST_DO_IT.Butacas(
 GO
 
 CREATE TABLE JUST_DO_IT.Pasajes(
-	codigo NUMERIC(18,0),
-	precio NUMERIC(18,0) NOT NULL,
+	codigo NUMERIC(18,0) IDENTITY(1,1),
+	precio NUMERIC(18,2) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
 	pasajero NUMERIC(18,0) NOT NULL,
@@ -291,6 +296,8 @@ CREATE TABLE JUST_DO_IT.Pasajes(
 	FOREIGN KEY (pasajero) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios
 )
+
+SET IDENTITY_INSERT JUST_DO_IT.Pasajes ON
 
 GO
 
@@ -346,16 +353,17 @@ GO
 
 CREATE TABLE JUST_DO_IT.Compras(
 	id NUMERIC(18,0) IDENTITY(1,1),
+	comprador NUMERIC(18,0),
 	fecha_devolucion DATETIME,
-	codigo_pasaje NUMERIC(18,0) NOT NULL,
 	motivo_cancelacion NVARCHAR(255),
+	monto NUMERIC(18,2),
 	medio_de_pago NUMERIC(18,0),
 	numero_tarjeta NUMERIC(18,0),
 	vencimiento NUMERIC(18,0),
 	codigo_seguridad NUMERIC(18,0),
 	cuotas NUMERIC(18,0),
 	PRIMARY KEY (id),
-	FOREIGN KEY (codigo_pasaje) REFERENCES JUST_DO_IT.Pasajes,
+	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (medio_de_pago) REFERENCES JUST_DO_IT.MediosDePago
 )
 
@@ -571,6 +579,34 @@ SET cantidadDisponible = (SELECT COUNT(butacas.numero)
 						GROUP BY butacas.aeronave)
 
 GO
+CREATE PROCEDURE JUST_DO_IT.almacenarPasaje(@Vuelo NUMERIC(18,0), @Costo NUMERIC(18,2), @Comprador NUMERIC(18,0),
+											@NumeroTarjeta NUMERIC(18,0), @CodigoTarjeta NUMERIC(18,0),
+											@VencimientoTarjeta NUMERIC(18,0), @Cuotas NUMERIC(18,0))
+AS BEGIN
+	BEGIN TRANSACTION almacenarPasaje
+	BEGIN TRY
+		INSERT INTO JUST_DO_IT.Pasajes(vuelo_id, comprador, fecha_compra, precio, pasajero, butaca)
+			SELECT @Vuelo, @Comprador, GETDATE(), @Costo, reservadas.usuario_id, reservadas.butaca_id
+				FROM JUST_DO_IT.ButacasReservadas reservadas
+					WHERE reservadas.vuelo_id = @Vuelo
+
+		DECLARE @CantidadPasajes INT
+		SELECT @CantidadPasajes = COUNT(*) FROM JUST_DO_IT.ButacasReservadas 
+							WHERE vuelo_id = @Vuelo GROUP BY vuelo_id
+
+		DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
+
+		INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, numero_tarjeta, codigo_seguridad, vencimiento, cuotas)
+			VALUES(@Comprador, 2, @Costo * @CantidadPasajes, @NumeroTarjeta, @CodigoTarjeta, @VencimientoTarjeta, @Cuotas)
+		COMMIT TRANSACTION almacenarPasaje	
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION almacenarPasaje
+		RAISERROR('El pasaje no pudo ser almacenado',16,217) WITH SETERROR
+	END CATCH	
+END 
+
+GO
 
 CREATE PROCEDURE JUST_DO_IT.reservarButaca(@usuario NUMERIC(18,0), @vuelo NUMERIC(18,0), @butaca NUMERIC(18,0))
 AS BEGIN
@@ -771,3 +807,4 @@ AS BEGIN
 END
 
 GO
+

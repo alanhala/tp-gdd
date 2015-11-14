@@ -24,7 +24,16 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void btnDarDeBaja_Click(object sender, EventArgs e)
         {
-            new Server().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '" + tbNumeroMatricula.Text + "'");
+
+            try
+            {
+                Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '" + cbMatricula.Text + "'");
+                MessageBox.Show("La aeronave se dió de baja satisfactoriamente");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             this.chequearYProcederFrenteARutasProgramadas();
         }
 
@@ -34,6 +43,11 @@ namespace AerolineaFrba.Abm_Aeronave
         }
         private void chequearYProcederFrenteARutasProgramadas() {
 
+        }
+
+        private void BajaFinVidaUtil_Load(object sender, EventArgs e)
+        {
+            Commons.getInstance().cargarComboBoxOrderBy("Aeronaves", "matricula", cbMatricula);
         }
     }
 }
