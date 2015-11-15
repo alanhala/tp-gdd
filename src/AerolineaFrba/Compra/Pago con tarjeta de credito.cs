@@ -28,9 +28,10 @@ namespace AerolineaFrba.Compra
             if (txtNumero.Text.Length == 16 && txtCodigo.Text.Length > 0 && txtVencimiento.Text.Length == 4)
             {
                 this.form_pago.cargarDatosTarjeta(txtNumero.Text,
-                                           int.Parse(txtCodigo.Text),
-                                           int.Parse(txtVencimiento.Text),
-                                           int.Parse(cmbCuotas.Text));
+                                                  txtCodigo.Text,
+                                                  txtVencimiento.Text,
+                                                  cmbCuotas.Text,
+                                                  cmbTipo.Text);
                 this.Hide();
             }
             else
@@ -41,12 +42,11 @@ namespace AerolineaFrba.Compra
 
         private void pagoTarjeta_Load(object sender, EventArgs e)
         {
-            string query = "SELECT nombre FROM JUST_DO_IT.MediosDePago";
+            string query = "SELECT nombre FROM JUST_DO_IT.MediosDePago WHERE nombre <> 'Efectivo'";
             SqlDataReader reader =  Server.getInstance().query(query);
             while (reader.Read())
             {
-                if(!(reader["nombre"].ToString() == "Efectivo"))
-                    cmbTipo.Items.Add(reader["nombre"].ToString());
+                cmbTipo.Items.Add(reader["nombre"].ToString());
             }
             reader.Close();
             cmbTipo.SelectedIndex = 0;

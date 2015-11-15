@@ -83,10 +83,18 @@ namespace AerolineaFrba.Compra
                MessageBox.Show("Debe seleccionar una butaca");
            else
            {
-               this.form_pasajeros.agregarPasajero(txtApellidoPasajero.Text + ", " + txtNombrePasajero.Text,
-                                                   this.usuario_id,
-                                                   ((ComboBoxItem)cmbButacas.SelectedItem).Value.ToString());
-               this.Hide();
+               if (this.txtMailPasajero.Text == "" || this.txtDireccionPasajero.Text == "" || this.txtTelefonoPasajero.Text == "")
+                   MessageBox.Show("Debe completar todos los campos");
+               else
+               {
+                   string query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", " + this.txtMailPasajero.Text + ", "
+                                   + this.txtDireccionPasajero.Text + ", " + this.txtTelefonoPasajero.Text;
+                   Server.getInstance().realizarQuery(query);
+                   this.form_pasajeros.agregarPasajero(txtApellidoPasajero.Text + ", " + txtNombrePasajero.Text,
+                                                       this.usuario_id,
+                                                       ((ComboBoxItem)cmbButacas.SelectedItem).Value.ToString());
+                   this.Hide();
+               }
            }
 
         }

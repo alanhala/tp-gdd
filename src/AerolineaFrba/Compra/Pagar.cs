@@ -16,11 +16,13 @@ namespace AerolineaFrba.Compra
         private float costo_viaje;
         private int usuario_id;
         private string numero;
-        private int codigo;
-        private int vencimiento;
-        private int cuotas;
-        private bool tarjeta;
+        private string codigo;
+        private string vencimiento;
+        private string cuotas;
+        private string tipo;
+        private bool efectivo;
         private bool soyCliente;
+        private bool cargoPago;
 
         public Pagar()
         {
@@ -33,6 +35,14 @@ namespace AerolineaFrba.Compra
             this.costo_viaje = costo_viaje;
             lblCosto.Text = this.costo_viaje.ToString();
             this.soyCliente = false;
+            this.cargoPago = false;
+            this.efectivo = false;
+
+            this.numero = "NULL";
+            this.codigo = "NULL";
+            this.vencimiento = "NULL";
+            this.cuotas = "1";
+            this.tipo = "NULL";
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -69,13 +79,15 @@ namespace AerolineaFrba.Compra
             new pagoTarjeta(this).Show();
         }
 
-        internal void cargarDatosTarjeta(string numero, int codigo, int vencimiento, int cuotas)
+        internal void cargarDatosTarjeta(string numero, string codigo, string vencimiento, string cuotas, string tipo)
         {
             this.numero = numero;
             this.codigo = codigo;
             this.vencimiento = vencimiento;
             this.cuotas = cuotas;
-            this.tarjeta = true;
+            this.tipo = tipo;
+            this.cargoPago = true;
+            this.btnPagaEnEfectivo.Enabled = false;
         }
 
         private void btnFinalizar_Click(object sender, EventArgs e)
@@ -84,22 +96,47 @@ namespace AerolineaFrba.Compra
             {
                 MessageBox.Show("El alta de usuario no era requerida, ingrese en soy cliente y entre con uno existente");
             }
-            else
+            else if (this.cargoPago)
             {
                 try
                 {
-                    string query = "EXEC JUST_DO_IT.almacenarPasaje " + this.vuelo_id + ", " + this.costo_viaje + ", " +
-                                    this.usuario_id + ", " + this.numero + ", " + this.codigo + ", " + this.vencimiento + ", " + this.cuotas;
-                    Server.getInstance().realizarQuery(query);
-                    MessageBox.Show("El pasaje ha sido almacenado");
-                    new Vistas_Inicio.Inicio_Admin().Show();
-                    this.Hide();
+                    string query;
+                    if (this.txtMailPasajero.Text == "" || this.txtDireccionPasajero.Text == "" || this.txtTelefonoPasajero.Text == "")
+                        MessageBox.Show("Debe completar todos los campos");
+                    else
+                    {
+                        query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", " + this.txtMailPasajero.Text + ", "
+                                   + this.txtDireccionPasajero.Text + ", " + this.txtTelefonoPasajero.Text;
+                        Server.getInstance().realizarQuery(query);
+                        int idMedioDePago;
+                        if (this.efectivo)
+                            idMedioDePago = MedioDePago.obtenerID("Efectivo");
+                        else
+                            idMedioDePago = MedioDePago.obtenerID(this.tipo);
+
+                        query = "EXEC JUST_DO_IT.almacenarPasaje " + this.vuelo_id + ", " + this.costo_viaje + ", " +
+                                        this.usuario_id + ", " + this.numero + ", " + this.codigo + ", " + this.vencimiento + ", " +
+                                        this.cuotas + ", " + idMedioDePago;
+                        Server.getInstance().realizarQuery(query);
+                        MessageBox.Show("El pasaje ha sido almacenado");
+                        new Vistas_Inicio.Inicio_Admin().Show();
+                        this.Hide();
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
+            else
+                MessageBox.Show("Debe elegir un medio de pago");
+        }
+
+        private void btnPagaEnEfectivo_Click(object sender, EventArgs e)
+        {
+            btnPagaConTarjeta.Enabled = false;
+            this.efectivo = true;
+            this.cargoPago = true;
         }
     }
 }

@@ -211,6 +211,7 @@
             this.btnPagaEnEfectivo.TabIndex = 28;
             this.btnPagaEnEfectivo.Text = "Efectivo";
             this.btnPagaEnEfectivo.UseVisualStyleBackColor = true;
+            this.btnPagaEnEfectivo.Click += new System.EventHandler(this.btnPagaEnEfectivo_Click);
             // 
             // groupBox2
             // 

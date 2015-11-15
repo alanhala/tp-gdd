@@ -37,8 +37,13 @@ namespace AerolineaFrba.Compra
 
         private void btnContinuar_Click(object sender, EventArgs e)
         {
-            new Pagar(this.vuelo_id, this.costo_viaje).Show();
-            this.Hide();
+            if (lstPasajeros.Items.Count == 0)
+                MessageBox.Show("Debe agregar algun pasajero");
+            else
+            {
+                new Pagar(this.vuelo_id, this.costo_viaje).Show();
+                this.Hide();
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

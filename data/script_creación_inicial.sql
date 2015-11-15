@@ -173,6 +173,9 @@ IF OBJECT_ID (N'JUST_DO_IT.reservarButaca') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.almacenarPasaje') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarPasaje;
 
+IF OBJECT_ID (N'JUST_DO_IT.actualizarUsuario') IS NOT NULL
+    drop procedure JUST_DO_IT.actualizarUsuario;
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -579,9 +582,19 @@ SET cantidadDisponible = (SELECT COUNT(butacas.numero)
 						GROUP BY butacas.aeronave)
 
 GO
+
+CREATE PROCEDURE JUST_DO_IT.actualizarUsuario(@Usuario NUMERIC(18,0), @Mail NVARCHAR(255), @Direccion NVARCHAR(255), @Telefono NUMERIC(18,0))
+AS BEGIN
+	UPDATE JUST_DO_IT.Usuarios
+		SET mail = @Mail, direccion = @Direccion, telefono = @Telefono
+		WHERE id = @Usuario
+END
+
+GO
 CREATE PROCEDURE JUST_DO_IT.almacenarPasaje(@Vuelo NUMERIC(18,0), @Costo NUMERIC(18,2), @Comprador NUMERIC(18,0),
 											@NumeroTarjeta NUMERIC(18,0), @CodigoTarjeta NUMERIC(18,0),
-											@VencimientoTarjeta NUMERIC(18,0), @Cuotas NUMERIC(18,0))
+											@VencimientoTarjeta NUMERIC(18,0), @Cuotas NUMERIC(18,0),
+											@MedioDePago NUMERIC(18,0))
 AS BEGIN
 	BEGIN TRANSACTION almacenarPasaje
 	BEGIN TRY
@@ -597,7 +610,7 @@ AS BEGIN
 		DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
 
 		INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, numero_tarjeta, codigo_seguridad, vencimiento, cuotas)
-			VALUES(@Comprador, 2, @Costo * @CantidadPasajes, @NumeroTarjeta, @CodigoTarjeta, @VencimientoTarjeta, @Cuotas)
+			VALUES(@Comprador, @MedioDePago, @Costo * @CantidadPasajes, @NumeroTarjeta, @CodigoTarjeta, @VencimientoTarjeta, @Cuotas)
 		COMMIT TRANSACTION almacenarPasaje	
 	END TRY
 	BEGIN CATCH
@@ -612,6 +625,19 @@ CREATE PROCEDURE JUST_DO_IT.reservarButaca(@usuario NUMERIC(18,0), @vuelo NUMERI
 AS BEGIN
 	INSERT INTO JUST_DO_IT.ButacasReservadas(usuario_id, vuelo_id, butaca_id)
 		VALUES(@usuario, @vuelo, @butaca)
+END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.IDMedioDePago(@Nombre varchar(255))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @id int;
+    SELECT @id = id
+	FROM JUST_DO_IT.MediosDePago 
+    WHERE nombre LIKE @Nombre
+    RETURN @id;
 END
 
 GO

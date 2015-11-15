@@ -155,6 +155,7 @@
       <DependentUpon>Canje.cs</DependentUpon>
     </Compile>
     <Compile Include="Ciudades.cs" />
+    <Compile Include="MedioDePago.cs" />
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="Compra\Pasajeros.cs">
       <SubType>Form</SubType>
