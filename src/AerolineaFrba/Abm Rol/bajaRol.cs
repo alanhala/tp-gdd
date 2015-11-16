@@ -23,7 +23,8 @@ namespace AerolineaFrba.Abm_Rol
             {
                 try
                 {
-                    string query_rol = "EXEC JUST_DO_IT.baja'" + tbNombre + "'";
+                    string nombre = tbNombre.Text;
+                    string query_rol = "EXEC JUST_DO_IT.bajaRol '" + nombre + "'";
                     Server.getInstance().realizarQuery(query_rol);
                     MessageBox.Show("El rol se ha dado de baja correctamente");
                 }

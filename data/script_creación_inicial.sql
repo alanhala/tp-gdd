@@ -241,7 +241,7 @@ GO
 CREATE TABLE JUST_DO_IT.Roles(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	nombre varchar(50) UNIQUE NOT NULL,
-	baja_rol BINARY,
+	baja_rol BIT,
 	PRIMARY KEY (id)
 )
 
@@ -789,8 +789,8 @@ GO
 CREATE PROCEDURE JUST_DO_IT.almacenarRol(@Nombre VARCHAR(50))
 AS BEGIN
 	BEGIN TRY
-		INSERT INTO JUST_DO_IT.Roles(nombre) 
-			VALUES(@Nombre)
+		INSERT INTO JUST_DO_IT.Roles(nombre, baja_rol) 
+			VALUES(@Nombre, 0)
 	END TRY
 	BEGIN CATCH
 		RAISERROR('El rol ingresado ya existe',16,217) WITH SETERROR
@@ -848,7 +848,9 @@ AS BEGIN
 	BEGIN TRY
 		UPDATE JUST_DO_IT.Roles
 			SET baja_rol = 1
-			WHERE Roles.nombre = @nombre
+			WHERE nombre = @nombre
+
+
 	END TRY
 	BEGIN CATCH
 		RAISERROR('Fallo la baja de rol',16,217) WITH SETERROR
@@ -857,5 +859,3 @@ AS BEGIN
 END 
 
 GO
-
-select * from JUST_DO_IT.Usuarios

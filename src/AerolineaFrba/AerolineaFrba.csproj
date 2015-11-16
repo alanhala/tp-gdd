@@ -123,6 +123,12 @@
     <Compile Include="Abm Rol\modificarRol.Designer.cs">
       <DependentUpon>modificarRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Rol\quitarFuncionalidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\quitarFuncionalidad.Designer.cs">
+      <DependentUpon>quitarFuncionalidad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Ruta\Alta Ruta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -302,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\modificarRol.resx">
       <DependentUpon>modificarRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\quitarFuncionalidad.resx">
+      <DependentUpon>quitarFuncionalidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Ruta\Alta Ruta.resx">
       <DependentUpon>Alta Ruta.cs</DependentUpon>
