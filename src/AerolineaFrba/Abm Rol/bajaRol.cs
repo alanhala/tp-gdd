@@ -17,12 +17,29 @@ namespace AerolineaFrba.Abm_Rol
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) //aceptar
         {
-
+            if (tbNombre.Text.Trim() != "")
+            {
+                try
+                {
+                    string query_rol = "EXEC JUST_DO_IT.baja'" + tbNombre + "'";
+                    Server.getInstance().realizarQuery(query_rol);
+                    MessageBox.Show("El rol se ha dado de baja correctamente");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // cancelar
+        {
+            this.Close();
+        }
+
+        private void tbNombre_TextChanged(object sender, EventArgs e)
         {
 
         }

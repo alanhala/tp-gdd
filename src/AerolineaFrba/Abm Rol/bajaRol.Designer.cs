@@ -34,18 +34,12 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbFuncionalidad3 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbFuncionalidad2 = new System.Windows.Forms.ComboBox();
-            this.cbFuncionalidad1 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(160, 225);
+            this.btnCancelar.Location = new System.Drawing.Point(160, 132);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 49;
@@ -55,7 +49,7 @@
             // 
             // btnQuitar
             // 
-            this.btnQuitar.Location = new System.Drawing.Point(255, 224);
+            this.btnQuitar.Location = new System.Drawing.Point(255, 131);
             this.btnQuitar.Name = "btnQuitar";
             this.btnQuitar.Size = new System.Drawing.Size(75, 23);
             this.btnQuitar.TabIndex = 48;
@@ -68,15 +62,9 @@
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.tbNombre);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad3);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad2);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad1);
             this.groupBox1.Location = new System.Drawing.Point(37, 33);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(269, 170);
+            this.groupBox1.Size = new System.Drawing.Size(269, 80);
             this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
@@ -87,6 +75,7 @@
             this.tbNombre.Name = "tbNombre";
             this.tbNombre.Size = new System.Drawing.Size(100, 20);
             this.tbNombre.TabIndex = 36;
+            this.tbNombre.TextChanged += new System.EventHandler(this.tbNombre_TextChanged);
             // 
             // label1
             // 
@@ -97,63 +86,12 @@
             this.label1.TabIndex = 32;
             this.label1.Text = "Nombre";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "Funcionalidad 1";
-            // 
-            // cbFuncionalidad3
-            // 
-            this.cbFuncionalidad3.FormattingEnabled = true;
-            this.cbFuncionalidad3.Location = new System.Drawing.Point(139, 124);
-            this.cbFuncionalidad3.Name = "cbFuncionalidad3";
-            this.cbFuncionalidad3.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad3.TabIndex = 49;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 95);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 13);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "Funcionalidad 2";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 124);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 13);
-            this.label4.TabIndex = 48;
-            this.label4.Text = "Funcionalidad 3";
-            // 
-            // cbFuncionalidad2
-            // 
-            this.cbFuncionalidad2.FormattingEnabled = true;
-            this.cbFuncionalidad2.Location = new System.Drawing.Point(139, 92);
-            this.cbFuncionalidad2.Name = "cbFuncionalidad2";
-            this.cbFuncionalidad2.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad2.TabIndex = 35;
-            // 
-            // cbFuncionalidad1
-            // 
-            this.cbFuncionalidad1.FormattingEnabled = true;
-            this.cbFuncionalidad1.Location = new System.Drawing.Point(139, 62);
-            this.cbFuncionalidad1.Name = "cbFuncionalidad1";
-            this.cbFuncionalidad1.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad1.TabIndex = 37;
-            // 
             // bajaRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(342, 260);
+            this.ClientSize = new System.Drawing.Size(342, 167);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnQuitar);
@@ -173,11 +111,5 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbFuncionalidad3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbFuncionalidad2;
-        private System.Windows.Forms.ComboBox cbFuncionalidad1;
     }
 }

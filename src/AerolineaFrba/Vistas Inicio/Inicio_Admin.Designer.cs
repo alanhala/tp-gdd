@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio_Admin));
             this.crearRol = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.modificarRol = new System.Windows.Forms.Button();
+            this.eliminarRol = new System.Windows.Forms.Button();
             this.altaRuta = new System.Windows.Forms.Button();
             this.bajaRuta = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -67,29 +67,31 @@
             this.crearRol.UseVisualStyleBackColor = false;
             this.crearRol.Click += new System.EventHandler(this.crearRol_Click);
             // 
-            // button3
+            // modificarRol
             // 
-            this.button3.BackColor = System.Drawing.Color.Orange;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(12, 79);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(178, 43);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Modificar Rol";
-            this.button3.UseVisualStyleBackColor = false;
+            this.modificarRol.BackColor = System.Drawing.Color.Orange;
+            this.modificarRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.modificarRol.ForeColor = System.Drawing.Color.White;
+            this.modificarRol.Location = new System.Drawing.Point(12, 79);
+            this.modificarRol.Name = "modificarRol";
+            this.modificarRol.Size = new System.Drawing.Size(178, 43);
+            this.modificarRol.TabIndex = 11;
+            this.modificarRol.Text = "Modificar Rol";
+            this.modificarRol.UseVisualStyleBackColor = false;
+            this.modificarRol.Click += new System.EventHandler(this.modificarRol_Click);
             // 
-            // button4
+            // eliminarRol
             // 
-            this.button4.BackColor = System.Drawing.Color.Orange;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(12, 140);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(178, 43);
-            this.button4.TabIndex = 12;
-            this.button4.Text = "Eliminar Rol";
-            this.button4.UseVisualStyleBackColor = false;
+            this.eliminarRol.BackColor = System.Drawing.Color.Orange;
+            this.eliminarRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eliminarRol.ForeColor = System.Drawing.Color.White;
+            this.eliminarRol.Location = new System.Drawing.Point(12, 140);
+            this.eliminarRol.Name = "eliminarRol";
+            this.eliminarRol.Size = new System.Drawing.Size(178, 43);
+            this.eliminarRol.TabIndex = 12;
+            this.eliminarRol.Text = "Eliminar Rol";
+            this.eliminarRol.UseVisualStyleBackColor = false;
+            this.eliminarRol.Click += new System.EventHandler(this.eliminarRol_Click);
             // 
             // altaRuta
             // 
@@ -356,8 +358,8 @@
             this.Controls.Add(this.altaAeronave);
             this.Controls.Add(this.bajaRuta);
             this.Controls.Add(this.altaRuta);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.eliminarRol);
+            this.Controls.Add(this.modificarRol);
             this.Controls.Add(this.crearRol);
             this.Name = "Inicio_Admin";
             this.Text = "Incorporar Aeronave";
@@ -369,8 +371,8 @@
         #endregion
 
         private System.Windows.Forms.Button crearRol;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button modificarRol;
+        private System.Windows.Forms.Button eliminarRol;
         private System.Windows.Forms.Button altaRuta;
         private System.Windows.Forms.Button bajaRuta;
         private System.Windows.Forms.Button button2;

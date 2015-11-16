@@ -167,6 +167,10 @@ IF OBJECT_ID (N'JUST_DO_IT.butacasLibres') IS NOT NULL
     drop function JUST_DO_IT.butacasLibres;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.IDMedioDePago') IS NOT NULL
+    drop function JUST_DO_IT.IDMedioDePago;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.reservarButaca') IS NOT NULL
     drop procedure JUST_DO_IT.reservarButaca;
 
@@ -175,6 +179,9 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarPasaje') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.actualizarUsuario') IS NOT NULL
     drop procedure JUST_DO_IT.actualizarUsuario;
+
+IF OBJECT_ID (N'JUST_DO_IT.bajaRol') IS NOT NULL
+    drop procedure JUST_DO_IT.bajaRol;
 
 /******CREACION DE TABLAS******/
 
@@ -234,6 +241,7 @@ GO
 CREATE TABLE JUST_DO_IT.Roles(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	nombre varchar(50) UNIQUE NOT NULL,
+	baja_rol BINARY,
 	PRIMARY KEY (id)
 )
 
@@ -834,3 +842,20 @@ END
 
 GO
 
+
+CREATE PROCEDURE JUST_DO_IT.bajaRol(@nombre VARCHAR(50))
+AS BEGIN
+	BEGIN TRY
+		UPDATE JUST_DO_IT.Roles
+			SET baja_rol = 1
+			WHERE Roles.nombre = @nombre
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Fallo la baja de rol',16,217) WITH SETERROR
+	END CATCH
+
+END 
+
+GO
+
+select * from JUST_DO_IT.Usuarios

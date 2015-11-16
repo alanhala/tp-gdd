@@ -96,5 +96,17 @@ namespace AerolineaFrba.Vistas_Inicio
         {
             new Abm_Rol.altaRol().Show();
         }
+
+        private void modificarRol_Click(object sender, EventArgs e)
+        {
+            new Abm_Rol.ModificarRol().Show();
+        }
+
+        private void eliminarRol_Click(object sender, EventArgs e)
+        {
+            new Abm_Rol.bajaRol().Show();
+        }
+
+
     }
 }
