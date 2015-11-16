@@ -83,3 +83,4 @@ C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.c
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\bin\Debug\AerolineaFrba.exe
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\bin\Debug\AerolineaFrba.pdb
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.quitarFuncionalidad.resources
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.quitarFuncionalidad.resources

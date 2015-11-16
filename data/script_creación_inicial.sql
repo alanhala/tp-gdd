@@ -7,10 +7,6 @@ GO
 
 /******DROP TABLES******/
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Compras'))
-	drop table JUST_DO_IT.Compras
-
-GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Rol_Funcionalidad'))
 	drop table JUST_DO_IT.Rol_Funcionalidad
@@ -34,6 +30,11 @@ GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Pasajes'))
 	drop table JUST_DO_IT.Pasajes
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Compras'))
+	drop table JUST_DO_IT.Compras
 
 GO
 
@@ -183,6 +184,9 @@ IF OBJECT_ID (N'JUST_DO_IT.actualizarUsuario') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.bajaRol') IS NOT NULL
     drop procedure JUST_DO_IT.bajaRol;
 
+IF OBJECT_ID (N'JUST_DO_IT.NombreTipoDeServicio') IS NOT NULL
+    drop function JUST_DO_IT.NombreTipoDeServicio;
+	
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -230,6 +234,7 @@ CREATE TABLE JUST_DO_IT.Rutas(
 	ciu_id_origen NUMERIC(18,0) NOT NULL,
 	ciu_id_destino NUMERIC(18,0) NOT NULL,
 	tipo_servicio NUMERIC(18,0) NOT NULL,
+	eliminada BIT DEFAULT 0,
 	PRIMARY KEY(id),
 	FOREIGN KEY (ciu_id_origen) REFERENCES JUST_DO_IT.Ciudades,
 	FOREIGN KEY (ciu_id_destino) REFERENCES JUST_DO_IT.Ciudades,
@@ -293,19 +298,48 @@ CREATE TABLE JUST_DO_IT.Butacas(
 
 GO
 
+CREATE TABLE JUST_DO_IT.MediosDePago(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	nombre NVARCHAR(255) NOT NULL UNIQUE,
+	cuotas NUMERIC(18,0),
+	PRIMARY KEY (id)
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Compras(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	comprador NUMERIC(18,0),
+	fecha_devolucion DATETIME,
+	motivo_cancelacion NVARCHAR(255),
+	monto NUMERIC(18,2),
+	medio_de_pago NUMERIC(18,0),
+	numero_tarjeta NUMERIC(18,0),
+	vencimiento NUMERIC(18,0),
+	codigo_seguridad NUMERIC(18,0),
+	cuotas NUMERIC(18,0),
+	encomienda BIT DEFAULT 0,
+	PRIMARY KEY (id),
+	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios,
+	FOREIGN KEY (medio_de_pago) REFERENCES JUST_DO_IT.MediosDePago
+)
+
+GO
+
 CREATE TABLE JUST_DO_IT.Pasajes(
 	codigo NUMERIC(18,0) IDENTITY(1,1),
 	precio NUMERIC(18,2) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
 	pasajero NUMERIC(18,0) NOT NULL,
-	comprador NUMERIC(18,0) NOT NULL,
-	butaca NUMERIC(18,0) NOT NULL
-	PRIMARY KEY (codigo)
+	compra NUMERIC(18,0) NOT NULL DEFAULT 1,
+	butaca NUMERIC(18,0) NOT NULL,
+	cancelado BIT DEFAULT 0,
+	PRIMARY KEY (codigo),
 	FOREIGN KEY (butaca) REFERENCEs JUST_DO_IT.Butacas,
 	FOREIGN KEY (vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
 	FOREIGN KEY (pasajero) REFERENCES JUST_DO_IT.Usuarios,
-	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios
+	FOREIGN KEY (compra) REFERENCES JUST_DO_IT.Compras
 )
 
 SET IDENTITY_INSERT JUST_DO_IT.Pasajes ON
@@ -319,8 +353,10 @@ CREATE TABLE JUST_DO_IT.Paquete(
 	kg NUMERIC(18,0) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
+	compras NUMERIC(18,0) NOT NULL DEFAULT 1,
 	PRIMARY KEY(id),
-	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos
+	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
+	FOREIGN KEY(compras) REFERENCES JUST_DO_IT.Compras
 )
 
 GO
@@ -350,32 +386,6 @@ CREATE TABLE JUST_DO_IT.Rol_Funcionalidad(
 	id_funcionalidad NUMERIC(18,0) NOT NULL,
 	FOREIGN KEY (id_rol) REFERENCES JUST_DO_IT.Roles,
 	FOREIGN KEY (id_funcionalidad) REFERENCES JUST_DO_IT.Funcionalidades
-)
-GO
-
-CREATE TABLE JUST_DO_IT.MediosDePago(
-	id NUMERIC(18,0) IDENTITY(1,1),
-	nombre NVARCHAR(255) NOT NULL UNIQUE,
-	cuotas NUMERIC(18,0),
-	PRIMARY KEY (id)
-)
-
-GO
-
-CREATE TABLE JUST_DO_IT.Compras(
-	id NUMERIC(18,0) IDENTITY(1,1),
-	comprador NUMERIC(18,0),
-	fecha_devolucion DATETIME,
-	motivo_cancelacion NVARCHAR(255),
-	monto NUMERIC(18,2),
-	medio_de_pago NUMERIC(18,0),
-	numero_tarjeta NUMERIC(18,0),
-	vencimiento NUMERIC(18,0),
-	codigo_seguridad NUMERIC(18,0),
-	cuotas NUMERIC(18,0),
-	PRIMARY KEY (id),
-	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios,
-	FOREIGN KEY (medio_de_pago) REFERENCES JUST_DO_IT.MediosDePago
 )
 
 GO
@@ -535,12 +545,27 @@ INSERT INTO #temporalParaPasaje(temporalPasaje_id, codigo, fecha_compra, precio,
 		ON aeronaves.id = butacas.aeronave_id AND temporal.butaca_tipo = butacas.tipo AND temporal.butaca_nro = butacas.numero
 /*************************/
 
-INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, comprador, butaca) 
-	SELECT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t2.usuario_id, t1.butaca_id
+INSERT INTO JUST_DO_IT.MediosDePago(nombre) VALUES('Efectivo');
+INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('VISA', 6);
+INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('Master Card', 1);
+
+INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, cuotas)
+	SELECT t2.usuario_id, 1, t1.precio, 1
 		FROM #temporalParaPasaje t1
 		JOIN #temporalUsuarios t2
 		ON t1.temporalPasaje_id = t2.temporalPasaje_id
 
+INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, butaca) 
+	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t1.butaca_id
+		FROM #temporalParaPasaje t1
+		JOIN #temporalUsuarios t2
+		ON t1.temporalPasaje_id = t2.temporalPasaje_id
+
+UPDATE JUST_DO_IT.Pasajes SET compra = (SELECT TOP 1 compras.id 
+										FROM JUST_DO_IT.Compras compras
+										WHERE JUST_DO_IT.Pasajes.pasajero = compras.comprador 
+										AND JUST_DO_IT.Pasajes.precio = compras.monto)
+		
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
@@ -548,23 +573,30 @@ INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
 
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
 
-INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id)
-	SELECT DISTINCT maestra.Paquete_Codigo, maestra.Paquete_FechaCompra, maestra.Paquete_KG, maestra.Paquete_Precio, vuelos.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas, JUST_DO_IT.Aeronaves
+INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, cuotas, encomienda)
+	SELECT usuarios.id, 1, maestra.Paquete_Precio, 1, 1
+		FROM gd_esquema.Maestra AS maestra 
+		JOIN JUST_DO_IT.Usuarios AS usuarios
+		ON maestra.Paquete_Codigo <> 0 AND maestra.Cli_Dni = usuarios.dni 
+			AND maestra.Cli_Apellido = usuarios.apellido AND maestra.Cli_Nombre = usuarios.nombre
+
+
+/*INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id, compras)
+	SELECT DISTINCT maestra.Paquete_Codigo, maestra.Paquete_FechaCompra, maestra.Paquete_KG, maestra.Paquete_Precio, vuelos.id, compras.id
+		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas, JUST_DO_IT.Aeronaves,
+			JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Compras AS compras
 			WHERE maestra.Paquete_Codigo <> 0 AND maestra.Aeronave_Matricula = aeronaves.matricula
 				AND maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
 				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
 				AND rutas.id = vuelos.ruta_id AND aeronaves.id = vuelos.aeronave_id
-
+				AND maestra.Cli_Dni = usuarios.dni AND maestra.Cli_Apellido = usuarios.apellido 
+				AND maestra.Cli_Nombre = usuarios.nombre AND compras.comprador = usuarios.id 
+				AND compras.monto = maestra.Paquete_Precio AND compras.encomienda = 1*/
+				
 INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
-	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), pasajes.comprador
-		FROM JUST_DO_IT.Pasajes AS pasajes
-
-GO
-
-INSERT INTO JUST_DO_IT.MediosDePago(nombre) VALUES('Efectivo');
-INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('VISA', 6);
-INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('Master Card', 1);
+	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador 
+		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Compras AS compras
+		 WHERE pasajes.compra = compras.id
 
 GO
 
@@ -606,19 +638,22 @@ CREATE PROCEDURE JUST_DO_IT.almacenarPasaje(@Vuelo NUMERIC(18,0), @Costo NUMERIC
 AS BEGIN
 	BEGIN TRANSACTION almacenarPasaje
 	BEGIN TRY
-		INSERT INTO JUST_DO_IT.Pasajes(vuelo_id, comprador, fecha_compra, precio, pasajero, butaca)
-			SELECT @Vuelo, @Comprador, GETDATE(), @Costo, reservadas.usuario_id, reservadas.butaca_id
-				FROM JUST_DO_IT.ButacasReservadas reservadas
-					WHERE reservadas.vuelo_id = @Vuelo
-
 		DECLARE @CantidadPasajes INT
 		SELECT @CantidadPasajes = COUNT(*) FROM JUST_DO_IT.ButacasReservadas 
 							WHERE vuelo_id = @Vuelo GROUP BY vuelo_id
 
-		DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
-
 		INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, numero_tarjeta, codigo_seguridad, vencimiento, cuotas)
 			VALUES(@Comprador, @MedioDePago, @Costo * @CantidadPasajes, @NumeroTarjeta, @CodigoTarjeta, @VencimientoTarjeta, @Cuotas)
+
+		DECLARE @compra_id INT
+		SELECT @compra_id = @@IDENTITY
+		INSERT INTO JUST_DO_IT.Pasajes(vuelo_id, compra, fecha_compra, precio, pasajero, butaca)
+			SELECT @Vuelo, @compra_id, GETDATE(), @Costo, reservadas.usuario_id, reservadas.butaca_id
+				FROM JUST_DO_IT.ButacasReservadas reservadas
+					WHERE reservadas.vuelo_id = @Vuelo
+
+		DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
+
 		COMMIT TRANSACTION almacenarPasaje	
 	END TRY
 	BEGIN CATCH
@@ -672,6 +707,19 @@ BEGIN
 	FROM JUST_DO_IT.TiposServicios 
     WHERE nombre LIKE @Nombre
     RETURN @id;
+END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.NombreTipoDeServicio(@id NUMERIC(18,0))
+RETURNS VARCHAR(255) 
+AS
+BEGIN
+    DECLARE @nombre VARCHAR(255);
+    SELECT @nombre = nombre
+	FROM JUST_DO_IT.TiposServicios 
+    WHERE id = @id
+    RETURN @nombre;
 END
 
 GO

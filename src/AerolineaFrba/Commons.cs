@@ -61,6 +61,17 @@ namespace AerolineaFrba
             return id;
         }
 
+        public string getNombreFrom(string function, int id)
+        {
+            SqlDataReader reader;
+            string query = "SELECT JUST_DO_IT." + function + "(" + id + ") AS nombre";
+            reader = Server.getInstance().query(query);
+            reader.Read();
+            string nombre = reader["nombre"].ToString();
+            reader.Close();
+            return nombre;
+        }
+
         public DataGridViewRow getSelectedRow(DataGridView dataGrid)
         {
             foreach (DataGridViewRow row in dataGrid.SelectedRows)

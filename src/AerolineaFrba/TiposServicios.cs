@@ -13,5 +13,10 @@ namespace AerolineaFrba
         {
             return Commons.getInstance().getIDFrom("IDTipoDeServicio", nombre);
         }
+
+        public static string obtenerNombre(int id)
+        {
+            return Commons.getInstance().getNombreFrom("NombreTipoDeServicio", id);
+        }
     }
 }
