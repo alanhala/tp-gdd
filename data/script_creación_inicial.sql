@@ -102,6 +102,22 @@ GO
 
 IF OBJECT_ID('tempdb..#temporalPasajes') IS NOT NULL
 	drop table #temporalPasajes
+
+GO
+
+IF OBJECT_ID('tempdb..#temporalPaquete') IS NOT NULL
+	drop table #temporalPaquete
+
+GO
+
+IF OBJECT_ID('tempdb..#temporalUsuariosPaquete') IS NOT NULL
+	drop table #temporalUsuariosPaquete	
+
+GO
+
+IF OBJECT_ID('tempdb..#temporalParaPaquete') IS NOT NULL
+	drop table #temporalParaPaquete	
+
 GO
 
 IF OBJECT_ID('tempdb..#cantidadDeButacas') IS NOT NULL
@@ -186,7 +202,7 @@ IF OBJECT_ID (N'JUST_DO_IT.bajaRol') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.NombreTipoDeServicio') IS NOT NULL
     drop function JUST_DO_IT.NombreTipoDeServicio;
-	
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -353,10 +369,10 @@ CREATE TABLE JUST_DO_IT.Paquete(
 	kg NUMERIC(18,0) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
-	compras NUMERIC(18,0) NOT NULL DEFAULT 1,
+	compra NUMERIC(18,0) NOT NULL DEFAULT 1,
 	PRIMARY KEY(id),
 	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
-	FOREIGN KEY(compras) REFERENCES JUST_DO_IT.Compras
+	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras
 )
 
 GO
@@ -555,23 +571,13 @@ INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, cuotas)
 		JOIN #temporalUsuarios t2
 		ON t1.temporalPasaje_id = t2.temporalPasaje_id
 
-INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, butaca) 
-	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t1.butaca_id
+INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, butaca, compra) 
+	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t1.butaca_id, compras.id
 		FROM #temporalParaPasaje t1
 		JOIN #temporalUsuarios t2
 		ON t1.temporalPasaje_id = t2.temporalPasaje_id
-
-UPDATE JUST_DO_IT.Pasajes SET compra = (SELECT TOP 1 compras.id 
-										FROM JUST_DO_IT.Compras compras
-										WHERE JUST_DO_IT.Pasajes.pasajero = compras.comprador 
-										AND JUST_DO_IT.Pasajes.precio = compras.monto)
-		
-INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
-	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
-
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
-
-INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
+		JOIN JUST_DO_IT.Compras compras
+		ON t1.precio = compras.monto AND t2.usuario_id = compras.comprador
 
 INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, cuotas, encomienda)
 	SELECT usuarios.id, 1, maestra.Paquete_Precio, 1, 1
@@ -580,19 +586,84 @@ INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, cuotas, encomien
 		ON maestra.Paquete_Codigo <> 0 AND maestra.Cli_Dni = usuarios.dni 
 			AND maestra.Cli_Apellido = usuarios.apellido AND maestra.Cli_Nombre = usuarios.nombre
 
+/*****TABLAS AUXILIARES PARA PAQUETE*****/
+CREATE TABLE #temporalPaquete(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	codigo NUMERIC (18,0),
+	fecha_compra DATETIME,
+	precio NUMERIC(18,2), 
+	kg NUMERIC(18,2),
+	cli_dni NUMERIC(18,0),
+	cli_nombre NVARCHAR(255),
+	cli_apellido NVARCHAR(255),
+	fechaSalida DATETIME,
+	fechaLlegadaEstimada DATETIME,
+	fechaLlegada DATETIME,
+	ciudadOrigen NVARCHAR(255),
+	ciudadDestino NVARCHAR(255),
+	tipo_servicio NVARCHAR(255),
+	aeronave_matricula NVARCHAR(255),
+	aeronave_fabricante NVARCHAR(255)
+)
 
-/*INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id, compras)
-	SELECT DISTINCT maestra.Paquete_Codigo, maestra.Paquete_FechaCompra, maestra.Paquete_KG, maestra.Paquete_Precio, vuelos.id, compras.id
-		FROM gd_esquema.Maestra AS maestra, JUST_DO_IT.Vuelos AS vuelos, #rutasDeLaMaestra AS rutas, JUST_DO_IT.Aeronaves,
-			JUST_DO_IT.Usuarios AS usuarios, JUST_DO_IT.Compras AS compras
-			WHERE maestra.Paquete_Codigo <> 0 AND maestra.Aeronave_Matricula = aeronaves.matricula
-				AND maestra.Ruta_Codigo = rutas.codigo AND maestra.Ruta_Ciudad_Origen = rutas.origen AND maestra.Ruta_Ciudad_Destino = rutas.destino
-				AND maestra.FechaSalida = vuelos.fecha_salida AND maestra.Fecha_LLegada_Estimada = vuelos.fecha_llegada_estimada AND maestra.FechaLLegada = vuelos.fecha_llegada
-				AND rutas.id = vuelos.ruta_id AND aeronaves.id = vuelos.aeronave_id
-				AND maestra.Cli_Dni = usuarios.dni AND maestra.Cli_Apellido = usuarios.apellido 
-				AND maestra.Cli_Nombre = usuarios.nombre AND compras.comprador = usuarios.id 
-				AND compras.monto = maestra.Paquete_Precio AND compras.encomienda = 1*/
-				
+INSERT INTO #temporalPaquete(codigo, aeronave_matricula, aeronave_fabricante, ciudadDestino,
+							ciudadOrigen, cli_apellido, cli_dni, cli_nombre, fecha_compra, fechaLlegada, 
+							fechaLlegadaEstimada, fechaSalida, kg, precio, tipo_servicio)
+
+		SELECT Paquete_Codigo, Aeronave_Matricula, Aeronave_Fabricante, Ruta_Ciudad_Destino, 
+				Ruta_Ciudad_Origen, Cli_Apellido, Cli_Dni, Cli_Nombre, Paquete_FechaCompra, FechaLLegada,
+				Fecha_LLegada_Estimada, FechaSalida, Paquete_KG, Paquete_Precio, Tipo_Servicio
+		FROM gd_esquema.Maestra
+		WHERE Paquete_Codigo <> 0
+
+CREATE TABLE #temporalUsuariosPaquete(
+	temporalPaquete_id NUMERIC(18,0),
+	usuario_id NUMERIC(18,0)
+)
+
+INSERT INTO #temporalUsuariosPaquete(temporalPaquete_id, usuario_id)
+	SELECT temporal.id, usuarios.id
+		FROM #temporalPaquete AS temporal, JUST_DO_IT.Usuarios AS usuarios
+		WHERE temporal.Cli_Dni = usuarios.dni AND temporal.Cli_Apellido = usuarios.apellido 
+		AND temporal.Cli_Nombre =  usuarios.nombre
+
+CREATE TABLE #temporalParaPaquete(
+	temporalPaquete_id NUMERIC(18,0),
+	codigo NUMERIC(18,0),
+	fecha_compra DATETIME,
+	kg NUMERIC(18,2),
+	precio NUMERIC(18,2),
+	vuelo_id NUMERIC(18,0)
+)
+
+INSERT INTO #temporalParaPaquete(temporalPaquete_id, codigo, fecha_compra, kg, precio, vuelo_id)
+	SELECT temporal.id, temporal.codigo, temporal.fecha_compra, temporal.kg, temporal.precio, vuelos.id
+	FROM #temporalPaquete AS temporal
+	JOIN #rutasDeLaMaestra AS rutas
+	ON rutas.origen = temporal.ciudadOrigen AND rutas.destino = temporal.ciudadDestino 
+	AND temporal.tipo_servicio = rutas.tipo_servicio 
+	JOIN JUST_DO_IT.Aeronaves AS aeronaves
+	ON temporal.aeronave_matricula = aeronaves.matricula AND temporal.aeronave_fabricante = aeronaves.fabricante
+	JOIN JUST_DO_IT.Vuelos AS vuelos
+	ON temporal.fechaLlegada = vuelos.fecha_llegada AND temporal.fechaSalida = vuelos.fecha_salida 
+	AND vuelos.aeronave_id = aeronaves.id AND rutas.id = vuelos.ruta_id 
+/*************************/
+
+INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id, compra)
+	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.kg, t1.precio, t1.vuelo_id, compras.id
+	FROM #temporalParaPaquete t1
+	JOIN #temporalUsuariosPaquete t2
+	ON t1.temporalPaquete_id = t2.temporalPaquete_id
+	JOIN JUST_DO_IT.Compras compras
+	ON compras.encomienda = 1 AND compras.comprador = t2.usuario_id AND compras.monto = t1.precio				
+		
+INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
+	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
+
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
+
+INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
+
 INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador 
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Compras AS compras
