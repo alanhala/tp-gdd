@@ -132,6 +132,10 @@ IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
 GO
 
+IF OBJECT_ID (N'obtener_id_aeronave_segun_matricula') IS NOT NULL
+    drop function obtener_id_aeronave_segun_matricula;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
     drop function JUST_DO_IT.IDTipoDeServicio;
 GO
@@ -977,4 +981,21 @@ AS BEGIN
 
 END 
 
+
 GO
+CREATE FUNCTION obtener_id_aeronave_segun_matricula(@matricula NVARCHAR(255))
+RETURNS NUMERIC(18,0)
+AS
+BEGIN
+	DECLARE @retorno NUMERIC(18,0)
+	SELECT @retorno = (SELECT aeronaves.id
+						FROM JUST_DO_IT.Aeronaves AS aeronaves
+						WHERE aeronaves.matricula = @matricula)
+	RETURN @retorno
+END
+
+GO
+
+
+
+

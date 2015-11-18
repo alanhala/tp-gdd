@@ -24,7 +24,7 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void btnDarDeBaja_Click(object sender, EventArgs e)
         {
-
+            new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text).Show();
             try
             {
                 Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '" + cbMatricula.Text + "'");
