@@ -501,7 +501,7 @@ INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada, fecha_llegada_estimad
 				AND maestra.Aeronave_Matricula = aeronaves.matricula AND maestra.Aeronave_Fabricante = aeronaves.fabricante
 
 GO
-
+/*
 /******TABLAS AUXILIARES PARA EL PASAJE******/
 CREATE TABLE #temporalPasajes(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -573,7 +573,7 @@ INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('VISA', 6);
 INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('Master Card', 1);
 
 INSERT INTO JUST_DO_IT.Compras(comprador, fecha_compra, medio_de_pago, monto, cuotas)
-	SELECT DISTINCT t2.usuario_id, t1.fecha_compra, 1, t1.precio, 1
+	SELECT t2.usuario_id, t1.fecha_compra, 1, t1.precio, 1
 		FROM #temporalParaPasaje t1
 		JOIN #temporalUsuarios t2
 		ON t1.temporalPasaje_id = t2.temporalPasaje_id
@@ -663,7 +663,7 @@ INSERT INTO JUST_DO_IT.Paquetes(codigo, fecha_compra, kg, precio, vuelo_id, comp
 	JOIN JUST_DO_IT.Compras compras
 	ON compras.encomienda = 1 
 	AND compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra		
-		
+*/		
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
