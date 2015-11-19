@@ -26,5 +26,15 @@ namespace AerolineaFrba.Abm_Rol
         {
 
         }
+
+        private void cbNombre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void quitarFuncionalidad_Click(object sender, EventArgs e)
+        {
+            new Abm_Rol.quitarFuncionalidad().Show();
+        }
     }
 }
