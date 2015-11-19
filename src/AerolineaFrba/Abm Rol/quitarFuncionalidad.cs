@@ -16,5 +16,10 @@ namespace AerolineaFrba.Abm_Rol
         {
             InitializeComponent();
         }
+
+        private void btnCanc_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

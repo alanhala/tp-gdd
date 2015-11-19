@@ -29,122 +29,72 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModificarRol));
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnModificar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbFuncionalidad3 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbFuncionalidad2 = new System.Windows.Forms.ComboBox();
-            this.cbFuncionalidad1 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.quitarFuncionalidad = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.cbNombre = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Location = new System.Drawing.Point(155, 229);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 39;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            // 
-            // btnModificar
-            // 
-            this.btnModificar.Location = new System.Drawing.Point(250, 228);
-            this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(75, 23);
-            this.btnModificar.TabIndex = 38;
-            this.btnModificar.Text = "Modificar";
-            this.btnModificar.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.tbNombre);
+            this.groupBox1.Controls.Add(this.cbNombre);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad3);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad2);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad1);
-            this.groupBox1.Location = new System.Drawing.Point(35, 33);
+            this.groupBox1.Location = new System.Drawing.Point(35, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(269, 170);
+            this.groupBox1.Size = new System.Drawing.Size(269, 81);
             this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Complete los siguientes campos";
-            // 
-            // tbNombre
-            // 
-            this.tbNombre.Location = new System.Drawing.Point(139, 32);
-            this.tbNombre.Name = "tbNombre";
-            this.tbNombre.Size = new System.Drawing.Size(100, 20);
-            this.tbNombre.TabIndex = 36;
+            this.groupBox1.Text = "Seleccione el rol que desea modificar";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 35);
+            this.label1.Location = new System.Drawing.Point(42, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 32;
             this.label1.Text = "Nombre";
             // 
-            // label2
+            // button1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "Funcionalidad 1";
+            this.button1.Location = new System.Drawing.Point(35, 122);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(269, 31);
+            this.button1.TabIndex = 56;
+            this.button1.Text = "Agregar funcionalidad";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // cbFuncionalidad3
+            // quitarFuncionalidad
             // 
-            this.cbFuncionalidad3.FormattingEnabled = true;
-            this.cbFuncionalidad3.Location = new System.Drawing.Point(139, 124);
-            this.cbFuncionalidad3.Name = "cbFuncionalidad3";
-            this.cbFuncionalidad3.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad3.TabIndex = 49;
+            this.quitarFuncionalidad.Location = new System.Drawing.Point(35, 170);
+            this.quitarFuncionalidad.Name = "quitarFuncionalidad";
+            this.quitarFuncionalidad.Size = new System.Drawing.Size(269, 31);
+            this.quitarFuncionalidad.TabIndex = 57;
+            this.quitarFuncionalidad.Text = "Quitar funcionalidad";
+            this.quitarFuncionalidad.UseVisualStyleBackColor = true;
+            this.quitarFuncionalidad.Click += new System.EventHandler(this.quitarFuncionalidad_Click);
             // 
-            // label3
+            // button3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 95);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 13);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "Funcionalidad 2";
+            this.button3.Location = new System.Drawing.Point(35, 218);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(269, 31);
+            this.button3.TabIndex = 58;
+            this.button3.Text = "Cambiar el nombre del rol";
+            this.button3.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // cbNombre
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 124);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 13);
-            this.label4.TabIndex = 48;
-            this.label4.Text = "Funcionalidad 3";
-            // 
-            // cbFuncionalidad2
-            // 
-            this.cbFuncionalidad2.FormattingEnabled = true;
-            this.cbFuncionalidad2.Location = new System.Drawing.Point(139, 92);
-            this.cbFuncionalidad2.Name = "cbFuncionalidad2";
-            this.cbFuncionalidad2.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad2.TabIndex = 35;
-            // 
-            // cbFuncionalidad1
-            // 
-            this.cbFuncionalidad1.FormattingEnabled = true;
-            this.cbFuncionalidad1.Location = new System.Drawing.Point(139, 62);
-            this.cbFuncionalidad1.Name = "cbFuncionalidad1";
-            this.cbFuncionalidad1.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad1.TabIndex = 37;
+            this.cbNombre.FormattingEnabled = true;
+            this.cbNombre.Location = new System.Drawing.Point(114, 32);
+            this.cbNombre.Name = "cbNombre";
+            this.cbNombre.Size = new System.Drawing.Size(121, 21);
+            this.cbNombre.TabIndex = 33;
+            this.cbNombre.SelectedIndexChanged += new System.EventHandler(this.cbNombre_SelectedIndexChanged);
             // 
             // ModificarRol
             // 
@@ -152,9 +102,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(337, 267);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.quitarFuncionalidad);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.btnModificar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ModificarRol";
             this.Text = "Modificar Rol";
@@ -167,16 +118,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbFuncionalidad3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbFuncionalidad2;
-        private System.Windows.Forms.ComboBox cbFuncionalidad1;
+        private System.Windows.Forms.ComboBox cbNombre;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button quitarFuncionalidad;
+        private System.Windows.Forms.Button button3;
     }
 }

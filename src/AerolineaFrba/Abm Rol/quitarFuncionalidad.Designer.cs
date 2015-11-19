@@ -34,7 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cbFuncionalidad1 = new System.Windows.Forms.ComboBox();
-            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnCanc = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -86,14 +86,15 @@
             this.cbFuncionalidad1.Size = new System.Drawing.Size(100, 21);
             this.cbFuncionalidad1.TabIndex = 37;
             // 
-            // btnCancelar
+            // btnCanc
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(144, 154);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 57;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCanc.Location = new System.Drawing.Point(144, 154);
+            this.btnCanc.Name = "btnCanc";
+            this.btnCanc.Size = new System.Drawing.Size(75, 23);
+            this.btnCanc.TabIndex = 57;
+            this.btnCanc.Text = "Cancelar";
+            this.btnCanc.UseVisualStyleBackColor = true;
+            this.btnCanc.Click += new System.EventHandler(this.btnCanc_Click);
             // 
             // btnModificar
             // 
@@ -111,7 +112,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(332, 198);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnCanc);
             this.Controls.Add(this.btnModificar);
             this.Name = "quitarFuncionalidad";
             this.Text = "quitarFuncionalidad";
@@ -128,7 +129,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbFuncionalidad1;
-        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnCanc;
         private System.Windows.Forms.Button btnModificar;
     }
 }

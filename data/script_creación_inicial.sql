@@ -763,8 +763,6 @@ END
 
 GO
 
-SELECT JUST
-
 CREATE FUNCTION JUST_DO_IT.IDCiudad(@Ciudad varchar(255))
 RETURNS int 
 AS
@@ -1000,9 +998,3 @@ BEGIN
 END
 
 GO
-
-
-
-
-
-
