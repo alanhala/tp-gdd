@@ -23,8 +23,8 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Pu
 
 GO
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Paquete'))
-	drop table JUST_DO_IT.Paquete
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Paquetes'))
+	drop table JUST_DO_IT.Paquetes
 
 GO
 
@@ -330,6 +330,7 @@ GO
 CREATE TABLE JUST_DO_IT.Compras(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	comprador NUMERIC(18,0),
+	fecha_compra DATETIME,
 	fecha_devolucion DATETIME,
 	motivo_cancelacion NVARCHAR(255),
 	monto NUMERIC(18,2),
@@ -338,7 +339,7 @@ CREATE TABLE JUST_DO_IT.Compras(
 	vencimiento NUMERIC(18,0),
 	codigo_seguridad NUMERIC(18,0),
 	cuotas NUMERIC(18,0),
-	encomienda BIT DEFAULT 0,
+	encomienda BIT DEFAULT 0
 	PRIMARY KEY (id),
 	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (medio_de_pago) REFERENCES JUST_DO_IT.MediosDePago
@@ -366,7 +367,7 @@ SET IDENTITY_INSERT JUST_DO_IT.Pasajes ON
 
 GO
 
-CREATE TABLE JUST_DO_IT.Paquete(
+CREATE TABLE JUST_DO_IT.Paquetes(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	codigo NUMERIC(18,0) NOT NULL,
 	precio NUMERIC(18,2) NOT NULL,
@@ -567,57 +568,23 @@ INSERT INTO #temporalParaPasaje(temporalPasaje_id, codigo, fecha_compra, precio,
 
 GO
 
-CREATE PROCEDURE JUST_DO_IT.almacenar_compras_pasajes
-AS BEGIN
-	DECLARE @codigo NUMERIC(18,0)
-	DECLARE @pasajero NUMERIC(18,0)
-	DECLARE @precio NUMERIC(18,2)
-	DECLARE @compra NUMERIC(18,0)
-	DECLARE cPasajes CURSOR FOR
-
-	SELECT codigo, pasajero, precio
-	FROM JUST_DO_IT.Pasajes
-
-	OPEN cPasajes
-	FETCH cPasajes INTO @codigo, @pasajero, @precio
-
-	WHILE (@@FETCH_STATUS = 0 )
-	BEGIN
-		INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, cuotas)
-			VALUES (@pasajero, 1, @precio, 1)
-		SELECT @compra = @@IDENTITY
-		UPDATE JUST_DO_IT.Pasajes SET compra = @compra WHERE codigo = @codigo
-	
-	FETCH cPasajes INTO @codigo, @pasajero, @precio
-	END
-	CLOSE cPasajes
-	DEALLOCATE cPasajes
-END
-
-GO
-
 INSERT INTO JUST_DO_IT.MediosDePago(nombre) VALUES('Efectivo');
 INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('VISA', 6);
 INSERT INTO JUST_DO_IT.MediosDePago(nombre, cuotas) VALUES('Master Card', 1);
 
-INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, cuotas)
-	VALUES(1, 1, 1, 1)
-INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, butaca) 
-	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t1.butaca_id
+INSERT INTO JUST_DO_IT.Compras(comprador, fecha_compra, medio_de_pago, monto, cuotas)
+	SELECT DISTINCT t2.usuario_id, t1.fecha_compra, 1, t1.precio, 1
 		FROM #temporalParaPasaje t1
 		JOIN #temporalUsuarios t2
 		ON t1.temporalPasaje_id = t2.temporalPasaje_id
 
-EXEC JUST_DO_IT.almacenar_compras_pasajes
-
-DROP PROCEDURE JUST_DO_IT.almacenar_compras_pasajes
-
-/*INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, cuotas, encomienda)
-	SELECT usuarios.id, 1, maestra.Paquete_Precio, 1, 1
-		FROM gd_esquema.Maestra AS maestra 
-		JOIN JUST_DO_IT.Usuarios AS usuarios
-		ON maestra.Paquete_Codigo <> 0 AND maestra.Cli_Dni = usuarios.dni 
-			AND maestra.Cli_Apellido = usuarios.apellido AND maestra.Cli_Nombre = usuarios.nombre
+INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, butaca, compra) 
+	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t1.butaca_id, compras.id
+		FROM #temporalParaPasaje t1
+		JOIN #temporalUsuarios t2
+		ON t1.temporalPasaje_id = t2.temporalPasaje_id
+		JOIN JUST_DO_IT.Compras compras
+		ON compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra
 
 /*****TABLAS AUXILIARES PARA PAQUETE*****/
 CREATE TABLE #temporalPaquete(
@@ -682,14 +649,21 @@ INSERT INTO #temporalParaPaquete(temporalPaquete_id, codigo, fecha_compra, kg, p
 	AND vuelos.aeronave_id = aeronaves.id AND rutas.id = vuelos.ruta_id 
 /*************************/
 
-INSERT INTO JUST_DO_IT.Paquete(codigo, fecha_compra, kg, precio, vuelo_id, compra)
+INSERT INTO JUST_DO_IT.Compras(comprador, fecha_compra, medio_de_pago, monto, cuotas, encomienda)
+	SELECT DISTINCT t2.usuario_id, t1.fecha_compra, 1, t1.precio, 1, 1
+		FROM #temporalParaPaquete t1
+		JOIN #temporalUsuariosPaquete t2
+		ON t1.temporalPaquete_id = t2.temporalPaquete_id
+	
+INSERT INTO JUST_DO_IT.Paquetes(codigo, fecha_compra, kg, precio, vuelo_id, compra)
 	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.kg, t1.precio, t1.vuelo_id, compras.id
 	FROM #temporalParaPaquete t1
 	JOIN #temporalUsuariosPaquete t2
 	ON t1.temporalPaquete_id = t2.temporalPaquete_id
 	JOIN JUST_DO_IT.Compras compras
-	ON compras.encomienda = 1 AND compras.comprador = t2.usuario_id AND compras.monto = t1.precio				
-		*/
+	ON compras.encomienda = 1 
+	AND compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra		
+		
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
