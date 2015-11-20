@@ -40,11 +40,13 @@ namespace AerolineaFrba.Abm_Aeronave
             string idAeronave = respuesta["idAeronave"].ToString();
             respuesta.Close();
 
-            string comboQuery = "SELECT vuelos.id FROM JUST_DO_IT.Vuelos AS vuelos, JUST_DO_IT.Aeronaves AS aeronaves WHERE vuelos.aeronave_id = aeronaves.id AND vuelos.aeronave_id = " + idAeronave;
+            SqlDataReader eliminarVuelo;
+            string comboQuery = "SELECT vuelos.id, vuelos.fecha_salida FROM JUST_DO_IT.Vuelos AS vuelos WHERE vuelos.fecha_llegada IS NULL AND vuelos.fecha_salida > CURRENT_TIMESTAMP AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = " + idAeronave;
             respuesta = server.query(comboQuery);
             while (respuesta.Read())
             {
-               respuesta["vuelos.id"].ToString();
+                eliminarVuelo = server.query("EXEC JUST_DO_IT.eliminar_vuelo " + respuesta["vuelos.id"].ToString());
+                
             }
             respuesta.Close();
         }

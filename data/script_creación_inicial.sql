@@ -302,6 +302,7 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 	ruta_id NUMERIC(18,0) NOT NULL,
 	aeronave_id NUMERIC(18,0) NOT NULL,
 	cantidadDisponible NUMERIC(18,0) NOT NULL DEFAULT 0,
+	vuelo_eliminado BIT DEFAULT 0,
 	PRIMARY KEY (id),
 	FOREIGN KEY (ruta_id) REFERENCES JUST_DO_IT.Rutas,
 	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves,
@@ -1003,4 +1004,20 @@ BEGIN
 END
 
 GO
+
+CREATE PROCEDURE JUST_DO_IT.eliminar_vuelos(@id_vuelo NUMERIC(18,0))
+AS BEGIN
+	UPDATE JUST_DO_IT.Vuelos	
+	SET vuelo_eliminado = 1
+	WHERE id = @id_vuelo
+END
+
+GO
+
+	
+
+
+
+
+
 
