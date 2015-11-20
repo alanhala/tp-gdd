@@ -34,9 +34,11 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             SqlDataReader respuesta;
             Server server = Server.getInstance();
-            string query = "SELECT obtener_id_aeronave_segun_matricula(" + matricula + ") AS idAeronave";
+            string query = "SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula('" + matricula + "') AS idAeronave";
             respuesta = server.query(query);
+            respuesta.Read();
             string idAeronave = respuesta["idAeronave"].ToString();
+            respuesta.Close();
 
             string comboQuery = "SELECT vuelos.id FROM JUST_DO_IT.Vuelos AS vuelos, JUST_DO_IT.Aeronaves AS aeronaves WHERE vuelos.aeronave_id = aeronaves.id AND vuelos.aeronave_id = " + idAeronave;
             respuesta = server.query(comboQuery);

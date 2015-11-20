@@ -13,6 +13,10 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ro
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Paquete'))
+	drop table JUST_DO_IT.Paquete
+GO
+
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Funcionalidades'))
 	drop table JUST_DO_IT.Funcionalidades
 
@@ -132,8 +136,8 @@ IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
 GO
 
-IF OBJECT_ID (N'obtener_id_aeronave_segun_matricula') IS NOT NULL
-    drop function obtener_id_aeronave_segun_matricula;
+IF OBJECT_ID (N'JUST_DO_IT.obtener_id_aeronave_segun_matricula') IS NOT NULL
+    drop function JUST_DO_IT.obtener_id_aeronave_segun_matricula;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.IDTipoDeServicio') IS NOT NULL
@@ -987,7 +991,7 @@ END
 
 
 GO
-CREATE FUNCTION obtener_id_aeronave_segun_matricula(@matricula NVARCHAR(255))
+CREATE FUNCTION JUST_DO_IT.obtener_id_aeronave_segun_matricula(@matricula NVARCHAR(255))
 RETURNS NUMERIC(18,0)
 AS
 BEGIN
@@ -999,3 +1003,4 @@ BEGIN
 END
 
 GO
+
