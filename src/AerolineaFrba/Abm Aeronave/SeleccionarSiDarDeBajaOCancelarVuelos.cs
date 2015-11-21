@@ -14,6 +14,10 @@ namespace AerolineaFrba.Abm_Aeronave
     public partial class SeleccionarSiDarDeBajaOCancelarVuelos : Form
     {
         public string matricula;
+        DateTimePicker fechaFueraServicio;
+        DateTimePicker fechaReinicioServicio;
+        Boolean finVidaUtil;
+
         public SeleccionarSiDarDeBajaOCancelarVuelos()
         {
             
@@ -23,6 +27,16 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             InitializeComponent();
             matricula = unaMatricula;
+            finVidaUtil = true;
+        }
+
+        public SeleccionarSiDarDeBajaOCancelarVuelos(string unaMatricula, DateTimePicker fechaFueraServicio, DateTimePicker fechaReinicioServicio)
+        {
+            InitializeComponent();
+            matricula = unaMatricula;
+            this.fechaFueraServicio = fechaFueraServicio;
+            this.fechaReinicioServicio = fechaReinicioServicio;
+            finVidaUtil = false;
         }
 
         private void SeleccionarSiDarDeBajaOCancelarVuelos_Load(object sender, EventArgs e)
@@ -40,13 +54,18 @@ namespace AerolineaFrba.Abm_Aeronave
             string idAeronave = respuesta["idAeronave"].ToString();
             respuesta.Close();
 
-            SqlDataReader eliminarVuelo;
-            string comboQuery = "SELECT vuelos.id, vuelos.fecha_salida FROM JUST_DO_IT.Vuelos AS vuelos WHERE vuelos.fecha_llegada IS NULL AND vuelos.fecha_salida > CURRENT_TIMESTAMP AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = " + idAeronave;
-            respuesta = server.query(comboQuery);
+            if (finVidaUtil)
+            {
+                string comboQuery = "SELECT vuelos.id FROM JUST_DO_IT.Vuelos AS vuelos WHERE vuelos.fecha_llegada IS NULL AND vuelos.fecha_salida > CURRENT_TIMESTAMP AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = " + idAeronave;
+                respuesta = server.query(comboQuery);
+            }
+            else {
+                string comboQuery = "SELECT vuelos.id FROM JUST_DO_IT.Vuelos AS vuelos WHERE ((" + fechaFueraServicio.Text + " BETWEEN vuelos.fecha_salida AND vuelos.fecha_llegada) OR (" + fechaReinicioServicio.Text + " BETWEEN vuelos.fecha_salida AND vuelos.fecha_llegada)) AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = " + idAeronave;
+                respuesta = server.query(comboQuery);
+            }
             while (respuesta.Read())
             {
-                eliminarVuelo = server.query("EXEC JUST_DO_IT.eliminar_vuelo " + respuesta["vuelos.id"].ToString());
-                
+                server.query("EXEC JUST_DO_IT.eliminar_vuelo " + respuesta["vuelos.id"].ToString());
             }
             respuesta.Close();
         }
