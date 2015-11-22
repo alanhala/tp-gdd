@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AerolineaFrba
 {
-    public partial class Inicio : Form
+    public partial class inicioPrograma : Form
     {
-        public Inicio()
+        public inicioPrograma()
         {
             InitializeComponent();
         }

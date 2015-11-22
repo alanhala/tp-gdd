@@ -1,6 +1,6 @@
 ﻿namespace AerolineaFrba
 {
-    partial class Inicio
+    partial class inicioPrograma
     {
         /// <summary>
         /// Variable del diseñador requerida.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(inicioPrograma));
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnInvitado = new System.Windows.Forms.Button();
@@ -84,7 +84,7 @@
             this.btnAdministrador.UseVisualStyleBackColor = false;
             this.btnAdministrador.Click += new System.EventHandler(this.btnAdministrador_Click);
             // 
-            // Inicio
+            // inicioPrograma
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -101,7 +101,7 @@
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "Inicio";
+            this.Name = "inicioPrograma";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

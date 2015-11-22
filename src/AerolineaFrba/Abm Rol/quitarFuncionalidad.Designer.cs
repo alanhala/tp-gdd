@@ -29,93 +29,126 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(quitarFuncionalidad));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbNombre = new System.Windows.Forms.TextBox();
+            this.seleccionar = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dgvShowRoles = new System.Windows.Forms.DataGridView();
+            this.buscar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbFuncionalidad1 = new System.Windows.Forms.ComboBox();
-            this.btnCanc = new System.Windows.Forms.Button();
-            this.btnModificar = new System.Windows.Forms.Button();
+            this.tbNombre = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // seleccionar
+            // 
+            this.seleccionar.Location = new System.Drawing.Point(415, 105);
+            this.seleccionar.Name = "seleccionar";
+            this.seleccionar.Size = new System.Drawing.Size(75, 23);
+            this.seleccionar.TabIndex = 57;
+            this.seleccionar.Text = "Seleccionar";
+            this.seleccionar.UseVisualStyleBackColor = true;
+            this.seleccionar.Click += new System.EventHandler(this.seleccionar_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(22, 105);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 57;
+            this.button2.Text = "Limpiar";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // dgvShowRoles
+            // 
+            this.dgvShowRoles.AllowUserToAddRows = false;
+            this.dgvShowRoles.AllowUserToDeleteRows = false;
+            this.dgvShowRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvShowRoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.funcionalidad});
+            this.dgvShowRoles.Location = new System.Drawing.Point(22, 145);
+            this.dgvShowRoles.MultiSelect = false;
+            this.dgvShowRoles.Name = "dgvShowRoles";
+            this.dgvShowRoles.ReadOnly = true;
+            this.dgvShowRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvShowRoles.Size = new System.Drawing.Size(468, 164);
+            this.dgvShowRoles.TabIndex = 58;
+            this.dgvShowRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowRoles_CellContentClick);
+            // 
+            // buscar
+            // 
+            this.buscar.Location = new System.Drawing.Point(205, 27);
+            this.buscar.Name = "buscar";
+            this.buscar.Size = new System.Drawing.Size(75, 23);
+            this.buscar.TabIndex = 56;
+            this.buscar.Text = "Buscar";
+            this.buscar.UseVisualStyleBackColor = true;
+            this.buscar.Click += new System.EventHandler(this.buscar_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "Nombre";
+            // 
+            // tbNombre
+            // 
+            this.tbNombre.Enabled = false;
+            this.tbNombre.Location = new System.Drawing.Point(83, 29);
+            this.tbNombre.Name = "tbNombre";
+            this.tbNombre.Size = new System.Drawing.Size(100, 20);
+            this.tbNombre.TabIndex = 56;
             // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.tbNombre);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad1);
-            this.groupBox1.Location = new System.Drawing.Point(27, 33);
+            this.groupBox1.Controls.Add(this.buscar);
+            this.groupBox1.Location = new System.Drawing.Point(22, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(269, 105);
-            this.groupBox1.TabIndex = 58;
+            this.groupBox1.Size = new System.Drawing.Size(468, 82);
+            this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Complete los siguientes campos";
+            this.groupBox1.Text = "Seleccione la funcionalidad que desee dar de baja";
             // 
-            // tbNombre
+            // button1
             // 
-            this.tbNombre.Location = new System.Drawing.Point(139, 32);
-            this.tbNombre.Name = "tbNombre";
-            this.tbNombre.Size = new System.Drawing.Size(100, 20);
-            this.tbNombre.TabIndex = 36;
+            this.button1.Location = new System.Drawing.Point(415, 325);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 59;
+            this.button1.Text = "Aceptar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label1
+            // funcionalidad
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Nombre";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "Funcionalidad 1";
-            // 
-            // cbFuncionalidad1
-            // 
-            this.cbFuncionalidad1.FormattingEnabled = true;
-            this.cbFuncionalidad1.Location = new System.Drawing.Point(139, 62);
-            this.cbFuncionalidad1.Name = "cbFuncionalidad1";
-            this.cbFuncionalidad1.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad1.TabIndex = 37;
-            // 
-            // btnCanc
-            // 
-            this.btnCanc.Location = new System.Drawing.Point(144, 154);
-            this.btnCanc.Name = "btnCanc";
-            this.btnCanc.Size = new System.Drawing.Size(75, 23);
-            this.btnCanc.TabIndex = 57;
-            this.btnCanc.Text = "Cancelar";
-            this.btnCanc.UseVisualStyleBackColor = true;
-            this.btnCanc.Click += new System.EventHandler(this.btnCanc_Click);
-            // 
-            // btnModificar
-            // 
-            this.btnModificar.Location = new System.Drawing.Point(239, 153);
-            this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(75, 23);
-            this.btnModificar.TabIndex = 56;
-            this.btnModificar.Text = "Modificar";
-            this.btnModificar.UseVisualStyleBackColor = true;
+            this.funcionalidad.HeaderText = "Funcionalidad";
+            this.funcionalidad.Name = "funcionalidad";
+            this.funcionalidad.ReadOnly = true;
             // 
             // quitarFuncionalidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(332, 198);
+            this.ClientSize = new System.Drawing.Size(513, 360);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.seleccionar);
+            this.Controls.Add(this.dgvShowRoles);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnCanc);
-            this.Controls.Add(this.btnModificar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "quitarFuncionalidad";
-            this.Text = "quitarFuncionalidad";
+            this.Text = "Modificar Rol";
+            this.Load += new System.EventHandler(this.Form2_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -124,12 +157,14 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tbNombre;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dgvShowRoles;
+        private System.Windows.Forms.Button seleccionar;
+        private System.Windows.Forms.Button buscar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbFuncionalidad1;
-        private System.Windows.Forms.Button btnCanc;
-        private System.Windows.Forms.Button btnModificar;
+        private System.Windows.Forms.TextBox tbNombre;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
     }
 }

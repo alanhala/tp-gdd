@@ -71,7 +71,6 @@ C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.C
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.SoyCliente.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Consulta_Millas.ConsultaMillas.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Devolucion.Baja.resources
-C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Inicio.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Generacion_Viaje.Alta_Viaje.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Listado_Estadistico.Estadistica.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Properties.Resources.resources
@@ -131,3 +130,6 @@ C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\Aeroli
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.SeleccionarSiDarDeBajaOCancelarVuelos.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.ReemplazoAeronaveFinVidaUtil.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.SeleccionarSiDarDeBajaOCancelarVuelos.resources
+C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.inicioPrograma.resources
+C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.agregarFuncionalidad.resources
+C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.modificarNombre.resources
