@@ -132,8 +132,16 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRuta;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.eliminar_vuelos') IS NOT NULL
+    drop procedure JUST_DO_IT.eliminar_vuelos;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.obtener_vuelos_segun_id_aeronave') IS NOT NULL
+    drop function JUST_DO_IT.obtener_vuelos_segun_id_aeronave;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.obtener_id_aeronave_segun_matricula') IS NOT NULL
@@ -1014,10 +1022,28 @@ END
 
 GO
 
-	
+CREATE FUNCTION JUST_DO_IT.obtener_vuelos_segun_id_aeronave(@idAeronave NUMERIC(18,0))
+RETURNS TABLE
+AS RETURN
+	SELECT vuelos.id vuelos 
+	FROM JUST_DO_IT.Vuelos AS vuelos 
+	WHERE vuelos.fecha_llegada IS NULL 
+		AND vuelos.fecha_salida > CURRENT_TIMESTAMP 
+		AND vuelos.vuelo_eliminado = 0 
+		AND vuelos.aeronave_id = @idAeronave				
+GO 
+
+SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave(5)
+
+EXEC JUST_DO_IT.eliminar_vuelos 158
+
+SELECT * FROM JUST_DO_IT.Vuelos
+WHERE aeronave_id = 4
 
 
-
-
-
-
+	SELECT vuelos.id
+	FROM JUST_DO_IT.Vuelos AS vuelos 
+	WHERE 
+		 vuelos.fecha_salida > CURRENT_TIMESTAMP 
+		AND vuelos.vuelo_eliminado = 0 
+		AND vuelos.aeronave_id = 3

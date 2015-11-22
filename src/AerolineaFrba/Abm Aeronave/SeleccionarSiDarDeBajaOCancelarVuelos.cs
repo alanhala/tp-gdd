@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace AerolineaFrba.Abm_Aeronave
 {
@@ -46,28 +47,39 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlDataReader respuesta;
+            SqlDataReader respuestaAeronave;
             Server server = Server.getInstance();
             string query = "SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula('" + matricula + "') AS idAeronave";
-            respuesta = server.query(query);
-            respuesta.Read();
-            string idAeronave = respuesta["idAeronave"].ToString();
-            respuesta.Close();
+            respuestaAeronave = server.query(query);
+            respuestaAeronave.Read();
+            int idAeronave = int.Parse(respuestaAeronave["idAeronave"].ToString());
+            respuestaAeronave.Close();
+            SqlDataReader respuestaVuelo;
 
             if (finVidaUtil)
             {
-                string comboQuery = "SELECT vuelos.id FROM JUST_DO_IT.Vuelos AS vuelos WHERE vuelos.fecha_llegada IS NULL AND vuelos.fecha_salida > CURRENT_TIMESTAMP AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = " + idAeronave;
-                respuesta = server.query(comboQuery);
+                string comboQuery = "SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave(" + idAeronave + ")";
+                respuestaVuelo = server.query(comboQuery);
             }
             else {
                 string comboQuery = "SELECT vuelos.id FROM JUST_DO_IT.Vuelos AS vuelos WHERE ((" + fechaFueraServicio.Text + " BETWEEN vuelos.fecha_salida AND vuelos.fecha_llegada) OR (" + fechaReinicioServicio.Text + " BETWEEN vuelos.fecha_salida AND vuelos.fecha_llegada)) AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = " + idAeronave;
-                respuesta = server.query(comboQuery);
+                respuestaVuelo = server.query(comboQuery);
             }
-            while (respuesta.Read())
+            ArrayList vuelos = new ArrayList();
+            int cantVuelos = 0;
+
+            while (respuestaVuelo.Read())
             {
-                server.query("EXEC JUST_DO_IT.eliminar_vuelo " + respuesta["vuelos.id"].ToString());
+                vuelos.Add(int.Parse(respuestaVuelo["vuelos"].ToString()));
+                cantVuelos++;
             }
-            respuesta.Close();
+
+            respuestaVuelo.Close();
+
+            foreach (object vuelo in vuelos) {
+                query = "EXEC JUST_DO_IT.eliminar_vuelos " + vuelo;
+                server.query(query);
+            }
         }
     }
 }
