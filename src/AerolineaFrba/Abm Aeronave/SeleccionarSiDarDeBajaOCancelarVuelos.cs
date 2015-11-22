@@ -62,7 +62,7 @@ namespace AerolineaFrba.Abm_Aeronave
                 respuestaVuelo = server.query(comboQuery);
             }
             else {
-                string comboQuery = "SELECT vuelos.id FROM JUST_DO_IT.Vuelos AS vuelos WHERE ((" + fechaFueraServicio.Text + " BETWEEN vuelos.fecha_salida AND vuelos.fecha_llegada) OR (" + fechaReinicioServicio.Text + " BETWEEN vuelos.fecha_salida AND vuelos.fecha_llegada)) AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = " + idAeronave;
+                string comboQuery = "SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave_y_fechas(" + idAeronave + ", " + fechaFueraServicio.Text + ", " + fechaReinicioServicio.Text + ")";
                 respuestaVuelo = server.query(comboQuery);
             }
             ArrayList vuelos = new ArrayList();

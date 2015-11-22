@@ -40,11 +40,7 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
-=======
-   //         new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
->>>>>>> 173ee5cedea11aed849c352f2b47628f3a5533fb
             try
             {
                 Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_fuera_servicio = 1, fecha_fuera_servicio = '" + dtpFechaFueraServicio.Value.ToString("yyyy-dd-MM") + "' , fecha_reinicio_servicio = '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "' WHERE matricula = '" + cbMatricula.Text + "'");

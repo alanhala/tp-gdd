@@ -140,6 +140,10 @@ IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.obtener_vuelos_segun_id_aeronave_y_fechas') IS NOT NULL
+    drop function JUST_DO_IT.obtener_vuelos_segun_id_aeronave_y_fechas;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.obtener_vuelos_segun_id_aeronave') IS NOT NULL
     drop function JUST_DO_IT.obtener_vuelos_segun_id_aeronave;
 GO
@@ -1055,6 +1059,17 @@ AS RETURN
 		AND vuelos.vuelo_eliminado = 0 
 		AND vuelos.aeronave_id = @idAeronave				
 GO 
+
+CREATE FUNCTION JUST_DO_IT.obtener_vuelos_segun_id_aeronave_y_fechas(@idAeronave NUMERIC(18,0), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
+RETURNS TABLE
+AS RETURN
+	SELECT vuelos.id vuelos
+	FROM JUST_DO_IT.Vuelos AS vuelos 
+	WHERE ((@fecha_fuera_servicio BETWEEN vuelos.fecha_salida AND vuelos.fecha_llegada_estimada) OR 
+			(@fecha_reinicio_servicio BETWEEN vuelos.fecha_salida AND vuelos.fecha_llegada_estimada) OR
+			(@fecha_fuera_servicio < vuelos.fecha_salida AND @fecha_reinicio_servicio > vuelos.fecha_llegada_estimada)) 
+				AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = 3
+GO
 
 CREATE PROCEDURE JUST_DO_IT.re_altaRol(@nombre VARCHAR(50))
 AS BEGIN
