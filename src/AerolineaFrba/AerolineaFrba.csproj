@@ -117,11 +117,11 @@
     <Compile Include="Abm Funcionalidad\bajaFunc.Designer.cs">
       <DependentUpon>bajaFunc.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rol\agregarOtraFuncionalidad.cs">
+    <Compile Include="Abm Rol\agregarFuncionalidad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Rol\agregarOtraFuncionalidad.Designer.cs">
-      <DependentUpon>agregarOtraFuncionalidad.cs</DependentUpon>
+    <Compile Include="Abm Rol\agregarFuncionalidad.Designer.cs">
+      <DependentUpon>agregarFuncionalidad.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rol\altaRol.cs">
       <SubType>Form</SubType>
@@ -135,17 +135,23 @@
     <Compile Include="Abm Rol\bajaRol.Designer.cs">
       <DependentUpon>bajaRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Rol\modificarRol.cs">
+    <Compile Include="Abm Rol\modificarNombre.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Rol\modificarRol.Designer.cs">
-      <DependentUpon>modificarRol.cs</DependentUpon>
+    <Compile Include="Abm Rol\modificarNombre.Designer.cs">
+      <DependentUpon>modificarNombre.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rol\quitarFuncionalidad.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Abm Rol\quitarFuncionalidad.Designer.cs">
       <DependentUpon>quitarFuncionalidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Rol\modificarRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\modificarRol.Designer.cs">
+      <DependentUpon>modificarRol.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Ruta\Alta Ruta.cs">
       <SubType>Form</SubType>
@@ -324,8 +330,8 @@
     <EmbeddedResource Include="Abm Funcionalidad\bajaFunc.resx">
       <DependentUpon>bajaFunc.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\agregarOtraFuncionalidad.resx">
-      <DependentUpon>agregarOtraFuncionalidad.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Rol\agregarFuncionalidad.resx">
+      <DependentUpon>agregarFuncionalidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\altaRol.resx">
       <DependentUpon>altaRol.cs</DependentUpon>
@@ -333,11 +339,14 @@
     <EmbeddedResource Include="Abm Rol\bajaRol.resx">
       <DependentUpon>bajaRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Rol\modificarRol.resx">
-      <DependentUpon>modificarRol.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Rol\modificarNombre.resx">
+      <DependentUpon>modificarNombre.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\quitarFuncionalidad.resx">
       <DependentUpon>quitarFuncionalidad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\modificarRol.resx">
+      <DependentUpon>modificarRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Ruta\Alta Ruta.resx">
       <DependentUpon>Alta Ruta.cs</DependentUpon>

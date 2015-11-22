@@ -1051,13 +1051,10 @@ END
 
 GO
 
-CREATE PROCEDURE JUST_DO_IT.modificarNombreRol(@nombreViejo VARCHAR(50),@nombreNuevo VARCHAR(50))
+CREATE PROCEDURE JUST_DO_IT.modificarNombreRol(@idRol NUMERIC(18,0),@nombreNuevo VARCHAR(50))
 AS BEGIN
 	BEGIN TRY
-		UPDATE JUST_DO_IT.Roles
-			SET nombre = @nombreNuevo
-			WHERE nombre = @nombreViejo
-
+		UPDATE JUST_DO_IT.Roles SET nombre = @nombreNuevo WHERE id = @idRol
 	END TRY
 	BEGIN CATCH
 		RAISERROR('Fallo la modificación del nombre',16,217) WITH SETERROR
@@ -1067,15 +1064,10 @@ END
 
 GO
 
+
 INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de alta aeronaves')
 INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede modificar aeronaves')
 INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de baja aeronaves')
 
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,2)
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,3)
-
-
-
-select * from JUST_DO_IT.Rol_Funcionalidad
-
-SELECT  * from JUST_DO_IT.nombresRolesYFuncionalidades()

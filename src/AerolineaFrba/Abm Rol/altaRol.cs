@@ -89,7 +89,7 @@ namespace AerolineaFrba.Abm_Rol
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            new Abm_Rol.agregarOtraFuncionalidad().Show();
+//          new Abm_Rol.agregarFuncionalidad().Show();
         }
     }
 }
