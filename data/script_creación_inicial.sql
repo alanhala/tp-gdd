@@ -1033,17 +1033,3 @@ AS RETURN
 		AND vuelos.aeronave_id = @idAeronave				
 GO 
 
-SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave(5)
-
-EXEC JUST_DO_IT.eliminar_vuelos 158
-
-SELECT * FROM JUST_DO_IT.Vuelos
-WHERE aeronave_id = 4
-
-
-	SELECT vuelos.id
-	FROM JUST_DO_IT.Vuelos AS vuelos 
-	WHERE 
-		 vuelos.fecha_salida > CURRENT_TIMESTAMP 
-		AND vuelos.vuelo_eliminado = 0 
-		AND vuelos.aeronave_id = 3
