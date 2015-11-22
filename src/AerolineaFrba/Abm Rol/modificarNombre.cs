@@ -13,7 +13,6 @@ namespace AerolineaFrba.Abm_Rol
     public partial class modificarNombre : Form
     {
         private int idRolLocal;
-        private string nombreRolLocal;
         
         public modificarNombre(int idRol, string nombreRol)
         {
@@ -42,6 +41,12 @@ namespace AerolineaFrba.Abm_Rol
                 MessageBox.Show(ex1.Message);
 
             }
+            this.Hide();
+        }
+
+        private void cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
 
     }

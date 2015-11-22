@@ -36,10 +36,10 @@
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbFuncionalidad2 = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.cbFuncionalidad3 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbFuncionalidad2 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,12 +109,20 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.cbFuncionalidad2);
             this.groupBox1.Controls.Add(this.cbFuncionalidad1);
-            this.groupBox1.Location = new System.Drawing.Point(33, 31);
+            this.groupBox1.Location = new System.Drawing.Point(34, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(269, 170);
             this.groupBox1.TabIndex = 52;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
+            // 
+            // cbFuncionalidad3
+            // 
+            this.cbFuncionalidad3.FormattingEnabled = true;
+            this.cbFuncionalidad3.Location = new System.Drawing.Point(139, 124);
+            this.cbFuncionalidad3.Name = "cbFuncionalidad3";
+            this.cbFuncionalidad3.Size = new System.Drawing.Size(100, 21);
+            this.cbFuncionalidad3.TabIndex = 49;
             // 
             // label3
             // 
@@ -126,14 +134,6 @@
             this.label3.Text = "Funcionalidad 2";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // cbFuncionalidad2
-            // 
-            this.cbFuncionalidad2.FormattingEnabled = true;
-            this.cbFuncionalidad2.Location = new System.Drawing.Point(139, 92);
-            this.cbFuncionalidad2.Name = "cbFuncionalidad2";
-            this.cbFuncionalidad2.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad2.TabIndex = 35;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -143,13 +143,13 @@
             this.label4.TabIndex = 48;
             this.label4.Text = "Funcionalidad 3";
             // 
-            // cbFuncionalidad3
+            // cbFuncionalidad2
             // 
-            this.cbFuncionalidad3.FormattingEnabled = true;
-            this.cbFuncionalidad3.Location = new System.Drawing.Point(139, 124);
-            this.cbFuncionalidad3.Name = "cbFuncionalidad3";
-            this.cbFuncionalidad3.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad3.TabIndex = 49;
+            this.cbFuncionalidad2.FormattingEnabled = true;
+            this.cbFuncionalidad2.Location = new System.Drawing.Point(139, 92);
+            this.cbFuncionalidad2.Name = "cbFuncionalidad2";
+            this.cbFuncionalidad2.Size = new System.Drawing.Size(100, 21);
+            this.cbFuncionalidad2.TabIndex = 35;
             // 
             // altaRol
             // 

@@ -223,6 +223,9 @@ IF OBJECT_ID (N'JUST_DO_IT.modificarNombreRol') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.nombresRolesYFuncionalidades') IS NOT NULL
     drop function JUST_DO_IT.nombresRolesYFuncionalidades;
 
+IF OBJECT_ID (N'JUST_DO_IT.bajaRol_Funcionalidad') IS NOT NULL
+    drop procedure JUST_DO_IT.bajaRol_Funcionalidad;
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -919,7 +922,7 @@ GO
 CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades()
 RETURNS TABLE
 AS RETURN
-	SELECT R.nombre AS nombreRol, F.descripcion AS nombreFuncionalidad
+	SELECT F.descripcion AS nombreFuncionalidad
 	FROM JUST_DO_IT.Roles AS R , JUST_DO_IT.Funcionalidades AS F, JUST_DO_IT.Rol_Funcionalidad AS RF
 	WHERE RF.id_rol = R.id AND RF.id_funcionalidad = F.id
 GO
@@ -1064,6 +1067,18 @@ END
 
 GO
 
+CREATE PROCEDURE JUST_DO_IT.bajaRol_Funcionalidad(@idRol NUMERIC(18,0),@idFuncionalidad NUMERIC(18,0))
+AS BEGIN
+	BEGIN TRY
+		DELETE FROM JUST_DO_IT.Rol_Funcionalidad WHERE id_rol = @idRol AND id_funcionalidad = @idFuncionalidad
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Fallo la baja de la funcionalidad',16,217) WITH SETERROR
+	END CATCH
+
+END 
+
+GO
 
 INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de alta aeronaves')
 INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede modificar aeronaves')
@@ -1071,3 +1086,5 @@ INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de baja aeronaves')
 
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,2)
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,3)
+
+select * from JUST_DO_IT.Rol_Funcionalidad

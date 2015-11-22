@@ -46,9 +46,7 @@ namespace AerolineaFrba.Abm_Rol
             SqlDataReader reader = Server.getInstance().query(query);
             while (reader.Read())
             {
-                dgvShowRoles.Rows.Add(reader["nombreRol"].ToString(), reader["nombreFuncionalidad"].ToString());
- //               dgvShowRoles.Rows.Add(reader["nombre"].ToString() + " - " + reader["baja_rol"].ToString());
-
+                dgvShowRoles.Rows.Add(reader["nombreFuncionalidad"].ToString());
             }
             reader.Close();
 
@@ -56,10 +54,20 @@ namespace AerolineaFrba.Abm_Rol
 
         private void seleccionar_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void buscar_Click(object sender, EventArgs e)
+        {
+            this.actualizarTabla();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
             DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
             if (int.Parse(row.Cells[1].Value.ToString()) == 0)
             {
-                MessageBox.Show("No se ha seleccionado ningun rol");
+                MessageBox.Show("No se ha seleccionado ninguna funcionalidad");
             }
             else
             {
@@ -68,20 +76,18 @@ namespace AerolineaFrba.Abm_Rol
                 int idRol = Rol.obtenerID(nombreRol);
                 int idFuncionalidad = Funcionalidad.obtenerID(descripcionFuncionalidad);
 
-
-//                new Pasajeros(vuelo_id, costoViaje).Show();
+                string query = "EXEC JUST_DO_IT.bajaRol_Funcionalidad" + idRol + "," + idFuncionalidad;
+                try
+                {
+                    Server.getInstance().realizarQuery(query);
+                    MessageBox.Show("La funcionalidad se eliminó satisfactoriamente");
+                }
+                catch (Exception ex1)
+                {
+                    MessageBox.Show(ex1.Message);
+                }
                 this.Hide();
-
             }
         }
-
-        private void buscar_Click(object sender, EventArgs e)
-        {
-            this.actualizarTabla();
-        }
-
-
-
-
     }
 }

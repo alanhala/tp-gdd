@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.aceptar = new System.Windows.Forms.Button();
             this.tbNombreViejo = new System.Windows.Forms.TextBox();
+            this.cancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,12 +96,23 @@
             this.tbNombreViejo.Size = new System.Drawing.Size(203, 20);
             this.tbNombreViejo.TabIndex = 40;
             // 
+            // cancelar
+            // 
+            this.cancelar.Location = new System.Drawing.Point(245, 152);
+            this.cancelar.Name = "cancelar";
+            this.cancelar.Size = new System.Drawing.Size(75, 23);
+            this.cancelar.TabIndex = 37;
+            this.cancelar.Text = "Cancelar";
+            this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
+            // 
             // modificarNombre
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(431, 187);
+            this.Controls.Add(this.cancelar);
             this.Controls.Add(this.aceptar);
             this.Controls.Add(this.groupBox1);
             this.Name = "modificarNombre";
@@ -119,5 +131,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button aceptar;
         private System.Windows.Forms.TextBox tbNombreViejo;
+        private System.Windows.Forms.Button cancelar;
     }
 }

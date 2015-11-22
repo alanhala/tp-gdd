@@ -32,13 +32,12 @@
             this.seleccionar = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.dgvShowRoles = new System.Windows.Forms.DataGridView();
-            this.nombreRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buscar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbNombre = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +67,6 @@
             this.dgvShowRoles.AllowUserToDeleteRows = false;
             this.dgvShowRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvShowRoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nombreRol,
             this.funcionalidad});
             this.dgvShowRoles.Location = new System.Drawing.Point(22, 145);
             this.dgvShowRoles.MultiSelect = false;
@@ -78,18 +76,6 @@
             this.dgvShowRoles.Size = new System.Drawing.Size(468, 164);
             this.dgvShowRoles.TabIndex = 58;
             this.dgvShowRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowRoles_CellContentClick);
-            // 
-            // nombreRol
-            // 
-            this.nombreRol.HeaderText = "Nombre Rol";
-            this.nombreRol.Name = "nombreRol";
-            this.nombreRol.ReadOnly = true;
-            // 
-            // funcionalidad
-            // 
-            this.funcionalidad.HeaderText = "Funcionalidad";
-            this.funcionalidad.Name = "funcionalidad";
-            this.funcionalidad.ReadOnly = true;
             // 
             // buscar
             // 
@@ -139,6 +125,13 @@
             this.button1.TabIndex = 59;
             this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // funcionalidad
+            // 
+            this.funcionalidad.HeaderText = "Funcionalidad";
+            this.funcionalidad.Name = "funcionalidad";
+            this.funcionalidad.ReadOnly = true;
             // 
             // quitarFuncionalidad
             // 
@@ -166,13 +159,12 @@
 
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dgvShowRoles;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreRol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
         private System.Windows.Forms.Button seleccionar;
         private System.Windows.Forms.Button buscar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
     }
 }

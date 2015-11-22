@@ -90,19 +90,18 @@ namespace AerolineaFrba.Abm_Rol
         private void quitarFunc_Click(object sender, EventArgs e)
         {
             DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
-            if (int.Parse(row.Cells[0].Value.ToString()) == 0)
-            {
-                MessageBox.Show("No se ha seleccionado ningun rol");
-            }
-            else
-            {
+//          if (int.Parse(row.Cells[0].Value.ToString()) == 0)
+//          {
+//              MessageBox.Show("No se ha seleccionado ningun rol");
+//          }
+//          else
+//          {
                 string nombreRol = row.Cells[0].Value.ToString();
                 int idRol = Rol.obtenerID(nombreRol);
 
                 new quitarFuncionalidad(idRol).Show();
-                this.Hide();       
-        
-            }
+                this.Hide();
+//          }
         }
     }
 }
