@@ -211,6 +211,18 @@ IF OBJECT_ID (N'JUST_DO_IT.bajaRol') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.NombreTipoDeServicio') IS NOT NULL
     drop function JUST_DO_IT.NombreTipoDeServicio;
 
+IF OBJECT_ID (N'JUST_DO_IT.eliminar_vuelos') IS NOT NULL
+    drop procedure JUST_DO_IT.eliminar_vuelos;
+
+IF OBJECT_ID (N'JUST_DO_IT.re_altaRol') IS NOT NULL
+    drop procedure JUST_DO_IT.re_altaRol;
+
+IF OBJECT_ID (N'JUST_DO_IT.modificarNombreRol') IS NOT NULL
+    drop procedure JUST_DO_IT.modificarNombreRol;
+
+IF OBJECT_ID (N'JUST_DO_IT.nombresRolesYFuncionalidades') IS NOT NULL
+    drop function JUST_DO_IT.nombresRolesYFuncionalidades;
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -904,6 +916,14 @@ AS RETURN
 
 GO
 
+CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades()
+RETURNS TABLE
+AS RETURN
+	SELECT R.nombre AS nombreRol, F.descripcion AS nombreFuncionalidad
+	FROM JUST_DO_IT.Roles AS R , JUST_DO_IT.Funcionalidades AS F, JUST_DO_IT.Rol_Funcionalidad AS RF
+	WHERE RF.id_rol = R.id AND RF.id_funcionalidad = F.id
+GO
+
 CREATE FUNCTION JUST_DO_IT.IDRol(@Nombre varchar(255))
 RETURNS int 
 AS
@@ -1014,10 +1034,48 @@ END
 
 GO
 
-	
+CREATE PROCEDURE JUST_DO_IT.re_altaRol(@nombre VARCHAR(50))
+AS BEGIN
+	BEGIN TRY
+		UPDATE JUST_DO_IT.Roles
+			SET baja_rol = 0
+			WHERE nombre = @nombre
+
+
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Fallo el alta de rol',16,217) WITH SETERROR
+	END CATCH
+
+END 
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.modificarNombreRol(@nombreViejo VARCHAR(50),@nombreNuevo VARCHAR(50))
+AS BEGIN
+	BEGIN TRY
+		UPDATE JUST_DO_IT.Roles
+			SET nombre = @nombreNuevo
+			WHERE nombre = @nombreViejo
+
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Fallo la modificación del nombre',16,217) WITH SETERROR
+	END CATCH
+
+END 
+
+GO
+
+INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de alta aeronaves')
+INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede modificar aeronaves')
+INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de baja aeronaves')
+
+INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,2)
+INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,3)
 
 
 
+select * from JUST_DO_IT.Rol_Funcionalidad
 
-
-
+SELECT  * from JUST_DO_IT.nombresRolesYFuncionalidades()

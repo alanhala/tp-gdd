@@ -30,30 +30,43 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModificarRol));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tbNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.quitarFuncionalidad = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.cbNombre = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dgvShowRoles = new System.Windows.Forms.DataGridView();
+            this.nombreRol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.seleccionar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.cbNombre);
+            this.groupBox1.Controls.Add(this.seleccionar);
+            this.groupBox1.Controls.Add(this.tbNombre);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(35, 17);
+            this.groupBox1.Location = new System.Drawing.Point(22, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(269, 81);
+            this.groupBox1.Size = new System.Drawing.Size(468, 82);
             this.groupBox1.TabIndex = 55;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Seleccione el rol que desea modificar";
             // 
+            // tbNombre
+            // 
+            this.tbNombre.Enabled = false;
+            this.tbNombre.Location = new System.Drawing.Point(83, 29);
+            this.tbNombre.Name = "tbNombre";
+            this.tbNombre.Size = new System.Drawing.Size(100, 20);
+            this.tbNombre.TabIndex = 56;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(42, 35);
+            this.label1.Location = new System.Drawing.Point(19, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 32;
@@ -61,49 +74,69 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(35, 122);
+            this.button1.Location = new System.Drawing.Point(415, 105);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(269, 31);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 56;
-            this.button1.Text = "Agregar funcionalidad";
+            this.button1.Text = "Buscar";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // quitarFuncionalidad
+            // button2
             // 
-            this.quitarFuncionalidad.Location = new System.Drawing.Point(35, 170);
-            this.quitarFuncionalidad.Name = "quitarFuncionalidad";
-            this.quitarFuncionalidad.Size = new System.Drawing.Size(269, 31);
-            this.quitarFuncionalidad.TabIndex = 57;
-            this.quitarFuncionalidad.Text = "Quitar funcionalidad";
-            this.quitarFuncionalidad.UseVisualStyleBackColor = true;
-            this.quitarFuncionalidad.Click += new System.EventHandler(this.quitarFuncionalidad_Click);
+            this.button2.Location = new System.Drawing.Point(22, 105);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 57;
+            this.button2.Text = "Limpiar";
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // dgvShowRoles
             // 
-            this.button3.Location = new System.Drawing.Point(35, 218);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(269, 31);
-            this.button3.TabIndex = 58;
-            this.button3.Text = "Cambiar el nombre del rol";
-            this.button3.UseVisualStyleBackColor = true;
+            this.dgvShowRoles.AllowUserToAddRows = false;
+            this.dgvShowRoles.AllowUserToDeleteRows = false;
+            this.dgvShowRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvShowRoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nombreRol,
+            this.funcionalidad});
+            this.dgvShowRoles.Location = new System.Drawing.Point(22, 155);
+            this.dgvShowRoles.MultiSelect = false;
+            this.dgvShowRoles.Name = "dgvShowRoles";
+            this.dgvShowRoles.ReadOnly = true;
+            this.dgvShowRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvShowRoles.Size = new System.Drawing.Size(468, 164);
+            this.dgvShowRoles.TabIndex = 58;
+            this.dgvShowRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowRoles_CellContentClick);
             // 
-            // cbNombre
+            // nombreRol
             // 
-            this.cbNombre.FormattingEnabled = true;
-            this.cbNombre.Location = new System.Drawing.Point(114, 32);
-            this.cbNombre.Name = "cbNombre";
-            this.cbNombre.Size = new System.Drawing.Size(121, 21);
-            this.cbNombre.TabIndex = 33;
-            this.cbNombre.SelectedIndexChanged += new System.EventHandler(this.cbNombre_SelectedIndexChanged);
+            this.nombreRol.HeaderText = "Nombre Rol";
+            this.nombreRol.Name = "nombreRol";
+            this.nombreRol.ReadOnly = true;
+            // 
+            // funcionalidad
+            // 
+            this.funcionalidad.HeaderText = "Funcionalidad";
+            this.funcionalidad.Name = "funcionalidad";
+            this.funcionalidad.ReadOnly = true;
+            // 
+            // seleccionar
+            // 
+            this.seleccionar.Location = new System.Drawing.Point(200, 26);
+            this.seleccionar.Name = "seleccionar";
+            this.seleccionar.Size = new System.Drawing.Size(75, 23);
+            this.seleccionar.TabIndex = 57;
+            this.seleccionar.Text = "Seleccionar";
+            this.seleccionar.UseVisualStyleBackColor = true;
+            this.seleccionar.Click += new System.EventHandler(this.seleccionar_Click);
             // 
             // ModificarRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(337, 267);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.quitarFuncionalidad);
+            this.ClientSize = new System.Drawing.Size(513, 331);
+            this.Controls.Add(this.dgvShowRoles);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -112,6 +145,7 @@
             this.Load += new System.EventHandler(this.Form2_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -120,9 +154,12 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbNombre;
+        private System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button quitarFuncionalidad;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dgvShowRoles;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombreRol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
+        private System.Windows.Forms.Button seleccionar;
     }
 }

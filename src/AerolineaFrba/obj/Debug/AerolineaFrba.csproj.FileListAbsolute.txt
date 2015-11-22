@@ -131,3 +131,4 @@ C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\Aeroli
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.SeleccionarSiDarDeBajaOCancelarVuelos.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.ReemplazoAeronaveFinVidaUtil.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.SeleccionarSiDarDeBajaOCancelarVuelos.resources
+C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.agregarOtraFuncionalidad.resources

@@ -117,6 +117,12 @@
     <Compile Include="Abm Funcionalidad\bajaFunc.Designer.cs">
       <DependentUpon>bajaFunc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Rol\agregarOtraFuncionalidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\agregarOtraFuncionalidad.Designer.cs">
+      <DependentUpon>agregarOtraFuncionalidad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Rol\altaRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -317,6 +323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Funcionalidad\bajaFunc.resx">
       <DependentUpon>bajaFunc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\agregarOtraFuncionalidad.resx">
+      <DependentUpon>agregarOtraFuncionalidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\altaRol.resx">
       <DependentUpon>altaRol.cs</DependentUpon>
