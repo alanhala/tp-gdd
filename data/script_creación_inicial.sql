@@ -1132,17 +1132,16 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio(@matricula NVARCHAR(255), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 AS BEGIN
-	IF	@fecha_fuera_servicio < @fecha_reinicio_servicio
+	IF	(@fecha_fuera_servicio < @fecha_reinicio_servicio AND @fecha_fuera_servicio >= (SELECT CONVERT(char(10), GetDate(),126)))
 		UPDATE JUST_DO_IT.Aeronaves 
 			SET baja_fuera_servicio = 1, 
 				fecha_fuera_servicio = @fecha_fuera_servicio, 
 				fecha_reinicio_servicio = @fecha_reinicio_servicio
 			WHERE matricula = @matricula
 	ELSE
-		RAISERROR('Fallo la baja de Aeronave. La fecha de fuera de servicio no puede ser posterior a la de su reinicio',16,217) WITH SETERROR
+		RAISERROR('Fallo la baja de Aeronave',16,217) WITH SETERROR
 END
 
 GO
-
 
 
