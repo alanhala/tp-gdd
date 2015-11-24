@@ -878,8 +878,8 @@ AS BEGIN
 			WHERE matricula = matricula AND modelo = @modelo AND fabricante = @fabricante AND tipo_servicio = @tipo_servicio
 				AND kgs_disponibles = @kgs_disponibles AND butacas_totales = @cant_butacas))
 		BEGIN
-			INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles, butacas_totales)
-				VALUES(@matricula, @modelo, @fabricante, @tipo_servicio, @kgs_disponibles, @cant_butacas)
+			INSERT INTO JUST_DO_IT.Aeronaves(matricula, modelo, fabricante, tipo_servicio, kgs_disponibles, butacas_totales, fecha_alta)
+				VALUES(@matricula, @modelo, @fabricante, @tipo_servicio, @kgs_disponibles, @cant_butacas, GETDATE())
 		END ELSE
 			RAISERROR('La aeronave ingresada ya existe',16,217) WITH SETERROR
 	ELSE 
@@ -1114,11 +1114,5 @@ END
 
 GO
 
-INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de alta aeronaves')
-INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede modificar aeronaves')
-INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de baja aeronaves')
-
-INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,2)
-INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,3)
-
-select * from JUST_DO_IT.Rol_Funcionalidad
+SELECT * FROM JUST_DO_IT.Aeronaves
+WHERE matricula = 'ABJ-122'
