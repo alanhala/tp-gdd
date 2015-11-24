@@ -32,12 +32,12 @@
             this.btnDarDeBaja = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbMatricula = new System.Windows.Forms.ComboBox();
             this.dtpFechaFueraServicio = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpFechaReinicioServicio = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.cbMatricula = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,6 +78,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // cbMatricula
+            // 
+            this.cbMatricula.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMatricula.FormattingEnabled = true;
+            this.cbMatricula.Location = new System.Drawing.Point(131, 30);
+            this.cbMatricula.Name = "cbMatricula";
+            this.cbMatricula.Size = new System.Drawing.Size(121, 21);
+            this.cbMatricula.TabIndex = 34;
             // 
             // dtpFechaFueraServicio
             // 
@@ -126,14 +135,6 @@
             this.label5.Size = new System.Drawing.Size(133, 13);
             this.label5.TabIndex = 24;
             this.label5.Text = "Fecha de fuera de servicio";
-            // 
-            // cbMatricula
-            // 
-            this.cbMatricula.FormattingEnabled = true;
-            this.cbMatricula.Location = new System.Drawing.Point(131, 30);
-            this.cbMatricula.Name = "cbMatricula";
-            this.cbMatricula.Size = new System.Drawing.Size(121, 21);
-            this.cbMatricula.TabIndex = 34;
             // 
             // BajaFueraDeServicio
             // 

@@ -48,7 +48,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(157, 127);
+            this.btnCancelar.Location = new System.Drawing.Point(159, 102);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 41;
@@ -59,7 +59,7 @@
             // btnDarDeBaja
             // 
             this.btnDarDeBaja.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnDarDeBaja.Location = new System.Drawing.Point(252, 127);
+            this.btnDarDeBaja.Location = new System.Drawing.Point(254, 102);
             this.btnDarDeBaja.Name = "btnDarDeBaja";
             this.btnDarDeBaja.Size = new System.Drawing.Size(75, 23);
             this.btnDarDeBaja.TabIndex = 40;
@@ -74,13 +74,14 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(31, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(269, 91);
+            this.groupBox1.Size = new System.Drawing.Size(269, 79);
             this.groupBox1.TabIndex = 54;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
             // 
             // cbMatricula
             // 
+            this.cbMatricula.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMatricula.FormattingEnabled = true;
             this.cbMatricula.Location = new System.Drawing.Point(128, 37);
             this.cbMatricula.Name = "cbMatricula";
@@ -92,7 +93,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(339, 162);
+            this.ClientSize = new System.Drawing.Size(339, 134);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnDarDeBaja);

@@ -31,6 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnCancelarVuelos = new System.Windows.Forms.Button();
             this.btnReemplazarAeronave = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -62,11 +63,22 @@
             this.btnReemplazarAeronave.Text = "Reemplazar Aeronave";
             this.btnReemplazarAeronave.UseVisualStyleBackColor = true;
             // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(182, 94);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.TabIndex = 42;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // SeleccionarSiDarDeBajaOCancelarVuelos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 116);
+            this.ClientSize = new System.Drawing.Size(451, 129);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnReemplazarAeronave);
             this.Controls.Add(this.btnCancelarVuelos);
             this.Controls.Add(this.label1);
@@ -83,5 +95,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCancelarVuelos;
         private System.Windows.Forms.Button btnReemplazarAeronave;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }

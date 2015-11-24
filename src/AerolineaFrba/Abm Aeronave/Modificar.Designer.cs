@@ -121,6 +121,7 @@
             // 
             // cbTipoServicio
             // 
+            this.cbTipoServicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipoServicio.FormattingEnabled = true;
             this.cbTipoServicio.Location = new System.Drawing.Point(460, 35);
             this.cbTipoServicio.Name = "cbTipoServicio";
@@ -172,6 +173,7 @@
             // 
             // cbFabricante
             // 
+            this.cbFabricante.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFabricante.FormattingEnabled = true;
             this.cbFabricante.Location = new System.Drawing.Point(121, 90);
             this.cbFabricante.Name = "cbFabricante";

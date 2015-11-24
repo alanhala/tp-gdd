@@ -54,7 +54,12 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            tbNumeroMatricula.Clear();
+            tbModelo.Clear();
+            cbFabricante.Items.Clear();
+            cbTipoServicio.Items.Clear();
+            tbCantButacas.Clear();
+            tbEspacioTotalParaEncomiendas.Clear();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

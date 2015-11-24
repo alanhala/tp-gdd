@@ -43,7 +43,8 @@ namespace AerolineaFrba.Abm_Aeronave
             new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
             try
             {
-                Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_fuera_servicio = 1, fecha_fuera_servicio = '" + dtpFechaFueraServicio.Value.ToString("yyyy-dd-MM") + "' , fecha_reinicio_servicio = '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "' WHERE matricula = '" + cbMatricula.Text + "'");
+                string query = "EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '" + cbMatricula.Text + "', '" + dtpFechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "'";
+                Server.getInstance().realizarQuery(query);
                 MessageBox.Show("La aeronave se dió de baja satisfactoriamente");
             }
             catch (Exception ex)

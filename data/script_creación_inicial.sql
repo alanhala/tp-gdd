@@ -132,6 +132,10 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRuta;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio') IS NOT NULL
+    drop procedure JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.eliminar_vuelos') IS NOT NULL
     drop procedure JUST_DO_IT.eliminar_vuelos;
 GO
@@ -1126,14 +1130,19 @@ END
 
 GO
 
-<<<<<<< HEAD
-SELECT * FROM JUST_DO_IT.Aeronaves
-WHERE matricula = 'ABJ-122'
-=======
-INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de alta aeronaves')
-INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede modificar aeronaves')
-INSERT INTO JUST_DO_IT.Funcionalidades VALUES ('Puede dar de baja aeronaves')
+CREATE PROCEDURE JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio(@matricula NVARCHAR(255), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
+AS BEGIN
+	IF	@fecha_fuera_servicio < @fecha_reinicio_servicio
+		UPDATE JUST_DO_IT.Aeronaves 
+			SET baja_fuera_servicio = 1, 
+				fecha_fuera_servicio = @fecha_fuera_servicio, 
+				fecha_reinicio_servicio = @fecha_reinicio_servicio
+			WHERE matricula = @matricula
+	ELSE
+		RAISERROR('Fallo la baja de Aeronave. La fecha de fuera de servicio no puede ser posterior a la de su reinicio',16,217) WITH SETERROR
+END
 
-INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,2)
-INSERT INTO JUST_DO_IT.Rol_Funcionalidad VALUES (1,3)
->>>>>>> 63ce9ca9a9a7d0b206e64708b074149e6875ed73
+GO
+
+
+

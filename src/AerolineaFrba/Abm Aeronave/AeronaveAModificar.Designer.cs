@@ -39,6 +39,7 @@
             // 
             // cbMatricula
             // 
+            this.cbMatricula.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMatricula.FormattingEnabled = true;
             this.cbMatricula.Location = new System.Drawing.Point(100, 40);
             this.cbMatricula.Name = "cbMatricula";
