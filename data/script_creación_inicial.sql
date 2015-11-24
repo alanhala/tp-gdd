@@ -365,6 +365,7 @@ CREATE TABLE JUST_DO_IT.Compras(
 	fecha_compra DATETIME,
 	fecha_devolucion DATETIME,
 	motivo_cancelacion NVARCHAR(255),
+	monto_devuelto NUMERIC(18,2) DEFAULT 0,
 	monto NUMERIC(18,2),
 	medio_de_pago NUMERIC(18,0),
 	numero_tarjeta NUMERIC(18,0),
