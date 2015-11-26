@@ -28,20 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.listadoDeRutas = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.listadoDeRutas)).BeginInit();
             this.SuspendLayout();
+            // 
+            // listadoDeRutas
+            // 
+            this.listadoDeRutas.AllowUserToAddRows = false;
+            this.listadoDeRutas.AllowUserToDeleteRows = false;
+            this.listadoDeRutas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.listadoDeRutas.Location = new System.Drawing.Point(25, 42);
+            this.listadoDeRutas.Name = "listadoDeRutas";
+            this.listadoDeRutas.ReadOnly = true;
+            this.listadoDeRutas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.listadoDeRutas.Size = new System.Drawing.Size(638, 272);
+            this.listadoDeRutas.TabIndex = 1;
+            this.listadoDeRutas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listadoDeRutas_CellContentClick);
             // 
             // ReemplazoAeronaveFinVidaUtil
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 203);
+            this.ClientSize = new System.Drawing.Size(693, 363);
+            this.Controls.Add(this.listadoDeRutas);
             this.Name = "ReemplazoAeronaveFinVidaUtil";
             this.Text = "Seleccionar el reemplazo de la Aeronave";
             this.Load += new System.EventHandler(this.ReemplazoAeronaveFinVidaUtil_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.listadoDeRutas)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView listadoDeRutas;
     }
 }

@@ -62,5 +62,10 @@ namespace AerolineaFrba.Abm_Ruta
             owner.cargarLabelsRuta(ruta);
             this.Close();
         }
+
+        private void listadoDeRutas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

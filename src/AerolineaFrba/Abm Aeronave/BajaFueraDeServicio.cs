@@ -40,11 +40,11 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
             try
             {
                 string query = "EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '" + cbMatricula.Text + "', '" + dtpFechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "'";
                 Server.getInstance().realizarQuery(query);
+                new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
                 MessageBox.Show("La aeronave se dió de baja satisfactoriamente");
             }
             catch (Exception ex)

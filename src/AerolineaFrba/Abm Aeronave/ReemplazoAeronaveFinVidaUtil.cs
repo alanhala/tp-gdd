@@ -23,5 +23,10 @@ namespace AerolineaFrba.Abm_Aeronave
         {
 
         }
+
+        private void listadoDeRutas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

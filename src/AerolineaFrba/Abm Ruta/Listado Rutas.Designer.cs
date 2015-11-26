@@ -47,6 +47,7 @@ namespace AerolineaFrba.Abm_Ruta
             this.listadoDeRutas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.listadoDeRutas.Size = new System.Drawing.Size(824, 404);
             this.listadoDeRutas.TabIndex = 0;
+            this.listadoDeRutas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listadoDeRutas_CellContentClick);
             // 
             // seleccionarRuta
             // 

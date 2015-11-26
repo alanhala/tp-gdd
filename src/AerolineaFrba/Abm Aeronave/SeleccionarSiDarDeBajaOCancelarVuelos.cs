@@ -80,6 +80,7 @@ namespace AerolineaFrba.Abm_Aeronave
                 query = "EXEC JUST_DO_IT.eliminar_vuelos " + vuelo;
                 server.query(query);
             }
+            MessageBox.Show("Los vuelos se han cancelado");
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
