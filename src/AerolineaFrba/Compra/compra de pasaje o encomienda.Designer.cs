@@ -176,6 +176,7 @@
             this.dgvViajesDisponibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvViajesDisponibles.Size = new System.Drawing.Size(845, 133);
             this.dgvViajesDisponibles.TabIndex = 18;
+            this.dgvViajesDisponibles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvViajesDisponibles_CellContentClick);
             // 
             // viajeDisponible
             // 

@@ -125,7 +125,6 @@ C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\Aeroli
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Vistas_Inicio.Menu_Invitado.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Vistas_Inicio.Inicio_Admin.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.csproj.GenerateResource.Cache
-C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.ReemplazoAeronaveFinVidaUtil.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.SeleccionarSiDarDeBajaOCancelarVuelos.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.ReemplazoAeronaveFinVidaUtil.resources
 C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.SeleccionarSiDarDeBajaOCancelarVuelos.resources
@@ -135,3 +134,4 @@ C:\Users\Maca\Desktop\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.A
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.agregarFuncionalidad.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.modificarNombre.resources
 C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.inicioPrograma.resources
+C:\Users\Elián\Documents\UTN\Gestión de Datos\GitLab\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.ReemplazoAeronave.resources

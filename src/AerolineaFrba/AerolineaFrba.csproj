@@ -81,11 +81,11 @@
     <Compile Include="Abm Aeronave\SeleccionarSiDarDeBajaOCancelarVuelos.Designer.cs">
       <DependentUpon>SeleccionarSiDarDeBajaOCancelarVuelos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Aeronave\ReemplazoAeronaveFinVidaUtil.cs">
+    <Compile Include="Abm Aeronave\ReemplazoAeronave.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Aeronave\ReemplazoAeronaveFinVidaUtil.Designer.cs">
-      <DependentUpon>ReemplazoAeronaveFinVidaUtil.cs</DependentUpon>
+    <Compile Include="Abm Aeronave\ReemplazoAeronave.Designer.cs">
+      <DependentUpon>ReemplazoAeronave.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Aeronave\Listado Aeronaves.cs">
       <SubType>Form</SubType>
@@ -318,8 +318,8 @@
     <EmbeddedResource Include="Abm Aeronave\Modificar.resx">
       <DependentUpon>Modificar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Aeronave\ReemplazoAeronaveFinVidaUtil.resx">
-      <DependentUpon>ReemplazoAeronaveFinVidaUtil.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Aeronave\ReemplazoAeronave.resx">
+      <DependentUpon>ReemplazoAeronave.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Aeronave\SeleccionarSiDarDeBajaOCancelarVuelos.resx">
       <DependentUpon>SeleccionarSiDarDeBajaOCancelarVuelos.cs</DependentUpon>

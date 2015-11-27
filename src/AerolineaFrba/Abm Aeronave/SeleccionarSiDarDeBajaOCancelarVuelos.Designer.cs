@@ -62,6 +62,7 @@
             this.btnReemplazarAeronave.TabIndex = 2;
             this.btnReemplazarAeronave.Text = "Reemplazar Aeronave";
             this.btnReemplazarAeronave.UseVisualStyleBackColor = true;
+            this.btnReemplazarAeronave.Click += new System.EventHandler(this.btnReemplazarAeronave_Click);
             // 
             // btnCancelar
             // 

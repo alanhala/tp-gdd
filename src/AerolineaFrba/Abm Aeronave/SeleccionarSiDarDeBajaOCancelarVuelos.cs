@@ -87,5 +87,17 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             this.Close();
         }
+
+        private void btnReemplazarAeronave_Click(object sender, EventArgs e)
+        {
+            if (finVidaUtil)
+            {
+                new ReemplazoAeronave(matricula).Show();
+            }
+            else 
+            {
+                new ReemplazoAeronave(matricula, this.fechaFueraServicio, this.fechaReinicioServicio).Show();
+            }
+        }
     }
 }

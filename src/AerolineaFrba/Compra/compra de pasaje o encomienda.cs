@@ -85,5 +85,10 @@ namespace AerolineaFrba.Compra
             }
         }
 
+        private void dgvViajesDisponibles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
     }
 }

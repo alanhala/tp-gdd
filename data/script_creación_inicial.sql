@@ -132,6 +132,14 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRuta;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.reemplazar_vuelos_aeronave') IS NOT NULL
+    drop procedure JUST_DO_IT.reemplazar_vuelos_aeronave;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.aeronaves_que_pueden_reemplazar_a') IS NOT NULL
+    drop procedure JUST_DO_IT.aeronaves_que_pueden_reemplazar_a;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio') IS NOT NULL
     drop procedure JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio;
 GO
@@ -142,6 +150,18 @@ GO
 
 IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.EstaDisponibleParaElVuelo') IS NOT NULL
+    drop function JUST_DO_IT.EstaDisponibleParaElVuelo;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.EstaDisponibleParaReemplazar') IS NOT NULL
+    drop function JUST_DO_IT.EstaDisponibleParaReemplazar;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.obtener_aeronaves_que_reemplacen_a') IS NOT NULL
+    drop function JUST_DO_IT.obtener_aeronaves_que_reemplacen_a;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.obtener_vuelos_segun_id_aeronave_y_fechas') IS NOT NULL
@@ -1145,8 +1165,92 @@ END
 
 GO
 
+CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaElVuelo(@aeronave NUMERIC(18,0), @vueloId NUMERIC(18,0))
+RETURNS BIT
+AS BEGIN
+	IF (NOT EXISTS(SELECT 1
+	FROM JUST_DO_IT.Vuelos vuelosAeronaveNueva, JUST_DO_IT.Vuelos vueloAeronaveVieja
+	WHERE vuelosAeronaveNueva.aeronave_id = @aeronave
+		AND vueloAeronaveVieja.id = @vueloId
+		AND 
+			((vueloAeronaveVieja.fecha_salida <= vuelosAeronaveNueva.fecha_salida AND vueloAeronaveVieja.fecha_llegada_estimada >= vuelosAeronaveNueva.fecha_llegada_estimada)
+			OR
+			(vueloAeronaveVieja.fecha_salida <= vuelosAeronaveNueva.fecha_salida AND vueloAeronaveVieja.fecha_llegada_estimada >= vuelosAeronaveNueva.fecha_salida)
+			OR
+			(vueloAeronaveVieja.fecha_salida <= vuelosAeronaveNueva.fecha_llegada_estimada AND vueloAeronaveVieja.fecha_llegada_estimada >= vuelosAeronaveNueva.fecha_llegada_estimada))
 
+	)) RETURN 1
+	RETURN 0
+END
+GO
 
-SELECT * 
-FROM JUST_DO_IT.Vuelos
+CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaReemplazar(@aeronave NVARCHAR(255), @aeronaveAReemplazar NVARCHAR(255))
+RETURNS BIT
+AS BEGIN
+	DECLARE @vueloId NUMERIC(18,0)
+	DECLARE @idAeronave NUMERIC(18,0)
+	SELECT @idAeronave = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronave))
+	DECLARE @idAeronaveAReemplazar NUMERIC(18,0)
+	SELECT @idAeronaveAReemplazar = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveAReemplazar))
+	DECLARE busqueda CURSOR
+	FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
+		WHERE vuelos.aeronave_id = @idAeronaveAReemplazar
+			AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
+		
+	OPEN busqueda
+	FETCH busqueda INTO  @vueloId
+	WHILE (@@FETCH_STATUS = 0)
+	BEGIN	
+		IF (JUST_DO_IT.EstaDisponibleParaElVuelo(@idAeronave, @vueloId) = 0) /* 0 no esta disponible, 1 si */
+		BEGIN 
+			CLOSE busqueda
+			DEALLOCATE busqueda
+			RETURN 0
+		END	
+		FETCH busqueda INTO  @vueloId
+	END
+	CLOSE busqueda
+	DEALLOCATE busqueda
+	RETURN 1
+END
 
+GO
+
+CREATE FUNCTION JUST_DO_IT.obtener_aeronaves_que_reemplacen_a(@aeronave NVARCHAR(255))
+RETURNS TABLE
+AS RETURN
+	SELECT aeronaves.matricula AS matricula, aeronaves.butacas_totales AS butacas, aeronaves.kgs_disponibles AS kgs,
+		aeronaves.tipo_servicio AS tipoServicio
+	FROM JUST_DO_IT.Aeronaves aeronaves
+	WHERE aeronaves.matricula <> @aeronave AND JUST_DO_IT.EstaDisponibleParaReemplazar(aeronaves.matricula, @aeronave) = 1
+
+GO 
+CREATE PROCEDURE JUST_DO_IT.reemplazar_vuelos_aeronave(@aeronaveVieja NVARCHAR(255), @aeronaveNueva NVARCHAR(255))
+AS BEGIN
+	DECLARE @vueloId NUMERIC(18,0)
+	DECLARE @idAeronaveVieja NUMERIC(18,0)
+	SELECT @idAeronaveVieja = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveVieja))
+	DECLARE @idAeronaveNueva NUMERIC(18,0)
+	SELECT @idAeronaveNueva = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveNueva))
+
+	DECLARE busqueda CURSOR
+	FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
+		WHERE vuelos.aeronave_id = @aeronaveVieja
+		AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
+		
+	OPEN busqueda
+	FETCH busqueda INTO @vueloId
+	WHILE (@@FETCH_STATUS = 0)
+	BEGIN
+		
+		UPDATE JUST_DO_IT.Vuelos
+			SET aeronave_id = @aeronaveNueva
+			WHERE id = @vueloId
+	
+		FETCH busqueda INTO  @vueloId
+	END
+	CLOSE busqueda
+	DEALLOCATE busqueda
+END
+
+GO
