@@ -38,7 +38,6 @@
             this.cmbOrigen = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.dgvViajesDisponibles = new System.Windows.Forms.DataGridView();
             this.viajeDisponible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantButacasLibres = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -146,15 +145,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Ciudad Origen";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(278, 224);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(8, 8);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // dgvViajesDisponibles
             // 
             this.dgvViajesDisponibles.AllowUserToAddRows = false;
@@ -234,7 +224,7 @@
             // 
             // btnViajar
             // 
-            this.btnViajar.Location = new System.Drawing.Point(598, 401);
+            this.btnViajar.Location = new System.Drawing.Point(631, 401);
             this.btnViajar.Name = "btnViajar";
             this.btnViajar.Size = new System.Drawing.Size(75, 23);
             this.btnViajar.TabIndex = 20;
@@ -252,7 +242,6 @@
             this.Controls.Add(this.dgvViajesDisponibles);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "compraPasaje";
@@ -277,7 +266,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dgvViajesDisponibles;
         private System.Windows.Forms.Button btnViajar;
         private System.Windows.Forms.ComboBox cmbDestino;

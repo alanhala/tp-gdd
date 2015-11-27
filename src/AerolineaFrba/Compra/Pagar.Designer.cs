@@ -53,8 +53,16 @@
             this.btnSoyCliente = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lblCosto = new System.Windows.Forms.Label();
+            this.txtKGs = new System.Windows.Forms.TextBox();
+            this.lblKGs = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -220,14 +228,14 @@
             this.groupBox2.Controls.Add(this.btnPagaEnEfectivo);
             this.groupBox2.Location = new System.Drawing.Point(30, 277);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(346, 55);
+            this.groupBox2.Size = new System.Drawing.Size(353, 55);
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tipo  de Pago";
             // 
             // btnAnterior
             // 
-            this.btnAnterior.Location = new System.Drawing.Point(255, 350);
+            this.btnAnterior.Location = new System.Drawing.Point(255, 430);
             this.btnAnterior.Name = "btnAnterior";
             this.btnAnterior.Size = new System.Drawing.Size(75, 23);
             this.btnAnterior.TabIndex = 34;
@@ -236,7 +244,7 @@
             // 
             // btnFinalizar
             // 
-            this.btnFinalizar.Location = new System.Drawing.Point(161, 350);
+            this.btnFinalizar.Location = new System.Drawing.Point(161, 430);
             this.btnFinalizar.Name = "btnFinalizar";
             this.btnFinalizar.Size = new System.Drawing.Size(75, 23);
             this.btnFinalizar.TabIndex = 33;
@@ -246,7 +254,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(67, 350);
+            this.btnLimpiar.Location = new System.Drawing.Point(67, 430);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btnLimpiar.TabIndex = 32;
@@ -284,12 +292,77 @@
             this.lblCosto.Size = new System.Drawing.Size(0, 22);
             this.lblCosto.TabIndex = 36;
             // 
+            // txtKGs
+            // 
+            this.txtKGs.Location = new System.Drawing.Point(228, 41);
+            this.txtKGs.Name = "txtKGs";
+            this.txtKGs.Size = new System.Drawing.Size(109, 20);
+            this.txtKGs.TabIndex = 39;
+            // 
+            // lblKGs
+            // 
+            this.lblKGs.AutoSize = true;
+            this.lblKGs.Location = new System.Drawing.Point(6, 44);
+            this.lblKGs.Name = "lblKGs";
+            this.lblKGs.Size = new System.Drawing.Size(121, 13);
+            this.lblKGs.TabIndex = 38;
+            this.lblKGs.Text = "Cantidad de Kg a enviar";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox3.BackgroundImage")));
+            this.groupBox3.Controls.Add(this.dateTimePicker1);
+            this.groupBox3.Controls.Add(this.txtKGs);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.lblKGs);
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Location = new System.Drawing.Point(28, 334);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(355, 73);
+            this.groupBox3.TabIndex = 40;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Agregar Encomienda";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(150, 169);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 39;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 175);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(108, 13);
+            this.label10.TabIndex = 38;
+            this.label10.Text = "Fecha de Nacimiento";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(222, 147);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(128, 20);
+            this.textBox1.TabIndex = 37;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 150);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(26, 13);
+            this.label11.TabIndex = 36;
+            this.label11.Text = "Mail";
+            // 
             // Pagar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(425, 385);
+            this.ClientSize = new System.Drawing.Size(425, 457);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.lblCosto);
             this.Controls.Add(this.btnSoyCliente);
             this.Controls.Add(this.btnAnterior);
@@ -303,6 +376,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -334,5 +409,12 @@
         private System.Windows.Forms.Button btnSoyCliente;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblCosto;
+        private System.Windows.Forms.TextBox txtKGs;
+        private System.Windows.Forms.Label lblKGs;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label11;
     }
 }

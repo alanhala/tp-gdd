@@ -14,13 +14,15 @@ namespace AerolineaFrba.Compra
     {
         private int vuelo_id;
         private float costo_viaje;
+        private float costo_encomienda;
 
         public Pasajeros() { }
-        public Pasajeros(int id, float costo)
+        public Pasajeros(int id, float costo, float costoEncomienda)
         {
             InitializeComponent();
             this.vuelo_id = id;
             this.costo_viaje = costo;
+            this.costo_encomienda = costoEncomienda;
         }
 
         public void agregarPasajero(string usuario, int usuario_id, string butaca)
@@ -41,7 +43,7 @@ namespace AerolineaFrba.Compra
                 MessageBox.Show("Debe agregar algun pasajero");
             else
             {
-                new Pagar(this.vuelo_id, this.costo_viaje).Show();
+                new Pagar(this.vuelo_id, this.costo_viaje, this.costo_encomienda).Show();
                 this.Hide();
             }
         }
