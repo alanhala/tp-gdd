@@ -1312,3 +1312,66 @@ AS BEGIN
 END
 
 GO
+
+drop PROCEDURE JUST_DO_IT.generar_butacas
+GO
+
+CREATE PROCEDURE JUST_DO_IT.generar_butacas(@matriculaAeronave NVARCHAR(255), @cantidadButacas int)
+AS BEGIN
+	DECLARE @contador int
+	DECLARE @numeroButaca int
+	DECLARE @cambioPiso int
+	SELECT @contador = 1
+	SELECT @numeroButaca = 1
+	SELECT @cambioPiso = 0
+	DECLARE @idAeronave NUMERIC(18,0)
+	SELECT @idAeronave = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@matriculaAeronave))
+
+	WHILE(@contador <= @cantidadButacas)
+	BEGIN
+		IF(@contador <= @cantidadButacas/2)
+		BEGIN
+			IF(@contador % 2 = 0)
+			BEGIN
+				INSERT INTO JUST_DO_IT.Butacas (numero, piso, tipo, aeronave_id)
+				VALUES(@numeroButaca, 1, 'Ventanilla', @idAeronave)
+			END
+			ELSE
+				INSERT INTO JUST_DO_IT.Butacas (numero, piso, tipo, aeronave_id)
+				VALUES(@numeroButaca, 1, 'Pasillo', @idAeronave)
+		END
+		ELSE
+		BEGIN
+			IF(@contador % 2 = 0)
+			BEGIN
+				INSERT INTO JUST_DO_IT.Butacas (numero, piso, tipo, aeronave_id)
+				VALUES(@numeroButaca, 2, 'Ventanilla', @idAeronave)
+			END	
+			ELSE
+			BEGIN
+				INSERT INTO JUST_DO_IT.Butacas (numero, piso, tipo, aeronave_id)
+				VALUES(@numeroButaca, 2, 'Pasillo', @idAeronave)
+			END
+		END
+
+		IF(@contador >= @cantidadButacas / 2 AND @cambioPiso = 0)
+		BEGIN
+			SET @numeroButaca = 0
+			SET @cambioPiso = 1
+		END
+
+		SET @contador = @contador + 1;
+		SET @numeroButaca = @numeroButaca + 1;
+	END
+END
+
+GO
+
+
+
+SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula('ccc')
+
+SELECT * FROM JUST_DO_IT.Butacas
+WHERE aeronave_id = 41
+
+EXEC JUST_DO_IT.generar_butacas '111', 20

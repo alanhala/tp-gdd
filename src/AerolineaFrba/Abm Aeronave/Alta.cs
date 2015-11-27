@@ -78,8 +78,11 @@ namespace AerolineaFrba.Abm_Aeronave
                 int cantidadButacas = int.Parse(tbCantButacas.Text);
 
                 string altaAeronave = "EXEC JUST_DO_IT.almacenarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + cantidadButacas;
+                string generarButacas = "EXEC JUST_DO_IT.generar_butacas '" + matricula + "', " + cantidadButacas; 
+                
                 try {
                     Server.getInstance().realizarQuery(altaAeronave);
+                    Server.getInstance().realizarQuery(generarButacas);
                     MessageBox.Show("La aeronave se agrego satisfactoriamente");
                 }
                 catch (Exception ex)
