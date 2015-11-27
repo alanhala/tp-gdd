@@ -72,6 +72,11 @@ namespace AerolineaFrba.Compra
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
             DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvViajesDisponibles);
+            if (row == null)
+            {
+                MessageBox.Show("Debe seleccionar algun vuelo");
+                return;
+            }
             if (int.Parse(row.Cells[1].Value.ToString()) == 0)
             {
                 MessageBox.Show("No quedan butacas disponibles");
@@ -80,7 +85,8 @@ namespace AerolineaFrba.Compra
             {
                 int vuelo_id = int.Parse(row.Cells[0].Value.ToString());
                 float costoViaje = float.Parse(row.Cells[6].Value.ToString());
-                new Pasajeros(vuelo_id, costoViaje).Show();
+                float costoEncomienda = float.Parse(row.Cells[7].Value.ToString());
+                new Pasajeros(vuelo_id, costoViaje, costoEncomienda).Show();
                 this.Hide();
             }
         }

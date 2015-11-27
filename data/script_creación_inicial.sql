@@ -262,6 +262,9 @@ IF OBJECT_ID (N'JUST_DO_IT.nombresRolesYFuncionalidades') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.bajaRol_Funcionalidad') IS NOT NULL
     drop procedure JUST_DO_IT.bajaRol_Funcionalidad;
 
+IF OBJECT_ID (N'JUST_DO_IT.KGsDisponibles') IS NOT NULL
+    drop function JUST_DO_IT.KGsDisponibles;
+	
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -353,6 +356,7 @@ CREATE TABLE JUST_DO_IT.Vuelos(
 	ruta_id NUMERIC(18,0) NOT NULL,
 	aeronave_id NUMERIC(18,0) NOT NULL,
 	cantidadDisponible NUMERIC(18,0) NOT NULL DEFAULT 0,
+	KGsDisponibles NUMERIC(18,2) NOT NULL DEFAULT 0,
 	vuelo_eliminado BIT DEFAULT 0,
 	PRIMARY KEY (id),
 	FOREIGN KEY (ruta_id) REFERENCES JUST_DO_IT.Rutas,
@@ -420,22 +424,21 @@ CREATE TABLE JUST_DO_IT.Pasajes(
 	FOREIGN KEY (compra) REFERENCES JUST_DO_IT.Compras
 )
 
-SET IDENTITY_INSERT JUST_DO_IT.Pasajes ON
-
 GO
 
 CREATE TABLE JUST_DO_IT.Paquetes(
-	id NUMERIC(18,0) IDENTITY(1,1),
-	codigo NUMERIC(18,0) NOT NULL,
+	codigo NUMERIC(18,0) IDENTITY(1,1),
 	precio NUMERIC(18,2) NOT NULL,
 	kg NUMERIC(18,0) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
 	compra NUMERIC(18,0) NOT NULL DEFAULT 1,
-	PRIMARY KEY(id),
+	PRIMARY KEY(codigo),
 	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
 	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras
 )
+
+
 
 GO
 
@@ -641,6 +644,7 @@ INSERT INTO JUST_DO_IT.Compras(comprador, fecha_compra, medio_de_pago, monto, cu
 		JOIN #temporalUsuarios t2
 		ON t1.temporalPasaje_id = t2.temporalPasaje_id
 
+SET IDENTITY_INSERT JUST_DO_IT.Pasajes ON
 INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, butaca, compra) 
 	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t1.butaca_id, compras.id
 		FROM #temporalParaPasaje t1
@@ -648,6 +652,7 @@ INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero,
 		ON t1.temporalPasaje_id = t2.temporalPasaje_id
 		JOIN JUST_DO_IT.Compras compras
 		ON compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra
+SET IDENTITY_INSERT JUST_DO_IT.Pasajes OFF
 		
 /*****TABLAS AUXILIARES PARA PAQUETE*****/
 CREATE TABLE #temporalPaquete(
@@ -723,7 +728,8 @@ INSERT INTO JUST_DO_IT.Compras(comprador, fecha_compra, medio_de_pago, monto, cu
 		FROM #temporalParaPaquete t1
 		JOIN #temporalUsuariosPaquete t2
 		ON t1.temporalPaquete_id = t2.temporalPaquete_id
-	
+
+SET IDENTITY_INSERT JUST_DO_IT.Paquetes ON
 INSERT INTO JUST_DO_IT.Paquetes(codigo, fecha_compra, kg, precio, vuelo_id, compra)
 	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.kg, t1.precio, t1.vuelo_id, compras.id
 	FROM #temporalParaPaquete t1
@@ -732,7 +738,8 @@ INSERT INTO JUST_DO_IT.Paquetes(codigo, fecha_compra, kg, precio, vuelo_id, comp
 	JOIN JUST_DO_IT.Compras compras
 	ON compras.encomienda = 1 
 	AND compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra		
-	
+SET IDENTITY_INSERT JUST_DO_IT.Paquetes OFF
+
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
@@ -763,10 +770,32 @@ AS RETURN
 								
 GO 
 
+CREATE FUNCTION JUST_DO_IT.KGsDisponibles(@Vuelo NUMERIC(18,0))
+RETURNS NUMERIC(18,0)
+AS BEGIN
+	DECLARE @ocupados NUMERIC(18,0)
+	DECLARE @maximo NUMERIC(18,0)
+	SELECT  @ocupados = SUM(paquetes.kg)
+		FROM JUST_DO_IT.Paquetes paquetes
+		WHERE paquetes.vuelo_id = @Vuelo
+		GROUP BY paquetes.vuelo_id
+
+	SELECT @maximo = aeronaves.kgs_disponibles
+	FROM JUST_DO_IT.Vuelos vuelos, JUST_DO_IT.Aeronaves aeronaves
+	WHERE vuelos.id = @vuelo AND vuelos.aeronave_id = aeronaves.id
+
+	RETURN @maximo - @ocupados
+END		
+					
+GO 
+
 UPDATE JUST_DO_IT.Vuelos 
 SET cantidadDisponible = (SELECT COUNT(butacas.numero) 
 						FROM JUST_DO_IT.butacasLibres(JUST_DO_IT.Vuelos.id) butacas
 						GROUP BY butacas.aeronave)
+
+UPDATE JUST_DO_IT.Vuelos 
+SET KGsDisponibles = (SELECT JUST_DO_IT.KGsDisponibles(JUST_DO_IT.Vuelos.id))
 
 GO
 
@@ -781,31 +810,59 @@ GO
 CREATE PROCEDURE JUST_DO_IT.almacenarPasaje(@Vuelo NUMERIC(18,0), @Costo NUMERIC(18,2), @Comprador NUMERIC(18,0),
 											@NumeroTarjeta NUMERIC(18,0), @CodigoTarjeta NUMERIC(18,0),
 											@VencimientoTarjeta NUMERIC(18,0), @Cuotas NUMERIC(18,0),
-											@MedioDePago NUMERIC(18,0))
+											@MedioDePago NUMERIC(18,0), @KGs NUMERIC(18,0))
 AS BEGIN
 	BEGIN TRANSACTION almacenarPasaje
+	DECLARE @error BIT
+	SET @error = 1
 	BEGIN TRY
 		DECLARE @CantidadPasajes INT
+		DECLARE @CostoKG NUMERIC(18,0)
 		SELECT @CantidadPasajes = COUNT(*) FROM JUST_DO_IT.ButacasReservadas 
 							WHERE vuelo_id = @Vuelo GROUP BY vuelo_id
-
-		INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, numero_tarjeta, codigo_seguridad, vencimiento, cuotas)
-			VALUES(@Comprador, @MedioDePago, @Costo * @CantidadPasajes, @NumeroTarjeta, @CodigoTarjeta, @VencimientoTarjeta, @Cuotas)
+		SELECT @CostoKG = r.precio_baseKG
+		FROM JUST_DO_IT.Vuelos v, JUST_DO_IT.Rutas r
+		WHERE v.id = @Vuelo AND v.ruta_id = r.id
+		INSERT INTO JUST_DO_IT.Compras(comprador, medio_de_pago, monto, fecha_compra, numero_tarjeta, codigo_seguridad, vencimiento, cuotas)
+			VALUES(@Comprador, @MedioDePago, @Costo * @CantidadPasajes + @KGs * @CostoKG, 
+			GETDATE(),@NumeroTarjeta, @CodigoTarjeta, @VencimientoTarjeta, @Cuotas)
 
 		DECLARE @compra_id INT
 		SELECT @compra_id = @@IDENTITY
+
+		IF (@KGs < 0)
+		BEGIN
+			SET @error = 0
+			RAISERROR('La cantidad de KGs ingresada para encomienda debe ser positiva',16,217) WITH SETERROR
+		END
+		IF (@KGs <> 0)
+		BEGIN
+			DECLARE @KGsDisponibles NUMERIC(18,2)
+			SELECT @KGsDisponibles = vuelos.KGsDisponibles
+			FROM JUST_DO_IT.Vuelos vuelos 
+			WHERE vuelos.id = @Vuelo
+			IF (@KGs > @KGsDisponibles)
+			BEGIN
+				SET @error = 0
+				RAISERROR('La cantidad de KGs ingresada supera la disponible',16,217) WITH SETERROR
+			END
+			INSERT INTO JUST_DO_IT.Paquetes(vuelo_id,compra,fecha_compra,kg,precio)
+				VALUES(@Vuelo, @compra_id, GETDATE(), @KGs, @KGs * @CostoKG)
+		END
+
 		INSERT INTO JUST_DO_IT.Pasajes(vuelo_id, compra, fecha_compra, precio, pasajero, butaca)
 			SELECT @Vuelo, @compra_id, GETDATE(), @Costo, reservadas.usuario_id, reservadas.butaca_id
 				FROM JUST_DO_IT.ButacasReservadas reservadas
 					WHERE reservadas.vuelo_id = @Vuelo
-
+		
 		DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
 
 		COMMIT TRANSACTION almacenarPasaje	
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION almacenarPasaje
-		RAISERROR('El pasaje no pudo ser almacenado',16,217) WITH SETERROR
+		IF (@error = 1)
+			RAISERROR('El pasaje no pudo ser almacenado',16,217) WITH SETERROR
 	END CATCH	
 END 
 
@@ -874,7 +931,7 @@ GO
 CREATE FUNCTION JUST_DO_IT.vuelosDisponibles(@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @Salida DATETIME)
 RETURNS TABLE
 AS RETURN
-	SELECT vuelos.id AS vuelo, vuelos.cantidadDisponible AS cantidad, aeronaves.kgs_disponibles AS kgsDisponibles, 
+	SELECT vuelos.id AS vuelo, vuelos.cantidadDisponible AS cantidad, vuelos.KGsDisponibles AS kgsDisponibles, 
 	vuelos.fecha_salida AS salida, vuelos.fecha_llegada_estimada AS llegada, tipos.nombre AS tipoServicio, (rutas.precio_basePasaje * tipos.costo_adicional) AS costoViaje,
 	rutas.precio_baseKG AS costoEncomienda
 	FROM JUST_DO_IT.Vuelos vuelos
@@ -1164,6 +1221,7 @@ AS BEGIN
 END
 
 GO
+
 
 CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaElVuelo(@aeronave NUMERIC(18,0), @vueloId NUMERIC(18,0))
 RETURNS BIT

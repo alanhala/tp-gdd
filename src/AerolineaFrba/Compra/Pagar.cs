@@ -14,6 +14,7 @@ namespace AerolineaFrba.Compra
     {
         private int vuelo_id;
         private float costo_viaje;
+        private float costo_encomienda;
         private int usuario_id;
         private string numero;
         private string codigo;
@@ -28,16 +29,18 @@ namespace AerolineaFrba.Compra
         {
         }
 
-        public Pagar(int vuelo_id, float costo_viaje)
+        public Pagar(int vuelo_id, float costo_viaje, float costo_encomienda)
         {
             InitializeComponent();
             this.vuelo_id = vuelo_id;
             this.costo_viaje = costo_viaje;
+            this.costo_encomienda = costo_encomienda;
             lblCosto.Text = this.costo_viaje.ToString();
             this.soyCliente = false;
             this.cargoPago = false;
             this.efectivo = false;
 
+            lblKGs.Text = lblKGs.Text + " ($" + this.costo_encomienda + " por KG)";  
             this.numero = "NULL";
             this.codigo = "NULL";
             this.vencimiento = "NULL";
@@ -105,8 +108,25 @@ namespace AerolineaFrba.Compra
                         MessageBox.Show("Debe completar todos los campos");
                     else
                     {
-                        query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", " + this.txtMailPasajero.Text + ", "
-                                   + this.txtDireccionPasajero.Text + ", " + this.txtTelefonoPasajero.Text;
+                        float KGsAEnviar;
+                        if (txtKGs.Text.Trim() == "")
+                        {
+                            KGsAEnviar = 0;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                KGsAEnviar = int.Parse(txtKGs.Text);
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("La cantidad de KGs ingresada no es valida");
+                                return;
+                            }
+                        }
+                        query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", '" + this.txtMailPasajero.Text + "', '"
+                                       + this.txtDireccionPasajero.Text + "', " + this.txtTelefonoPasajero.Text;
                         Server.getInstance().realizarQuery(query);
                         int idMedioDePago;
                         if (this.efectivo)
@@ -116,7 +136,7 @@ namespace AerolineaFrba.Compra
 
                         query = "EXEC JUST_DO_IT.almacenarPasaje " + this.vuelo_id + ", " + this.costo_viaje + ", " +
                                         this.usuario_id + ", " + this.numero + ", " + this.codigo + ", " + this.vencimiento + ", " +
-                                        this.cuotas + ", " + idMedioDePago;
+                                        this.cuotas + ", " + idMedioDePago + ", " + KGsAEnviar;
                         Server.getInstance().realizarQuery(query);
                         MessageBox.Show("El pasaje ha sido almacenado");
                         new Vistas_Inicio.Inicio_Admin().Show();

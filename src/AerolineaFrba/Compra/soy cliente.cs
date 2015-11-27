@@ -38,28 +38,35 @@ namespace AerolineaFrba.Compra
             }
             else
             {
-                string query = "SELECT * FROM JUST_DO_IT.Usuarios WHERE dni=" +
-                    int.Parse(txtDNI.Text) + " AND nombre='" + txtNombre.Text + 
-                    "' AND apellido='" + txtApellido.Text + "'";
-                SqlDataReader reader = Server.getInstance().query(query);
-                reader.Read();
-                if (reader.HasRows)
+                try
                 {
-                    this.formOrigen.cargarCliente(int.Parse(reader["id"].ToString()),
-                                                    reader["dni"].ToString(),
-                                                    reader["nombre"].ToString(),
-                                                    reader["apellido"].ToString(),
-                                                    reader["direccion"].ToString(),
-                                                    reader["telefono"].ToString(),
-                                                    reader["mail"].ToString(),
-                                                    reader["fecha_nacimiento"].ToString());
-                    this.Hide();
+                    string query = "SELECT * FROM JUST_DO_IT.Usuarios WHERE dni=" +
+                        int.Parse(txtDNI.Text) + " AND nombre='" + txtNombre.Text +
+                        "' AND apellido='" + txtApellido.Text + "'";
+                    SqlDataReader reader = Server.getInstance().query(query);
+                    reader.Read();
+                    if (reader.HasRows)
+                    {
+                        this.formOrigen.cargarCliente(int.Parse(reader["id"].ToString()),
+                                                        reader["dni"].ToString(),
+                                                        reader["nombre"].ToString(),
+                                                        reader["apellido"].ToString(),
+                                                        reader["direccion"].ToString(),
+                                                        reader["telefono"].ToString(),
+                                                        reader["mail"].ToString(),
+                                                        reader["fecha_nacimiento"].ToString());
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("El usuario ingresado no existe");
+                    }
+                    reader.Close();
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("El usuario ingresado no existe");
+                    MessageBox.Show("Debe ingresar datos validos");
                 }
-                reader.Close();
             }
         }
     }
