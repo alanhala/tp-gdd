@@ -132,6 +132,10 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRuta;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.generar_butacas') IS NOT NULL
+    drop procedure JUST_DO_IT.generar_butacas;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.reemplazar_vuelos_aeronave') IS NOT NULL
     drop procedure JUST_DO_IT.reemplazar_vuelos_aeronave;
 GO
@@ -1320,9 +1324,6 @@ END
 
 GO
 
-drop PROCEDURE JUST_DO_IT.generar_butacas
-GO
-
 CREATE PROCEDURE JUST_DO_IT.generar_butacas(@matriculaAeronave NVARCHAR(255), @cantidadButacas int)
 AS BEGIN
 	DECLARE @contador int
@@ -1371,20 +1372,6 @@ AS BEGIN
 		SET @numeroButaca = @numeroButaca + 1;
 	END
 END
-
-GO
-
-
-
-SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula('ccc')
-
-SELECT * FROM JUST_DO_IT.Butacas
-WHERE aeronave_id = 41
-
-
-EXEC JUST_DO_IT.generar_butacas '111', 20
-
-SELECT * FROM JUST_DO_IT.Ciudades WHERE id = 21 or id = 3
 
 GO
 
