@@ -40,11 +40,15 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
+            new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
+        }
+
+        public void darDeBajaAeronave(string matricula, DateTimePicker fechaFueraServicio, DateTimePicker fechaReinicioServicio)
+        {
             try
             {
-                string query = "EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '" + cbMatricula.Text + "', '" + dtpFechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + dtpFechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "'";
+                string query = "EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '" + matricula + "', '" + fechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + fechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "'";
                 Server.getInstance().realizarQuery(query);
-                new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
                 MessageBox.Show("La aeronave se dió de baja satisfactoriamente");
             }
             catch (Exception ex)
@@ -60,7 +64,7 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void Baja_Load(object sender, EventArgs e)
         {
-            Commons.getInstance().cargarComboBoxOrderBy("Aeronaves", "matricula", cbMatricula);
+            Commons.getInstance().cargarComboBoxOrderBy("AeronavesDisponiblesParaBaja()", "matricula", cbMatricula);
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

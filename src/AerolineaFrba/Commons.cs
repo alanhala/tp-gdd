@@ -40,7 +40,7 @@ namespace AerolineaFrba
         {
             SqlDataReader respuesta;
             Server server = Server.getInstance();
-            string queryCombo = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " AS " + entidad + " ORDER BY " + atributo;
+            string queryCombo = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " ORDER BY " + atributo;
             respuesta = server.query(queryCombo);
 
             while (respuesta.Read())

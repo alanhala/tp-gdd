@@ -25,16 +25,19 @@ namespace AerolineaFrba.Abm_Aeronave
         private void btnDarDeBaja_Click(object sender, EventArgs e)
         {
             new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text).Show();
+            this.chequearYProcederFrenteARutasProgramadas();
+        }
+
+        public void darDeBajaAeronave(string matricula) {
             try
             {
-                Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '" + cbMatricula.Text + "'");
+                Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '" + matricula + "'");
                 MessageBox.Show("La aeronave se dió de baja satisfactoriamente");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            this.chequearYProcederFrenteARutasProgramadas();
         }
 
         private void tbNumeroMatricula_TextChanged(object sender, EventArgs e)
@@ -47,7 +50,12 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void BajaFinVidaUtil_Load(object sender, EventArgs e)
         {
-            Commons.getInstance().cargarComboBoxOrderBy("Aeronaves", "matricula", cbMatricula);
+            Commons.getInstance().cargarComboBoxOrderBy("AeronavesDisponiblesParaBaja()", "matricula", cbMatricula);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

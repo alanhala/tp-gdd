@@ -60,12 +60,26 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void btnReemplazarAeronave_Click(object sender, EventArgs e)
         {
-            DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvAeronaves);
-            string matriculaNueva = row.Cells[0].Value.ToString();
-            string query = "EXEC JUST_DO_IT.reemplazar_vuelos_aeronave '" + this.matriculaAReemplazar + "', '" + matriculaNueva + "'";
-            SqlDataReader reader = Server.getInstance().query(query);
-            MessageBox.Show("Los vuelos han sido reemplazados");
-            reader.Close();
+            try
+            {
+                DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvAeronaves);
+                string matriculaNueva = row.Cells[0].Value.ToString();
+                string query;
+                if (finVidaUtil)
+                {
+                    query = "EXEC JUST_DO_IT.reemplazar_vuelos_aeronave_fin_vida_util '" + this.matriculaAReemplazar + "', '" + matriculaNueva + "'";
+                }
+                else {
+                    query = "EXEC JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio '" + this.matriculaAReemplazar + "', '" + matriculaNueva + "', '" + this.fechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + this.fechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "'";
+                }
+                SqlDataReader reader = Server.getInstance().query(query);
+                MessageBox.Show("Los vuelos han sido reemplazados y la aeronave se dio de baja satisfactoriamente");
+                reader.Close();
+            }
+            catch {
+                MessageBox.Show("Error: Los vuelos no han sido reemplazados");
+            }
+
         }
     }
 }

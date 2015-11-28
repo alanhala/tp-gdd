@@ -47,40 +47,55 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlDataReader respuestaAeronave;
-            Server server = Server.getInstance();
-            string query = "SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula('" + matricula + "') AS idAeronave";
-            respuestaAeronave = server.query(query);
-            respuestaAeronave.Read();
-            int idAeronave = int.Parse(respuestaAeronave["idAeronave"].ToString());
-            respuestaAeronave.Close();
-            SqlDataReader respuestaVuelo;
-
-            if (finVidaUtil)
+            try
             {
-                string comboQuery = "SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave(" + idAeronave + ")";
-                respuestaVuelo = server.query(comboQuery);
-            }
-            else {
-                string comboQuery = "SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave_y_fechas(" + idAeronave + ", " + fechaFueraServicio.Text + ", " + fechaReinicioServicio.Text + ")";
-                respuestaVuelo = server.query(comboQuery);
-            }
-            ArrayList vuelos = new ArrayList();
-            int cantVuelos = 0;
+                SqlDataReader respuestaAeronave;
+                Server server = Server.getInstance();
+                string query = "SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula('" + matricula + "') AS idAeronave";
+                respuestaAeronave = server.query(query);
+                respuestaAeronave.Read();
+                int idAeronave = int.Parse(respuestaAeronave["idAeronave"].ToString());
+                respuestaAeronave.Close();
+                SqlDataReader respuestaVuelo;
 
-            while (respuestaVuelo.Read())
-            {
-                vuelos.Add(int.Parse(respuestaVuelo["vuelos"].ToString()));
-                cantVuelos++;
-            }
+                if (finVidaUtil)
+                {
+                    string comboQuery = "SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave(" + idAeronave + ")";
+                    respuestaVuelo = server.query(comboQuery);
+                }
+                else
+                {
+                    string comboQuery = "SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave_y_fechas(" + idAeronave + ", " + fechaFueraServicio.Text + ", " + fechaReinicioServicio.Text + ")";
+                    respuestaVuelo = server.query(comboQuery);
+                }
+                ArrayList vuelos = new ArrayList();
+                int cantVuelos = 0;
 
-            respuestaVuelo.Close();
+                while (respuestaVuelo.Read())
+                {
+                    vuelos.Add(int.Parse(respuestaVuelo["vuelos"].ToString()));
+                    cantVuelos++;
+                }
 
-            foreach (object vuelo in vuelos) {
-                query = "EXEC JUST_DO_IT.eliminar_vuelos " + vuelo;
-                server.query(query);
+                respuestaVuelo.Close();
+
+                foreach (object vuelo in vuelos)
+                {
+                    query = "EXEC JUST_DO_IT.eliminar_vuelos " + vuelo;
+                    server.query(query);
+                }
+                MessageBox.Show("Los vuelos se han cancelado");
+                if (finVidaUtil)
+                {
+                    new BajaFinVidaUtil().darDeBajaAeronave(matricula);
+                }
+                else {
+                    new BajaFueraDeServicio().darDeBajaAeronave(matricula, this.fechaFueraServicio, this.fechaReinicioServicio);
+                }
             }
-            MessageBox.Show("Los vuelos se han cancelado");
+            catch {
+                MessageBox.Show("Los vuelos no fueron cancelados");
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

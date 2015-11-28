@@ -132,6 +132,14 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRuta;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio') IS NOT NULL
+    drop procedure JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.reemplazar_vuelos_aeronave_fin_vida_util') IS NOT NULL
+    drop procedure JUST_DO_IT.reemplazar_vuelos_aeronave_fin_vida_util;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.generar_butacas') IS NOT NULL
     drop procedure JUST_DO_IT.generar_butacas;
 GO
@@ -156,6 +164,13 @@ IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.AeronavesDisponiblesParaBaja') IS NOT NULL
+    drop function JUST_DO_IT.AeronavesDisponiblesParaBaja;
+GO
+
+IF OBJECT_ID (N'JUST_DO_IT.buscar_vuelo') IS NOT NULL
+    drop function JUST_DO_IT.buscar_vuelo;
+GO
 
 IF OBJECT_ID (N'JUST_DO_IT.buscar_vuelo') IS NOT NULL
     drop function JUST_DO_IT.buscar_vuelo;
@@ -336,6 +351,7 @@ CREATE TABLE JUST_DO_IT.Rutas(
 ) 
 
 GO
+
 
 CREATE TABLE JUST_DO_IT.Roles(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -980,6 +996,7 @@ END
 
 GO
 
+
 CREATE PROCEDURE JUST_DO_IT.almacenarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255), @tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
@@ -1226,7 +1243,7 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio(@matricula NVARCHAR(255), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 AS BEGIN
-	IF	(@fecha_fuera_servicio < @fecha_reinicio_servicio  AND @fecha_fuera_servicio >= CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)))
+	IF	(@fecha_fuera_servicio <= @fecha_reinicio_servicio  AND @fecha_fuera_servicio >= CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)))
 		UPDATE JUST_DO_IT.Aeronaves 
 			SET baja_fuera_servicio = 1, 
 				fecha_fuera_servicio = @fecha_fuera_servicio, 
@@ -1237,7 +1254,6 @@ AS BEGIN
 END
 
 GO
-
 
 CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaElVuelo(@aeronave NUMERIC(18,0), @vueloId NUMERIC(18,0))
 RETURNS BIT
@@ -1302,34 +1318,58 @@ AS RETURN
 GO 
 
 
-CREATE PROCEDURE JUST_DO_IT.reemplazar_vuelos_aeronave(@aeronaveVieja NVARCHAR(255), @aeronaveNueva NVARCHAR(255))
+CREATE PROCEDURE JUST_DO_IT.reemplazar_vuelos_aeronave_fin_vida_util(@aeronaveVieja NVARCHAR(255), @aeronaveNueva NVARCHAR(255))
 AS BEGIN
-	DECLARE @vueloId NUMERIC(18,0)
 	DECLARE @idAeronaveVieja NUMERIC(18,0)
 	SELECT @idAeronaveVieja = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveVieja))
 	DECLARE @idAeronaveNueva NUMERIC(18,0)
 	SELECT @idAeronaveNueva = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveNueva))
+	BEGIN TRANSACTION reemplazarVuelos
+		BEGIN TRY
+			UPDATE JUST_DO_IT.Vuelos
+				SET aeronave_id = @idAeronaveNueva
+				WHERE vuelos.aeronave_id = @idAeronaveVieja
+				AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
 
-	DECLARE busqueda CURSOR
-	FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
-		WHERE vuelos.aeronave_id = @idAeronaveVieja
-		AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
-		
-	OPEN busqueda
-	FETCH busqueda INTO @vueloId
-	WHILE (@@FETCH_STATUS = 0)
-	BEGIN
-		UPDATE JUST_DO_IT.Vuelos
-			SET aeronave_id = @idAeronaveNueva
-			WHERE id = @vueloId
-	
-		FETCH busqueda INTO  @vueloId
-	END
-	CLOSE busqueda
-	DEALLOCATE busqueda
+			UPDATE JUST_DO_IT.Aeronaves 
+				SET baja_vida_util = 1 
+				WHERE matricula = @aeronaveVieja
+			
+			COMMIT TRANSACTION reemplazarVuelos
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION reemplazarVuelos
+			RAISERROR('No se pudieron reemplazar los vuelos ni dar de baja la aeronave',16,217) WITH SETERROR
+		END CATCH
 END
 
 GO
+
+CREATE PROCEDURE JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio(@aeronaveVieja NVARCHAR(255), @aeronaveNueva NVARCHAR(255), @fechaFueraServicio DATETIME, @fechaReinicioServicio DATETIME)
+AS BEGIN
+	DECLARE @idAeronaveVieja NUMERIC(18,0)
+	SELECT @idAeronaveVieja = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveVieja))
+	DECLARE @idAeronaveNueva NUMERIC(18,0)
+	SELECT @idAeronaveNueva = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveNueva))
+	BEGIN TRANSACTION reemplazarVuelos
+		BEGIN TRY
+			UPDATE JUST_DO_IT.Vuelos
+				SET aeronave_id = @idAeronaveNueva
+				WHERE vuelos.aeronave_id = @idAeronaveVieja
+				AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
+
+			EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '@aeronaveVieja' , '@fechaFueraServicio', '@fechaReinicioServicio'
+
+			COMMIT TRANSACTION reemplazarVuelos
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION reemplazarVuelos
+			RAISERROR('No se pudieron reemplazar los vuelos ni dar de baja la aeronave',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
+
 
 CREATE PROCEDURE JUST_DO_IT.generar_butacas(@matriculaAeronave NVARCHAR(255), @cantidadButacas int)
 AS BEGIN
@@ -1400,24 +1440,6 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION JUST_DO_IT.buscar_vuelo(@aeronave_id NUMERIC(18,0), @ciudad_origen NVARCHAR(255), @ciudad_destino NVARCHAR(255), @fecha_salida DATETIME)
-RETURNS NUMERIC(18,0)
-AS
-BEGIN
-	DECLARE @vuelo_id NUMERIC(18,0) 
-	
-	select @vuelo_id = v.id
-	from JUST_DO_IT.Vuelos v
-	join JUST_DO_IT.Aeronaves a on v.aeronave_id = @aeronave_id
-	join JUST_DO_IT.Rutas r on v.ruta_id = r.id
-	join JUST_DO_IT.Ciudades co on r.ciu_id_origen = co.id AND co.nombre = @ciudad_origen
-	join JUST_DO_IT.Ciudades cd on r.ciu_id_destino = cd.id AND cd.nombre = @ciudad_destino
-	where YEAR(@fecha_salida) = YEAR(v.fecha_salida) AND MONTH(@fecha_salida) = MONTH(v.fecha_salida) AND DAY(@fecha_salida) = DAY(v.fecha_salida) AND v.fecha_llegada IS NULL
-
-	RETURN @vuelo_id
-END
-GO
-
 CREATE PROCEDURE JUST_DO_IT.registrar_llegada(@vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME)
 AS
 BEGIN
@@ -1431,3 +1453,14 @@ BEGIN
 	END CATCH
 END
 GO
+
+CREATE FUNCTION JUST_DO_IT.AeronavesDisponiblesParaBaja()
+RETURNS TABLE
+AS  
+RETURN
+	SELECT matricula
+	FROM JUST_DO_IT.Aeronaves 
+	WHERE baja_fuera_servicio = 0 AND baja_vida_util = 0
+
+
+
