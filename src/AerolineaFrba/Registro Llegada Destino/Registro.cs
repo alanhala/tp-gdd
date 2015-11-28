@@ -60,5 +60,32 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             lblModeloAeronave.Text = aeronave_seleccionada.modelo;
             lblTipoServicioAeronave.Text = aeronave_seleccionada.servicio;
         }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            if (this.camposValidos())
+            {
+                string query = "SELECT JUST_DO_IT.buscar_vuelo(" + aeronave_seleccionada.id + ", '" + this.origenComboBox.SelectedItem.ToString() + "', '" +
+                            this.destinoComboBox.SelectedItem.ToString() + "', '" + dtpFechaYHoraSalida.Value.ToString("yyy-MM-dd") + "') as vuelo_id";
+                SqlDataReader reader = Server.getInstance().query(query);
+                reader.Read();
+                var vuelo_id = reader["vuelo_id"].ToString();
+                reader.Close();
+                if (vuelo_id == "")
+                    MessageBox.Show("La aeronave seleccionada no posee un vuelo con los campos ingresados.");
+                else
+                {
+                    Server.getInstance().realizarQuery("EXEC JUST_DO_IT.registrar_llegada(" + vuelo_id + ", " + dtpFechaYHoraLlegada.Value.ToString("yyy-MM-dd") + ")");
+                }
+            }
+            else
+                MessageBox.Show("Debe completar todos los datos");
+         
+        }
+
+        public bool camposValidos()
+        {
+            return this.aeronave_seleccionada != null && this.origenComboBox.SelectedItem != null && this.destinoComboBox.SelectedItem != null;
+        }
     }
 }

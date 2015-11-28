@@ -58,13 +58,17 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.btnBuscarAeronave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.matriculasComboBox = new System.Windows.Forms.ComboBox();
+            this.dtpFechaYHoraSalida = new System.Windows.Forms.DateTimePicker();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtpFechaYHoraLlegada
             // 
-            this.dtpFechaYHoraLlegada.Location = new System.Drawing.Point(9, 140);
+            this.dtpFechaYHoraLlegada.CustomFormat = "dd/MM/yyy - HH:mm:ss";
+            this.dtpFechaYHoraLlegada.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFechaYHoraLlegada.Location = new System.Drawing.Point(9, 210);
             this.dtpFechaYHoraLlegada.Name = "dtpFechaYHoraLlegada";
             this.dtpFechaYHoraLlegada.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaYHoraLlegada.TabIndex = 0;
@@ -72,7 +76,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 125);
+            this.label2.Location = new System.Drawing.Point(9, 195);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(158, 13);
             this.label2.TabIndex = 2;
@@ -82,8 +86,6 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
             this.groupBox1.Controls.Add(this.lblFabricanteAeronave);
-            this.groupBox1.Controls.Add(this.lblModeloAeronave);
-            this.groupBox1.Controls.Add(this.lblCantButacasAeronave);
             this.groupBox1.Controls.Add(this.lblKgEncomiendasAeronave);
             this.groupBox1.Controls.Add(this.lblTipoServicioAeronave);
             this.groupBox1.Controls.Add(this.lblMatriculaAeronave);
@@ -114,7 +116,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             // lblModeloAeronave
             // 
             this.lblModeloAeronave.AutoSize = true;
-            this.lblModeloAeronave.Location = new System.Drawing.Point(214, 132);
+            this.lblModeloAeronave.Location = new System.Drawing.Point(173, 162);
             this.lblModeloAeronave.Name = "lblModeloAeronave";
             this.lblModeloAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblModeloAeronave.TabIndex = 27;
@@ -122,7 +124,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             // lblCantButacasAeronave
             // 
             this.lblCantButacasAeronave.AutoSize = true;
-            this.lblCantButacasAeronave.Location = new System.Drawing.Point(215, 104);
+            this.lblCantButacasAeronave.Location = new System.Drawing.Point(174, 134);
             this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
             this.lblCantButacasAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblCantButacasAeronave.TabIndex = 25;
@@ -253,9 +255,13 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             // groupBox2
             // 
             this.groupBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox2.BackgroundImage")));
+            this.groupBox2.Controls.Add(this.dtpFechaYHoraSalida);
+            this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.destinoComboBox);
             this.groupBox2.Controls.Add(this.origenComboBox);
+            this.groupBox2.Controls.Add(this.lblModeloAeronave);
             this.groupBox2.Controls.Add(this.dtpFechaYHoraLlegada);
+            this.groupBox2.Controls.Add(this.lblCantButacasAeronave);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label4);
@@ -292,6 +298,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.btnGuardar.TabIndex = 11;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // btnBuscarAeronave
             // 
@@ -321,6 +328,24 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.matriculasComboBox.Name = "matriculasComboBox";
             this.matriculasComboBox.Size = new System.Drawing.Size(150, 21);
             this.matriculasComboBox.TabIndex = 9;
+            // 
+            // dtpFechaYHoraSalida
+            // 
+            this.dtpFechaYHoraSalida.CustomFormat = "dd/MM/yyy - HH:mm:ss";
+            this.dtpFechaYHoraSalida.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFechaYHoraSalida.Location = new System.Drawing.Point(12, 153);
+            this.dtpFechaYHoraSalida.Name = "dtpFechaYHoraSalida";
+            this.dtpFechaYHoraSalida.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaYHoraSalida.TabIndex = 29;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 138);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(160, 13);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "Fecha y hora de salida del vuelo";
             // 
             // Registro
             // 
@@ -377,5 +402,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
         private System.Windows.Forms.ComboBox matriculasComboBox;
         private ComboBox destinoComboBox;
         private ComboBox origenComboBox;
+        private DateTimePicker dtpFechaYHoraSalida;
+        private Label label12;
     }
 }

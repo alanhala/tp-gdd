@@ -264,7 +264,14 @@ IF OBJECT_ID (N'JUST_DO_IT.bajaRol_Funcionalidad') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.KGsDisponibles') IS NOT NULL
     drop function JUST_DO_IT.KGsDisponibles;
-	
+
+IF OBJECT_ID (N'JUST_DO_IT.buscar_vuelo') IS NOT NULL
+    drop function JUST_DO_IT.buscar_vuelo;
+
+IF OBJECT_ID (N'JUST_DO_IT.registrar_llegada') IS NOT NULL
+    drop procedure JUST_DO_IT.registrar_llegada;
+GO
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -1374,4 +1381,41 @@ SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula('ccc')
 SELECT * FROM JUST_DO_IT.Butacas
 WHERE aeronave_id = 41
 
+
 EXEC JUST_DO_IT.generar_butacas '111', 20
+
+SELECT * FROM JUST_DO_IT.Ciudades WHERE id = 21 or id = 3
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.buscar_vuelo(@aeronave_id NUMERIC(18,0), @ciudad_origen NVARCHAR(255), @ciudad_destino NVARCHAR(255), @fecha_salida DATETIME)
+RETURNS NUMERIC(18,0)
+AS
+BEGIN
+	DECLARE @vuelo_id NUMERIC(18,0) 
+	
+	select @vuelo_id = v.id
+	from JUST_DO_IT.Vuelos v
+	join JUST_DO_IT.Aeronaves a on v.aeronave_id = @aeronave_id
+	join JUST_DO_IT.Rutas r on v.ruta_id = r.id
+	join JUST_DO_IT.Ciudades co on r.ciu_id_origen = co.id AND co.nombre = @ciudad_origen
+	join JUST_DO_IT.Ciudades cd on r.ciu_id_destino = cd.id AND cd.nombre = @ciudad_destino
+	where YEAR(@fecha_salida) = YEAR(v.fecha_salida) AND MONTH(@fecha_salida) = MONTH(v.fecha_salida) AND DAY(@fecha_salida) = DAY(v.fecha_salida) AND v.fecha_llegada IS NULL
+
+	RETURN @vuelo_id
+END
+GO
+
+CREATE PROCEDURE JUST_DO_IT.registrar_llegada(@vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME)
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE JUST_DO_IT.Vuelos
+		SET fecha_llegada = @fecha_llegada
+		where id = @vuelo_id
+	END TRY
+	BEGIN CATCH
+		RAISERROR('No se pudo registrar la llegada del vuelo',16,217) WITH SETERROR
+	END CATCH
+END
+GO
