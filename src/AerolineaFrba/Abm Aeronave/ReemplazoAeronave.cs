@@ -64,6 +64,7 @@ namespace AerolineaFrba.Abm_Aeronave
             string matriculaNueva = row.Cells[0].Value.ToString();
             string query = "EXEC JUST_DO_IT.reemplazar_vuelos_aeronave '" + this.matriculaAReemplazar + "', '" + matriculaNueva + "'";
             SqlDataReader reader = Server.getInstance().query(query);
+            MessageBox.Show("Los vuelos han sido reemplazados");
             reader.Close();
         }
     }

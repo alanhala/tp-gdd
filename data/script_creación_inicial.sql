@@ -156,6 +156,11 @@ IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
 GO
 
+
+IF OBJECT_ID (N'JUST_DO_IT.buscar_vuelo') IS NOT NULL
+    drop function JUST_DO_IT.buscar_vuelo;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.EstaDisponibleParaElVuelo') IS NOT NULL
     drop function JUST_DO_IT.EstaDisponibleParaElVuelo;
 GO
@@ -304,8 +309,8 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	fabricante NVARCHAR(255) NOT NULL,
 	tipo_servicio NUMERIC(18,0) NOT NULL,
 	fecha_alta DATETIME,
-	baja_fuera_servicio BINARY,
-	baja_vida_util BINARY,
+	baja_fuera_servicio BIT DEFAULT 0,
+	baja_vida_util BIT DEFAULT 0,
 	fecha_fuera_servicio DATETIME,
 	fecha_reinicio_servicio DATETIME,
 	fecha_baja_definitiva DATETIME,
@@ -1263,7 +1268,7 @@ AS BEGIN
 	SELECT @idAeronaveAReemplazar = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveAReemplazar))
 	DECLARE busqueda CURSOR
 	FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
-		WHERE vuelos.aeronave_id = @idAeronaveAReemplazar
+		WHERE vuelos.aeronave_id = @idAeronaveAReemplazar 
 			AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
 		
 	OPEN busqueda
@@ -1292,8 +1297,11 @@ AS RETURN
 		aeronaves.tipo_servicio AS tipoServicio
 	FROM JUST_DO_IT.Aeronaves aeronaves
 	WHERE aeronaves.matricula <> @aeronave AND JUST_DO_IT.EstaDisponibleParaReemplazar(aeronaves.matricula, @aeronave) = 1
+		AND aeronaves.baja_fuera_servicio = 0 AND aeronaves.baja_vida_util = 0
 
 GO 
+
+
 CREATE PROCEDURE JUST_DO_IT.reemplazar_vuelos_aeronave(@aeronaveVieja NVARCHAR(255), @aeronaveNueva NVARCHAR(255))
 AS BEGIN
 	DECLARE @vueloId NUMERIC(18,0)
@@ -1304,16 +1312,15 @@ AS BEGIN
 
 	DECLARE busqueda CURSOR
 	FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
-		WHERE vuelos.aeronave_id = @aeronaveVieja
+		WHERE vuelos.aeronave_id = @idAeronaveVieja
 		AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
 		
 	OPEN busqueda
 	FETCH busqueda INTO @vueloId
 	WHILE (@@FETCH_STATUS = 0)
 	BEGIN
-		
 		UPDATE JUST_DO_IT.Vuelos
-			SET aeronave_id = @aeronaveNueva
+			SET aeronave_id = @idAeronaveNueva
 			WHERE id = @vueloId
 	
 		FETCH busqueda INTO  @vueloId

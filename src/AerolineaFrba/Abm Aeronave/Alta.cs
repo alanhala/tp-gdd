@@ -70,16 +70,25 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             if (this.validarCampos()) {
-                string matricula = tbNumeroMatricula .Text;
-                string modelo = tbModelo.Text;
-                string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
-                int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
-                int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
-                int cantidadButacas = int.Parse(tbCantButacas.Text);
+                string altaAeronave;
+                string generarButacas;
+                try
+                {
+                    string matricula = tbNumeroMatricula.Text;
+                    string modelo = tbModelo.Text;
+                    string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
+                    int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
+                    int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
+                    int cantidadButacas = int.Parse(tbCantButacas.Text);
 
-                string altaAeronave = "EXEC JUST_DO_IT.almacenarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + cantidadButacas;
-                string generarButacas = "EXEC JUST_DO_IT.generar_butacas '" + matricula + "', " + cantidadButacas; 
-                
+                    altaAeronave = "EXEC JUST_DO_IT.almacenarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + cantidadButacas;
+                    generarButacas = "EXEC JUST_DO_IT.generar_butacas '" + matricula + "', " + cantidadButacas;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Debe ingresar datos validos");
+                    return;
+                }
                 try {
                     Server.getInstance().realizarQuery(altaAeronave);
                     Server.getInstance().realizarQuery(generarButacas);
