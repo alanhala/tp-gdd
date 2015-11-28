@@ -1393,6 +1393,24 @@ BEGIN
 END
 GO
 
+CREATE FUNCTION JUST_DO_IT.buscar_vuelo(@aeronave_id NUMERIC(18,0), @ciudad_origen NVARCHAR(255), @ciudad_destino NVARCHAR(255), @fecha_salida DATETIME)
+RETURNS NUMERIC(18,0)
+AS
+BEGIN
+	DECLARE @vuelo_id NUMERIC(18,0) 
+	
+	select @vuelo_id = v.id
+	from JUST_DO_IT.Vuelos v
+	join JUST_DO_IT.Aeronaves a on v.aeronave_id = @aeronave_id
+	join JUST_DO_IT.Rutas r on v.ruta_id = r.id
+	join JUST_DO_IT.Ciudades co on r.ciu_id_origen = co.id AND co.nombre = @ciudad_origen
+	join JUST_DO_IT.Ciudades cd on r.ciu_id_destino = cd.id AND cd.nombre = @ciudad_destino
+	where YEAR(@fecha_salida) = YEAR(v.fecha_salida) AND MONTH(@fecha_salida) = MONTH(v.fecha_salida) AND DAY(@fecha_salida) = DAY(v.fecha_salida) AND v.fecha_llegada IS NULL
+
+	RETURN @vuelo_id
+END
+GO
+
 CREATE PROCEDURE JUST_DO_IT.registrar_llegada(@vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME)
 AS
 BEGIN
