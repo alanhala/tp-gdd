@@ -1208,9 +1208,28 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.eliminar_vuelos(@id_vuelo NUMERIC(18,0))
 AS BEGIN
-	UPDATE JUST_DO_IT.Vuelos	
-	SET vuelo_eliminado = 1
-	WHERE id = @id_vuelo
+	BEGIN TRANSACTION
+		BEGIN TRY
+			UPDATE JUST_DO_IT.Vuelos	
+			SET vuelo_eliminado = 1
+			WHERE id = @id_vuelo
+		
+			UPDATE pas
+			SET pas.cancelado = 1
+			FROM JUST_DO_IT.Pasajes pas
+			WHERE pas.vuelo_id = @id_vuelo
+
+			UPDATE paq
+			SET paq.cancelado = 1
+			FROM JUST_DO_IT.Pasajes paq
+			WHERE paq.vuelo_id = @id_vuelo
+
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('No se ha podido eliminar los vuelos con sus pasajes y encomiendas',16,217) WITH SETERROR
+		END CATCH
 END
 
 GO
