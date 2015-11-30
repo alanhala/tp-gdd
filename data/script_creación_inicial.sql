@@ -306,16 +306,15 @@ IF OBJECT_ID (N'JUST_DO_IT.NombreCiudad') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.ActualizarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.ActualizarRuta;
 
-<<<<<<< Updated upstream
 IF OBJECT_ID (N'JUST_DO_IT.ModificarCiudad') IS NOT NULL
     drop procedure JUST_DO_IT.ModificarCiudad;
 
 IF OBJECT_ID (N'JUST_DO_IT.almacenarCiudad') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarCiudad;
-=======
+
 IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
-	drop procedure alta_aeronave_fuera_de_servicio
->>>>>>> Stashed changes
+	drop procedure alta_aeronave_fuera_de_servicio;
+
 
 /******CREACION DE TABLAS******/
 
@@ -1103,13 +1102,13 @@ GO
     
 
 CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_reinicio_servicio DATETIME, @cant_butacas NUMERIC(18,0))
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
 			UPDATE JUST_DO_IT.Aeronaves
 				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
-				kgs_disponibles = @kgs_disponibles,  fecha_reinicio_servicio = @fecha_reinicio_servicio, butacas_totales = @cant_butacas
+				kgs_disponibles = @kgs_disponibles,  butacas_totales = @cant_butacas
 				WHERE Aeronaves.matricula = @matricula
 		END TRY
 		BEGIN CATCH
@@ -1573,11 +1572,7 @@ RETURN
 	WHERE baja_fuera_servicio = 0 AND baja_vida_util = 0
 
 GO
-<<<<<<< Updated upstream
-  
-=======
-/**
->>>>>>> Stashed changes
+
 CREATE PROCEDURE JUST_DO_IT.BajarRuta(@Ruta NUMERIC(18,0))
 AS BEGIN
 	CREATE TABLE JUST_DO_IT.#AuxiliarEliminarRuta(
@@ -1625,7 +1620,7 @@ AS BEGIN
 END
 
 GO
-*//
+
 CREATE PROCEDURE JUST_DO_IT.ActualizarRuta(@ruta NUMERIC(18,0), @codigo NUMERIC(18,0), @kg NUMERIC(18,2),
 										   @pasaje NUMERIC(18,2), @origen NUMERIC(18,0), @destino NUMERIC(18,0),
 										   @tipo_servicio NUMERIC(18,0))
@@ -1637,7 +1632,6 @@ END
 
 GO
 
-<<<<<<< Updated upstream
 CREATE PROCEDURE JUST_DO_IT.almacenarCiudad(@nombre VARCHAR(255))
 AS BEGIN
 	BEGIN TRY
@@ -1660,7 +1654,9 @@ AS BEGIN
 		RAISERROR('La ciudad ingresada ya existe',16,217) WITH SETERROR
 	END CATCH
 END
-=======
+
+GO
+
 CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
 AS
 BEGIN
@@ -1685,4 +1681,4 @@ END
 
 GO
 
->>>>>>> Stashed changes
+
