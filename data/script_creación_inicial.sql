@@ -420,7 +420,7 @@ CREATE TABLE JUST_DO_IT.MediosDePago(
 GO
 
 CREATE TABLE JUST_DO_IT.Compras(
-	id NUMERIC(18,0) IDENTITY(1,1),
+	codigo NUMERIC(18,0) IDENTITY(672301,1),
 	comprador NUMERIC(18,0),
 	fecha_compra DATETIME,
 	fecha_devolucion DATETIME,
@@ -433,7 +433,7 @@ CREATE TABLE JUST_DO_IT.Compras(
 	codigo_seguridad NUMERIC(18,0),
 	cuotas NUMERIC(18,0),
 	encomienda BIT DEFAULT 0
-	PRIMARY KEY (id),
+	PRIMARY KEY (codigo),
 	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (medio_de_pago) REFERENCES JUST_DO_IT.MediosDePago
 )
@@ -678,7 +678,7 @@ INSERT INTO JUST_DO_IT.Compras(comprador, fecha_compra, medio_de_pago, monto, cu
 
 SET IDENTITY_INSERT JUST_DO_IT.Pasajes ON
 INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero, butaca, compra) 
-	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t1.butaca_id, compras.id
+	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.precio, t1.vuelo_id, t2.usuario_id, t1.butaca_id, compras.codigo
 		FROM #temporalParaPasaje t1
 		JOIN #temporalUsuarios t2
 		ON t1.temporalPasaje_id = t2.temporalPasaje_id
@@ -763,7 +763,7 @@ INSERT INTO JUST_DO_IT.Compras(comprador, fecha_compra, medio_de_pago, monto, cu
 
 SET IDENTITY_INSERT JUST_DO_IT.Paquetes ON
 INSERT INTO JUST_DO_IT.Paquetes(codigo, fecha_compra, kg, precio, vuelo_id, compra)
-	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.kg, t1.precio, t1.vuelo_id, compras.id
+	SELECT DISTINCT t1.codigo, t1.fecha_compra, t1.kg, t1.precio, t1.vuelo_id, compras.codigo
 	FROM #temporalParaPaquete t1
 	JOIN #temporalUsuariosPaquete t2
 	ON t1.temporalPaquete_id = t2.temporalPaquete_id
@@ -782,7 +782,7 @@ INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
 INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador 
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Compras AS compras
-		 WHERE pasajes.compra = compras.id
+		 WHERE pasajes.compra = compras.codigo
 
 GO
 
@@ -843,7 +843,7 @@ GO
 CREATE PROCEDURE JUST_DO_IT.almacenarPasaje(@Vuelo NUMERIC(18,0), @Costo NUMERIC(18,2), @Comprador NUMERIC(18,0),
 											@NumeroTarjeta NUMERIC(18,0), @CodigoTarjeta NUMERIC(18,0),
 											@VencimientoTarjeta NUMERIC(18,0), @Cuotas NUMERIC(18,0),
-											@MedioDePago NUMERIC(18,0), @KGs NUMERIC(18,0), 
+											@MedioDePago NUMERIC(18,0), @KGs NUMERIC(18,2), 
 											@EsEncomienda BIT)
 AS BEGIN
 	BEGIN TRANSACTION almacenarPasaje
@@ -906,8 +906,6 @@ AS BEGIN
 			DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
 		END
 		COMMIT TRANSACTION almacenarPasaje	
-
-		SELECT * FROM JUST_DO_IT.Compras ORDER BY id DESC
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION almacenarPasaje

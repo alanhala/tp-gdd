@@ -10,16 +10,26 @@ using System.Windows.Forms;
 
 namespace AerolineaFrba.Compra
 {
-    public partial class Form6 : Form
+    public partial class InformeDeCompra : Form
     {
-        public Form6()
+        public InformeDeCompra() { }
+
+        public InformeDeCompra(string monto, string codigo)
         {
             InitializeComponent();
+            lblMontoAAbonar.Text = monto.ToString();
+            lblNumeroCompraPNR.Text = codigo.ToString();
         }
 
         private void Form6_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            new Vistas_Inicio.Inicio_Admin().Show();
+            this.Hide();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,6 @@ namespace AerolineaFrba.Compra
         private bool soyCliente;
         private bool cargoPago;
         private int esEncomienda;
-        private string mensaje;
 
         public Pagar()
         {
@@ -47,7 +47,6 @@ namespace AerolineaFrba.Compra
             this.cuotas = "1";
             this.tipo = "NULL";
             this.esEncomienda = 0;
-            this.mensaje = "El pasaje ha sido almacenado";
         }
 
         public Pagar(int vuelo_id, float costo_encomienda)
@@ -55,7 +54,6 @@ namespace AerolineaFrba.Compra
             this.inicializar(vuelo_id, costo_encomienda);
             lblCosto.Text = "$" + this.costo_encomienda + " por KG";
             this.esEncomienda = 1;
-            this.mensaje = "El paquete ha sido almacenado";
             this.costo_viaje = 0;
         }
 
@@ -169,8 +167,15 @@ namespace AerolineaFrba.Compra
                                 this.cuotas + ", " + idMedioDePago + ", " + KGsAEnviar + ", " + this.esEncomienda;
 
                     Server.getInstance().realizarQuery(query);
-                    MessageBox.Show(this.mensaje);
-                    new Vistas_Inicio.Inicio_Admin().Show();
+
+                    query = "SELECT TOP 1 codigo, monto FROM JUST_DO_IT.Compras ORDER BY codigo DESC";
+                    SqlDataReader reader = Server.getInstance().query(query);
+                    reader.Read();
+                    string codigo = reader["codigo"].ToString();
+                    string monto = reader["monto"].ToString();
+                    reader.Close();
+
+                    new InformeDeCompra(monto, codigo).Show();
                     this.Hide();
                 }
             }
