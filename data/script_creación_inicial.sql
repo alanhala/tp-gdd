@@ -1484,5 +1484,15 @@ RETURN
 	FROM JUST_DO_IT.Aeronaves 
 	WHERE baja_fuera_servicio = 0 AND baja_vida_util = 0
 
+GO
+
+/** Agrego funcionalidades  **/
+
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede habilitar aeronaves')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar aeronaves')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede agregar roles')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede eliminar funcionalidades')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar roles')
 
 
+GO

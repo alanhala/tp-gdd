@@ -54,12 +54,12 @@ namespace AerolineaFrba.Abm_Rol
             
             DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
 
-//            if (int.Parse(row.Cells[0].Value.ToString()) == 0)
-//            {
-//                MessageBox.Show("No se ha seleccionado ningun rol");
-//            }
-//            else
-//            {
+            if (row == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningun rol");
+                return;
+            }
+
                 string nombreRol = row.Cells[0].Value.ToString();
                 int idRol = Rol.obtenerID(nombreRol);
 
@@ -68,40 +68,36 @@ namespace AerolineaFrba.Abm_Rol
 //            }
         }
 
-    
-
         private void agregarFuncionalidad_Click(object sender, EventArgs e)
         {
-                DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
-            if (int.Parse(row.Cells[0].Value.ToString()) == 0)
+            DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
+            if (row == null)
             {
                 MessageBox.Show("No se ha seleccionado ningun rol");
+                return;
             }
-            else
-            {
-                string nombreRol = row.Cells[0].Value.ToString();
-                int idRol = Rol.obtenerID(nombreRol);
+            string nombreRol = row.Cells[0].Value.ToString();
+            int idRol = Rol.obtenerID(nombreRol);
 
-                new agregarFuncionalidad(idRol).Show();
-                this.Hide();       
+            new agregarFuncionalidad(idRol).Show();
+            this.Hide();
         }
-    }
 
         private void quitarFunc_Click(object sender, EventArgs e)
         {
             DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
-//          if (int.Parse(row.Cells[0].Value.ToString()) == 0)
-//          {
-//              MessageBox.Show("No se ha seleccionado ningun rol");
-//          }
-//          else
-//          {
+            if (row == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningun rol");
+                return;
+            }
+
                 string nombreRol = row.Cells[0].Value.ToString();
                 int idRol = Rol.obtenerID(nombreRol);
 
                 new quitarFuncionalidad(idRol).Show();
                 this.Hide();
-//          }
+
         }
     }
 }

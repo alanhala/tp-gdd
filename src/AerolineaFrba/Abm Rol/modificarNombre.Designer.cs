@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(modificarNombre));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.tbNombreViejo = new System.Windows.Forms.TextBox();
             this.tbNombreNuevo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.aceptar = new System.Windows.Forms.Button();
-            this.tbNombreViejo = new System.Windows.Forms.TextBox();
             this.cancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -53,14 +53,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
             // 
-            // label1
+            // tbNombreViejo
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 33);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Nombre antiguo del rol";
+            this.tbNombreViejo.Enabled = false;
+            this.tbNombreViejo.Location = new System.Drawing.Point(152, 30);
+            this.tbNombreViejo.Name = "tbNombreViejo";
+            this.tbNombreViejo.Size = new System.Drawing.Size(203, 20);
+            this.tbNombreViejo.TabIndex = 40;
             // 
             // tbNombreNuevo
             // 
@@ -78,6 +77,15 @@
             this.label2.TabIndex = 38;
             this.label2.Text = "Nombre nuevo del rol";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 33);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Nombre antiguo del rol";
+            // 
             // aceptar
             // 
             this.aceptar.Location = new System.Drawing.Point(335, 152);
@@ -87,14 +95,6 @@
             this.aceptar.Text = "Aceptar";
             this.aceptar.UseVisualStyleBackColor = true;
             this.aceptar.Click += new System.EventHandler(this.aceptar_Click);
-            // 
-            // tbNombreViejo
-            // 
-            this.tbNombreViejo.Enabled = false;
-            this.tbNombreViejo.Location = new System.Drawing.Point(152, 30);
-            this.tbNombreViejo.Name = "tbNombreViejo";
-            this.tbNombreViejo.Size = new System.Drawing.Size(203, 20);
-            this.tbNombreViejo.TabIndex = 40;
             // 
             // cancelar
             // 
@@ -116,7 +116,7 @@
             this.Controls.Add(this.aceptar);
             this.Controls.Add(this.groupBox1);
             this.Name = "modificarNombre";
-            this.Text = "modificarNombre";
+            this.Text = "ºº";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

@@ -32,12 +32,13 @@
             this.seleccionar = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.dgvShowRoles = new System.Windows.Forms.DataGridView();
+            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buscar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbNombre = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -76,6 +77,12 @@
             this.dgvShowRoles.Size = new System.Drawing.Size(468, 164);
             this.dgvShowRoles.TabIndex = 58;
             this.dgvShowRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowRoles_CellContentClick);
+            // 
+            // funcionalidad
+            // 
+            this.funcionalidad.HeaderText = "Funcionalidad";
+            this.funcionalidad.Name = "funcionalidad";
+            this.funcionalidad.ReadOnly = true;
             // 
             // buscar
             // 
@@ -127,11 +134,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // funcionalidad
+            // cancelar
             // 
-            this.funcionalidad.HeaderText = "Funcionalidad";
-            this.funcionalidad.Name = "funcionalidad";
-            this.funcionalidad.ReadOnly = true;
+            this.cancelar.Location = new System.Drawing.Point(22, 325);
+            this.cancelar.Name = "cancelar";
+            this.cancelar.Size = new System.Drawing.Size(75, 23);
+            this.cancelar.TabIndex = 60;
+            this.cancelar.Text = "Cancelar";
+            this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
             // 
             // quitarFuncionalidad
             // 
@@ -139,6 +150,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(513, 360);
+            this.Controls.Add(this.cancelar);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.seleccionar);
             this.Controls.Add(this.dgvShowRoles);
@@ -166,5 +178,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
+        private System.Windows.Forms.Button cancelar;
     }
 }
