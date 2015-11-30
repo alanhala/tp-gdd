@@ -90,6 +90,9 @@ GO
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.MediosDePago'))
 	drop table JUST_DO_IT.MediosDePago
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.AuxiliarEliminarRuta'))
+	drop table JUST_DO_IT.AuxiliarEliminarRuta
+
 GO
 
 IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
@@ -291,9 +294,12 @@ IF OBJECT_ID (N'JUST_DO_IT.KGsDisponibles') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.buscar_vuelo') IS NOT NULL
     drop function JUST_DO_IT.buscar_vuelo;
-
+	
 IF OBJECT_ID (N'JUST_DO_IT.registrar_llegada') IS NOT NULL
     drop procedure JUST_DO_IT.registrar_llegada;
+
+IF OBJECT_ID (N'JUST_DO_IT.BajarRuta') IS NOT NULL
+    drop procedure JUST_DO_IT.BajarRuta;
 GO
 
 /******CREACION DE TABLAS******/
@@ -351,7 +357,6 @@ CREATE TABLE JUST_DO_IT.Rutas(
 ) 
 
 GO
-
 
 CREATE TABLE JUST_DO_IT.Roles(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -465,6 +470,7 @@ CREATE TABLE JUST_DO_IT.Paquetes(
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
 	compra NUMERIC(18,0) NOT NULL,
+	cancelado BIT DEFAULT 0,
 	PRIMARY KEY(codigo),
 	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
 	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras
@@ -645,7 +651,7 @@ CREATE TABLE #temporalParaPasaje(
 )
 
 GO
-CREATE NONCLUSTERED INDEX [<Name of Missing Index, sysname,>]
+CREATE NONCLUSTERED INDEX [<IndiceTemporalPasajes, JUST_DO_IT,>]
 ON #temporalPasajes ([fechaSalida],[fechaLlegada])
 INCLUDE ([id],[codigo],[fecha_compra],[precio],[ciudadOrigen],[ciudadDestino],[tipo_servicio],[aeronave_matricula],[aeronave_fabricante],[butaca_nro],[butaca_tipo])
 GO
@@ -685,7 +691,13 @@ INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero,
 		JOIN JUST_DO_IT.Compras compras
 		ON compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra
 SET IDENTITY_INSERT JUST_DO_IT.Pasajes OFF
-		
+
+GO
+CREATE NONCLUSTERED INDEX [<IndicePasajes, JUST_DO_IT,>]
+ON JUST_DO_IT.Pasajes ([codigo],[compra])
+INCLUDE ([precio],[vuelo_id],[pasajero],[butaca],[fecha_compra])
+GO
+	
 /*****TABLAS AUXILIARES PARA PAQUETE*****/
 CREATE TABLE #temporalPaquete(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -737,7 +749,7 @@ CREATE TABLE #temporalParaPaquete(
 )
 
 GO
-CREATE NONCLUSTERED INDEX [<Name of Missing Index, sysname,>]
+CREATE NONCLUSTERED INDEX [<IndiceTemporalPaquete, JUST_DO_IT,>]
 ON #temporalPaquete ([fechaSalida],[fechaLlegada])
 INCLUDE ([id],[codigo],[fecha_compra],[precio],[ciudadOrigen],[ciudadDestino],[tipo_servicio],[aeronave_matricula],[aeronave_fabricante])
 GO
@@ -771,6 +783,12 @@ INSERT INTO JUST_DO_IT.Paquetes(codigo, fecha_compra, kg, precio, vuelo_id, comp
 	ON compras.encomienda = 1 
 	AND compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra		
 SET IDENTITY_INSERT JUST_DO_IT.Paquetes OFF
+
+GO
+CREATE NONCLUSTERED INDEX [<IndicePaquetes, JUST_DO_IT,>]
+ON JUST_DO_IT.Paquetes ([codigo],[compra])
+INCLUDE ([precio],[vuelo_id],[kg],[fecha_compra])
+GO
 
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
@@ -1474,6 +1492,7 @@ BEGIN
 		RAISERROR('No se pudo registrar la llegada del vuelo',16,217) WITH SETERROR
 	END CATCH
 END
+
 GO
 
 CREATE FUNCTION JUST_DO_IT.AeronavesDisponiblesParaBaja()
@@ -1484,5 +1503,53 @@ RETURN
 	FROM JUST_DO_IT.Aeronaves 
 	WHERE baja_fuera_servicio = 0 AND baja_vida_util = 0
 
+GO
 
+CREATE TABLE JUST_DO_IT.AuxiliarEliminarRuta(
+	compra NUMERIC(18,0) UNIQUE
+)
 
+GO
+
+CREATE PROCEDURE JUST_DO_IT.BajarRuta(@Ruta NUMERIC(18,0))
+AS BEGIN
+	BEGIN TRY
+		BEGIN TRANSACTION bajaRuta
+		UPDATE JUST_DO_IT.Rutas SET eliminada = 1
+			WHERE id = @Ruta
+
+		INSERT INTO JUST_DO_IT.AuxiliarEliminarRuta
+		SELECT DISTINCT compra 
+		FROM JUST_DO_IT.Pasajes, JUST_DO_IT.Vuelos v
+		WHERE ruta_id = @Ruta AND vuelo_id = v.id
+		UNION
+		SELECT DISTINCT compra 
+		FROM JUST_DO_IT.Paquetes, JUST_DO_IT.Vuelos v
+		WHERE ruta_id = @Ruta AND vuelo_id = v.id
+						
+		UPDATE JUST_DO_IT.Compras SET fecha_devolucion = GETDATE(),
+									  monto_devuelto = monto,
+									  motivo_cancelacion = 'La ruta fue dada de baja' 
+				WHERE EXISTS (SELECT 1 
+							  FROM JUST_DO_IT.AuxiliarEliminarRuta a
+							  WHERE a.compra = JUST_DO_IT.Compras.codigo)
+		
+		DELETE FROM JUST_DO_IT.AuxiliarEliminarRuta
+
+		UPDATE JUST_DO_IT.Pasajes SET cancelado = 1
+				WHERE EXISTS (SELECT 1
+							 FROM JUST_DO_IT.Vuelos v
+							 WHERE v.ruta_id = @Ruta AND JUST_DO_IT.Pasajes.vuelo_id = v.id)
+
+		UPDATE JUST_DO_IT.Paquetes SET cancelado = 1
+				WHERE EXISTS (SELECT 1
+							 FROM JUST_DO_IT.Vuelos v
+							 WHERE v.ruta_id = @Ruta AND JUST_DO_IT.Paquetes.vuelo_id = v.id)
+
+		COMMIT TRANSACTION bajaRuta
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION bajaRuta
+		RAISERROR('No se pudo dar de baja la ruta',16,217) WITH SETERROR
+	END CATCH
+END

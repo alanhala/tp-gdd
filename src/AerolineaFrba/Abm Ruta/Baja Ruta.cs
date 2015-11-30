@@ -20,7 +20,23 @@ namespace AerolineaFrba.Abm_Ruta
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-
+            if (cmbRutas.Text.Trim() == "")
+            {
+                MessageBox.Show("Debe seleccionar una ruta");
+                return;
+            }
+            try
+            {
+                string ruta = ((ComboBoxItem)cmbRutas.SelectedItem).Value.ToString();
+                string query = "EXEC JUST_DO_IT.BajarRuta " + ruta;
+                Server.getInstance().realizarQuery(query);
+                MessageBox.Show("La ruta se dio de baja satisfactoriamente");
+                new Vistas_Inicio.Inicio_Admin().Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Baja_Ruta_Load(object sender, EventArgs e)
@@ -47,20 +63,30 @@ namespace AerolineaFrba.Abm_Ruta
                 int destino = Ciudades.obtenerID(cmbDestino.Text);
                 List<string> codigos = new List<string>();
                 List<int> servicios = new List<int>();
-                string query = "SELECT codigo, tipo_servicio FROM JUST_DO_IT.Rutas WHERE ciu_id_origen=" + origen + " AND ciu_id_destino=" + destino;
+                List<double> ids = new List<double>();
+                string query = "SELECT id, codigo, tipo_servicio, eliminada FROM JUST_DO_IT.Rutas WHERE ciu_id_origen=" + origen + " AND ciu_id_destino=" + destino;
                 SqlDataReader reader = Server.getInstance().query(query);
                 while (reader.Read())
                 {
-                    codigos.Add(reader["codigo"].ToString());
-                    servicios.Add(int.Parse(reader["tipo_servicio"].ToString()));
-                    
+                    string al = reader["eliminada"].ToString();
+
+                    if (reader["eliminada"].ToString() == "False")
+                    {
+                        codigos.Add(reader["codigo"].ToString());
+                        servicios.Add(int.Parse(reader["tipo_servicio"].ToString()));
+                        ids.Add(double.Parse(reader["id"].ToString()));
+                    }
                 }
                 reader.Close();
                 int i;
+                ComboBoxItem item = new ComboBoxItem(cmbRutas);
                 for (i = 0; i < codigos.Count; i ++)
                 {
                     string servicio = TiposServicios.obtenerNombre(servicios.ElementAt(i));
-                    cmbRutas.Items.Add(codigos.ElementAt(i) + " - " + servicio);
+                    item = new ComboBoxItem();
+                    item.Value = ids.ElementAt(i);
+                    item.Text = codigos.ElementAt(i) + " - " + servicio;
+                    cmbRutas.Items.Add(item);
                 }
             }
         }

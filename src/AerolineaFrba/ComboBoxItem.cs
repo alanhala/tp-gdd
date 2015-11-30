@@ -12,6 +12,13 @@ namespace AerolineaFrba
         public string Text { get; set; }
         public object Value { get; set; }
 
+        public ComboBoxItem(ComboBox comboBox)
+        {
+            this.bindCombobox(comboBox);
+        }
+
+        public ComboBoxItem() { }
+
         public override string ToString()
         {
             return Text;
