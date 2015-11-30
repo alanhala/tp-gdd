@@ -31,7 +31,10 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            string matricula = this.comboBox1.SelectedItem.ToString();
+            string query = "EXEC JUST_DO_IT.alta_aeronave_fuera_de_servicio('" + matricula + "')";
+            Server.getInstance().realizarQuery(query);
+            this.Close(); 
         }
     }
 }

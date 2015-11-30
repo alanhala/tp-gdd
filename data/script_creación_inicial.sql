@@ -92,6 +92,7 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Me
 
 GO
 
+
 IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
 	drop table #rutasDeLaMaestra
 GO
@@ -305,11 +306,16 @@ IF OBJECT_ID (N'JUST_DO_IT.NombreCiudad') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.ActualizarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.ActualizarRuta;
 
+<<<<<<< Updated upstream
 IF OBJECT_ID (N'JUST_DO_IT.ModificarCiudad') IS NOT NULL
     drop procedure JUST_DO_IT.ModificarCiudad;
 
 IF OBJECT_ID (N'JUST_DO_IT.almacenarCiudad') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarCiudad;
+=======
+IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
+	drop procedure alta_aeronave_fuera_de_servicio
+>>>>>>> Stashed changes
 
 /******CREACION DE TABLAS******/
 
@@ -341,8 +347,6 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	fecha_alta DATETIME,
 	baja_fuera_servicio BIT DEFAULT 0,
 	baja_vida_util BIT DEFAULT 0,
-	fecha_fuera_servicio DATETIME,
-	fecha_reinicio_servicio DATETIME,
 	fecha_baja_definitiva DATETIME,
 	PRIMARY KEY(id),
 	FOREIGN KEY (tipo_servicio) REFERENCES JUST_DO_IT.TiposServicios
@@ -525,6 +529,18 @@ CREATE TABLE JUST_DO_IT.ButacasReservadas(
 	FOREIGN KEY (usuario_id) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (butaca_id) REFERENCES JUST_DO_IT.Butacas,
 	FOREIGN KEY (vuelo_id) REFERENCES JUST_DO_IT.Vuelos
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Aeronaves_Fuera_De_Servicio(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	aeronave_id NUMERIC(18,0),
+	fecha_fuera_servicio DATETIME,
+	fecha_reinicio_servicio_estimado DATETIME,
+	fecha_reinicio_servicio DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
 )
 
 GO
@@ -1332,12 +1348,16 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio(@matricula NVARCHAR(255), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 AS BEGIN
+	DECLARE @aeronave_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
 	IF	(@fecha_fuera_servicio <= @fecha_reinicio_servicio  AND @fecha_fuera_servicio >= CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)))
-		UPDATE JUST_DO_IT.Aeronaves 
-			SET baja_fuera_servicio = 1, 
-				fecha_fuera_servicio = @fecha_fuera_servicio, 
-				fecha_reinicio_servicio = @fecha_reinicio_servicio
-			WHERE matricula = @matricula
+		BEGIN
+			UPDATE JUST_DO_IT.Aeronaves 
+				SET baja_fuera_servicio = 1 
+				WHERE id = @aeronave_id
+
+			INSERT INTO JUST_DO_IT.Aeronaves_Fuera_De_Servicio(aeronave_id, fecha_fuera_servicio, fecha_reinicio_servicio_estimado)
+			VALUES(@aeronave_id, @fecha_fuera_servicio, @fecha_reinicio_servicio)
+		END
 	ELSE
 		RAISERROR('Fallo la baja de Aeronave',16,217) WITH SETERROR
 END
@@ -1553,7 +1573,11 @@ RETURN
 	WHERE baja_fuera_servicio = 0 AND baja_vida_util = 0
 
 GO
+<<<<<<< Updated upstream
   
+=======
+/**
+>>>>>>> Stashed changes
 CREATE PROCEDURE JUST_DO_IT.BajarRuta(@Ruta NUMERIC(18,0))
 AS BEGIN
 	CREATE TABLE JUST_DO_IT.#AuxiliarEliminarRuta(
@@ -1601,7 +1625,7 @@ AS BEGIN
 END
 
 GO
-
+*//
 CREATE PROCEDURE JUST_DO_IT.ActualizarRuta(@ruta NUMERIC(18,0), @codigo NUMERIC(18,0), @kg NUMERIC(18,2),
 										   @pasaje NUMERIC(18,2), @origen NUMERIC(18,0), @destino NUMERIC(18,0),
 										   @tipo_servicio NUMERIC(18,0))
@@ -1613,6 +1637,7 @@ END
 
 GO
 
+<<<<<<< Updated upstream
 CREATE PROCEDURE JUST_DO_IT.almacenarCiudad(@nombre VARCHAR(255))
 AS BEGIN
 	BEGIN TRY
@@ -1635,3 +1660,29 @@ AS BEGIN
 		RAISERROR('La ciudad ingresada ya existe',16,217) WITH SETERROR
 	END CATCH
 END
+=======
+CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
+AS
+BEGIN
+	DECLARE @aeroanve_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
+	BEGIN TRANSACTION
+		BEGIN TRY
+			UPDATE JUST_DO_IT.Aeronaves
+			SET baja_fuera_servicio = 0
+			WHERE id = @aeroanve_id
+
+			UPDATE JUST_DO_IT.Aeronaves_Fuera_De_Servicio
+			SET fecha_reinicio_servicio = CURRENT_TIMESTAMP
+			WHERE aeronave_id = @aeroanve_id AND fecha_reinicio_servicio IS NULL
+			
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('No se ha podido dar de alta la aeronave',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
+
+>>>>>>> Stashed changes
