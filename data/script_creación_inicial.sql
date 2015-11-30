@@ -1553,7 +1553,7 @@ RETURN
 	WHERE baja_fuera_servicio = 0 AND baja_vida_util = 0
 
 GO
-
+  
 CREATE PROCEDURE JUST_DO_IT.BajarRuta(@Ruta NUMERIC(18,0))
 AS BEGIN
 	CREATE TABLE JUST_DO_IT.#AuxiliarEliminarRuta(
