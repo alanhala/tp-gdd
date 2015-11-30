@@ -29,20 +29,151 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(agregarFuncionalidad));
+            this.cancelar = new System.Windows.Forms.Button();
+            this.aceptar = new System.Windows.Forms.Button();
+            this.seleccionar = new System.Windows.Forms.Button();
+            this.dgvShowRoles = new System.Windows.Forms.DataGridView();
+            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button2 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tbNombre = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buscar = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // agregarOtraFuncionalidad
+            // cancelar
+            // 
+            this.cancelar.Location = new System.Drawing.Point(16, 324);
+            this.cancelar.Name = "cancelar";
+            this.cancelar.Size = new System.Drawing.Size(75, 23);
+            this.cancelar.TabIndex = 66;
+            this.cancelar.Text = "Cancelar";
+            this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
+            // 
+            // aceptar
+            // 
+            this.aceptar.Location = new System.Drawing.Point(409, 324);
+            this.aceptar.Name = "aceptar";
+            this.aceptar.Size = new System.Drawing.Size(75, 23);
+            this.aceptar.TabIndex = 65;
+            this.aceptar.Text = "Aceptar";
+            this.aceptar.UseVisualStyleBackColor = true;
+            this.aceptar.Click += new System.EventHandler(this.aceptar_Click);
+            // 
+            // seleccionar
+            // 
+            this.seleccionar.Location = new System.Drawing.Point(409, 104);
+            this.seleccionar.Name = "seleccionar";
+            this.seleccionar.Size = new System.Drawing.Size(75, 23);
+            this.seleccionar.TabIndex = 62;
+            this.seleccionar.Text = "Seleccionar";
+            this.seleccionar.UseVisualStyleBackColor = true;
+            // 
+            // dgvShowRoles
+            // 
+            this.dgvShowRoles.AllowUserToAddRows = false;
+            this.dgvShowRoles.AllowUserToDeleteRows = false;
+            this.dgvShowRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvShowRoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.funcionalidad});
+            this.dgvShowRoles.Location = new System.Drawing.Point(16, 144);
+            this.dgvShowRoles.MultiSelect = false;
+            this.dgvShowRoles.Name = "dgvShowRoles";
+            this.dgvShowRoles.ReadOnly = true;
+            this.dgvShowRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvShowRoles.Size = new System.Drawing.Size(468, 164);
+            this.dgvShowRoles.TabIndex = 64;
+            // 
+            // funcionalidad
+            // 
+            this.funcionalidad.HeaderText = "Funcionalidad";
+            this.funcionalidad.Name = "funcionalidad";
+            this.funcionalidad.ReadOnly = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(16, 104);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 63;
+            this.button2.Text = "Limpiar";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
+            this.groupBox1.Controls.Add(this.tbNombre);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.buscar);
+            this.groupBox1.Location = new System.Drawing.Point(16, 16);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(468, 82);
+            this.groupBox1.TabIndex = 61;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Seleccione la funcionalidad que desee agregar";
+            // 
+            // tbNombre
+            // 
+            this.tbNombre.Enabled = false;
+            this.tbNombre.Location = new System.Drawing.Point(83, 29);
+            this.tbNombre.Name = "tbNombre";
+            this.tbNombre.Size = new System.Drawing.Size(100, 20);
+            this.tbNombre.TabIndex = 56;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "Nombre";
+            // 
+            // buscar
+            // 
+            this.buscar.Location = new System.Drawing.Point(205, 27);
+            this.buscar.Name = "buscar";
+            this.buscar.Size = new System.Drawing.Size(75, 23);
+            this.buscar.TabIndex = 56;
+            this.buscar.Text = "Buscar";
+            this.buscar.UseVisualStyleBackColor = true;
+            this.buscar.Click += new System.EventHandler(this.buscar_Click);
+            // 
+            // agregarFuncionalidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Name = "agregarOtraFuncionalidad";
+            this.ClientSize = new System.Drawing.Size(501, 354);
+            this.Controls.Add(this.cancelar);
+            this.Controls.Add(this.aceptar);
+            this.Controls.Add(this.seleccionar);
+            this.Controls.Add(this.dgvShowRoles);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.groupBox1);
+            this.Name = "agregarFuncionalidad";
             this.Text = "agregarOtraFuncionalidad";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button cancelar;
+        private System.Windows.Forms.Button aceptar;
+        private System.Windows.Forms.Button seleccionar;
+        private System.Windows.Forms.DataGridView dgvShowRoles;
+        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox tbNombre;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buscar;
     }
 }

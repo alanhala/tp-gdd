@@ -13,9 +13,12 @@ namespace AerolineaFrba.Abm_Rol
 {
     public partial class quitarFuncionalidad : Form
     {
+        private int idRol1;
+        
         public quitarFuncionalidad(int idRol)
         {
             InitializeComponent();
+            this.idRol1 = idRol;
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -64,19 +67,21 @@ namespace AerolineaFrba.Abm_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
-            if (int.Parse(row.Cells[1].Value.ToString()) == 0)
+
+              DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
+/*            if (int.Parse(row.Cells[0].Value.ToString()) == null)
             {
                 MessageBox.Show("No se ha seleccionado ninguna funcionalidad");
             }
             else
             {
-                string nombreRol = row.Cells[0].Value.ToString();
-                string descripcionFuncionalidad = row.Cells[1].Value.ToString();
-                int idRol = Rol.obtenerID(nombreRol);
+  
+  */
+
+                string descripcionFuncionalidad = row.Cells[0].Value.ToString();
                 int idFuncionalidad = Funcionalidad.obtenerID(descripcionFuncionalidad);
 
-                string query = "EXEC JUST_DO_IT.bajaRol_Funcionalidad" + idRol + "," + idFuncionalidad;
+                string query = "EXEC JUST_DO_IT.bajaRol_Funcionalidad " + idRol1 + "," + idFuncionalidad;
                 try
                 {
                     Server.getInstance().realizarQuery(query);
@@ -87,7 +92,12 @@ namespace AerolineaFrba.Abm_Rol
                     MessageBox.Show(ex1.Message);
                 }
                 this.Hide();
-            }
+//            }
+        }
+
+        private void cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }
