@@ -25,51 +25,61 @@ namespace AerolineaFrba.Vistas_Inicio
         private void altaAeronave_Click(object sender, EventArgs e)
         {
             new Abm_Aeronave.Alta().Show();
+            this.Hide();
         }
 
         private void altaRuta_Click(object sender, EventArgs e)
         {
             new Abm_Ruta.Alta_Ruta().Show();
+            this.Hide();
         }
 
         private void modificarRuta_Click(object sender, EventArgs e)
         {
-            new Abm_Ruta.Modificar_Ruta().Show();
+            new Abm_Ruta.Listado_Rutas().Show();
+            this.Hide();
         }
 
         private void bajaRuta_Click(object sender, EventArgs e)
         {
             new Abm_Ruta.Baja_Ruta().Show();
+            this.Hide();
         }
 
         private void modificarAeronave_Click(object sender, EventArgs e)
         {
             new Abm_Aeronave.modificarAeronave().Show();
+            this.Hide();
         }
 
         private void bajaAeronave_Click(object sender, EventArgs e)
         {
             new Abm_Aeronave.Baja().Show();
+            this.Hide();
         }
 
         private void altaViaje_Click(object sender, EventArgs e)
         {
             new Generacion_Viaje.Alta_Viaje().Show();
+            this.Hide();
         }
 
         private void registroLlegada_Click(object sender, EventArgs e)
         {
             new Registro_Llegada_Destino.Registro().Show();
+            this.Hide();
         }
 
         private void compraPasajes_Encom_Click(object sender, EventArgs e)
         {
             new Compra.compraPasaje().Show();
+            this.Hide();
         }
 
         private void crearFuncionalidad_Click(object sender, EventArgs e)
         {
             new Abm_Funcionalidades.Alta().Show();
+            this.Hide();
         }
 
         private void modificarFuncionalidad_Click(object sender, EventArgs e)
@@ -80,31 +90,37 @@ namespace AerolineaFrba.Vistas_Inicio
         private void bajaFuncionalidad_Click(object sender, EventArgs e)
         {
             new Abm_Funcionalidades.bajaFunc().Show();
+            this.Hide();
         }
 
         private void bajaPasaje_Encom_Click(object sender, EventArgs e)
         {
             new Devolucion.Baja().Show();
+            this.Hide();
         }
 
         private void estadisticas_Click(object sender, EventArgs e)
         {
             new Listado_Estadistico.Estadistica().Show();
+            this.Hide();
         }
 
         private void crearRol_Click(object sender, EventArgs e)
         {
             new Abm_Rol.altaRol().Show();
+            this.Hide();
         }
 
         private void modificarRol_Click(object sender, EventArgs e)
         {
             new Abm_Rol.modificarRol().Show();
+            this.Hide();
         }
 
         private void eliminarRol_Click(object sender, EventArgs e)
         {
             new Abm_Rol.bajaRol().Show();
+            this.Hide();
         }
 
 

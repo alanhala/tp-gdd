@@ -34,6 +34,7 @@ namespace AerolineaFrba.Abm_Ruta
             this.listadoDeRutas = new System.Windows.Forms.DataGridView();
             this.seleccionarRuta = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnMenu = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.listadoDeRutas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,12 +71,23 @@ namespace AerolineaFrba.Abm_Ruta
             this.label1.TabIndex = 2;
             this.label1.Text = "Listado de Rutas";
             // 
+            // btnMenu
+            // 
+            this.btnMenu.Location = new System.Drawing.Point(32, 396);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(147, 48);
+            this.btnMenu.TabIndex = 3;
+            this.btnMenu.Text = "Menu Principal";
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
             // Listado_Rutas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(894, 470);
+            this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.seleccionarRuta);
             this.Controls.Add(this.listadoDeRutas);
@@ -93,5 +105,6 @@ namespace AerolineaFrba.Abm_Ruta
         private System.Windows.Forms.DataGridView listadoDeRutas;
         private Button seleccionarRuta;
         private Label label1;
+        private Button btnMenu;
     }
 }

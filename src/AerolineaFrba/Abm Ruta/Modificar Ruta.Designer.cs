@@ -64,6 +64,7 @@
             this.btnAceptar.TabIndex = 42;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // groupBox1
             // 
@@ -89,6 +90,7 @@
             // 
             // cmbCiudadDestino
             // 
+            this.cmbCiudadDestino.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCiudadDestino.FormattingEnabled = true;
             this.cmbCiudadDestino.Location = new System.Drawing.Point(443, 58);
             this.cmbCiudadDestino.Name = "cmbCiudadDestino";
@@ -104,6 +106,7 @@
             // 
             // cmbCiudadOrigen
             // 
+            this.cmbCiudadOrigen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCiudadOrigen.FormattingEnabled = true;
             this.cmbCiudadOrigen.Location = new System.Drawing.Point(164, 60);
             this.cmbCiudadOrigen.Name = "cmbCiudadOrigen";
@@ -112,6 +115,7 @@
             // 
             // cmbTipoServicio
             // 
+            this.cmbTipoServicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipoServicio.FormattingEnabled = true;
             this.cmbTipoServicio.Location = new System.Drawing.Point(443, 29);
             this.cmbTipoServicio.Name = "cmbTipoServicio";

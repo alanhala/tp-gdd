@@ -302,6 +302,12 @@ IF OBJECT_ID (N'JUST_DO_IT.BajarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.BajarRuta;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.NombreCiudad') IS NOT NULL
+    drop function JUST_DO_IT.NombreCiudad;
+
+IF OBJECT_ID (N'JUST_DO_IT.ActualizarRuta') IS NOT NULL
+    drop procedure JUST_DO_IT.ActualizarRuta;
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -804,6 +810,14 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 
 GO
 
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede habilitar aeronaves')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar aeronaves')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede agregar roles')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede eliminar funcionalidades')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar roles')
+
+GO
+
 CREATE FUNCTION JUST_DO_IT.butacasLibres(@Vuelo NUMERIC(18,0))
 RETURNS TABLE
 AS RETURN
@@ -994,6 +1008,19 @@ BEGIN
     DECLARE @nombre VARCHAR(255);
     SELECT @nombre = nombre
 	FROM JUST_DO_IT.TiposServicios 
+    WHERE id = @id
+    RETURN @nombre;
+END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.NombreCiudad(@id NUMERIC(18,0))
+RETURNS VARCHAR(255) 
+AS
+BEGIN
+    DECLARE @nombre VARCHAR(255);
+    SELECT @nombre = nombre
+	FROM JUST_DO_IT.Ciudades 
     WHERE id = @id
     RETURN @nombre;
 END
@@ -1524,14 +1551,11 @@ RETURN
 
 GO
 
-CREATE TABLE JUST_DO_IT.AuxiliarEliminarRuta(
-	compra NUMERIC(18,0) UNIQUE
-)
-
-GO
-
 CREATE PROCEDURE JUST_DO_IT.BajarRuta(@Ruta NUMERIC(18,0))
 AS BEGIN
+	CREATE TABLE JUST_DO_IT.#AuxiliarEliminarRuta(
+		compra NUMERIC(18,0) UNIQUE
+	)
 	BEGIN TRY
 		BEGIN TRANSACTION bajaRuta
 		UPDATE JUST_DO_IT.Rutas SET eliminada = 1
@@ -1550,10 +1574,9 @@ AS BEGIN
 									  monto_devuelto = monto,
 									  motivo_cancelacion = 'La ruta fue dada de baja' 
 				WHERE EXISTS (SELECT 1 
-							  FROM JUST_DO_IT.AuxiliarEliminarRuta a
+							  FROM JUST_DO_IT.#AuxiliarEliminarRuta a
 							  WHERE a.compra = JUST_DO_IT.Compras.codigo)
 		
-		DELETE FROM JUST_DO_IT.AuxiliarEliminarRuta
 
 		UPDATE JUST_DO_IT.Pasajes SET cancelado = 1
 				WHERE EXISTS (SELECT 1
@@ -1571,13 +1594,19 @@ AS BEGIN
 		ROLLBACK TRANSACTION bajaRuta
 		RAISERROR('No se pudo dar de baja la ruta',16,217) WITH SETERROR
 	END CATCH
+	DROP TABLE JUST_DO_IT.#AuxiliarEliminarRuta
 END
 
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede habilitar aeronaves')
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar aeronaves')
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede agregar roles')
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede eliminar funcionalidades')
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar roles')
+GO
+
+CREATE PROCEDURE JUST_DO_IT.ActualizarRuta(@ruta NUMERIC(18,0), @codigo NUMERIC(18,0), @kg NUMERIC(18,2),
+										   @pasaje NUMERIC(18,2), @origen NUMERIC(18,0), @destino NUMERIC(18,0),
+										   @tipo_servicio NUMERIC(18,0))
+AS BEGIN
+	UPDATE JUST_DO_IT.Rutas SET codigo = @codigo, precio_baseKG = @kg, precio_basePasaje = @pasaje,
+								ciu_id_origen = @origen, ciu_id_destino = @destino, tipo_servicio = @tipo_servicio
+							WHERE id = @ruta
+END
 
 GO
 

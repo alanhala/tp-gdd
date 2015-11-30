@@ -83,6 +83,7 @@ namespace AerolineaFrba.Abm_Ruta
         {
             Ruta ruta = (Ruta)listadoDeRutas.CurrentRow.DataBoundItem;
             new Modificar_Ruta(ruta.id.ToString()).Show();
+            this.Hide();
         }
 
         private void procesarAlta()
@@ -94,6 +95,12 @@ namespace AerolineaFrba.Abm_Ruta
         private void listadoDeRutas_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            new Vistas_Inicio.Inicio_Admin().Show();
+            this.Hide();
         }
     }
 }
