@@ -35,8 +35,6 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblFabricanteAeronave = new System.Windows.Forms.Label();
-            this.lblModeloAeronave = new System.Windows.Forms.Label();
-            this.lblCantButacasAeronave = new System.Windows.Forms.Label();
             this.lblKgEncomiendasAeronave = new System.Windows.Forms.Label();
             this.lblTipoServicioAeronave = new System.Windows.Forms.Label();
             this.lblMatriculaAeronave = new System.Windows.Forms.Label();
@@ -49,17 +47,19 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.lblModeloAeronave = new System.Windows.Forms.Label();
+            this.lblCantButacasAeronave = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dtpFechaYHoraSalida = new System.Windows.Forms.DateTimePicker();
+            this.label12 = new System.Windows.Forms.Label();
             this.destinoComboBox = new System.Windows.Forms.ComboBox();
             this.origenComboBox = new System.Windows.Forms.ComboBox();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnBuscarAeronave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.matriculasComboBox = new System.Windows.Forms.ComboBox();
-            this.dtpFechaYHoraSalida = new System.Windows.Forms.DateTimePicker();
-            this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -112,22 +112,6 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.lblFabricanteAeronave.Name = "lblFabricanteAeronave";
             this.lblFabricanteAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblFabricanteAeronave.TabIndex = 28;
-            // 
-            // lblModeloAeronave
-            // 
-            this.lblModeloAeronave.AutoSize = true;
-            this.lblModeloAeronave.Location = new System.Drawing.Point(173, 162);
-            this.lblModeloAeronave.Name = "lblModeloAeronave";
-            this.lblModeloAeronave.Size = new System.Drawing.Size(0, 13);
-            this.lblModeloAeronave.TabIndex = 27;
-            // 
-            // lblCantButacasAeronave
-            // 
-            this.lblCantButacasAeronave.AutoSize = true;
-            this.lblCantButacasAeronave.Location = new System.Drawing.Point(174, 134);
-            this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
-            this.lblCantButacasAeronave.Size = new System.Drawing.Size(0, 13);
-            this.lblCantButacasAeronave.TabIndex = 25;
             // 
             // lblKgEncomiendasAeronave
             // 
@@ -234,6 +218,22 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.label3.TabIndex = 4;
             this.label3.Text = "Matrícula";
             // 
+            // lblModeloAeronave
+            // 
+            this.lblModeloAeronave.AutoSize = true;
+            this.lblModeloAeronave.Location = new System.Drawing.Point(173, 162);
+            this.lblModeloAeronave.Name = "lblModeloAeronave";
+            this.lblModeloAeronave.Size = new System.Drawing.Size(0, 13);
+            this.lblModeloAeronave.TabIndex = 27;
+            // 
+            // lblCantButacasAeronave
+            // 
+            this.lblCantButacasAeronave.AutoSize = true;
+            this.lblCantButacasAeronave.Location = new System.Drawing.Point(174, 134);
+            this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
+            this.lblCantButacasAeronave.Size = new System.Drawing.Size(0, 13);
+            this.lblCantButacasAeronave.TabIndex = 25;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -271,6 +271,24 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos del Vuelo";
+            // 
+            // dtpFechaYHoraSalida
+            // 
+            this.dtpFechaYHoraSalida.CustomFormat = "dd/MM/yyy - HH:mm:ss";
+            this.dtpFechaYHoraSalida.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFechaYHoraSalida.Location = new System.Drawing.Point(12, 153);
+            this.dtpFechaYHoraSalida.Name = "dtpFechaYHoraSalida";
+            this.dtpFechaYHoraSalida.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaYHoraSalida.TabIndex = 29;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 138);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(160, 13);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "Fecha y hora de salida del vuelo";
             // 
             // destinoComboBox
             // 
@@ -328,24 +346,6 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.matriculasComboBox.Name = "matriculasComboBox";
             this.matriculasComboBox.Size = new System.Drawing.Size(150, 21);
             this.matriculasComboBox.TabIndex = 9;
-            // 
-            // dtpFechaYHoraSalida
-            // 
-            this.dtpFechaYHoraSalida.CustomFormat = "dd/MM/yyy - HH:mm:ss";
-            this.dtpFechaYHoraSalida.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFechaYHoraSalida.Location = new System.Drawing.Point(12, 153);
-            this.dtpFechaYHoraSalida.Name = "dtpFechaYHoraSalida";
-            this.dtpFechaYHoraSalida.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaYHoraSalida.TabIndex = 29;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 138);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(160, 13);
-            this.label12.TabIndex = 30;
-            this.label12.Text = "Fecha y hora de salida del vuelo";
             // 
             // Registro
             // 
