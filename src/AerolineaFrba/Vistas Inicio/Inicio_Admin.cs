@@ -123,6 +123,12 @@ namespace AerolineaFrba.Vistas_Inicio
             this.Hide();
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            new Abm_Ciudad.AltaCiudad().Show();
+            this.Hide();
+        }
+
 
     }
 }

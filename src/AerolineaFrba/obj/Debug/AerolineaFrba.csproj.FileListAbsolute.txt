@@ -45,3 +45,4 @@ C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.exe
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.csprojResolveAssemblyReference.cache
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ciudad.AltaCiudad.resources

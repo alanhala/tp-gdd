@@ -90,9 +90,6 @@ GO
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.MediosDePago'))
 	drop table JUST_DO_IT.MediosDePago
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.AuxiliarEliminarRuta'))
-	drop table JUST_DO_IT.AuxiliarEliminarRuta
-
 GO
 
 IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
@@ -308,11 +305,17 @@ IF OBJECT_ID (N'JUST_DO_IT.NombreCiudad') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.ActualizarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.ActualizarRuta;
 
+IF OBJECT_ID (N'JUST_DO_IT.ModificarCiudad') IS NOT NULL
+    drop procedure JUST_DO_IT.ModificarCiudad;
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarCiudad') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarCiudad;
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
 	id NUMERIC(18,0) IDENTITY(1,1),
-	nombre NVARCHAR(255) NOT NULL,
+	nombre NVARCHAR(255) NOT NULL UNIQUE,
 	PRIMARY KEY (id)
 )
 
@@ -1561,7 +1564,7 @@ AS BEGIN
 		UPDATE JUST_DO_IT.Rutas SET eliminada = 1
 			WHERE id = @Ruta
 
-		INSERT INTO JUST_DO_IT.AuxiliarEliminarRuta
+		INSERT INTO JUST_DO_IT.#AuxiliarEliminarRuta
 		SELECT DISTINCT compra 
 		FROM JUST_DO_IT.Pasajes, JUST_DO_IT.Vuelos v
 		WHERE ruta_id = @Ruta AND vuelo_id = v.id
@@ -1610,3 +1613,25 @@ END
 
 GO
 
+CREATE PROCEDURE JUST_DO_IT.almacenarCiudad(@nombre VARCHAR(255))
+AS BEGIN
+	BEGIN TRY
+		INSERT INTO JUST_DO_IT.Ciudades(nombre) VALUES (@nombre)
+	END TRY
+	BEGIN CATCH
+		RAISERROR('La ciudad ingresada ya existe',16,217) WITH SETERROR
+	END CATCH
+END
+SELECT * FROM JUST_DO_IT.Ciudades ORDER BY nombre
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.modificarCiudad(@ciudad NUMERIC(18,0), @nombre VARCHAR(255))
+AS BEGIN
+	BEGIN TRY
+		UPDATE JUST_DO_IT.Ciudades SET nombre = @nombre WHERE id = @ciudad
+	END TRY
+	BEGIN CATCH
+		RAISERROR('La ciudad ingresada ya existe',16,217) WITH SETERROR
+	END CATCH
+END
