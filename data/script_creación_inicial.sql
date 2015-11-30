@@ -446,7 +446,7 @@ CREATE TABLE JUST_DO_IT.Pasajes(
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
 	pasajero NUMERIC(18,0) NOT NULL,
-	compra NUMERIC(18,0) NOT NULL DEFAULT 1,
+	compra NUMERIC(18,0) NOT NULL,
 	butaca NUMERIC(18,0) NOT NULL,
 	cancelado BIT DEFAULT 0,
 	PRIMARY KEY (codigo),
@@ -464,7 +464,7 @@ CREATE TABLE JUST_DO_IT.Paquetes(
 	kg NUMERIC(18,0) NOT NULL,
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
-	compra NUMERIC(18,0) NOT NULL DEFAULT 1,
+	compra NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY(codigo),
 	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
 	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras
@@ -839,10 +839,12 @@ AS BEGIN
 END
 
 GO
+
 CREATE PROCEDURE JUST_DO_IT.almacenarPasaje(@Vuelo NUMERIC(18,0), @Costo NUMERIC(18,2), @Comprador NUMERIC(18,0),
 											@NumeroTarjeta NUMERIC(18,0), @CodigoTarjeta NUMERIC(18,0),
 											@VencimientoTarjeta NUMERIC(18,0), @Cuotas NUMERIC(18,0),
-											@MedioDePago NUMERIC(18,0), @KGs NUMERIC(18,0))
+											@MedioDePago NUMERIC(18,0), @KGs NUMERIC(18,0), 
+											@EsEncomienda BIT)
 AS BEGIN
 	BEGIN TRANSACTION almacenarPasaje
 	DECLARE @error BIT
@@ -850,8 +852,12 @@ AS BEGIN
 	BEGIN TRY
 		DECLARE @CantidadPasajes INT
 		DECLARE @CostoKG NUMERIC(18,0)
-		SELECT @CantidadPasajes = COUNT(*) FROM JUST_DO_IT.ButacasReservadas 
-							WHERE vuelo_id = @Vuelo GROUP BY vuelo_id
+		IF (@Costo > 0)
+			SELECT @CantidadPasajes = COUNT(*) FROM JUST_DO_IT.ButacasReservadas 
+								WHERE vuelo_id = 1 GROUP BY vuelo_id
+		ELSE
+			SET @CantidadPasajes = 0
+
 		SELECT @CostoKG = r.precio_baseKG
 		FROM JUST_DO_IT.Vuelos v, JUST_DO_IT.Rutas r
 		WHERE v.id = @Vuelo AND v.ruta_id = r.id
@@ -878,23 +884,41 @@ AS BEGIN
 				SET @error = 0
 				RAISERROR('La cantidad de KGs ingresada supera la disponible',16,217) WITH SETERROR
 			END
+			UPDATE JUST_DO_IT.Vuelos SET KGsDisponibles = KGsDisponibles - @KGs
+				WHERE id = @Vuelo
 			INSERT INTO JUST_DO_IT.Paquetes(vuelo_id,compra,fecha_compra,kg,precio)
 				VALUES(@Vuelo, @compra_id, GETDATE(), @KGs, @KGs * @CostoKG)
 		END
 
-		INSERT INTO JUST_DO_IT.Pasajes(vuelo_id, compra, fecha_compra, precio, pasajero, butaca)
-			SELECT @Vuelo, @compra_id, GETDATE(), @Costo, reservadas.usuario_id, reservadas.butaca_id
-				FROM JUST_DO_IT.ButacasReservadas reservadas
-					WHERE reservadas.vuelo_id = @Vuelo
-		
-		DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
+		IF (@EsEncomienda = 0)
+		BEGIN
+			DECLARE @CantidadAOcupar NUMERIC(18,0)
+			SELECT @CantidadAOcupar = COUNT(*) FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
 
+			UPDATE JUST_DO_IT.Vuelos SET cantidadDisponible = cantidadDisponible - @CantidadAOcupar
+				WHERE id = @Vuelo
+
+			INSERT INTO JUST_DO_IT.Pasajes(vuelo_id, compra, fecha_compra, precio, pasajero, butaca)
+				SELECT @Vuelo, @compra_id, GETDATE(), @Costo, reservadas.usuario_id, reservadas.butaca_id
+					FROM JUST_DO_IT.ButacasReservadas reservadas
+						WHERE reservadas.vuelo_id = @Vuelo
+		
+			DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
+		END
 		COMMIT TRANSACTION almacenarPasaje	
+
+		SELECT * FROM JUST_DO_IT.Compras ORDER BY id DESC
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION almacenarPasaje
 		IF (@error = 1)
 			RAISERROR('El pasaje no pudo ser almacenado',16,217) WITH SETERROR
+		ELSE
+		BEGIN
+			DECLARE @ErrorMessage VARCHAR(255)
+			SET @ErrorMessage = ERROR_MESSAGE()
+			RAISERROR(@ErrorMessage,16,217) WITH SETERROR
+		END
 	END CATCH	
 END 
 

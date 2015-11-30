@@ -96,5 +96,26 @@ namespace AerolineaFrba.Compra
 
         }
 
+        private void btnEncomienda_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvViajesDisponibles);
+            if (row == null)
+            {
+                MessageBox.Show("Debe seleccionar algun vuelo");
+                return;
+            }
+            if (int.Parse(row.Cells[1].Value.ToString()) == 0)
+            {
+                MessageBox.Show("No quedan butacas disponibles");
+            }
+            else
+            {
+                int vuelo_id = int.Parse(row.Cells[0].Value.ToString());
+                float costoEncomienda = float.Parse(row.Cells[7].Value.ToString());
+                new Pagar(vuelo_id, costoEncomienda).Show();
+                this.Hide();
+            }
+        }
+
     }
 }

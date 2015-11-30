@@ -48,6 +48,7 @@
             this.costoViaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.costoEncomienda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnViajar = new System.Windows.Forms.Button();
+            this.btnEncomienda = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvViajesDisponibles)).BeginInit();
@@ -225,7 +226,7 @@
             // 
             // btnViajar
             // 
-            this.btnViajar.Location = new System.Drawing.Point(631, 401);
+            this.btnViajar.Location = new System.Drawing.Point(581, 401);
             this.btnViajar.Name = "btnViajar";
             this.btnViajar.Size = new System.Drawing.Size(75, 23);
             this.btnViajar.TabIndex = 20;
@@ -233,12 +234,23 @@
             this.btnViajar.UseVisualStyleBackColor = true;
             this.btnViajar.Click += new System.EventHandler(this.btnSiguiente_Click);
             // 
+            // btnEncomienda
+            // 
+            this.btnEncomienda.Location = new System.Drawing.Point(677, 401);
+            this.btnEncomienda.Name = "btnEncomienda";
+            this.btnEncomienda.Size = new System.Drawing.Size(115, 23);
+            this.btnEncomienda.TabIndex = 21;
+            this.btnEncomienda.Text = "Enviar encomienda";
+            this.btnEncomienda.UseVisualStyleBackColor = true;
+            this.btnEncomienda.Click += new System.EventHandler(this.btnEncomienda_Click);
+            // 
             // compraPasaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(863, 436);
+            this.Controls.Add(this.btnEncomienda);
             this.Controls.Add(this.btnViajar);
             this.Controls.Add(this.dgvViajesDisponibles);
             this.Controls.Add(this.groupBox3);
@@ -279,5 +291,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoServicio;
         private System.Windows.Forms.DataGridViewTextBoxColumn costoViaje;
         private System.Windows.Forms.DataGridViewTextBoxColumn costoEncomienda;
+        private System.Windows.Forms.Button btnEncomienda;
     }
 }

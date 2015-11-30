@@ -24,28 +24,46 @@ namespace AerolineaFrba.Compra
         private bool efectivo;
         private bool soyCliente;
         private bool cargoPago;
+        private int esEncomienda;
+        private string mensaje;
 
         public Pagar()
         {
         }
 
-        public Pagar(int vuelo_id, float costo_viaje, float costo_encomienda)
+        public void inicializar(int vuelo_id, float costo_encomienda)
         {
             InitializeComponent();
             this.vuelo_id = vuelo_id;
-            this.costo_viaje = costo_viaje;
             this.costo_encomienda = costo_encomienda;
-            lblCosto.Text = this.costo_viaje.ToString();
             this.soyCliente = false;
             this.cargoPago = false;
             this.efectivo = false;
 
-            lblKGs.Text = lblKGs.Text + " ($" + this.costo_encomienda + " por KG)";  
+            lblKGs.Text = lblKGs.Text + " ($" + this.costo_encomienda + " por KG)";
             this.numero = "NULL";
             this.codigo = "NULL";
             this.vencimiento = "NULL";
             this.cuotas = "1";
             this.tipo = "NULL";
+            this.esEncomienda = 0;
+            this.mensaje = "El pasaje ha sido almacenado";
+        }
+
+        public Pagar(int vuelo_id, float costo_encomienda)
+        {
+            this.inicializar(vuelo_id, costo_encomienda);
+            lblCosto.Text = "$" + this.costo_encomienda + " por KG";
+            this.esEncomienda = 1;
+            this.mensaje = "El paquete ha sido almacenado";
+            this.costo_viaje = 0;
+        }
+
+        public Pagar(int vuelo_id, float costo_viaje, float costo_encomienda)
+        {
+            this.costo_viaje = costo_viaje;
+            this.inicializar(vuelo_id, costo_encomienda);
+            lblCosto.Text = this.costo_viaje.ToString();
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -98,58 +116,68 @@ namespace AerolineaFrba.Compra
             if (!this.soyCliente)
             {
                 MessageBox.Show("El alta de usuario no era requerida, ingrese en soy cliente y entre con uno existente");
+                return;
             }
-            else if (this.cargoPago)
+            if (!this.cargoPago)
             {
-                try
+                MessageBox.Show("Debe elegir un medio de pago");
+                return;
+            }
+            if (this.esEncomienda == 1)
+            {
+                if (this.txtKGs.Text.Trim() == "")
                 {
-                    string query;
-                    if (this.txtMailPasajero.Text == "" || this.txtDireccionPasajero.Text == "" || this.txtTelefonoPasajero.Text == "")
-                        MessageBox.Show("Debe completar todos los campos");
+                    MessageBox.Show("Debe ingresar la cantidad a enviar");
+                    return;
+                }
+            }
+            try
+            {
+                string query;
+                if (this.txtMailPasajero.Text == "" || this.txtDireccionPasajero.Text == "" || this.txtTelefonoPasajero.Text == "")
+                    MessageBox.Show("Debe completar todos los campos");
+                else
+                {
+                    float KGsAEnviar;
+                    if (txtKGs.Text.Trim() == "")
+                    {
+                        KGsAEnviar = 0;
+                    }
                     else
                     {
-                        float KGsAEnviar;
-                        if (txtKGs.Text.Trim() == "")
+                        try
                         {
-                            KGsAEnviar = 0;
+                            KGsAEnviar = float.Parse(txtKGs.Text);
                         }
-                        else
+                        catch (Exception)
                         {
-                            try
-                            {
-                                KGsAEnviar = int.Parse(txtKGs.Text);
-                            }
-                            catch (Exception)
-                            {
-                                MessageBox.Show("La cantidad de KGs ingresada no es valida");
-                                return;
-                            }
+                            MessageBox.Show("La cantidad de KGs ingresada no es valida");
+                            return;
                         }
-                        query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", '" + this.txtMailPasajero.Text + "', '"
-                                       + this.txtDireccionPasajero.Text + "', " + this.txtTelefonoPasajero.Text;
-                        Server.getInstance().realizarQuery(query);
-                        int idMedioDePago;
-                        if (this.efectivo)
-                            idMedioDePago = MedioDePago.obtenerID("Efectivo");
-                        else
-                            idMedioDePago = MedioDePago.obtenerID(this.tipo);
-
-                        query = "EXEC JUST_DO_IT.almacenarPasaje " + this.vuelo_id + ", " + this.costo_viaje + ", " +
-                                        this.usuario_id + ", " + this.numero + ", " + this.codigo + ", " + this.vencimiento + ", " +
-                                        this.cuotas + ", " + idMedioDePago + ", " + KGsAEnviar;
-                        Server.getInstance().realizarQuery(query);
-                        MessageBox.Show("El pasaje ha sido almacenado");
-                        new Vistas_Inicio.Inicio_Admin().Show();
-                        this.Hide();
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", '" + this.txtMailPasajero.Text + "', '"
+                                    + this.txtDireccionPasajero.Text + "', " + this.txtTelefonoPasajero.Text;
+                    Server.getInstance().realizarQuery(query);
+                    int idMedioDePago;
+                    if (this.efectivo)
+                        idMedioDePago = MedioDePago.obtenerID("Efectivo");
+                    else
+                        idMedioDePago = MedioDePago.obtenerID(this.tipo);
+
+                    query = "EXEC JUST_DO_IT.almacenarPasaje " + this.vuelo_id + ", " + this.costo_viaje + ", " +
+                                this.usuario_id + ", " + this.numero + ", " + this.codigo + ", " + this.vencimiento + ", " +
+                                this.cuotas + ", " + idMedioDePago + ", " + KGsAEnviar + ", " + this.esEncomienda;
+
+                    Server.getInstance().realizarQuery(query);
+                    MessageBox.Show(this.mensaje);
+                    new Vistas_Inicio.Inicio_Admin().Show();
+                    this.Hide();
                 }
             }
-            else
-                MessageBox.Show("Debe elegir un medio de pago");
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }   
         }
 
         private void btnPagaEnEfectivo_Click(object sender, EventArgs e)
