@@ -16,6 +16,11 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ro
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Usuario_Rol'))
+	drop table JUST_DO_IT.Usuario_Rol
+
+GO
+
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Paquete'))
 	drop table JUST_DO_IT.Paquete
 GO
@@ -415,9 +420,7 @@ CREATE TABLE JUST_DO_IT.Usuarios(
 	telefono NUMERIC(18,0) NOT NULL,
 	mail NVARCHAR(255) NOT NULL,
 	fecha_nacimiento DATETIME NOT NULL,
-	rol NUMERIC(18,0) NOT NULL DEFAULT 2,
-	PRIMARY KEY(id),
-	FOREIGN KEY(rol) REFERENCES JUST_DO_IT.Roles
+	PRIMARY KEY(id)
 )
 
 GO
@@ -564,11 +567,19 @@ CREATE TABLE JUST_DO_IT.Funcionalidades(
 GO
 
 CREATE TABLE JUST_DO_IT.Rol_Funcionalidad(
-	id NUMERIC(18,0) IDENTITY(1,1),
 	id_rol NUMERIC(18,0) NOT NULL,
 	id_funcionalidad NUMERIC(18,0) NOT NULL,
 	FOREIGN KEY (id_rol) REFERENCES JUST_DO_IT.Roles,
 	FOREIGN KEY (id_funcionalidad) REFERENCES JUST_DO_IT.Funcionalidades
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Usuario_Rol(
+	id_usuario NUMERIC(18,0),
+	id_rol NUMERIC(18,0),
+	FOREIGN KEY (id_usuario) REFERENCES JUST_DO_IT.Usuarios,
+	FOREIGN KEY (id_rol) REFERENCES JUST_DO_IT.Roles
 )
 
 GO
@@ -626,6 +637,15 @@ UPDATE JUST_DO_IT.TiposServicios SET costo_adicional = 1.15 WHERE nombre = 'Prim
 INSERT INTO JUST_DO_IT.Usuarios(nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento) 
 	SELECT  DISTINCT Cli_Nombre, Cli_Apellido, Cli_Dni, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
 		FROM gd_esquema.Maestra
+
+INSERT INTO JUST_DO_IT.Usuario_Rol(id_usuario, id_rol)
+	SELECT id, 2 FROM JUST_DO_IT.Usuarios
+
+INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento)
+	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900)
+
+INSERT INTO JUST_DO_IT.Usuario_Rol(id_usuario, id_rol)
+	VALUES (@@IDENTITY, 1)
 
 INSERT INTO JUST_DO_IT.Ciudades(nombre)
 	SELECT DISTINCT Ruta_Ciudad_Origen AS Ciudad FROM gd_esquema.Maestra
@@ -864,9 +884,6 @@ CREATE NONCLUSTERED INDEX [<IndicePaquetes, JUST_DO_IT,>]
 ON JUST_DO_IT.Paquetes ([codigo],[compra])
 INCLUDE ([precio],[vuelo_id],[kg],[fecha_compra])
 GO
-
-INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
-	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
 
