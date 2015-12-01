@@ -1667,6 +1667,9 @@ AS BEGIN
 			SELECT a.compra, GETDATE(), a.monto, 'La ruta fue dada de baja', a.tipo, a.codigo
 			FROM #AuxiliarEliminarRuta a
 		
+		INSERT INTO JUST_DO_IT.CancelacionesHechas(codigo_cancelacion, compra, fecha, monto_devuelto, motivo, tipo)
+			SELECT id, compra, fecha, monto, motivo, tipo FROM JUST_DO_IT.CancelacionesPendientes
+
 		UPDATE JUST_DO_IT.Vuelos SET vuelo_eliminado = 1 WHERE ruta_id = @Ruta
 
 		UPDATE JUST_DO_IT.Pasajes SET cancelado = 1
