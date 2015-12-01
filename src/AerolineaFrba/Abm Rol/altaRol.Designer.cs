@@ -29,141 +29,134 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(altaRol));
+            this.cancelar = new System.Windows.Forms.Button();
+            this.aceptar = new System.Windows.Forms.Button();
+            this.dgvFuncionalidades = new System.Windows.Forms.DataGridView();
+            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nombreRol = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.tbNombre = new System.Windows.Forms.TextBox();
-            this.cbFuncionalidad1 = new System.Windows.Forms.ComboBox();
-            this.btnLimpiar = new System.Windows.Forms.Button();
-            this.btnGuardar = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbFuncionalidad3 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbFuncionalidad2 = new System.Windows.Forms.ComboBox();
+            this.buscar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidades)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label2
+            // cancelar
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "Funcionalidad 1";
+            this.cancelar.Location = new System.Drawing.Point(26, 318);
+            this.cancelar.Name = "cancelar";
+            this.cancelar.Size = new System.Drawing.Size(75, 23);
+            this.cancelar.TabIndex = 72;
+            this.cancelar.Text = "Cancelar";
+            this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
             // 
-            // label1
+            // aceptar
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Nombre";
+            this.aceptar.Location = new System.Drawing.Point(474, 318);
+            this.aceptar.Name = "aceptar";
+            this.aceptar.Size = new System.Drawing.Size(75, 23);
+            this.aceptar.TabIndex = 71;
+            this.aceptar.Text = "Aceptar";
+            this.aceptar.UseVisualStyleBackColor = true;
+            this.aceptar.Click += new System.EventHandler(this.aceptar_Click);
             // 
-            // tbNombre
+            // dgvFuncionalidades
             // 
-            this.tbNombre.Location = new System.Drawing.Point(139, 32);
-            this.tbNombre.Name = "tbNombre";
-            this.tbNombre.Size = new System.Drawing.Size(100, 20);
-            this.tbNombre.TabIndex = 36;
-            this.tbNombre.TextChanged += new System.EventHandler(this.tbNombre_TextChanged);
+            this.dgvFuncionalidades.AllowUserToAddRows = false;
+            this.dgvFuncionalidades.AllowUserToDeleteRows = false;
+            this.dgvFuncionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFuncionalidades.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.funcionalidad});
+            this.dgvFuncionalidades.Location = new System.Drawing.Point(26, 130);
+            this.dgvFuncionalidades.MultiSelect = false;
+            this.dgvFuncionalidades.Name = "dgvFuncionalidades";
+            this.dgvFuncionalidades.ReadOnly = true;
+            this.dgvFuncionalidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvFuncionalidades.Size = new System.Drawing.Size(424, 174);
+            this.dgvFuncionalidades.TabIndex = 70;
             // 
-            // cbFuncionalidad1
+            // funcionalidad
             // 
-            this.cbFuncionalidad1.FormattingEnabled = true;
-            this.cbFuncionalidad1.Location = new System.Drawing.Point(139, 62);
-            this.cbFuncionalidad1.Name = "cbFuncionalidad1";
-            this.cbFuncionalidad1.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad1.TabIndex = 37;
-            this.cbFuncionalidad1.SelectedIndexChanged += new System.EventHandler(this.cbFuncionalidad1_SelectedIndexChanged);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Location = new System.Drawing.Point(171, 215);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(65, 23);
-            this.btnLimpiar.TabIndex = 50;
-            this.btnLimpiar.Text = "Cancelar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
-            // 
-            // btnGuardar
-            // 
-            this.btnGuardar.Location = new System.Drawing.Point(261, 215);
-            this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(65, 23);
-            this.btnGuardar.TabIndex = 51;
-            this.btnGuardar.Text = "Aceptar";
-            this.btnGuardar.UseVisualStyleBackColor = true;
-            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            this.funcionalidad.HeaderText = "Funcionalidad";
+            this.funcionalidad.Name = "funcionalidad";
+            this.funcionalidad.ReadOnly = true;
             // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.tbNombre);
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.nombreRol);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad3);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad2);
-            this.groupBox1.Controls.Add(this.cbFuncionalidad1);
-            this.groupBox1.Location = new System.Drawing.Point(34, 33);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.buscar);
+            this.groupBox1.Location = new System.Drawing.Point(26, 16);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(269, 170);
-            this.groupBox1.TabIndex = 52;
+            this.groupBox1.Size = new System.Drawing.Size(523, 98);
+            this.groupBox1.TabIndex = 67;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Complete los siguientes campos";
             // 
-            // cbFuncionalidad3
+            // nombreRol
             // 
-            this.cbFuncionalidad3.FormattingEnabled = true;
-            this.cbFuncionalidad3.Location = new System.Drawing.Point(139, 124);
-            this.cbFuncionalidad3.Name = "cbFuncionalidad3";
-            this.cbFuncionalidad3.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad3.TabIndex = 49;
+            this.nombreRol.Location = new System.Drawing.Point(151, 25);
+            this.nombreRol.Name = "nombreRol";
+            this.nombreRol.Size = new System.Drawing.Size(100, 20);
+            this.nombreRol.TabIndex = 73;
             // 
-            // label3
+            // label2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 95);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 13);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "Funcionalidad 2";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(19, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(132, 13);
+            this.label2.TabIndex = 57;
+            this.label2.Text = "Funcionalidades a agregar";
             // 
-            // label4
+            // label1
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 124);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 13);
-            this.label4.TabIndex = 48;
-            this.label4.Text = "Funcionalidad 3";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "Nombre del rol";
             // 
-            // cbFuncionalidad2
+            // buscar
             // 
-            this.cbFuncionalidad2.FormattingEnabled = true;
-            this.cbFuncionalidad2.Location = new System.Drawing.Point(139, 92);
-            this.cbFuncionalidad2.Name = "cbFuncionalidad2";
-            this.cbFuncionalidad2.Size = new System.Drawing.Size(100, 21);
-            this.cbFuncionalidad2.TabIndex = 35;
+            this.buscar.Location = new System.Drawing.Point(176, 54);
+            this.buscar.Name = "buscar";
+            this.buscar.Size = new System.Drawing.Size(75, 23);
+            this.buscar.TabIndex = 56;
+            this.buscar.Text = "Buscar";
+            this.buscar.UseVisualStyleBackColor = true;
+            this.buscar.Click += new System.EventHandler(this.buscar_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(474, 130);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 73;
+            this.button1.Text = "Agregar";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // altaRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(338, 250);
+            this.ClientSize = new System.Drawing.Size(579, 352);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cancelar);
+            this.Controls.Add(this.aceptar);
+            this.Controls.Add(this.dgvFuncionalidades);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnGuardar);
-            this.Controls.Add(this.btnLimpiar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "altaRol";
             this.Text = "Crear Rol";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFuncionalidades)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -172,16 +165,16 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbNombre;
-        private System.Windows.Forms.ComboBox cbFuncionalidad1;
-        private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.Button cancelar;
+        private System.Windows.Forms.Button aceptar;
+        private System.Windows.Forms.DataGridView dgvFuncionalidades;
+        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox cbFuncionalidad3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbFuncionalidad2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buscar;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox nombreRol;
+        private System.Windows.Forms.Button button1;
+
     }
 }

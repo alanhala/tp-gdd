@@ -17,47 +17,35 @@ namespace AerolineaFrba.Abm_Rol
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+
+
+        private void aceptar_Click(object sender, EventArgs e)
         {
-            Commons.getInstance().cargarComboBox("Funcionalidades", "descripcion", cbFuncionalidad1);
-            Commons.getInstance().cargarComboBox("Funcionalidades", "descripcion", cbFuncionalidad2);
-            Commons.getInstance().cargarComboBox("Funcionalidades", "descripcion", cbFuncionalidad3);
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnGuardar_Click(object sender, EventArgs e)
-        {
-            if (tbNombre.Text.Trim() != "")
+            DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvFuncionalidades);
+            if (row == null)
             {
-                string nombre = tbNombre.Text;
-                string func1 = cbFuncionalidad1.Text;
-                string func2 = cbFuncionalidad2.Text;
-                string func3 = cbFuncionalidad3.Text;
+                MessageBox.Show("No se ha seleccionado ninguna funcionalidad");
+                return;
+            }
 
-                string query_rol = "EXEC JUST_DO_IT.almacenarRol'" + nombre + "'";
+            if (nombreRol.Text.Trim() != "")
+            {
+                string nombreR = nombreRol.Text;
+                string query_rol = "EXEC JUST_DO_IT.almacenarRol'" + nombreR + "'";
                 try
                 {
                     Server.getInstance().realizarQuery(query_rol);
-                    int IdRol = Rol.obtenerID(nombre);
-                    int IdFuncionalidad1 = Funcionalidad.obtenerID(func1);
-                    string queryRol_Funcionalidad1 = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + IdRol + "," + IdFuncionalidad1;
-                    
-                    int IdFuncionalidad2 = Funcionalidad.obtenerID(func2);
-                    string queryRol_Funcionalidad2 = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + IdRol + "," + IdFuncionalidad2;
-                    
-                    int IdFuncionalidad3 = Funcionalidad.obtenerID(func1);
-                    string queryRol_Funcionalidad3 = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + IdRol + "," + IdFuncionalidad3;
+                    int IdRol = Rol.obtenerID(nombreR);
+
+//                    foreach (DataGridViewRow row in dgvFuncionalidades.SelectedRows)
+
+                    string descripcionFuncionalidad = row.Cells[0].Value.ToString();
+                    int idFuncionalidad = Funcionalidad.obtenerID(descripcionFuncionalidad);
+                    string query = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + IdRol + "," + idFuncionalidad;
 
                     try
                     {
-                        Server.getInstance().realizarQuery(queryRol_Funcionalidad1);
-                        Server.getInstance().realizarQuery(queryRol_Funcionalidad2);
-                        Server.getInstance().realizarQuery(queryRol_Funcionalidad3);
+                        Server.getInstance().realizarQuery(query);
                         MessageBox.Show("El rol se agrego satisfactoriamente");
                     }
                     catch (Exception ex1)
@@ -72,24 +60,32 @@ namespace AerolineaFrba.Abm_Rol
             }
         }
 
-         private void tbNombre_TextChanged(object sender, EventArgs e)
+
+        private void actualizarTabla()
         {
+            dgvFuncionalidades.Rows.Clear();
+            dgvFuncionalidades.Refresh();
+
+            string query = "SELECT * FROM JUST_DO_IT.Funcionalidades";
+
+            System.Data.SqlClient.SqlDataReader reader = Server.getInstance().query(query);
+            while (reader.Read())
+            {
+                dgvFuncionalidades.Rows.Add(reader["descripcion"].ToString());
+            }
+            reader.Close();
 
         }
 
-        private void cbFuncionalidad1_SelectedIndexChanged(object sender, EventArgs e)
+        private void buscar_Click(object sender, EventArgs e)
         {
-        
+            this.actualizarTabla();
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void cancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-//          new Abm_Rol.agregarFuncionalidad().Show();
-        }
     }
 }

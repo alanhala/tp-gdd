@@ -274,8 +274,8 @@ IF OBJECT_ID (N'JUST_DO_IT.NombreTipoDeServicio') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.eliminar_vuelos') IS NOT NULL
     drop procedure JUST_DO_IT.eliminar_vuelos;
 
-IF OBJECT_ID (N'JUST_DO_IT.re_altaRol') IS NOT NULL
-    drop procedure JUST_DO_IT.re_altaRol;
+IF OBJECT_ID (N'JUST_DO_IT.altaRolExistente') IS NOT NULL
+    drop procedure JUST_DO_IT.altaRolExistente;
 
 IF OBJECT_ID (N'JUST_DO_IT.modificarNombreRol') IS NOT NULL
     drop procedure JUST_DO_IT.modificarNombreRol;
@@ -356,7 +356,7 @@ GO
 CREATE TABLE JUST_DO_IT.Roles(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	nombre varchar(50) UNIQUE NOT NULL,
-	baja_rol BIT,
+	baja_rol BIT DEFAULT 0,
 	PRIMARY KEY (id)
 )
 
@@ -1219,17 +1219,17 @@ AS RETURN
 				AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = 3
 GO
 
-CREATE PROCEDURE JUST_DO_IT.re_altaRol(@nombre VARCHAR(50))
+CREATE PROCEDURE JUST_DO_IT.altaRolExistente(@nombre VARCHAR(50))
 AS BEGIN
 	BEGIN TRY
-		UPDATE JUST_DO_IT.Roles
-			SET baja_rol = 0
-			WHERE nombre = @nombre
+		DECLARE @estaDadoDeBaja BIT
+		SELECT @estaDadoDeBaja=baja_rol FROM JUST_DO_IT.Roles WHERE nombre = @nombre
 
-
+		IF( @estaDadoDeBaja = 1)
+			UPDATE JUST_DO_IT.Roles SET baja_rol = 0 WHERE nombre = @nombre
 	END TRY
 	BEGIN CATCH
-		RAISERROR('Fallo el alta de rol',16,217) WITH SETERROR
+		RAISERROR('El rol ya se encontraba habilitado',16,217) WITH SETERROR
 	END CATCH
 
 END 
@@ -1496,3 +1496,10 @@ INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar 
 
 
 GO
+
+select * from JUST_DO_IT.Roles
+select * from JUST_DO_IT.Funcionalidades
+select * from JUST_DO_IT.Rol_Funcionalidad
+
+select descripcion from JUST_DO_IT.Funcionalidades where descripcion = 'Puede loguearse'
+select nombre from JUST_DO_IT.Roles where baja_rol = 0

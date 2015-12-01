@@ -18,7 +18,7 @@ namespace AerolineaFrba.Abm_Rol
             InitializeComponent();
             this.idRol1 = idRol;
         }
-                
+        
         private void actualizarTabla()
         {
             dgvShowRoles.Rows.Clear();
