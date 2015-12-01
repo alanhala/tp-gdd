@@ -7,6 +7,10 @@ GO
 
 /******DROP TABLES******/
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves_Fuera_De_Servicio'))
+	drop table JUST_DO_IT.Aeronaves_Fuera_De_Servicio
+
+GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Rol_Funcionalidad'))
 	drop table JUST_DO_IT.Rol_Funcionalidad
@@ -312,9 +316,6 @@ IF OBJECT_ID (N'JUST_DO_IT.ModificarCiudad') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.almacenarCiudad') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarCiudad;
 
-IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
-	drop procedure alta_aeronave_fuera_de_servicio;
-
 
 /******CREACION DE TABLAS******/
 
@@ -346,6 +347,8 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	fecha_alta DATETIME,
 	baja_fuera_servicio BIT DEFAULT 0,
 	baja_vida_util BIT DEFAULT 0,
+	fecha_fuera_servicio DATETIME,
+	fecha_reinicio_servicio DATETIME,
 	fecha_baja_definitiva DATETIME,
 	PRIMARY KEY(id),
 	FOREIGN KEY (tipo_servicio) REFERENCES JUST_DO_IT.TiposServicios
@@ -488,8 +491,6 @@ CREATE TABLE JUST_DO_IT.Paquetes(
 	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras
 )
 
-
-
 GO
 
 CREATE TABLE JUST_DO_IT.Puntos(
@@ -497,6 +498,7 @@ CREATE TABLE JUST_DO_IT.Puntos(
 	millas NUMERIC(18,0) NOT NULL,
 	vencimiento DATETIME NOT NULL,
 	usuario_id NUMERIC(18,0) NOT NULL,
+	validos BIT DEFAULT 0,
 	PRIMARY KEY(id),
 	FOREIGN KEY(usuario_id) REFERENCES JUST_DO_IT.Usuarios
 )
@@ -848,7 +850,8 @@ AS RETURN
 							LEFT JOIN JUST_DO_IT.ButacasReservadas reservadas
 							ON pasajes.vuelo_id = reservadas.vuelo_id 
 							WHERE pasajes.vuelo_id = @Vuelo
-								AND (pasajes.butaca = butacas.id OR reservadas.butaca_id = butacas.id))
+								AND (pasajes.butaca = butacas.id OR reservadas.butaca_id = butacas.id)
+								AND pasajes.cancelado = 0)
 								
 GO 
 
@@ -1102,13 +1105,13 @@ GO
     
 
 CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_reinicio_servicio DATETIME, @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
 			UPDATE JUST_DO_IT.Aeronaves
 				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
-				kgs_disponibles = @kgs_disponibles,  butacas_totales = @cant_butacas
+				kgs_disponibles = @kgs_disponibles, fecha_reinicio_servicio = @fecha_reinicio_servicio, butacas_totales = @cant_butacas
 				WHERE Aeronaves.matricula = @matricula
 		END TRY
 		BEGIN CATCH
@@ -1352,16 +1355,10 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio(@matricula NVARCHAR(255), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 AS BEGIN
-	DECLARE @aeronave_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
-	IF	(@fecha_fuera_servicio <= @fecha_reinicio_servicio  AND @fecha_fuera_servicio >= CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)))
-		BEGIN
-			UPDATE JUST_DO_IT.Aeronaves 
-				SET baja_fuera_servicio = 1 
-				WHERE id = @aeronave_id
-
-			INSERT INTO JUST_DO_IT.Aeronaves_Fuera_De_Servicio(aeronave_id, fecha_fuera_servicio, fecha_reinicio_servicio_estimado)
-			VALUES(@aeronave_id, @fecha_fuera_servicio, @fecha_reinicio_servicio)
-		END
+	IF (@fecha_fuera_servicio <= @fecha_reinicio_servicio  AND @fecha_fuera_servicio >= CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)))
+		UPDATE JUST_DO_IT.Aeronaves
+		SET baja_fuera_servicio = 1, fecha_fuera_servicio = @fecha_fuera_servicio, fecha_reinicio_servicio = @fecha_reinicio_servicio
+		WHERE matricula = @matricula
 	ELSE
 		RAISERROR('Fallo la baja de Aeronave',16,217) WITH SETERROR
 END
@@ -1662,6 +1659,7 @@ END
 
 GO
 
+<<<<<<< HEAD
 
 CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
 AS
@@ -1687,6 +1685,8 @@ END
 
 GO
 
+=======
+>>>>>>> 5733836c4291b0265a39badbc5ee0ab865332abe
 
 select * from JUST_DO_IT.Roles
 select * from JUST_DO_IT.Funcionalidades
