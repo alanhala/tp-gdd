@@ -92,6 +92,11 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Me
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves_Fuera_De_Servicio'))
+	drop table JUST_DO_IT.Aeronaves_Fuera_De_Servicio
+
+GO
+
 
 IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
 	drop table #rutasDeLaMaestra
@@ -312,9 +317,6 @@ IF OBJECT_ID (N'JUST_DO_IT.ModificarCiudad') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.almacenarCiudad') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarCiudad;
 
-IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
-	drop procedure alta_aeronave_fuera_de_servicio;
-
 
 /******CREACION DE TABLAS******/
 
@@ -346,6 +348,8 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	fecha_alta DATETIME,
 	baja_fuera_servicio BIT DEFAULT 0,
 	baja_vida_util BIT DEFAULT 0,
+	fecha_fuera_servicio DATETIME,
+	fecha_reinicio_servicio DATETIME,
 	fecha_baja_definitiva DATETIME,
 	PRIMARY KEY(id),
 	FOREIGN KEY (tipo_servicio) REFERENCES JUST_DO_IT.TiposServicios
@@ -1102,13 +1106,13 @@ GO
     
 
 CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_reinicio_servicio DATETIME, @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
 			UPDATE JUST_DO_IT.Aeronaves
 				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
-				kgs_disponibles = @kgs_disponibles,  butacas_totales = @cant_butacas
+				kgs_disponibles = @kgs_disponibles, fecha_reinicio_servicio = @fecha_reinicio_servicio, butacas_totales = @cant_butacas
 				WHERE Aeronaves.matricula = @matricula
 		END TRY
 		BEGIN CATCH
@@ -1347,16 +1351,12 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio(@matricula NVARCHAR(255), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 AS BEGIN
-	DECLARE @aeronave_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
 	IF	(@fecha_fuera_servicio <= @fecha_reinicio_servicio  AND @fecha_fuera_servicio >= CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)))
-		BEGIN
-			UPDATE JUST_DO_IT.Aeronaves 
-				SET baja_fuera_servicio = 1 
-				WHERE id = @aeronave_id
-
-			INSERT INTO JUST_DO_IT.Aeronaves_Fuera_De_Servicio(aeronave_id, fecha_fuera_servicio, fecha_reinicio_servicio_estimado)
-			VALUES(@aeronave_id, @fecha_fuera_servicio, @fecha_reinicio_servicio)
-		END
+		UPDATE JUST_DO_IT.Aeronaves 
+			SET baja_fuera_servicio = 1, 
+				fecha_fuera_servicio = @fecha_fuera_servicio, 
+				fecha_reinicio_servicio = @fecha_reinicio_servicio
+-			WHERE matricula = @matricula
 	ELSE
 		RAISERROR('Fallo la baja de Aeronave',16,217) WITH SETERROR
 END
@@ -1653,30 +1653,6 @@ AS BEGIN
 	BEGIN CATCH
 		RAISERROR('La ciudad ingresada ya existe',16,217) WITH SETERROR
 	END CATCH
-END
-
-GO
-
-CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
-AS
-BEGIN
-	DECLARE @aeroanve_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
-	BEGIN TRANSACTION
-		BEGIN TRY
-			UPDATE JUST_DO_IT.Aeronaves
-			SET baja_fuera_servicio = 0
-			WHERE id = @aeroanve_id
-
-			UPDATE JUST_DO_IT.Aeronaves_Fuera_De_Servicio
-			SET fecha_reinicio_servicio = CURRENT_TIMESTAMP
-			WHERE aeronave_id = @aeroanve_id AND fecha_reinicio_servicio IS NULL
-			
-			COMMIT TRANSACTION
-		END TRY
-		BEGIN CATCH
-			ROLLBACK TRANSACTION
-			RAISERROR('No se ha podido dar de alta la aeronave',16,217) WITH SETERROR
-		END CATCH
 END
 
 GO
