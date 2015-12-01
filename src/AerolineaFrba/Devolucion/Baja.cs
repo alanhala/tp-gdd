@@ -21,5 +21,12 @@ namespace AerolineaFrba.Devolucion
         {
 
         }
+
+        private void Baja_Load(object sender, EventArgs e)
+        {
+            cmbTipo.Items.Add("Pasaje");
+            cmbTipo.Items.Add("Paquete");
+            cmbTipo.SelectedIndex = 0;
+        }
     }
 }
