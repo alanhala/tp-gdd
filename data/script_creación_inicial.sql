@@ -4,10 +4,6 @@ GO
 /****** Object:  Schema [JUST_DO_IT]    Script Date: 10/5/2015 3:43:38 PM ******/
 --CREATE SCHEMA [JUST_DO_IT]
 GO
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 /******DROP TABLES******/
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves_Fuera_De_Servicio'))
