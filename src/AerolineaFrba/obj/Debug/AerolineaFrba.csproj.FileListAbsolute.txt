@@ -11,6 +11,7 @@ C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.modificarAeronave.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.ReemplazoAeronave.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Aeronave.SeleccionarSiDarDeBajaOCancelarVuelos.resources
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ciudad.AltaCiudad.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Funcionalidades.Alta.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Funcionalidades.bajaFunc.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Rol.agregarFuncionalidad.resources
@@ -33,6 +34,7 @@ C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Compra.SoyCliente.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Consulta_Millas.ConsultaMillas.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Devolucion.Baja.resources
+C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Devolucion.Devoluciones.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.inicioPrograma.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Generacion_Viaje.Alta_Viaje.resources
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Listado_Estadistico.Estadistica.resources
@@ -44,9 +46,3 @@ C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.csproj.GenerateResource.Cache
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.exe
 C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.pdb
-C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.csprojResolveAssemblyReference.cache
-<<<<<<< Updated upstream
-C:\Users\IBM_ADMIN\Documents\Gestion\Aerolinea-FRBA\src\AerolineaFrba\obj\Debug\AerolineaFrba.Abm_Ciudad.AltaCiudad.resources
-=======
-C:\Users\Alan\Desktop\Aerolinea-FRBA\src\AerolineaFrba\bin\Debug\AerolineaFrba.exe.config
->>>>>>> Stashed changes

@@ -95,7 +95,7 @@ namespace AerolineaFrba.Vistas_Inicio
 
         private void bajaPasaje_Encom_Click(object sender, EventArgs e)
         {
-            new Devolucion.Baja().Show();
+            new Devolucion.Devoluciones().Show();
             this.Hide();
         }
 

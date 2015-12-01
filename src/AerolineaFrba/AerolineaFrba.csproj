@@ -191,6 +191,12 @@
       <DependentUpon>Canje.cs</DependentUpon>
     </Compile>
     <Compile Include="Ciudades.cs" />
+    <Compile Include="Devolucion\Devoluciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Devolucion\Devoluciones.Designer.cs">
+      <DependentUpon>Devoluciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="MedioDePago.cs" />
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="Compra\Pasajeros.cs">
@@ -396,6 +402,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Devolucion\Baja.resx">
       <DependentUpon>Baja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Devolucion\Devoluciones.resx">
+      <DependentUpon>Devoluciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas Inicio\Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>

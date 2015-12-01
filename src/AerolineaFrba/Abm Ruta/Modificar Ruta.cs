@@ -78,7 +78,7 @@ namespace AerolineaFrba.Abm_Ruta
                 new Listado_Rutas().Show();
                 this.Hide();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Debe ingresar datos validos");
             }
