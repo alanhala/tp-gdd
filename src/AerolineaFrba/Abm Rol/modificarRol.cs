@@ -22,6 +22,7 @@ namespace AerolineaFrba.Abm_Rol
         private void cancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void modificarNombre_Click_1(object sender, EventArgs e)
@@ -37,6 +38,7 @@ namespace AerolineaFrba.Abm_Rol
 
                 new modificarNombre(idRol,nombreRol).Show();
                 this.Hide();
+                new Vistas_Inicio.Inicio_Admin().Show();
             }
         }
 

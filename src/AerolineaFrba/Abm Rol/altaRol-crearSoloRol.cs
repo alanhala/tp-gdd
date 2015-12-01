@@ -45,6 +45,7 @@ namespace AerolineaFrba.Abm_Rol
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
 

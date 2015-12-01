@@ -1203,7 +1203,7 @@ AS BEGIN
 		DECLARE @estaRepetido BIT;
 		SELECT @estaRepetido = COUNT(*) FROM JUST_DO_IT.Rol_Funcionalidad where id= @IdRol AND id_funcionalidad = @IdFuncionalidad
 
-		IF(@estaRepetido<1)
+		IF(@estaRepetido=0)
 			INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_rol, id_funcionalidad) VALUES(@IdRol,@IdFuncionalidad)
 		ELSE
 			RAISERROR('La funcionalidad ingresada ya existe para ese rol',16,217) WITH SETERROR
@@ -1659,8 +1659,6 @@ END
 
 GO
 
-<<<<<<< HEAD
-
 CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
 AS
 BEGIN
@@ -1684,13 +1682,3 @@ BEGIN
 END
 
 GO
-
-=======
->>>>>>> 5733836c4291b0265a39badbc5ee0ab865332abe
-
-select * from JUST_DO_IT.Roles
-select * from JUST_DO_IT.Funcionalidades
-select * from JUST_DO_IT.Rol_Funcionalidad
-
-select descripcion from JUST_DO_IT.Funcionalidades where descripcion = 'Puede loguearse'
-select nombre from JUST_DO_IT.Roles where baja_rol = 0

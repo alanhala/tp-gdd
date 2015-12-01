@@ -42,11 +42,13 @@ namespace AerolineaFrba.Abm_Rol
 
             }
             this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void cancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
     }
