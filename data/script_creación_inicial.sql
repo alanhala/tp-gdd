@@ -1267,7 +1267,7 @@ CREATE PROCEDURE JUST_DO_IT.almacenarRol_Funcionalidad(@IdRol NUMERIC(18,0), @Id
 AS BEGIN
 	BEGIN TRY
 		DECLARE @estaRepetido BIT;
-		SELECT @estaRepetido = COUNT(*) FROM JUST_DO_IT.Rol_Funcionalidad where id= @IdRol AND id_funcionalidad = @IdFuncionalidad
+		SELECT @estaRepetido = COUNT(*) FROM JUST_DO_IT.Rol_Funcionalidad where id_rol = @IdRol AND id_funcionalidad = @IdFuncionalidad
 
 		IF(@estaRepetido=0)
 			INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_rol, id_funcionalidad) VALUES(@IdRol,@IdFuncionalidad)
@@ -1644,29 +1644,30 @@ GO
 CREATE PROCEDURE JUST_DO_IT.BajarRuta(@Ruta NUMERIC(18,0))
 AS BEGIN
 	CREATE TABLE #AuxiliarEliminarRuta(
-		compra NUMERIC(18,0) UNIQUE
+		compra NUMERIC(18,0) UNIQUE,
+		monto NUMERIC(18,2),
+		codigo NUMERIC(18,0),
+		tipo VARCHAR(255)
 	)
 	BEGIN TRY
 		BEGIN TRANSACTION bajaRuta
 		UPDATE JUST_DO_IT.Rutas SET eliminada = 1
 			WHERE id = @Ruta
 
-		INSERT INTO #AuxiliarEliminarRuta
-		SELECT DISTINCT compra 
-		FROM JUST_DO_IT.Pasajes, JUST_DO_IT.Vuelos v
+		INSERT INTO #AuxiliarEliminarRuta(compra, monto, codigo, tipo)
+		SELECT DISTINCT compra, p.precio, p.codigo, 'Pasaje'
+		FROM JUST_DO_IT.Pasajes p, JUST_DO_IT.Vuelos v
 		WHERE ruta_id = @Ruta AND vuelo_id = v.id
 		UNION
-		SELECT DISTINCT compra 
-		FROM JUST_DO_IT.Paquetes, JUST_DO_IT.Vuelos v
+		SELECT DISTINCT compra, p.precio, p.codigo, 'Paquete'
+		FROM JUST_DO_IT.Paquetes p, JUST_DO_IT.Vuelos v
 		WHERE ruta_id = @Ruta AND vuelo_id = v.id
 						
-		UPDATE JUST_DO_IT.Compras SET fecha_devolucion = GETDATE(),
-									  monto_devuelto = monto,
-									  motivo_cancelacion = 'La ruta fue dada de baja' 
-				WHERE EXISTS (SELECT 1 
-							  FROM #AuxiliarEliminarRuta a
-							  WHERE a.compra = JUST_DO_IT.Compras.codigo)
+		INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, fecha, monto, motivo, tipo, codigo)
+			SELECT a.compra, GETDATE(), a.monto, 'La ruta fue dada de baja', a.tipo, a.codigo
+			FROM #AuxiliarEliminarRuta a
 		
+		UPDATE JUST_DO_IT.Vuelos SET vuelo_eliminado = 1 WHERE ruta_id = @Ruta
 
 		UPDATE JUST_DO_IT.Pasajes SET cancelado = 1
 				WHERE EXISTS (SELECT 1
