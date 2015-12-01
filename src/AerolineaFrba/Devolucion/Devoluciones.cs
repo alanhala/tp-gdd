@@ -70,5 +70,11 @@ namespace AerolineaFrba.Devolucion
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            new Vistas_Inicio.Inicio_Admin().Show();
+            this.Hide();
+        }
     }
 }

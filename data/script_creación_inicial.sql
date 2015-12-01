@@ -45,6 +45,11 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ca
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.CancelacionesHechas'))
+	drop table JUST_DO_IT.CancelacionesHechas
+
+GO
+
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Compras'))
 	drop table JUST_DO_IT.Compras
 
@@ -460,19 +465,45 @@ CREATE TABLE JUST_DO_IT.Compras(
 	codigo NUMERIC(18,0) IDENTITY(672301,1),
 	comprador NUMERIC(18,0),
 	fecha_compra DATETIME,
-	fecha_devolucion DATETIME,
-	motivo_cancelacion NVARCHAR(255),
-	monto_devuelto NUMERIC(18,2) DEFAULT 0,
 	monto NUMERIC(18,2),
 	medio_de_pago NUMERIC(18,0),
 	numero_tarjeta NUMERIC(18,0),
 	vencimiento NUMERIC(18,0),
 	codigo_seguridad NUMERIC(18,0),
 	cuotas NUMERIC(18,0),
-	encomienda BIT DEFAULT 0
+	encomienda BIT DEFAULT 0,
 	PRIMARY KEY (codigo),
 	FOREIGN KEY (comprador) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (medio_de_pago) REFERENCES JUST_DO_IT.MediosDePago
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.CancelacionesPendientes(
+	id NUMERIC(18,0) IDENTITY(839212,1),
+	compra NUMERIC(18,0),
+	tipo BIT,
+	codigo NUMERIC(18,0),
+	motivo VARCHAR(255),
+	monto NUMERIC(18,2),
+	fecha DATETIME,
+	PRIMARY KEY(id),
+	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras,
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.CancelacionesHechas(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	codigo_cancelacion NUMERIC(18,0),
+	compra NUMERIC(18,0),
+	tipo VARCHAR(255),
+	codigo NUMERIC(18,0),
+	motivo VARCHAR(255),
+	monto_devuelto NUMERIC(18,2),
+	fecha DATETIME,
+	PRIMARY KEY(id),
+	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras
 )
 
 GO
@@ -563,16 +594,6 @@ CREATE TABLE JUST_DO_IT.Aeronaves_Fuera_De_Servicio(
 )
 
 GO
-
-CREATE TABLE JUST_DO_IT.CancelacionesPendientes(
-	id NUMERIC(18,0) IDENTITY(839212,1),
-	compra NUMERIC(18,0),
-	tipo BIT,
-	codigo NUMERIC(18,0),
-	motivo VARCHAR(255),
-	fecha DATETIME,
-	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras,
-)
 
 /******TABLA AUXILIAR******/
 CREATE TABLE #cantidadDeButacas(
@@ -1691,27 +1712,25 @@ CREATE PROCEDURE JUST_DO_IT.agregarCompraADevolver(@compra NUMERIC(18,0), @tipo 
 												   @motivo VARCHAR(255))
 AS BEGIN
 	BEGIN TRY
+		DECLARE @monto NUMERIC(18,2)
 		IF (@tipo = 0) /* Pasajes */
 		BEGIN
-			IF NOT EXISTS (
-				SELECT 1 FROM JUST_DO_IT.Pasajes p
-				WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
-			)
-			RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
+			SELECT @monto = precio FROM JUST_DO_IT.Pasajes p
+			WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
 		END
 		ELSE /* Paquetes */
 		BEGIN
-			IF NOT EXISTS (
-					SELECT 1 FROM JUST_DO_IT.Paquetes p
-					WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
-				)
-				RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
+			SELECT @monto = precio FROM JUST_DO_IT.Paquetes p
+			WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
 		END
+		IF (@monto IS NULL)
+			RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
+
 		IF EXISTS (SELECT 1 FROM JUST_DO_IT.CancelacionesPendientes WHERE compra = @compra AND @codigo = codigo AND tipo = @tipo)
 			RAISERROR('La compra ingresada ya ha sido encolada para darse de baja',16,217) WITH SETERROR
 
-		INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, tipo, codigo, motivo, fecha)
-			VALUES(@compra, @tipo, @codigo, @motivo, GETDATE())
+		INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, tipo, codigo, motivo, monto, fecha)
+			VALUES(@compra, @tipo, @codigo, @motivo, @monto, GETDATE())
 	END TRY
 	BEGIN CATCH
 		DECLARE @error VARCHAR(255)
@@ -1725,6 +1744,9 @@ GO
 CREATE PROCEDURE JUST_DO_IT.procesarCancelaciones
 AS BEGIN
 	BEGIN TRANSACTION procesarCancelaciones
+	DECLARE cancelar CURSOR
+	FOR SELECT id, compra, tipo, codigo, motivo, fecha FROM JUST_DO_IT.CancelacionesPendientes
+	OPEN cancelar
 	BEGIN TRY
 		DECLARE @id NUMERIC(18,0)
 		DECLARE @compra NUMERIC(18,0)
@@ -1733,18 +1755,14 @@ AS BEGIN
 		DECLARE @motivo VARCHAR(255)
 		DECLARE @fecha DATETIME
 
-		DECLARE cancelacion CURSOR
-		FOR SELECT * FROM JUST_DO_IT.CancelacionesPendientes
-		OPEN cancelacion
-
-		FETCH cancelacion INTO @id, @compra, @tipo, @codigo, @motivo, @fecha
+		FETCH cancelar INTO @id, @compra, @tipo, @codigo, @motivo, @fecha
 		WHILE (@@FETCH_STATUS = 0)
 		BEGIN
 			DECLARE @monto NUMERIC(18,2)
 			DECLARE @vuelo NUMERIC(18,0)
 			IF (@tipo = 0)
 			BEGIN
-				SELECT @monto = precio, @vuelo = vuelo_id FROM JUST_DO_IT.Pasajes WHERE codigo = @codigo
+				SELECT @vuelo = vuelo_id FROM JUST_DO_IT.Pasajes WHERE codigo = @codigo
 				UPDATE JUST_DO_IT.Pasajes SET cancelado = 1, codigo_cancelacion = @id WHERE codigo = @codigo
 				UPDATE JUST_DO_IT.Vuelos SET cantidadDisponible = cantidadDisponible + 1
 					WHERE id = @vuelo
@@ -1752,18 +1770,18 @@ AS BEGIN
 			ELSE
 			BEGIN
 				DECLARE @KGs NUMERIC(18,2)
-				SELECT @monto = precio, @vuelo = vuelo_id, @KGs = kg FROM JUST_DO_IT.Paquetes WHERE codigo = @codigo
+				SELECT @vuelo = vuelo_id, @KGs = kg FROM JUST_DO_IT.Paquetes WHERE codigo = @codigo
 				UPDATE JUST_DO_IT.Paquetes SET cancelado = 1, codigo_cancelacion = @id WHERE codigo = @codigo
 				UPDATE JUST_DO_IT.Vuelos SET KGsDisponibles = KGsDisponibles + @KGs
 					WHERE id = @vuelo
 			END
-			UPDATE JUST_DO_IT.Compras SET fecha_devolucion = @fecha, monto_devuelto = monto_devuelto + @monto,
-										  motivo_cancelacion = motivo_cancelacion + ', ' + @motivo
-
-			FETCH cancelacion INTO @id, @compra, @tipo, @codigo, @motivo, @fecha
+			FETCH cancelar INTO @id, @compra, @tipo, @codigo, @motivo, @fecha
 		END
-		CLOSE cancelacion
-		DEALLOCATE cancelacion
+				
+		INSERT INTO JUST_DO_IT.CancelacionesHechas(codigo_cancelacion, codigo, compra, fecha, monto_devuelto, motivo, tipo)
+		SELECT id, codigo, compra, fecha, monto, motivo, CASE WHEN tipo=0 THEN 'Pasaje' ELSE 'Paquete' END
+		FROM JUST_DO_IT.CancelacionesPendientes
+
 		DELETE FROM JUST_DO_IT.CancelacionesPendientes
 		COMMIT TRANSACTION procesarCancelaciones
 	END TRY
@@ -1771,6 +1789,8 @@ AS BEGIN
 		ROLLBACK TRANSACTION procesarCancelaciones
 		RAISERROR('Se produjo un error procesando las cancelaciones',16,217) WITH SETERROR
 	END CATCH
+	CLOSE cancelar
+	DEALLOCATE cancelar
 END
 
 GO
