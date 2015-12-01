@@ -4,7 +4,6 @@ GO
 /****** Object:  Schema [JUST_DO_IT]    Script Date: 10/5/2015 3:43:38 PM ******/
 --CREATE SCHEMA [JUST_DO_IT]
 GO
-
 /******DROP TABLES******/
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves_Fuera_De_Servicio'))
@@ -316,6 +315,9 @@ IF OBJECT_ID (N'JUST_DO_IT.ModificarCiudad') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.almacenarCiudad') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarCiudad;
 
+IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_baja_de_servicio') IS NOT NULL
+	drop procedure JUST_DO_IT.alta_aeronave_baja_de_servicio;
+
 
 /******CREACION DE TABLAS******/
 
@@ -538,7 +540,6 @@ CREATE TABLE JUST_DO_IT.Aeronaves_Fuera_De_Servicio(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	aeronave_id NUMERIC(18,0),
 	fecha_fuera_servicio DATETIME,
-	fecha_reinicio_servicio_estimado DATETIME,
 	fecha_reinicio_servicio DATETIME,
 	PRIMARY KEY (id),
 	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
@@ -1659,6 +1660,7 @@ END
 
 GO
 
+<<<<<<< HEAD
 CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
 AS
 BEGIN
@@ -1668,6 +1670,36 @@ BEGIN
 			UPDATE JUST_DO_IT.Aeronaves
 			SET baja_fuera_servicio = 0
 			WHERE id = @aeroanve_id
+=======
+CREATE PROCEDURE JUST_DO_IT.alta_aeronave_baja_de_servicio(@matricula NVARCHAR(255))
+AS
+BEGIN
+	DECLARE @aeronave_id NUMERIC(18,0)
+	DECLARE @fecha_fuera_servicio DATETIME
+
+	SELECT id = @aeronave_id, fecha_fuera_servicio = @fecha_fuera_servicio
+	FROM JUST_DO_IT.Aeronaves
+	WHERE matricula = @matricula
+
+	BEGIN TRANSACTION
+		BEGIN TRY
+			INSERT INTO JUST_DO_IT.Aeronaves_Fuera_De_Servicio(aeronave_id, fecha_fuera_servicio, fecha_reinicio_servicio)
+			VALUES(@aeronave_id, @fecha_fuera_servicio, CURRENT_TIMESTAMP)
+
+			UPDATE JUST_DO_IT.Aeronaves
+			SET baja_fuera_servicio = 0, fecha_fuera_servicio = NULL, fecha_reinicio_servicio = NULL
+			WHERE id = @aeronave_id
+
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('No se pudo dar de alta la aeronave',16,217) WITH SETERROR
+		END CATCH
+END
+GO
+
+>>>>>>> 2c5c0d53672d980316ce11e281a89035cddd2467
 
 			UPDATE JUST_DO_IT.Aeronaves_Fuera_De_Servicio
 			SET fecha_reinicio_servicio = CURRENT_TIMESTAMP
