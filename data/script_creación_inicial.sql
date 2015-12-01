@@ -1660,7 +1660,6 @@ END
 
 GO
 
-<<<<<<< HEAD
 CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
 AS
 BEGIN
@@ -1670,7 +1669,22 @@ BEGIN
 			UPDATE JUST_DO_IT.Aeronaves
 			SET baja_fuera_servicio = 0
 			WHERE id = @aeroanve_id
-=======
+			
+			UPDATE JUST_DO_IT.Aeronaves_Fuera_De_Servicio
+			SET fecha_reinicio_servicio = CURRENT_TIMESTAMP
+			WHERE aeronave_id = @aeroanve_id AND fecha_reinicio_servicio IS NULL
+			
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('No se ha podido dar de alta la aeronave',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
+
+
 CREATE PROCEDURE JUST_DO_IT.alta_aeronave_baja_de_servicio(@matricula NVARCHAR(255))
 AS
 BEGIN
@@ -1697,20 +1711,4 @@ BEGIN
 			RAISERROR('No se pudo dar de alta la aeronave',16,217) WITH SETERROR
 		END CATCH
 END
-GO
-
->>>>>>> 2c5c0d53672d980316ce11e281a89035cddd2467
-
-			UPDATE JUST_DO_IT.Aeronaves_Fuera_De_Servicio
-			SET fecha_reinicio_servicio = CURRENT_TIMESTAMP
-			WHERE aeronave_id = @aeroanve_id AND fecha_reinicio_servicio IS NULL
-			
-			COMMIT TRANSACTION
-		END TRY
-		BEGIN CATCH
-			ROLLBACK TRANSACTION
-			RAISERROR('No se ha podido dar de alta la aeronave',16,217) WITH SETERROR
-		END CATCH
-END
-
 GO
