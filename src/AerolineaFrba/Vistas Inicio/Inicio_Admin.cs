@@ -107,7 +107,7 @@ namespace AerolineaFrba.Vistas_Inicio
 
         private void crearRol_Click(object sender, EventArgs e)
         {
-            new Abm_Rol.altaRol().Show();
+            new Abm_Rol.altaRol_crearSoloRol().Show();
             this.Hide();
         }
 

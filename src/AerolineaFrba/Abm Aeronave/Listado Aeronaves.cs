@@ -67,5 +67,10 @@ namespace AerolineaFrba.Abm_Aeronave
             owner.cargarLabelsAeronave(aeronave);
             this.Close();
         }
+
+        private void listadoAeronaves_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

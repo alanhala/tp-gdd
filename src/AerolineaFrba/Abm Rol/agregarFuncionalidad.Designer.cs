@@ -31,10 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(agregarFuncionalidad));
             this.cancelar = new System.Windows.Forms.Button();
             this.aceptar = new System.Windows.Forms.Button();
-            this.seleccionar = new System.Windows.Forms.Button();
             this.dgvShowRoles = new System.Windows.Forms.DataGridView();
             this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,7 +43,7 @@
             // 
             // cancelar
             // 
-            this.cancelar.Location = new System.Drawing.Point(16, 324);
+            this.cancelar.Location = new System.Drawing.Point(16, 297);
             this.cancelar.Name = "cancelar";
             this.cancelar.Size = new System.Drawing.Size(75, 23);
             this.cancelar.TabIndex = 66;
@@ -55,22 +53,13 @@
             // 
             // aceptar
             // 
-            this.aceptar.Location = new System.Drawing.Point(409, 324);
+            this.aceptar.Location = new System.Drawing.Point(409, 297);
             this.aceptar.Name = "aceptar";
             this.aceptar.Size = new System.Drawing.Size(75, 23);
             this.aceptar.TabIndex = 65;
             this.aceptar.Text = "Aceptar";
             this.aceptar.UseVisualStyleBackColor = true;
             this.aceptar.Click += new System.EventHandler(this.aceptar_Click);
-            // 
-            // seleccionar
-            // 
-            this.seleccionar.Location = new System.Drawing.Point(409, 104);
-            this.seleccionar.Name = "seleccionar";
-            this.seleccionar.Size = new System.Drawing.Size(75, 23);
-            this.seleccionar.TabIndex = 62;
-            this.seleccionar.Text = "Seleccionar";
-            this.seleccionar.UseVisualStyleBackColor = true;
             // 
             // dgvShowRoles
             // 
@@ -79,7 +68,7 @@
             this.dgvShowRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvShowRoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.funcionalidad});
-            this.dgvShowRoles.Location = new System.Drawing.Point(16, 144);
+            this.dgvShowRoles.Location = new System.Drawing.Point(16, 118);
             this.dgvShowRoles.MultiSelect = false;
             this.dgvShowRoles.Name = "dgvShowRoles";
             this.dgvShowRoles.ReadOnly = true;
@@ -92,15 +81,6 @@
             this.funcionalidad.HeaderText = "Funcionalidad";
             this.funcionalidad.Name = "funcionalidad";
             this.funcionalidad.ReadOnly = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(16, 104);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 63;
-            this.button2.Text = "Limpiar";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -147,12 +127,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(501, 354);
+            this.ClientSize = new System.Drawing.Size(501, 328);
             this.Controls.Add(this.cancelar);
             this.Controls.Add(this.aceptar);
-            this.Controls.Add(this.seleccionar);
             this.Controls.Add(this.dgvShowRoles);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Name = "agregarFuncionalidad";
             this.Text = "agregarOtraFuncionalidad";
@@ -167,10 +145,8 @@
 
         private System.Windows.Forms.Button cancelar;
         private System.Windows.Forms.Button aceptar;
-        private System.Windows.Forms.Button seleccionar;
         private System.Windows.Forms.DataGridView dgvShowRoles;
         private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.Label label1;

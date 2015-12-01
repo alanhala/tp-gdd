@@ -4,7 +4,6 @@ GO
 /****** Object:  Schema [JUST_DO_IT]    Script Date: 10/5/2015 3:43:38 PM ******/
 --CREATE SCHEMA [JUST_DO_IT]
 GO
-
 /******DROP TABLES******/
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves_Fuera_De_Servicio'))
@@ -285,8 +284,8 @@ IF OBJECT_ID (N'JUST_DO_IT.NombreTipoDeServicio') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.eliminar_vuelos') IS NOT NULL
     drop procedure JUST_DO_IT.eliminar_vuelos;
 
-IF OBJECT_ID (N'JUST_DO_IT.re_altaRol') IS NOT NULL
-    drop procedure JUST_DO_IT.re_altaRol;
+IF OBJECT_ID (N'JUST_DO_IT.altaRolExistente') IS NOT NULL
+    drop procedure JUST_DO_IT.altaRolExistente;
 
 IF OBJECT_ID (N'JUST_DO_IT.modificarNombreRol') IS NOT NULL
     drop procedure JUST_DO_IT.modificarNombreRol;
@@ -327,7 +326,13 @@ IF OBJECT_ID (N'JUST_DO_IT.agregarCompraADevolver') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.procesarCancelaciones') IS NOT NULL
     drop procedure JUST_DO_IT.procesarCancelaciones;
-	
+
+IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_baja_de_servicio') IS NOT NULL
+	drop procedure JUST_DO_IT.alta_aeronave_baja_de_servicio;
+
+IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
+	drop procedure JUST_DO_IT.alta_aeronave_fuera_de_servicio;
+
 
 /******CREACION DE TABLAS******/
 
@@ -388,7 +393,7 @@ GO
 CREATE TABLE JUST_DO_IT.Roles(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	nombre varchar(50) UNIQUE NOT NULL,
-	baja_rol BIT,
+	baja_rol BIT DEFAULT 0,
 	PRIMARY KEY (id)
 )
 
@@ -552,7 +557,6 @@ CREATE TABLE JUST_DO_IT.Aeronaves_Fuera_De_Servicio(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	aeronave_id NUMERIC(18,0),
 	fecha_fuera_servicio DATETIME,
-	fecha_reinicio_servicio_estimado DATETIME,
 	fecha_reinicio_servicio DATETIME,
 	PRIMARY KEY (id),
 	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
@@ -1224,8 +1228,13 @@ GO
 CREATE PROCEDURE JUST_DO_IT.almacenarRol_Funcionalidad(@IdRol NUMERIC(18,0), @IdFuncionalidad NUMERIC(18,0))
 AS BEGIN
 	BEGIN TRY
-		INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_rol, id_funcionalidad)
-			VALUES(@IdRol,@IdFuncionalidad)
+		DECLARE @estaRepetido BIT;
+		SELECT @estaRepetido = COUNT(*) FROM JUST_DO_IT.Rol_Funcionalidad where id= @IdRol AND id_funcionalidad = @IdFuncionalidad
+
+		IF(@estaRepetido=0)
+			INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_rol, id_funcionalidad) VALUES(@IdRol,@IdFuncionalidad)
+		ELSE
+			RAISERROR('La funcionalidad ingresada ya existe para ese rol',16,217) WITH SETERROR
 	END TRY
 	BEGIN CATCH
 		RAISERROR('La funcionalidad ingresada ya existe para ese rol',16,217) WITH SETERROR
@@ -1328,17 +1337,17 @@ AS RETURN
 				AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = 3
 GO
 
-CREATE PROCEDURE JUST_DO_IT.re_altaRol(@nombre VARCHAR(50))
+CREATE PROCEDURE JUST_DO_IT.altaRolExistente(@nombre VARCHAR(50))
 AS BEGIN
 	BEGIN TRY
-		UPDATE JUST_DO_IT.Roles
-			SET baja_rol = 0
-			WHERE nombre = @nombre
+		DECLARE @estaDadoDeBaja BIT
+		SELECT @estaDadoDeBaja=baja_rol FROM JUST_DO_IT.Roles WHERE nombre = @nombre
 
-
+		IF( @estaDadoDeBaja = 1)
+			UPDATE JUST_DO_IT.Roles SET baja_rol = 0 WHERE nombre = @nombre
 	END TRY
 	BEGIN CATCH
-		RAISERROR('Fallo el alta de rol',16,217) WITH SETERROR
+		RAISERROR('El rol ya se encontraba habilitado',16,217) WITH SETERROR
 	END CATCH
 
 END 
@@ -1763,3 +1772,58 @@ AS BEGIN
 		RAISERROR('Se produjo un error procesando las cancelaciones',16,217) WITH SETERROR
 	END CATCH
 END
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
+AS
+BEGIN
+	DECLARE @aeroanve_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
+	BEGIN TRANSACTION
+		BEGIN TRY
+			UPDATE JUST_DO_IT.Aeronaves
+			SET baja_fuera_servicio = 0
+			WHERE id = @aeroanve_id
+			
+			UPDATE JUST_DO_IT.Aeronaves_Fuera_De_Servicio
+			SET fecha_reinicio_servicio = CURRENT_TIMESTAMP
+			WHERE aeronave_id = @aeroanve_id AND fecha_reinicio_servicio IS NULL
+			
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('No se ha podido dar de alta la aeronave',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.alta_aeronave_baja_de_servicio(@matricula NVARCHAR(255))
+AS
+BEGIN
+	DECLARE @aeronave_id NUMERIC(18,0)
+	DECLARE @fecha_fuera_servicio DATETIME
+
+	SELECT id = @aeronave_id, fecha_fuera_servicio = @fecha_fuera_servicio
+	FROM JUST_DO_IT.Aeronaves
+	WHERE matricula = @matricula
+
+	BEGIN TRANSACTION
+		BEGIN TRY
+			INSERT INTO JUST_DO_IT.Aeronaves_Fuera_De_Servicio(aeronave_id, fecha_fuera_servicio, fecha_reinicio_servicio)
+			VALUES(@aeronave_id, @fecha_fuera_servicio, CURRENT_TIMESTAMP)
+
+			UPDATE JUST_DO_IT.Aeronaves
+			SET baja_fuera_servicio = 0, fecha_fuera_servicio = NULL, fecha_reinicio_servicio = NULL
+			WHERE id = @aeronave_id
+
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('No se pudo dar de alta la aeronave',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO

@@ -15,34 +15,35 @@ namespace AerolineaFrba.Abm_Rol
         public bajaRol()
         {
             InitializeComponent();
+            Commons.getInstance().cargarComboBoxWhere("Roles","nombre", comboBoxNombreRol,"baja_rol = 0");
         }
 
         private void button1_Click(object sender, EventArgs e) //aceptar
         {
-            if (tbNombre.Text.Trim() != "")
+            if (comboBoxNombreRol.Text == "")
             {
                 try
                 {
-                    string nombre = tbNombre.Text;
+                    string nombre = comboBoxNombreRol.Text;
                     string query_rol = "EXEC JUST_DO_IT.bajaRol '" + nombre + "'";
                     Server.getInstance().realizarQuery(query_rol);
                     MessageBox.Show("El rol se ha dado de baja correctamente");
                 }
-                catch (Exception ex)
+                catch(Exception ex1)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex1.Message);
                 }
             }
+            else
+            {
+                MessageBox.Show("No seleccióno ningun rol");
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e) // cancelar
         {
             this.Close();
-        }
-
-        private void tbNombre_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

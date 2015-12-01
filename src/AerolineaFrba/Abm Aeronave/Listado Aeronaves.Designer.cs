@@ -45,6 +45,7 @@
             this.listadoAeronaves.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.listadoAeronaves.Size = new System.Drawing.Size(666, 370);
             this.listadoAeronaves.TabIndex = 0;
+            this.listadoAeronaves.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listadoAeronaves_CellContentClick);
             // 
             // seleccionarAeronave
             // 
