@@ -4,7 +4,7 @@ GO
 /****** Object:  Schema [JUST_DO_IT]    Script Date: 10/5/2015 3:43:38 PM ******/
 --CREATE SCHEMA [JUST_DO_IT]
 GO
-drop schema JUST_DO_IT
+
 /******DROP TABLES******/
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves_Fuera_De_Servicio'))
@@ -491,8 +491,6 @@ CREATE TABLE JUST_DO_IT.Paquetes(
 	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras
 )
 
-
-
 GO
 
 CREATE TABLE JUST_DO_IT.Puntos(
@@ -500,6 +498,7 @@ CREATE TABLE JUST_DO_IT.Puntos(
 	millas NUMERIC(18,0) NOT NULL,
 	vencimiento DATETIME NOT NULL,
 	usuario_id NUMERIC(18,0) NOT NULL,
+	validos BIT DEFAULT 0,
 	PRIMARY KEY(id),
 	FOREIGN KEY(usuario_id) REFERENCES JUST_DO_IT.Usuarios
 )
@@ -851,7 +850,8 @@ AS RETURN
 							LEFT JOIN JUST_DO_IT.ButacasReservadas reservadas
 							ON pasajes.vuelo_id = reservadas.vuelo_id 
 							WHERE pasajes.vuelo_id = @Vuelo
-								AND (pasajes.butaca = butacas.id OR reservadas.butaca_id = butacas.id))
+								AND (pasajes.butaca = butacas.id OR reservadas.butaca_id = butacas.id)
+								AND pasajes.cancelado = 0)
 								
 GO 
 

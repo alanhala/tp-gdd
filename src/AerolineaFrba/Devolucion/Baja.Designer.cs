@@ -41,6 +41,8 @@
             this.dtpFechaDevolucionPasajeOEncomienda = new System.Windows.Forms.DateTimePicker();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbTipo = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +60,8 @@
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
+            this.groupBox1.Controls.Add(this.cmbTipo);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.tbMotivoCancelacionPasajeOEncomienda);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.tbCodigoPasajeOEncomienda);
@@ -68,14 +72,14 @@
             this.groupBox1.Controls.Add(this.dtpFechaDevolucionPasajeOEncomienda);
             this.groupBox1.Location = new System.Drawing.Point(30, 67);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(381, 204);
+            this.groupBox1.Size = new System.Drawing.Size(381, 240);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de devolución o cancelación";
             // 
             // tbMotivoCancelacionPasajeOEncomienda
             // 
-            this.tbMotivoCancelacionPasajeOEncomienda.Location = new System.Drawing.Point(13, 131);
+            this.tbMotivoCancelacionPasajeOEncomienda.Location = new System.Drawing.Point(13, 179);
             this.tbMotivoCancelacionPasajeOEncomienda.Multiline = true;
             this.tbMotivoCancelacionPasajeOEncomienda.Name = "tbMotivoCancelacionPasajeOEncomienda";
             this.tbMotivoCancelacionPasajeOEncomienda.Size = new System.Drawing.Size(352, 55);
@@ -84,7 +88,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 115);
+            this.label4.Location = new System.Drawing.Point(10, 146);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(115, 13);
             this.label4.TabIndex = 8;
@@ -92,7 +96,7 @@
             // 
             // tbCodigoPasajeOEncomienda
             // 
-            this.tbCodigoPasajeOEncomienda.Location = new System.Drawing.Point(237, 78);
+            this.tbCodigoPasajeOEncomienda.Location = new System.Drawing.Point(237, 107);
             this.tbCodigoPasajeOEncomienda.Name = "tbCodigoPasajeOEncomienda";
             this.tbCodigoPasajeOEncomienda.Size = new System.Drawing.Size(128, 20);
             this.tbCodigoPasajeOEncomienda.TabIndex = 7;
@@ -102,9 +106,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(10, 85);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(171, 13);
+            this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Código de Pasaje y/o Encomienda";
+            this.label3.Text = "Devolucion de";
             // 
             // tbNumeroCompraPNR
             // 
@@ -140,7 +144,7 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(332, 290);
+            this.btnGuardar.Location = new System.Drawing.Point(330, 313);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 17;
@@ -151,12 +155,30 @@
             // btnLimpiar
             // 
             this.btnLimpiar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnLimpiar.Location = new System.Drawing.Point(238, 290);
+            this.btnLimpiar.Location = new System.Drawing.Point(236, 313);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btnLimpiar.TabIndex = 16;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 114);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(171, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Código de Pasaje y/o Encomienda";
+            // 
+            // cmbTipo
+            // 
+            this.cmbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTipo.FormattingEnabled = true;
+            this.cmbTipo.Location = new System.Drawing.Point(237, 75);
+            this.cmbTipo.Name = "cmbTipo";
+            this.cmbTipo.Size = new System.Drawing.Size(128, 21);
+            this.cmbTipo.TabIndex = 11;
             // 
             // Baja
             // 
@@ -165,7 +187,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnLimpiar;
-            this.ClientSize = new System.Drawing.Size(440, 335);
+            this.ClientSize = new System.Drawing.Size(440, 348);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox1);
@@ -174,6 +196,7 @@
             this.KeyPreview = true;
             this.Name = "Baja";
             this.Text = "Pasaje/Encomienda";
+            this.Load += new System.EventHandler(this.Baja_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -195,5 +218,7 @@
         private System.Windows.Forms.DateTimePicker dtpFechaDevolucionPasajeOEncomienda;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.ComboBox cmbTipo;
+        private System.Windows.Forms.Label label5;
     }
 }
