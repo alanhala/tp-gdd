@@ -51,6 +51,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.modificarRuta = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -199,7 +200,7 @@
             this.estadisticas.BackColor = System.Drawing.Color.Tomato;
             this.estadisticas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.estadisticas.ForeColor = System.Drawing.Color.White;
-            this.estadisticas.Location = new System.Drawing.Point(645, 81);
+            this.estadisticas.Location = new System.Drawing.Point(227, 391);
             this.estadisticas.Name = "estadisticas";
             this.estadisticas.Size = new System.Drawing.Size(178, 43);
             this.estadisticas.TabIndex = 26;
@@ -212,7 +213,7 @@
             this.bajaPasaje_Encom.BackColor = System.Drawing.Color.Tomato;
             this.bajaPasaje_Encom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bajaPasaje_Encom.ForeColor = System.Drawing.Color.White;
-            this.bajaPasaje_Encom.Location = new System.Drawing.Point(645, 19);
+            this.bajaPasaje_Encom.Location = new System.Drawing.Point(12, 392);
             this.bajaPasaje_Encom.Name = "bajaPasaje_Encom";
             this.bajaPasaje_Encom.Size = new System.Drawing.Size(178, 43);
             this.bajaPasaje_Encom.TabIndex = 25;
@@ -301,9 +302,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(652, 178);
+            this.pictureBox1.Location = new System.Drawing.Point(643, 191);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(166, 250);
+            this.pictureBox1.Size = new System.Drawing.Size(166, 244);
             this.pictureBox1.TabIndex = 30;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -326,19 +327,33 @@
             this.button1.BackColor = System.Drawing.Color.Tomato;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(645, 140);
+            this.button1.Location = new System.Drawing.Point(438, 392);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(178, 43);
             this.button1.TabIndex = 32;
             this.button1.Text = "Canje de millas";
             this.button1.UseVisualStyleBackColor = false;
             // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.Tomato;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Location = new System.Drawing.Point(643, 18);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(178, 43);
+            this.button3.TabIndex = 33;
+            this.button3.Text = "Agregar / Modificar Ciudad";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Inicio_Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(835, 431);
+            this.ClientSize = new System.Drawing.Size(835, 456);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.modificarRuta);
             this.Controls.Add(this.pictureBox1);
@@ -392,5 +407,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button modificarRuta;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
     }
 }

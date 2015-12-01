@@ -32,18 +32,18 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbCiudadDestino = new System.Windows.Forms.ComboBox();
-            this.tbPrecioBasePorKg = new System.Windows.Forms.TextBox();
-            this.cbcCiudadOrigen = new System.Windows.Forms.ComboBox();
-            this.cbTipoServicio = new System.Windows.Forms.ComboBox();
+            this.cmbCiudadDestino = new System.Windows.Forms.ComboBox();
+            this.txtPrecioBasePorKg = new System.Windows.Forms.TextBox();
+            this.cmbCiudadOrigen = new System.Windows.Forms.ComboBox();
+            this.cmbTipoServicio = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.tbPrecioBasePorPasaje = new System.Windows.Forms.TextBox();
-            this.tbCodigoRuta = new System.Windows.Forms.TextBox();
+            this.txtPrecioBasePorPasaje = new System.Windows.Forms.TextBox();
+            this.txtCodigoRuta = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,22 +64,23 @@
             this.btnAceptar.TabIndex = 42;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.cbCiudadDestino);
-            this.groupBox1.Controls.Add(this.tbPrecioBasePorKg);
-            this.groupBox1.Controls.Add(this.cbcCiudadOrigen);
-            this.groupBox1.Controls.Add(this.cbTipoServicio);
+            this.groupBox1.Controls.Add(this.cmbCiudadDestino);
+            this.groupBox1.Controls.Add(this.txtPrecioBasePorKg);
+            this.groupBox1.Controls.Add(this.cmbCiudadOrigen);
+            this.groupBox1.Controls.Add(this.cmbTipoServicio);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.tbPrecioBasePorPasaje);
-            this.groupBox1.Controls.Add(this.tbCodigoRuta);
+            this.groupBox1.Controls.Add(this.txtPrecioBasePorPasaje);
+            this.groupBox1.Controls.Add(this.txtCodigoRuta);
             this.groupBox1.Location = new System.Drawing.Point(21, 33);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(577, 142);
@@ -87,36 +88,39 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
             // 
-            // cbCiudadDestino
+            // cmbCiudadDestino
             // 
-            this.cbCiudadDestino.FormattingEnabled = true;
-            this.cbCiudadDestino.Location = new System.Drawing.Point(443, 58);
-            this.cbCiudadDestino.Name = "cbCiudadDestino";
-            this.cbCiudadDestino.Size = new System.Drawing.Size(100, 21);
-            this.cbCiudadDestino.TabIndex = 58;
+            this.cmbCiudadDestino.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCiudadDestino.FormattingEnabled = true;
+            this.cmbCiudadDestino.Location = new System.Drawing.Point(443, 58);
+            this.cmbCiudadDestino.Name = "cmbCiudadDestino";
+            this.cmbCiudadDestino.Size = new System.Drawing.Size(100, 21);
+            this.cmbCiudadDestino.TabIndex = 58;
             // 
-            // tbPrecioBasePorKg
+            // txtPrecioBasePorKg
             // 
-            this.tbPrecioBasePorKg.Location = new System.Drawing.Point(164, 87);
-            this.tbPrecioBasePorKg.Name = "tbPrecioBasePorKg";
-            this.tbPrecioBasePorKg.Size = new System.Drawing.Size(100, 20);
-            this.tbPrecioBasePorKg.TabIndex = 57;
+            this.txtPrecioBasePorKg.Location = new System.Drawing.Point(164, 87);
+            this.txtPrecioBasePorKg.Name = "txtPrecioBasePorKg";
+            this.txtPrecioBasePorKg.Size = new System.Drawing.Size(100, 20);
+            this.txtPrecioBasePorKg.TabIndex = 57;
             // 
-            // cbcCiudadOrigen
+            // cmbCiudadOrigen
             // 
-            this.cbcCiudadOrigen.FormattingEnabled = true;
-            this.cbcCiudadOrigen.Location = new System.Drawing.Point(164, 60);
-            this.cbcCiudadOrigen.Name = "cbcCiudadOrigen";
-            this.cbcCiudadOrigen.Size = new System.Drawing.Size(100, 21);
-            this.cbcCiudadOrigen.TabIndex = 56;
+            this.cmbCiudadOrigen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCiudadOrigen.FormattingEnabled = true;
+            this.cmbCiudadOrigen.Location = new System.Drawing.Point(164, 60);
+            this.cmbCiudadOrigen.Name = "cmbCiudadOrigen";
+            this.cmbCiudadOrigen.Size = new System.Drawing.Size(100, 21);
+            this.cmbCiudadOrigen.TabIndex = 56;
             // 
-            // cbTipoServicio
+            // cmbTipoServicio
             // 
-            this.cbTipoServicio.FormattingEnabled = true;
-            this.cbTipoServicio.Location = new System.Drawing.Point(443, 29);
-            this.cbTipoServicio.Name = "cbTipoServicio";
-            this.cbTipoServicio.Size = new System.Drawing.Size(100, 21);
-            this.cbTipoServicio.TabIndex = 55;
+            this.cmbTipoServicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTipoServicio.FormattingEnabled = true;
+            this.cmbTipoServicio.Location = new System.Drawing.Point(443, 29);
+            this.cmbTipoServicio.Name = "cmbTipoServicio";
+            this.cmbTipoServicio.Size = new System.Drawing.Size(100, 21);
+            this.cmbTipoServicio.TabIndex = 55;
             // 
             // label7
             // 
@@ -172,19 +176,19 @@
             this.label12.TabIndex = 49;
             this.label12.Text = "Còdigo de ruta";
             // 
-            // tbPrecioBasePorPasaje
+            // txtPrecioBasePorPasaje
             // 
-            this.tbPrecioBasePorPasaje.Location = new System.Drawing.Point(443, 87);
-            this.tbPrecioBasePorPasaje.Name = "tbPrecioBasePorPasaje";
-            this.tbPrecioBasePorPasaje.Size = new System.Drawing.Size(100, 20);
-            this.tbPrecioBasePorPasaje.TabIndex = 48;
+            this.txtPrecioBasePorPasaje.Location = new System.Drawing.Point(443, 87);
+            this.txtPrecioBasePorPasaje.Name = "txtPrecioBasePorPasaje";
+            this.txtPrecioBasePorPasaje.Size = new System.Drawing.Size(100, 20);
+            this.txtPrecioBasePorPasaje.TabIndex = 48;
             // 
-            // tbCodigoRuta
+            // txtCodigoRuta
             // 
-            this.tbCodigoRuta.Location = new System.Drawing.Point(164, 32);
-            this.tbCodigoRuta.Name = "tbCodigoRuta";
-            this.tbCodigoRuta.Size = new System.Drawing.Size(100, 20);
-            this.tbCodigoRuta.TabIndex = 47;
+            this.txtCodigoRuta.Location = new System.Drawing.Point(164, 32);
+            this.txtCodigoRuta.Name = "txtCodigoRuta";
+            this.txtCodigoRuta.Size = new System.Drawing.Size(100, 20);
+            this.txtCodigoRuta.TabIndex = 47;
             // 
             // Modificar_Ruta
             // 
@@ -210,17 +214,17 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox cbCiudadDestino;
-        private System.Windows.Forms.TextBox tbPrecioBasePorKg;
-        private System.Windows.Forms.ComboBox cbcCiudadOrigen;
-        private System.Windows.Forms.ComboBox cbTipoServicio;
+        private System.Windows.Forms.ComboBox cmbCiudadDestino;
+        private System.Windows.Forms.TextBox txtPrecioBasePorKg;
+        private System.Windows.Forms.ComboBox cmbCiudadOrigen;
+        private System.Windows.Forms.ComboBox cmbTipoServicio;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox tbPrecioBasePorPasaje;
-        private System.Windows.Forms.TextBox tbCodigoRuta;
+        private System.Windows.Forms.TextBox txtPrecioBasePorPasaje;
+        private System.Windows.Forms.TextBox txtCodigoRuta;
     }
 }

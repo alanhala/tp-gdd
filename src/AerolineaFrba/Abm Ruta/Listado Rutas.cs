@@ -16,16 +16,31 @@ namespace AerolineaFrba.Abm_Ruta
     {
         private ObservableCollection<Ruta> rutas;
         public Generacion_Viaje.Alta_Viaje owner { get; set; }
+        private bool esAlta;
+
+        private void instanciar()
+        {
+            rutas = new ObservableCollection<Ruta>();
+            this.cargarRutas();
+            listadoDeRutas.DataSource = rutas;
+            listadoDeRutas.Columns["id"].Visible = false;
+        }
 
         public Listado_Rutas(Generacion_Viaje.Alta_Viaje owner)
         {
             InitializeComponent();
             this.owner = owner;
-            rutas = new ObservableCollection<Ruta>();
-            this.cargarRutas();
-            listadoDeRutas.DataSource = rutas;
-            listadoDeRutas.Columns["id"].Visible = false;
-            
+            this.instanciar();
+            this.esAlta = true;
+            seleccionarRuta.Text = "Seleccionar ruta";
+        }
+
+        public Listado_Rutas()
+        {
+            InitializeComponent();
+            this.instanciar();
+            this.esAlta = false;
+            seleccionarRuta.Text = "Modificar ruta";
         }
 
         private void Listado_Rutas_Load(object sender, EventArgs e)
@@ -58,14 +73,34 @@ namespace AerolineaFrba.Abm_Ruta
 
         private void seleccionarRuta_Click(object sender, EventArgs e)
         {
-            Ruta ruta = (Ruta) listadoDeRutas.CurrentRow.DataBoundItem;
+            if (this.esAlta)
+                this.procesarAlta();
+            else
+                this.modificar();
+        }
+
+        private void modificar()
+        {
+            Ruta ruta = (Ruta)listadoDeRutas.CurrentRow.DataBoundItem;
+            new Modificar_Ruta(ruta.id.ToString()).Show();
+            this.Hide();
+        }
+
+        private void procesarAlta()
+        {
+            Ruta ruta = (Ruta)listadoDeRutas.CurrentRow.DataBoundItem;
             owner.cargarLabelsRuta(ruta);
             this.Close();
         }
-
         private void listadoDeRutas_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            new Vistas_Inicio.Inicio_Admin().Show();
+            this.Hide();
         }
     }
 }

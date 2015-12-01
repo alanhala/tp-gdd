@@ -92,6 +92,7 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Me
 
 GO
 
+
 IF OBJECT_ID('tempdb..#rutasDeLaMaestra') IS NOT NULL
 	drop table #rutasDeLaMaestra
 GO
@@ -291,16 +292,35 @@ IF OBJECT_ID (N'JUST_DO_IT.KGsDisponibles') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.buscar_vuelo') IS NOT NULL
     drop function JUST_DO_IT.buscar_vuelo;
-
+	
 IF OBJECT_ID (N'JUST_DO_IT.registrar_llegada') IS NOT NULL
     drop procedure JUST_DO_IT.registrar_llegada;
+
+IF OBJECT_ID (N'JUST_DO_IT.BajarRuta') IS NOT NULL
+    drop procedure JUST_DO_IT.BajarRuta;
 GO
+
+IF OBJECT_ID (N'JUST_DO_IT.NombreCiudad') IS NOT NULL
+    drop function JUST_DO_IT.NombreCiudad;
+
+IF OBJECT_ID (N'JUST_DO_IT.ActualizarRuta') IS NOT NULL
+    drop procedure JUST_DO_IT.ActualizarRuta;
+
+IF OBJECT_ID (N'JUST_DO_IT.ModificarCiudad') IS NOT NULL
+    drop procedure JUST_DO_IT.ModificarCiudad;
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarCiudad') IS NOT NULL
+    drop procedure JUST_DO_IT.almacenarCiudad;
+
+IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
+	drop procedure alta_aeronave_fuera_de_servicio;
+
 
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
 	id NUMERIC(18,0) IDENTITY(1,1),
-	nombre NVARCHAR(255) NOT NULL,
+	nombre NVARCHAR(255) NOT NULL UNIQUE,
 	PRIMARY KEY (id)
 )
 
@@ -326,8 +346,6 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	fecha_alta DATETIME,
 	baja_fuera_servicio BIT DEFAULT 0,
 	baja_vida_util BIT DEFAULT 0,
-	fecha_fuera_servicio DATETIME,
-	fecha_reinicio_servicio DATETIME,
 	fecha_baja_definitiva DATETIME,
 	PRIMARY KEY(id),
 	FOREIGN KEY (tipo_servicio) REFERENCES JUST_DO_IT.TiposServicios
@@ -351,7 +369,6 @@ CREATE TABLE JUST_DO_IT.Rutas(
 ) 
 
 GO
-
 
 CREATE TABLE JUST_DO_IT.Roles(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -465,6 +482,7 @@ CREATE TABLE JUST_DO_IT.Paquetes(
 	fecha_compra DATETIME NOT NULL,
 	vuelo_id NUMERIC(18,0) NOT NULL,
 	compra NUMERIC(18,0) NOT NULL,
+	cancelado BIT DEFAULT 0,
 	PRIMARY KEY(codigo),
 	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos,
 	FOREIGN KEY(compra) REFERENCES JUST_DO_IT.Compras
@@ -510,6 +528,18 @@ CREATE TABLE JUST_DO_IT.ButacasReservadas(
 	FOREIGN KEY (usuario_id) REFERENCES JUST_DO_IT.Usuarios,
 	FOREIGN KEY (butaca_id) REFERENCES JUST_DO_IT.Butacas,
 	FOREIGN KEY (vuelo_id) REFERENCES JUST_DO_IT.Vuelos
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.Aeronaves_Fuera_De_Servicio(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	aeronave_id NUMERIC(18,0),
+	fecha_fuera_servicio DATETIME,
+	fecha_reinicio_servicio_estimado DATETIME,
+	fecha_reinicio_servicio DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY (aeronave_id) REFERENCES JUST_DO_IT.Aeronaves
 )
 
 GO
@@ -645,7 +675,7 @@ CREATE TABLE #temporalParaPasaje(
 )
 
 GO
-CREATE NONCLUSTERED INDEX [<Name of Missing Index, sysname,>]
+CREATE NONCLUSTERED INDEX [<IndiceTemporalPasajes, JUST_DO_IT,>]
 ON #temporalPasajes ([fechaSalida],[fechaLlegada])
 INCLUDE ([id],[codigo],[fecha_compra],[precio],[ciudadOrigen],[ciudadDestino],[tipo_servicio],[aeronave_matricula],[aeronave_fabricante],[butaca_nro],[butaca_tipo])
 GO
@@ -685,7 +715,13 @@ INSERT INTO JUST_DO_IT.Pasajes(codigo, fecha_compra, precio, vuelo_id, pasajero,
 		JOIN JUST_DO_IT.Compras compras
 		ON compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra
 SET IDENTITY_INSERT JUST_DO_IT.Pasajes OFF
-		
+
+GO
+CREATE NONCLUSTERED INDEX [<IndicePasajes, JUST_DO_IT,>]
+ON JUST_DO_IT.Pasajes ([codigo],[compra])
+INCLUDE ([precio],[vuelo_id],[pasajero],[butaca],[fecha_compra])
+GO
+	
 /*****TABLAS AUXILIARES PARA PAQUETE*****/
 CREATE TABLE #temporalPaquete(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -737,7 +773,7 @@ CREATE TABLE #temporalParaPaquete(
 )
 
 GO
-CREATE NONCLUSTERED INDEX [<Name of Missing Index, sysname,>]
+CREATE NONCLUSTERED INDEX [<IndiceTemporalPaquete, JUST_DO_IT,>]
 ON #temporalPaquete ([fechaSalida],[fechaLlegada])
 INCLUDE ([id],[codigo],[fecha_compra],[precio],[ciudadOrigen],[ciudadDestino],[tipo_servicio],[aeronave_matricula],[aeronave_fabricante])
 GO
@@ -772,6 +808,12 @@ INSERT INTO JUST_DO_IT.Paquetes(codigo, fecha_compra, kg, precio, vuelo_id, comp
 	AND compras.comprador = t2.usuario_id AND compras.monto = t1.precio AND compras.fecha_compra = t1.fecha_compra		
 SET IDENTITY_INSERT JUST_DO_IT.Paquetes OFF
 
+GO
+CREATE NONCLUSTERED INDEX [<IndicePaquetes, JUST_DO_IT,>]
+ON JUST_DO_IT.Paquetes ([codigo],[compra])
+INCLUDE ([precio],[vuelo_id],[kg],[fecha_compra])
+GO
+
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento, rol)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900, 1)
 
@@ -783,6 +825,14 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
 	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador 
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Compras AS compras
 		 WHERE pasajes.compra = compras.codigo
+
+GO
+
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede habilitar aeronaves')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar aeronaves')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede agregar roles')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede eliminar funcionalidades')
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar roles')
 
 GO
 
@@ -982,6 +1032,19 @@ END
 
 GO
 
+CREATE FUNCTION JUST_DO_IT.NombreCiudad(@id NUMERIC(18,0))
+RETURNS VARCHAR(255) 
+AS
+BEGIN
+    DECLARE @nombre VARCHAR(255);
+    SELECT @nombre = nombre
+	FROM JUST_DO_IT.Ciudades 
+    WHERE id = @id
+    RETURN @nombre;
+END
+
+GO
+
 CREATE FUNCTION JUST_DO_IT.vuelosDisponibles(@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @Salida DATETIME)
 RETURNS TABLE
 AS RETURN
@@ -1039,13 +1102,13 @@ GO
     
 
 CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_reinicio_servicio DATETIME, @cant_butacas NUMERIC(18,0))
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
 			UPDATE JUST_DO_IT.Aeronaves
 				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
-				kgs_disponibles = @kgs_disponibles,  fecha_reinicio_servicio = @fecha_reinicio_servicio, butacas_totales = @cant_butacas
+				kgs_disponibles = @kgs_disponibles,  butacas_totales = @cant_butacas
 				WHERE Aeronaves.matricula = @matricula
 		END TRY
 		BEGIN CATCH
@@ -1190,9 +1253,28 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.eliminar_vuelos(@id_vuelo NUMERIC(18,0))
 AS BEGIN
-	UPDATE JUST_DO_IT.Vuelos	
-	SET vuelo_eliminado = 1
-	WHERE id = @id_vuelo
+	BEGIN TRANSACTION
+		BEGIN TRY
+			UPDATE JUST_DO_IT.Vuelos	
+			SET vuelo_eliminado = 1
+			WHERE id = @id_vuelo
+		
+			UPDATE pas
+			SET pas.cancelado = 1
+			FROM JUST_DO_IT.Pasajes pas
+			WHERE pas.vuelo_id = @id_vuelo
+
+			UPDATE paq
+			SET paq.cancelado = 1
+			FROM JUST_DO_IT.Pasajes paq
+			WHERE paq.vuelo_id = @id_vuelo
+
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('No se ha podido eliminar los vuelos con sus pasajes y encomiendas',16,217) WITH SETERROR
+		END CATCH
 END
 
 GO
@@ -1265,12 +1347,16 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio(@matricula NVARCHAR(255), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 AS BEGIN
+	DECLARE @aeronave_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
 	IF	(@fecha_fuera_servicio <= @fecha_reinicio_servicio  AND @fecha_fuera_servicio >= CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)))
-		UPDATE JUST_DO_IT.Aeronaves 
-			SET baja_fuera_servicio = 1, 
-				fecha_fuera_servicio = @fecha_fuera_servicio, 
-				fecha_reinicio_servicio = @fecha_reinicio_servicio
-			WHERE matricula = @matricula
+		BEGIN
+			UPDATE JUST_DO_IT.Aeronaves 
+				SET baja_fuera_servicio = 1 
+				WHERE id = @aeronave_id
+
+			INSERT INTO JUST_DO_IT.Aeronaves_Fuera_De_Servicio(aeronave_id, fecha_fuera_servicio, fecha_reinicio_servicio_estimado)
+			VALUES(@aeronave_id, @fecha_fuera_servicio, @fecha_reinicio_servicio)
+		END
 	ELSE
 		RAISERROR('Fallo la baja de Aeronave',16,217) WITH SETERROR
 END
@@ -1474,6 +1560,7 @@ BEGIN
 		RAISERROR('No se pudo registrar la llegada del vuelo',16,217) WITH SETERROR
 	END CATCH
 END
+
 GO
 
 CREATE FUNCTION JUST_DO_IT.AeronavesDisponiblesParaBaja()
@@ -1486,20 +1573,121 @@ RETURN
 
 GO
 
-/** Agrego funcionalidades  **/
+CREATE PROCEDURE JUST_DO_IT.BajarRuta(@Ruta NUMERIC(18,0))
+AS BEGIN
+	CREATE TABLE JUST_DO_IT.#AuxiliarEliminarRuta(
+		compra NUMERIC(18,0) UNIQUE
+	)
+	BEGIN TRY
+		BEGIN TRANSACTION bajaRuta
+		UPDATE JUST_DO_IT.Rutas SET eliminada = 1
+			WHERE id = @Ruta
 
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede habilitar aeronaves')
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar aeronaves')
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede agregar roles')
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede eliminar funcionalidades')
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar roles')
+		INSERT INTO JUST_DO_IT.#AuxiliarEliminarRuta
+		SELECT DISTINCT compra 
+		FROM JUST_DO_IT.Pasajes, JUST_DO_IT.Vuelos v
+		WHERE ruta_id = @Ruta AND vuelo_id = v.id
+		UNION
+		SELECT DISTINCT compra 
+		FROM JUST_DO_IT.Paquetes, JUST_DO_IT.Vuelos v
+		WHERE ruta_id = @Ruta AND vuelo_id = v.id
+						
+		UPDATE JUST_DO_IT.Compras SET fecha_devolucion = GETDATE(),
+									  monto_devuelto = monto,
+									  motivo_cancelacion = 'La ruta fue dada de baja' 
+				WHERE EXISTS (SELECT 1 
+							  FROM JUST_DO_IT.#AuxiliarEliminarRuta a
+							  WHERE a.compra = JUST_DO_IT.Compras.codigo)
+		
 
+		UPDATE JUST_DO_IT.Pasajes SET cancelado = 1
+				WHERE EXISTS (SELECT 1
+							 FROM JUST_DO_IT.Vuelos v
+							 WHERE v.ruta_id = @Ruta AND JUST_DO_IT.Pasajes.vuelo_id = v.id)
+
+		UPDATE JUST_DO_IT.Paquetes SET cancelado = 1
+				WHERE EXISTS (SELECT 1
+							 FROM JUST_DO_IT.Vuelos v
+							 WHERE v.ruta_id = @Ruta AND JUST_DO_IT.Paquetes.vuelo_id = v.id)
+
+		COMMIT TRANSACTION bajaRuta
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION bajaRuta
+		RAISERROR('No se pudo dar de baja la ruta',16,217) WITH SETERROR
+	END CATCH
+	DROP TABLE JUST_DO_IT.#AuxiliarEliminarRuta
+END
 
 GO
 
+CREATE PROCEDURE JUST_DO_IT.ActualizarRuta(@ruta NUMERIC(18,0), @codigo NUMERIC(18,0), @kg NUMERIC(18,2),
+										   @pasaje NUMERIC(18,2), @origen NUMERIC(18,0), @destino NUMERIC(18,0),
+										   @tipo_servicio NUMERIC(18,0))
+AS BEGIN
+	UPDATE JUST_DO_IT.Rutas SET codigo = @codigo, precio_baseKG = @kg, precio_basePasaje = @pasaje,
+								ciu_id_origen = @origen, ciu_id_destino = @destino, tipo_servicio = @tipo_servicio
+							WHERE id = @ruta
+END
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.almacenarCiudad(@nombre VARCHAR(255))
+AS BEGIN
+	BEGIN TRY
+		INSERT INTO JUST_DO_IT.Ciudades(nombre) VALUES (@nombre)
+	END TRY
+	BEGIN CATCH
+		RAISERROR('La ciudad ingresada ya existe',16,217) WITH SETERROR
+	END CATCH
+END
+SELECT * FROM JUST_DO_IT.Ciudades ORDER BY nombre
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.modificarCiudad(@ciudad NUMERIC(18,0), @nombre VARCHAR(255))
+AS BEGIN
+	BEGIN TRY
+		UPDATE JUST_DO_IT.Ciudades SET nombre = @nombre WHERE id = @ciudad
+	END TRY
+	BEGIN CATCH
+		RAISERROR('La ciudad ingresada ya existe',16,217) WITH SETERROR
+	END CATCH
+END
+
+GO
+
+<<<<<<< HEAD
 select * from JUST_DO_IT.Roles
 select * from JUST_DO_IT.Funcionalidades
 select * from JUST_DO_IT.Rol_Funcionalidad
 
 select descripcion from JUST_DO_IT.Funcionalidades where descripcion = 'Puede loguearse'
 select nombre from JUST_DO_IT.Roles where baja_rol = 0
+=======
+CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
+AS
+BEGIN
+	DECLARE @aeroanve_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
+	BEGIN TRANSACTION
+		BEGIN TRY
+			UPDATE JUST_DO_IT.Aeronaves
+			SET baja_fuera_servicio = 0
+			WHERE id = @aeroanve_id
+
+			UPDATE JUST_DO_IT.Aeronaves_Fuera_De_Servicio
+			SET fecha_reinicio_servicio = CURRENT_TIMESTAMP
+			WHERE aeronave_id = @aeroanve_id AND fecha_reinicio_servicio IS NULL
+			
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('No se ha podido dar de alta la aeronave',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
+
+
+>>>>>>> c5145500ff1d647282daa21a4af86a8fce81c269
