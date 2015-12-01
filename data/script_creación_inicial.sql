@@ -4,9 +4,13 @@ GO
 /****** Object:  Schema [JUST_DO_IT]    Script Date: 10/5/2015 3:43:38 PM ******/
 --CREATE SCHEMA [JUST_DO_IT]
 GO
-
+drop schema JUST_DO_IT
 /******DROP TABLES******/
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves_Fuera_De_Servicio'))
+	drop table JUST_DO_IT.Aeronaves_Fuera_De_Servicio
+
+GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Rol_Funcionalidad'))
 	drop table JUST_DO_IT.Rol_Funcionalidad
@@ -89,11 +93,6 @@ GO
 
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.MediosDePago'))
 	drop table JUST_DO_IT.MediosDePago
-
-GO
-
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Aeronaves_Fuera_De_Servicio'))
-	drop table JUST_DO_IT.Aeronaves_Fuera_De_Servicio
 
 GO
 
