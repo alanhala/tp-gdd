@@ -1431,14 +1431,14 @@ END
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaElVuelo(@aeronave NUMERIC(18,0), @vueloId NUMERIC(18,0))
+CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaElVuelo(@aeronave NUMERIC(18,0), @aeronave_a_reemplazar NUMERIC(18,0), @vueloId NUMERIC(18,0))
 RETURNS BIT
 AS BEGIN
 	IF (NOT EXISTS(SELECT 1
-	FROM JUST_DO_IT.Vuelos vuelosAeronaveNueva, JUST_DO_IT.Vuelos vueloAeronaveVieja
+	FROM JUST_DO_IT.Vuelos vuelosAeronaveNueva, JUST_DO_IT.Vuelos vueloAeronaveVieja, JUST_DO_IT.Aeronaves aeronave_vieja, JUST_DO_IT.Aeronaves aeronave_nueva
 	WHERE vuelosAeronaveNueva.aeronave_id = @aeronave
-		AND vueloAeronaveVieja.id = @vueloId
-		AND 
+		AND vueloAeronaveVieja.id = @vueloId AND aeronave_vieja.id = @aeronave_a_reemplazar AND aeronave_nueva.id = @aeronave
+		AND aeronave_vieja.tipo_servicio = aeronave_nueva.tipo_servicio AND aeronave_vieja.fabricante = aeronave_nueva.fabricante AND
 			((vueloAeronaveVieja.fecha_salida <= vuelosAeronaveNueva.fecha_salida AND vueloAeronaveVieja.fecha_llegada_estimada >= vuelosAeronaveNueva.fecha_llegada_estimada)
 			OR
 			(vueloAeronaveVieja.fecha_salida <= vuelosAeronaveNueva.fecha_salida AND vueloAeronaveVieja.fecha_llegada_estimada >= vuelosAeronaveNueva.fecha_salida)
@@ -1450,7 +1450,7 @@ AS BEGIN
 END
 GO
 
-CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaReemplazar(@aeronave NVARCHAR(255), @aeronaveAReemplazar NVARCHAR(255))
+CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaReemplazar(@aeronave NVARCHAR(255), @aeronaveAReemplazar NVARCHAR(255),@fin_vida_util BIT, @fecha_fin_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 RETURNS BIT
 AS BEGIN
 	DECLARE @vueloId NUMERIC(18,0)
@@ -1458,21 +1458,32 @@ AS BEGIN
 	SELECT @idAeronave = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronave))
 	DECLARE @idAeronaveAReemplazar NUMERIC(18,0)
 	SELECT @idAeronaveAReemplazar = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronaveAReemplazar))
-	DECLARE busqueda CURSOR
-	FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
-		WHERE vuelos.aeronave_id = @idAeronaveAReemplazar 
-			AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
-		
+	IF (@fin_vida_util = 1)
+		BEGIN
+			DECLARE busqueda CURSOR
+			FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
+				WHERE vuelos.aeronave_id = @idAeronaveAReemplazar 
+					AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
+		END
+	ELSE
+		BEGIN
+			DECLARE busqueda CURSOR
+			FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
+				WHERE vuelos.aeronave_id = @idAeronaveAReemplazar 
+					AND (vuelos.fecha_salida >= @fecha_fin_servicio AND vuelos.fecha_salida <= @fecha_reinicio_servicio)
+					AND (vuelos.fecha_llegada_estimada >= @fecha_fin_servicio AND vuelos.fecha_llegada_estimada <= @fecha_reinicio_servicio)
+		END
+
 	OPEN busqueda
 	FETCH busqueda INTO  @vueloId
 	WHILE (@@FETCH_STATUS = 0)
 	BEGIN	
-		IF (JUST_DO_IT.EstaDisponibleParaElVuelo(@idAeronave, @vueloId) = 0) /* 0 no esta disponible, 1 si */
+		IF (JUST_DO_IT.EstaDisponibleParaElVuelo(@idAeronave, @idAeronaveAReemplazar, @vueloId) = 0) /* 0 no esta disponible, 1 si */
 		BEGIN 
 			CLOSE busqueda
 			DEALLOCATE busqueda
 			RETURN 0
-		END	
+		END
 		FETCH busqueda INTO  @vueloId
 	END
 	CLOSE busqueda
@@ -1482,13 +1493,13 @@ END
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.obtener_aeronaves_que_reemplacen_a(@aeronave NVARCHAR(255))
+CREATE FUNCTION JUST_DO_IT.obtener_aeronaves_que_reemplacen_a(@aeronave NVARCHAR(255), @fin_vida_util BIT, @fecha_fin_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 RETURNS TABLE
 AS RETURN
 	SELECT aeronaves.matricula AS matricula, aeronaves.butacas_totales AS butacas, aeronaves.kgs_disponibles AS kgs,
 		aeronaves.tipo_servicio AS tipoServicio
 	FROM JUST_DO_IT.Aeronaves aeronaves
-	WHERE aeronaves.matricula <> @aeronave AND JUST_DO_IT.EstaDisponibleParaReemplazar(aeronaves.matricula, @aeronave) = 1
+	WHERE aeronaves.matricula <> @aeronave AND JUST_DO_IT.EstaDisponibleParaReemplazar(aeronaves.matricula, @aeronave, @fin_vida_util, @fecha_fin_servicio, @fecha_reinicio_servicio) = 1
 		AND aeronaves.baja_fuera_servicio = 0 AND aeronaves.baja_vida_util = 0
 
 GO 
@@ -1508,7 +1519,7 @@ AS BEGIN
 				AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
 
 			UPDATE JUST_DO_IT.Aeronaves 
-				SET baja_vida_util = 1 
+				SET baja_vida_util = 1, fecha_baja_definitiva = CURRENT_TIMESTAMP
 				WHERE matricula = @aeronaveVieja
 			
 			COMMIT TRANSACTION reemplazarVuelos
@@ -1534,7 +1545,7 @@ AS BEGIN
 				WHERE vuelos.aeronave_id = @idAeronaveVieja
 				AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
 
-			EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '@aeronaveVieja' , '@fechaFueraServicio', '@fechaReinicioServicio'
+			EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '@aeronaveVieja' , @fechaFueraServicio, @fechaReinicioServicio	
 
 			COMMIT TRANSACTION reemplazarVuelos
 		END TRY

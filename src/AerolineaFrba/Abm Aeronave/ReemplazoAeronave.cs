@@ -23,6 +23,7 @@ namespace AerolineaFrba.Abm_Aeronave
             InitializeComponent();
             matriculaAReemplazar = matricula;
             finVidaUtil = true;
+            mostrarBotonNuevaAeronave();
         }
 
         public ReemplazoAeronave(string matricula, DateTimePicker fechaFueraServicio, DateTimePicker fechaReinicioServicio)
@@ -32,17 +33,18 @@ namespace AerolineaFrba.Abm_Aeronave
             this.fechaFueraServicio = fechaFueraServicio;
             this.fechaReinicioServicio = fechaReinicioServicio;
             finVidaUtil = false;
+            mostrarBotonNuevaAeronave();
         }
 
         private void ReemplazoAeronaveFinVidaUtil_Load(object sender, EventArgs e)
         {
-            string query = "";
+            string query;
             if (finVidaUtil)
             {
-
+                query = "SELECT * FROM JUST_DO_IT.obtener_aeronaves_que_reemplacen_a('" + this.matriculaAReemplazar + "', 1, null, null)";
             }
             else {
-                query = "SELECT * FROM JUST_DO_IT.obtener_aeronaves_que_reemplacen_a('" + this.matriculaAReemplazar + "')";
+                query = "SELECT * FROM JUST_DO_IT.obtener_aeronaves_que_reemplacen_a('" + this.matriculaAReemplazar + "', 0, '" + this.fechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + this.fechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "')";
             }
             SqlDataReader reader = Server.getInstance().query(query);
             while (reader.Read())
@@ -80,6 +82,17 @@ namespace AerolineaFrba.Abm_Aeronave
                 MessageBox.Show("Error: Los vuelos no han sido reemplazados");
             }
 
+        }
+
+        public void mostrarBotonNuevaAeronave()
+        {
+            if (this.dgvAeronaves.RowCount == 0)
+                this.agregarAeronave.Show();
+        }
+
+        private void agregarAeronave_Click(object sender, EventArgs e)
+        {
+            new Abm_Aeronave.Alta().Show();
         }
     }
 }

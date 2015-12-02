@@ -34,6 +34,7 @@
             this.colKgs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTipoServicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnReemplazarAeronave = new System.Windows.Forms.Button();
+            this.agregarAeronave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAeronaves)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,11 +91,23 @@
             this.btnReemplazarAeronave.UseWaitCursor = true;
             this.btnReemplazarAeronave.Click += new System.EventHandler(this.btnReemplazarAeronave_Click);
             // 
+            // agregarAeronave
+            // 
+            this.agregarAeronave.Location = new System.Drawing.Point(36, 12);
+            this.agregarAeronave.Name = "agregarAeronave";
+            this.agregarAeronave.Size = new System.Drawing.Size(124, 32);
+            this.agregarAeronave.TabIndex = 3;
+            this.agregarAeronave.Text = "Agregar Aeronave";
+            this.agregarAeronave.UseVisualStyleBackColor = true;
+            this.agregarAeronave.Visible = false;
+            this.agregarAeronave.Click += new System.EventHandler(this.agregarAeronave_Click);
+            // 
             // ReemplazoAeronave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(516, 363);
+            this.Controls.Add(this.agregarAeronave);
             this.Controls.Add(this.btnReemplazarAeronave);
             this.Controls.Add(this.dgvAeronaves);
             this.Name = "ReemplazoAeronave";
@@ -113,5 +126,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colKgs;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTipoServicio;
         private System.Windows.Forms.Button btnReemplazarAeronave;
+        private System.Windows.Forms.Button agregarAeronave;
     }
 }
