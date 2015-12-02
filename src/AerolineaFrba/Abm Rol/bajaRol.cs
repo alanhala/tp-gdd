@@ -20,7 +20,8 @@ namespace AerolineaFrba.Abm_Rol
 
         private void button1_Click(object sender, EventArgs e) //aceptar
         {
-            if (comboBoxNombreRol.Text == "")
+
+            if (comboBoxNombreRol.Text != "")
             {
                 try
                 {
@@ -44,6 +45,7 @@ namespace AerolineaFrba.Abm_Rol
         private void button2_Click(object sender, EventArgs e) // cancelar
         {
             this.Close();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
     }
 }

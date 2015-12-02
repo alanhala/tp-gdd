@@ -32,7 +32,7 @@ namespace AerolineaFrba.Abm_Rol
                 dgvShowRoles.Rows.Add(reader["descripcion"].ToString());
             }
             reader.Close();
-
+            
         }
 
         private void aceptar_Click(object sender, EventArgs e)
@@ -58,11 +58,13 @@ namespace AerolineaFrba.Abm_Rol
                 MessageBox.Show(ex1.Message);
             }
             this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void cancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void buscar_Click(object sender, EventArgs e)

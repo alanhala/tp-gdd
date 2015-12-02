@@ -43,21 +43,16 @@ namespace AerolineaFrba.Abm_Rol
             dgvShowRoles.Rows.Clear();
             dgvShowRoles.Refresh();
 
-
-            string query = "SELECT * FROM JUST_DO_IT.nombresRolesYFuncionalidades()";
-            
-            SqlDataReader reader = Server.getInstance().query(query);
-            while (reader.Read())
             {
-                dgvShowRoles.Rows.Add(reader["nombreFuncionalidad"].ToString());
+                string query = "SELECT * FROM JUST_DO_IT.nombresRolesYFuncionalidades()";
+            
+                SqlDataReader reader = Server.getInstance().query(query);
+                while (reader.Read())
+                {
+                    dgvShowRoles.Rows.Add(reader["nombreFuncionalidad"].ToString());
+                }
+                reader.Close();
             }
-            reader.Close();
-
-        }
-
-        private void seleccionar_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void buscar_Click(object sender, EventArgs e)
@@ -68,16 +63,13 @@ namespace AerolineaFrba.Abm_Rol
         private void button1_Click(object sender, EventArgs e)
         {
 
-              DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
-/*            if (int.Parse(row.Cells[0].Value.ToString()) == null)
+           DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvShowRoles);
+           if (row == null)
             {
                 MessageBox.Show("No se ha seleccionado ninguna funcionalidad");
             }
             else
             {
-  
-  */
-
                 string descripcionFuncionalidad = row.Cells[0].Value.ToString();
                 int idFuncionalidad = Funcionalidad.obtenerID(descripcionFuncionalidad);
 
@@ -92,12 +84,14 @@ namespace AerolineaFrba.Abm_Rol
                     MessageBox.Show(ex1.Message);
                 }
                 this.Hide();
-//            }
+                new Vistas_Inicio.Inicio_Admin().Show();
+            }
         }
 
         private void cancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
     }
 }

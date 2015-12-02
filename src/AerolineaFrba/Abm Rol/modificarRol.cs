@@ -38,7 +38,6 @@ namespace AerolineaFrba.Abm_Rol
 
                 new modificarNombre(idRol,nombreRol).Show();
                 this.Hide();
-                new Vistas_Inicio.Inicio_Admin().Show();
             }
         }
 
@@ -83,9 +82,8 @@ namespace AerolineaFrba.Abm_Rol
             else
             {
                 string nombreRol = comboBox1.Text;
-                int idRol = Rol.obtenerID(nombreRol);
 
-                string query = "EXEC JUST_DO_IT.altaRolExistente " + idRol;
+                string query = "EXEC JUST_DO_IT.altaRolExistente '" + nombreRol + "'";
                 try
                 {
                     Server.getInstance().realizarQuery(query);

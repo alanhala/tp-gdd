@@ -1215,8 +1215,9 @@ CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades()
 RETURNS TABLE
 AS RETURN
 	SELECT F.descripcion AS nombreFuncionalidad
-	FROM JUST_DO_IT.Roles AS R , JUST_DO_IT.Funcionalidades AS F, JUST_DO_IT.Rol_Funcionalidad AS RF
-	WHERE RF.id_rol = R.id AND RF.id_funcionalidad = F.id
+	FROM JUST_DO_IT.Funcionalidades AS F, JUST_DO_IT.Rol_Funcionalidad AS RF
+	WHERE RF.id_rol = RF.id_rol AND RF .id_funcionalidad = F.id
+		
 GO
 
 CREATE FUNCTION JUST_DO_IT.IDRol(@Nombre varchar(255))
@@ -1271,8 +1272,7 @@ AS BEGIN
 
 		IF(@estaRepetido=0)
 			INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_rol, id_funcionalidad) VALUES(@IdRol,@IdFuncionalidad)
-		ELSE
-			RAISERROR('La funcionalidad ingresada ya existe para ese rol',16,217) WITH SETERROR
+
 	END TRY
 	BEGIN CATCH
 		RAISERROR('La funcionalidad ingresada ya existe para ese rol',16,217) WITH SETERROR

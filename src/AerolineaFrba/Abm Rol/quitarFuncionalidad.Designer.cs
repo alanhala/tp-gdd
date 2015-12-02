@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(quitarFuncionalidad));
-            this.seleccionar = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.dgvShowRoles = new System.Windows.Forms.DataGridView();
             this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buscar = new System.Windows.Forms.Button();
@@ -43,25 +41,6 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // seleccionar
-            // 
-            this.seleccionar.Location = new System.Drawing.Point(415, 105);
-            this.seleccionar.Name = "seleccionar";
-            this.seleccionar.Size = new System.Drawing.Size(75, 23);
-            this.seleccionar.TabIndex = 57;
-            this.seleccionar.Text = "Seleccionar";
-            this.seleccionar.UseVisualStyleBackColor = true;
-            this.seleccionar.Click += new System.EventHandler(this.seleccionar_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(22, 105);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 57;
-            this.button2.Text = "Limpiar";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // dgvShowRoles
             // 
             this.dgvShowRoles.AllowUserToAddRows = false;
@@ -69,7 +48,7 @@
             this.dgvShowRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvShowRoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.funcionalidad});
-            this.dgvShowRoles.Location = new System.Drawing.Point(22, 145);
+            this.dgvShowRoles.Location = new System.Drawing.Point(22, 113);
             this.dgvShowRoles.MultiSelect = false;
             this.dgvShowRoles.Name = "dgvShowRoles";
             this.dgvShowRoles.ReadOnly = true;
@@ -126,7 +105,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(415, 325);
+            this.button1.Location = new System.Drawing.Point(415, 293);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 59;
@@ -136,7 +115,7 @@
             // 
             // cancelar
             // 
-            this.cancelar.Location = new System.Drawing.Point(22, 325);
+            this.cancelar.Location = new System.Drawing.Point(22, 293);
             this.cancelar.Name = "cancelar";
             this.cancelar.Size = new System.Drawing.Size(75, 23);
             this.cancelar.TabIndex = 60;
@@ -149,12 +128,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(513, 360);
+            this.ClientSize = new System.Drawing.Size(513, 324);
             this.Controls.Add(this.cancelar);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.seleccionar);
             this.Controls.Add(this.dgvShowRoles);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "quitarFuncionalidad";
@@ -169,9 +146,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dgvShowRoles;
-        private System.Windows.Forms.Button seleccionar;
         private System.Windows.Forms.Button buscar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbNombre;
