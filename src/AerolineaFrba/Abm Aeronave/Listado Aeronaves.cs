@@ -42,7 +42,7 @@ namespace AerolineaFrba.Abm_Aeronave
                 "SELECT aeronaves.id, matricula, modelo, kgs_disponibles, butacas_totales, fabricante , servicios.nombre AS tipo_servicio " +
                 "FROM JUST_DO_IT.aeronavesNoDisponibles('" + fecha_salida.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + fecha_estimada_llegada.ToString("yyyy-MM-dd hh:mm:ss") + "') AS aeronaves, JUST_DO_IT.TiposServicios AS servicios " +
                 "WHERE aeronaves.tipo_servicio = servicios.id " +
-                "ORDER BY aeronaves.id";
+                "AND aeronaves.baja_fuera_servicio = 0 AND aeronaves.baja_vida_util = 0";
             SqlDataReader reader = Server.getInstance().query(query);
             while (reader.Read())
             {

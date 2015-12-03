@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.dgvAeronaves = new System.Windows.Forms.DataGridView();
+            this.btnReemplazarAeronave = new System.Windows.Forms.Button();
+            this.agregarAeronave = new System.Windows.Forms.Button();
             this.colMatricula = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colbutacas = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colKgs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTipoServicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnReemplazarAeronave = new System.Windows.Forms.Button();
-            this.agregarAeronave = new System.Windows.Forms.Button();
+            this.colFabricante = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAeronaves)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,14 +48,37 @@
             this.colMatricula,
             this.colbutacas,
             this.colKgs,
-            this.colTipoServicio});
+            this.colTipoServicio,
+            this.colFabricante});
             this.dgvAeronaves.Location = new System.Drawing.Point(36, 60);
             this.dgvAeronaves.Name = "dgvAeronaves";
             this.dgvAeronaves.ReadOnly = true;
             this.dgvAeronaves.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAeronaves.Size = new System.Drawing.Size(444, 255);
+            this.dgvAeronaves.Size = new System.Drawing.Size(544, 255);
             this.dgvAeronaves.TabIndex = 1;
             this.dgvAeronaves.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listadoDeRutas_CellContentClick);
+            // 
+            // btnReemplazarAeronave
+            // 
+            this.btnReemplazarAeronave.Location = new System.Drawing.Point(332, 328);
+            this.btnReemplazarAeronave.Name = "btnReemplazarAeronave";
+            this.btnReemplazarAeronave.Size = new System.Drawing.Size(148, 23);
+            this.btnReemplazarAeronave.TabIndex = 2;
+            this.btnReemplazarAeronave.Text = "Reemplazar Aeronave";
+            this.btnReemplazarAeronave.UseVisualStyleBackColor = true;
+            this.btnReemplazarAeronave.UseWaitCursor = true;
+            this.btnReemplazarAeronave.Click += new System.EventHandler(this.btnReemplazarAeronave_Click);
+            // 
+            // agregarAeronave
+            // 
+            this.agregarAeronave.Location = new System.Drawing.Point(36, 12);
+            this.agregarAeronave.Name = "agregarAeronave";
+            this.agregarAeronave.Size = new System.Drawing.Size(124, 32);
+            this.agregarAeronave.TabIndex = 3;
+            this.agregarAeronave.Text = "Agregar Aeronave";
+            this.agregarAeronave.UseVisualStyleBackColor = true;
+            this.agregarAeronave.Visible = false;
+            this.agregarAeronave.Click += new System.EventHandler(this.agregarAeronave_Click);
             // 
             // colMatricula
             // 
@@ -80,33 +104,17 @@
             this.colTipoServicio.Name = "colTipoServicio";
             this.colTipoServicio.ReadOnly = true;
             // 
-            // btnReemplazarAeronave
+            // colFabricante
             // 
-            this.btnReemplazarAeronave.Location = new System.Drawing.Point(332, 328);
-            this.btnReemplazarAeronave.Name = "btnReemplazarAeronave";
-            this.btnReemplazarAeronave.Size = new System.Drawing.Size(148, 23);
-            this.btnReemplazarAeronave.TabIndex = 2;
-            this.btnReemplazarAeronave.Text = "Reemplazar Aeronave";
-            this.btnReemplazarAeronave.UseVisualStyleBackColor = true;
-            this.btnReemplazarAeronave.UseWaitCursor = true;
-            this.btnReemplazarAeronave.Click += new System.EventHandler(this.btnReemplazarAeronave_Click);
-            // 
-            // agregarAeronave
-            // 
-            this.agregarAeronave.Location = new System.Drawing.Point(36, 12);
-            this.agregarAeronave.Name = "agregarAeronave";
-            this.agregarAeronave.Size = new System.Drawing.Size(124, 32);
-            this.agregarAeronave.TabIndex = 3;
-            this.agregarAeronave.Text = "Agregar Aeronave";
-            this.agregarAeronave.UseVisualStyleBackColor = true;
-            this.agregarAeronave.Visible = false;
-            this.agregarAeronave.Click += new System.EventHandler(this.agregarAeronave_Click);
+            this.colFabricante.HeaderText = "Fabricante";
+            this.colFabricante.Name = "colFabricante";
+            this.colFabricante.ReadOnly = true;
             // 
             // ReemplazoAeronave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(516, 363);
+            this.ClientSize = new System.Drawing.Size(625, 363);
             this.Controls.Add(this.agregarAeronave);
             this.Controls.Add(this.btnReemplazarAeronave);
             this.Controls.Add(this.dgvAeronaves);
@@ -121,11 +129,12 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvAeronaves;
+        private System.Windows.Forms.Button btnReemplazarAeronave;
+        private System.Windows.Forms.Button agregarAeronave;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMatricula;
         private System.Windows.Forms.DataGridViewTextBoxColumn colbutacas;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKgs;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTipoServicio;
-        private System.Windows.Forms.Button btnReemplazarAeronave;
-        private System.Windows.Forms.Button agregarAeronave;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFabricante;
     }
 }

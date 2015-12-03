@@ -14,11 +14,20 @@ namespace AerolineaFrba.Abm_Aeronave
     public partial class Alta : Form
     {
         public SqlDataReader respuesta;
-
+        public string matriculaAReemplazar { get; set; }
+        public Abm_Aeronave.ReemplazoAeronave owner { get; set; }
 
         public Alta()
         {
             InitializeComponent();
+        }
+
+        public Alta(string matriculaAReemplazar, Abm_Aeronave.ReemplazoAeronave owner)
+        {
+            InitializeComponent();
+            this.matriculaAReemplazar = matriculaAReemplazar;
+            this.owner = owner;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -70,10 +79,10 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             if (this.validarCampos()) {
-                string altaAeronave;
-                string generarButacas;
-                try
+                if (this.aeronaveValida())
                 {
+                    string altaAeronave;
+                    string generarButacas;
                     string matricula = tbNumeroMatricula.Text;
                     string modelo = tbModelo.Text;
                     string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
@@ -83,21 +92,30 @@ namespace AerolineaFrba.Abm_Aeronave
 
                     altaAeronave = "EXEC JUST_DO_IT.almacenarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + cantidadButacas;
                     generarButacas = "EXEC JUST_DO_IT.generar_butacas '" + matricula + "', " + cantidadButacas;
+                    try
+                    {
+                        Server.getInstance().realizarQuery(altaAeronave);
+                        Server.getInstance().realizarQuery(generarButacas);
+                        MessageBox.Show("La aeronave se agrego satisfactoriamente");
+                        if (this.matriculaAReemplazar != null)
+                        {
+                            owner.aeronaveCreada(matricula);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    
                 }
-                catch (Exception)
+                else
                 {
-                    MessageBox.Show("Debe ingresar datos validos");
-                    return;
+                    MessageBox.Show("Debe crear una aeronave con el mismo fabricante, tipo de servicio, cantidad de butacas y kilogramos disponibles");
                 }
-                try {
-                    Server.getInstance().realizarQuery(altaAeronave);
-                    Server.getInstance().realizarQuery(generarButacas);
-                    MessageBox.Show("La aeronave se agrego satisfactoriamente");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            }
+            else
+            {
+                MessageBox.Show("Debe ingresar datos validos");
             }
         }
 
@@ -154,6 +172,18 @@ namespace AerolineaFrba.Abm_Aeronave
             this.Close();
         }
 
+        public bool aeronaveValida()
+        {
+            string query = "SELECT * FROM JUST_DO_IT.Aeronaves a, JUST_DO_IT.TiposServicios t WHERE a.tipo_servicio = t.id AND a.matricula = '" + matriculaAReemplazar + "'";
+            SqlDataReader reader = Server.getInstance().query(query);
+            reader.Read();
+            if (this.matriculaAReemplazar != null)
+            {
+                return this.cbFabricante.SelectedItem.ToString() == reader["fabricante"].ToString() && this.cbTipoServicio.SelectedItem.ToString() == reader["nombre"].ToString() &&
+                this.tbCantButacas.Text.ToString() == reader["butacas_totales"].ToString() && this.tbEspacioTotalParaEncomiendas.Text == reader["kgs_disponibles"].ToString();
+            }
+            else return true;            
+        }
 
     }
 }

@@ -16,6 +16,7 @@ namespace AerolineaFrba.Abm_Aeronave
         Boolean finVidaUtil;
         DateTimePicker fechaFueraServicio;
         DateTimePicker fechaReinicioServicio;
+        public string matriculaNueva { get; set; }
 
         private string matriculaAReemplazar;
         public ReemplazoAeronave(string matricula)
@@ -50,7 +51,7 @@ namespace AerolineaFrba.Abm_Aeronave
             while (reader.Read())
             {
                 dgvAeronaves.Rows.Add(reader["matricula"].ToString(), reader["butacas"].ToString(),
-                    reader["kgs"].ToString(), reader["tipoServicio"].ToString());
+                    reader["kgs"].ToString(), reader["tipoServicio"].ToString(), reader["fabricante"].ToString());
             }
             reader.Close();
         }
@@ -65,7 +66,10 @@ namespace AerolineaFrba.Abm_Aeronave
             try
             {
                 DataGridViewRow row = Commons.getInstance().getSelectedRow(dgvAeronaves);
-                string matriculaNueva = row.Cells[0].Value.ToString();
+                if (this.matriculaNueva == null)
+                {
+                    this.matriculaNueva = row.Cells[0].Value.ToString();
+                }
                 string query;
                 if (finVidaUtil)
                 {
@@ -92,7 +96,13 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void agregarAeronave_Click(object sender, EventArgs e)
         {
-            new Abm_Aeronave.Alta().Show();
+            new Abm_Aeronave.Alta(matriculaAReemplazar, this).Show();
+        }
+
+        public void aeronaveCreada(string matricula)
+        {
+            this.matriculaNueva = matricula;
+            btnReemplazarAeronave.PerformClick();
         }
     }
 }
