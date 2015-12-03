@@ -24,14 +24,21 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void btnDarDeBaja_Click(object sender, EventArgs e)
         {
-            new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text).Show();
-            this.chequearYProcederFrenteARutasProgramadas();
+            if (this.cbMatricula.SelectedItem == null)
+            {
+                MessageBox.Show("Debe ingresar una matricula");
+            }
+            else
+            {
+                new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text).Show();
+                this.chequearYProcederFrenteARutasProgramadas();
+            }
         }
 
         public void darDeBajaAeronave(string matricula) {
             try
             {
-                Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1 WHERE matricula = '" + matricula + "'");
+                Server.getInstance().realizarQuery("UPDATE JUST_DO_IT.Aeronaves SET baja_vida_util = 1, fecha_baja_definitiva = CURRENT_TIMESTAMP WHERE matricula = '" + matricula + "'");
                 MessageBox.Show("La aeronave se dió de baja satisfactoriamente");
             }
             catch (Exception ex)

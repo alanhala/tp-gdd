@@ -40,7 +40,14 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
+            if (this.cbMatricula.SelectedItem == null)
+            {
+                MessageBox.Show("Debe ingresar una matricula");
+            }
+            else
+            {
+                new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
+            }           
         }
 
         public void darDeBajaAeronave(string matricula, DateTimePicker fechaFueraServicio, DateTimePicker fechaReinicioServicio)

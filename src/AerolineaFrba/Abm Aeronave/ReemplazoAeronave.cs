@@ -24,7 +24,6 @@ namespace AerolineaFrba.Abm_Aeronave
             InitializeComponent();
             matriculaAReemplazar = matricula;
             finVidaUtil = true;
-            mostrarBotonNuevaAeronave();
         }
 
         public ReemplazoAeronave(string matricula, DateTimePicker fechaFueraServicio, DateTimePicker fechaReinicioServicio)
@@ -34,7 +33,6 @@ namespace AerolineaFrba.Abm_Aeronave
             this.fechaFueraServicio = fechaFueraServicio;
             this.fechaReinicioServicio = fechaReinicioServicio;
             finVidaUtil = false;
-            mostrarBotonNuevaAeronave();
         }
 
         private void ReemplazoAeronaveFinVidaUtil_Load(object sender, EventArgs e)
@@ -54,6 +52,7 @@ namespace AerolineaFrba.Abm_Aeronave
                     reader["kgs"].ToString(), reader["tipoServicio"].ToString(), reader["fabricante"].ToString());
             }
             reader.Close();
+            mostrarBotonNuevaAeronave();
         }
 
         private void listadoDeRutas_CellContentClick(object sender, DataGridViewCellEventArgs e)

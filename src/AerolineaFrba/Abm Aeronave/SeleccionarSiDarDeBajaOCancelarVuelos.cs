@@ -82,7 +82,7 @@ namespace AerolineaFrba.Abm_Aeronave
                 foreach (object vuelo in vuelos)
                 {
                     query = "EXEC JUST_DO_IT.eliminar_vuelos " + vuelo;
-                    server.query(query);
+                    server.realizarQuery(query);
                 }
                 MessageBox.Show("Los vuelos se han cancelado");
                 if (finVidaUtil)

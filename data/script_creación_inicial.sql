@@ -244,8 +244,8 @@ IF OBJECT_ID (N'JUST_DO_IT.vuelosDisponibles') IS NOT NULL
     drop function JUST_DO_IT.vuelosDisponibles;
 GO
 
-IF OBJECT_ID (N'JUST_DO_IT.aeronavesNoDisponibles') IS NOT NULL
-	drop function JUST_DO_IT.aeronavesNoDisponibles;
+IF OBJECT_ID (N'JUST_DO_IT.aeronavesDisponiblesParaVuelos') IS NOT NULL
+	drop function JUST_DO_IT.aeronavesDisponiblesParaVuelos;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.IDRol') IS NOT NULL
@@ -1203,11 +1203,16 @@ END
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.aeronavesNoDisponibles(@Salida DATETIME, @LlegadaEstimada DATETIME)
+CREATE FUNCTION JUST_DO_IT.aeronavesDisponiblesParaVuelos(@Salida DATETIME, @LlegadaEstimada DATETIME)
 RETURNS TABLE
 AS RETURN
-	SELECT aeronaves.* FROM JUST_DO_IT.Aeronaves AS aeronaves WHERE aeronaves.id NOT IN 
-		(SELECT aeronave_id FROM JUST_DO_IT.Vuelos WHERE ((@Salida > fecha_salida AND @Salida < fecha_llegada_estimada) OR (@LlegadaEstimada > fecha_salida AND @LlegadaEstimada < fecha_llegada_estimada)) GROUP BY aeronave_id)
+	SELECT aeronaves.* FROM JUST_DO_IT.Aeronaves AS aeronaves 
+	WHERE aeronaves.id IN 
+		(SELECT aeronave_id FROM JUST_DO_IT.Vuelos 
+		WHERE ((@Salida > fecha_salida AND @Salida > fecha_llegada_estimada) 
+			OR (@Salida < fecha_salida AND @LlegadaEstimada < fecha_salida)
+			OR (@Salida > fecha_llegada_estimada)) 
+		GROUP BY aeronave_id)
 
 GO
 
@@ -1356,8 +1361,8 @@ GO
 CREATE FUNCTION JUST_DO_IT.obtener_vuelos_segun_id_aeronave(@idAeronave NUMERIC(18,0))
 RETURNS TABLE
 AS RETURN
-	SELECT vuelos.id vuelos 
-	FROM JUST_DO_IT.Vuelos AS vuelos 
+	SELECT vuelos.id AS vuelos 
+	FROM JUST_DO_IT.Vuelos vuelos 
 	WHERE vuelos.fecha_llegada IS NULL 
 		AND vuelos.fecha_salida > CURRENT_TIMESTAMP 
 		AND vuelos.vuelo_eliminado = 0 
@@ -1434,16 +1439,18 @@ GO
 CREATE FUNCTION JUST_DO_IT.EstaDisponibleParaElVuelo(@aeronave NUMERIC(18,0), @aeronave_a_reemplazar NUMERIC(18,0), @vueloId NUMERIC(18,0))
 RETURNS BIT
 AS BEGIN
-	IF (NOT EXISTS(SELECT 1
+	IF (EXISTS(SELECT 1
 	FROM JUST_DO_IT.Vuelos vuelosAeronaveNueva, JUST_DO_IT.Vuelos vueloAeronaveVieja, JUST_DO_IT.Aeronaves aeronave_vieja, JUST_DO_IT.Aeronaves aeronave_nueva
 	WHERE vuelosAeronaveNueva.aeronave_id = @aeronave
 		AND vueloAeronaveVieja.id = @vueloId AND aeronave_vieja.id = @aeronave_a_reemplazar AND aeronave_nueva.id = @aeronave
 		AND aeronave_vieja.tipo_servicio = aeronave_nueva.tipo_servicio AND aeronave_vieja.fabricante = aeronave_nueva.fabricante AND
-			((vueloAeronaveVieja.fecha_salida <= vuelosAeronaveNueva.fecha_salida AND vueloAeronaveVieja.fecha_llegada_estimada >= vuelosAeronaveNueva.fecha_llegada_estimada)
+			((vuelosAeronaveNueva.fecha_salida <= vueloAeronaveVieja.fecha_salida AND vuelosAeronaveNueva.fecha_llegada_estimada <= vueloAeronaveVieja.fecha_salida)
 			OR
-			(vueloAeronaveVieja.fecha_salida <= vuelosAeronaveNueva.fecha_salida AND vueloAeronaveVieja.fecha_llegada_estimada >= vuelosAeronaveNueva.fecha_salida)
+			(vuelosAeronaveNueva.fecha_salida >= vueloAeronaveVieja.fecha_salida AND vuelosAeronaveNueva.fecha_salida >= vueloAeronaveVieja.fecha_llegada_estimada)
 			OR
-			(vueloAeronaveVieja.fecha_salida <= vuelosAeronaveNueva.fecha_llegada_estimada AND vueloAeronaveVieja.fecha_llegada_estimada >= vuelosAeronaveNueva.fecha_llegada_estimada))
+			(vuelosAeronaveNueva.fecha_salida >= vueloAeronaveVieja.fecha_llegada_estimada))
+
+			
 
 	)) RETURN 1
 	RETURN 0
@@ -1475,16 +1482,16 @@ AS BEGIN
 		END
 
 	OPEN busqueda
-	FETCH busqueda INTO  @vueloId
+	FETCH NEXT FROM busqueda INTO  @vueloId
 	WHILE (@@FETCH_STATUS = 0)
-	BEGIN	
+	BEGIN
 		IF (JUST_DO_IT.EstaDisponibleParaElVuelo(@idAeronave, @idAeronaveAReemplazar, @vueloId) = 0) /* 0 no esta disponible, 1 si */
 		BEGIN 
 			CLOSE busqueda
 			DEALLOCATE busqueda
 			RETURN 0
 		END
-		FETCH busqueda INTO  @vueloId
+		FETCH NEXT FROM busqueda INTO  @vueloId
 	END
 	CLOSE busqueda
 	DEALLOCATE busqueda
@@ -1497,9 +1504,10 @@ CREATE FUNCTION JUST_DO_IT.obtener_aeronaves_que_reemplacen_a(@aeronave NVARCHAR
 RETURNS TABLE
 AS RETURN
 	SELECT aeronaves.matricula AS matricula, aeronaves.butacas_totales AS butacas, aeronaves.kgs_disponibles AS kgs,
-		aeronaves.tipo_servicio AS tipoServicio
-	FROM JUST_DO_IT.Aeronaves aeronaves
-	WHERE aeronaves.matricula <> @aeronave AND JUST_DO_IT.EstaDisponibleParaReemplazar(aeronaves.matricula, @aeronave, @fin_vida_util, @fecha_fin_servicio, @fecha_reinicio_servicio) = 1
+		tipoServicios.nombre AS tipoServicio, aeronaves.fabricante AS fabricante
+	FROM JUST_DO_IT.Aeronaves aeronaves, JUST_DO_IT.TiposServicios tipoServicios
+	WHERE aeronaves.tipo_servicio = tipoServicios.id AND
+	aeronaves.matricula <> @aeronave AND JUST_DO_IT.EstaDisponibleParaReemplazar(aeronaves.matricula, @aeronave, @fin_vida_util, @fecha_fin_servicio, @fecha_reinicio_servicio) = 1
 		AND aeronaves.baja_fuera_servicio = 0 AND aeronaves.baja_vida_util = 0
 
 GO 

@@ -175,15 +175,18 @@ namespace AerolineaFrba.Abm_Aeronave
 
         public bool aeronaveValida()
         {
-            string query = "SELECT * FROM JUST_DO_IT.Aeronaves a, JUST_DO_IT.TiposServicios t WHERE a.tipo_servicio = t.id AND a.matricula = '" + matriculaAReemplazar + "'";
-            SqlDataReader reader = Server.getInstance().query(query);
-            reader.Read();
+            bool retorno;
             if (this.matriculaAReemplazar != null)
             {
-                return this.cbFabricante.SelectedItem.ToString() == reader["fabricante"].ToString() && this.cbTipoServicio.SelectedItem.ToString() == reader["nombre"].ToString() &&
+                string query = "SELECT * FROM JUST_DO_IT.Aeronaves a, JUST_DO_IT.TiposServicios t WHERE a.tipo_servicio = t.id AND a.matricula = '" + matriculaAReemplazar + "'";
+                SqlDataReader reader = Server.getInstance().query(query);
+                reader.Read();
+                retorno = this.cbFabricante.SelectedItem.ToString() == reader["fabricante"].ToString() && this.cbTipoServicio.SelectedItem.ToString() == reader["nombre"].ToString() &&
                 this.tbCantButacas.Text.ToString() == reader["butacas_totales"].ToString() && this.tbEspacioTotalParaEncomiendas.Text == reader["kgs_disponibles"].ToString();
+                reader.Close();
             }
-            else return true;            
+            else retorno = true;
+            return retorno;
         }
 
     }
