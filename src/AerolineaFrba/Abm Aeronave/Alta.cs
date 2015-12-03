@@ -100,6 +100,7 @@ namespace AerolineaFrba.Abm_Aeronave
                         if (this.matriculaAReemplazar != null)
                         {
                             owner.aeronaveCreada(matricula);
+                            this.Close();
                         }
                     }
                     catch (Exception ex)
