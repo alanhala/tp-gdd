@@ -348,8 +348,14 @@ IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.LoguearUsuario') IS NOT NULL
 	drop procedure JUST_DO_IT.LoguearUsuario;
 
-	
+IF OBJECT_ID (N'JUST_DO_IT.dias_totales_fuera_de_servicio') IS NOT NULL
+    drop function JUST_DO_IT.dias_totales_fuera_de_servicio;
 
+IF OBJECT_ID (N'JUST_DO_IT.top_aeroanves_fuera_de_servicio') IS NOT NULL
+    drop function JUST_DO_IT.top_aeroanves_fuera_de_servicio;
+
+IF OBJECT_ID (N'JUST_DO_IT.usuarios_con_mas_puntaje') IS NOT NULL
+    drop function JUST_DO_IT.usuarios_con_mas_puntaje;
 
 /******CREACION DE TABLAS******/
 
@@ -1931,4 +1937,41 @@ BEGIN
 		END CATCH
 END
 
+GO
+
+CREATE FUNCTION JUST_DO_IT.dias_totales_fuera_de_servicio(@aeronave_id NUMERIC(18,0))
+RETURNS INT
+AS
+BEGIN
+	DECLARE @cant_dias INT
+
+	SELECT @cant_dias = SUM(DATEDIFF(DAY, fecha_fuera_servicio, fecha_reinicio_servicio))
+	FROM JUST_DO_IT.Aeronaves_Fuera_De_Servicio
+	WHERE aeronave_id = @aeronave_id
+
+	SELECT @cant_dias = @cant_dias + DATEDIFF(DAY,fecha_fuera_servicio, CURRENT_TIMESTAMP)
+	FROM JUST_DO_IT.Aeronaves
+	WHERE id = @aeronave_id AND baja_fuera_servicio = 1
+
+	RETURN @cant_dias
+END
+GO
+
+CREATE FUNCTION JUST_DO_IT.top_aeroanves_fuera_de_servicio()
+RETURNS TABLE
+AS RETURN
+	SELECT TOP 5 matricula, ISNULL(JUST_DO_IT.dias_totales_fuera_de_servicio(id), 0) as cantidad_dias
+	FROM JUST_DO_IT.Aeronaves
+	GROUP BY matricula, id
+	ORDER BY 2 desc
+GO
+
+CREATE FUNCTION JUST_DO_IT.usuarios_con_mas_puntaje()
+RETURNS TABLE
+AS RETURN
+	SELECT TOP 5 SUM(p.millas) as millas_totales, p.usuario_id, u.nombre, u.apellido
+	FROM JUST_DO_IT.Puntos p
+	join JUST_DO_IT.Usuarios u on p.usuario_id = u.id
+	GROUP BY usuario_id
+	ORDER BY 1 desc
 GO

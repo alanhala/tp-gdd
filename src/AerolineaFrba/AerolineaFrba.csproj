@@ -399,6 +399,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Consulta Millas\consulta millas.resx">
       <DependentUpon>consulta millas.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Devolucion\Baja.resx">
       <DependentUpon>Baja.cs</DependentUpon>
@@ -414,6 +415,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\Estadistica.resx">
       <DependentUpon>Estadistica.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
