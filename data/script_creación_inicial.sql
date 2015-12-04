@@ -113,6 +113,13 @@ GO
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.MediosDePago'))
 	drop table JUST_DO_IT.MediosDePago
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Productos'))
+	drop table JUST_DO_IT.Productos
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.RegistroCanjeMillas'))
+	drop table JUST_DO_IT.RegistroCanjeMillas
+
+	
 GO
 
 
@@ -367,6 +374,14 @@ IF OBJECT_ID (N'JUST_DO_IT.DestinosConAeronavesMasVacias') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.DestinosConPasajesMasComprados') IS NOT NULL
     drop function JUST_DO_IT.DestinosConPasajesMasComprados;
 	
+IF OBJECT_ID (N'JUST_DO_IT.canjearMillas') IS NOT NULL
+	drop procedure JUST_DO_IT.canjearMillas;
+
+IF OBJECT_ID (N'JUST_DO_IT.canjeMillas_leAlcanzanlasMillasPara') IS NOT NULL
+	drop function JUST_DO_IT.canjeMillas_leAlcanzanlasMillasPara;
+
+IF OBJECT_ID (N'JUST_DO_IT.canjeMillas_hayStockDe') IS NOT NULL
+	drop function JUST_DO_IT.canjeMillas_hayStockDe;
 
 	
 /******CREACION DE TABLAS******/
@@ -644,6 +659,27 @@ CREATE TABLE #cantidadDeButacas(
 	matricula VARCHAR(255),
 	cantidadTotal NUMERIC(18,0)
 )
+
+CREATE TABLE JUST_DO_IT.Productos(
+	id NUMERIC(18,0) IDENTITY(1,1),
+	descripcionProd NVARCHAR(255) NOT NULL UNIQUE,
+	cantMillasNecesarias NUMERIC(18,0),
+	stockProd NUMERIC(18,0),
+	PRIMARY KEY(id)
+)
+
+GO
+
+CREATE TABLE JUST_DO_IT.RegistroCanjeMillas(
+	id_usuario NUMERIC(18,0),
+	id_producto NUMERIC(18,0),
+	cantProductoElegido NUMERIC(18,0),
+	fechaCanje DATETIME,
+	FOREIGN KEY(id_usuario) REFERENCES JUST_DO_IT.Usuarios,
+	FOREIGN KEY(id_producto) REFERENCES JUST_DO_IT.Productos
+)
+
+GO
 
 INSERT INTO #cantidadDeButacas(matricula, cantidadTotal)
 	SELECT Aeronave_Matricula, COUNT (DISTINCT Butaca_Nro)
@@ -2029,3 +2065,123 @@ AS RETURN
 
 GO
 
+GO
+
+/* Productos para el canje de millas */
+INSERT INTO JUST_DO_IT.Productos VALUES ('Licuadora',200,50)
+INSERT INTO JUST_DO_IT.Productos VALUES ('Campera de cuero de dama',500,15)
+INSERT INTO JUST_DO_IT.Productos VALUES ('Microondas',1000,120)
+INSERT INTO JUST_DO_IT.Productos VALUES ('Una tarde con Laly Esposito',100000,1)
+INSERT INTO JUST_DO_IT.Productos VALUES ('Set de maquillajes',200,90)
+INSERT INTO JUST_DO_IT.Productos VALUES ('Cortapelo',400,60)
+INSERT INTO JUST_DO_IT.Productos VALUES ('Libro "Secretos verdaderos" por Luis Ventura',100,500)
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.canjeMillas_hayStockDe(@DescripcionProd  NVARCHAR(255), @cantProducto NUMERIC(18,0))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @hayStock int;
+    SELECT @hayStock = stockProd FROM JUST_DO_IT.Productos WHERE descripcionProd LIKE @DescripcionProd
+    
+	IF(@hayStock >= @cantProducto)
+		RETURN 1
+	ELSE
+		RETURN 0
+
+	RETURN @hayStock;
+END
+GO
+
+CREATE FUNCTION JUST_DO_IT.canjeMillas_leAlcanzanlasMillasPara(@DescripcionProd  NVARCHAR(255),@cantProducto NUMERIC(18,0), @dni NUMERIC(18,0))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @tieneMillasSuficientes int;
+	DECLARE @millasUsuario NUMERIC(18,0);
+	DECLARE @millasRequeridas NUMERIC(18,0);
+	DECLARE @idUsuario int;
+
+	SELECT @idUsuario = U.id FROM JUST_DO_IT.Usuarios AS U WHERE U.dni LIKE @dni; 
+
+	SELECT @millasUsuario = SUM(P.millas) FROM JUST_DO_IT.Usuarios AS U, JUST_DO_IT.Puntos AS P 
+	WHERE P.usuario_id LIKE @idUsuario AND P.vencimiento > CURRENT_TIMESTAMP AND P.validos='0';
+
+	SELECT @millasRequeridas = Prod.cantMillasNecesarias FROM JUST_DO_IT.Productos AS Prod WHERE Prod.descripcionProd LIKE @DescripcionProd;
+	
+	SET @millasRequeridas = @millasRequeridas * @cantProducto;	
+
+	IF(@millasUsuario > @millasRequeridas)
+		return 1;
+	ELSE
+		return 0;	
+		
+	RETURN -1;
+END
+GO
+
+CREATE PROCEDURE JUST_DO_IT.canjearMillas(@dni NUMERIC(18,0), @nombre VARCHAR(255), @apellido VARCHAR(255), @descripcionProd  NVARCHAR(255), @cantProducto NUMERIC(18,0))
+AS BEGIN
+	BEGIN TRANSACTION canjearMillas
+	DECLARE @error BIT
+	SET @error = 0
+	BEGIN TRY
+		
+		DECLARE @millasNecesarias INT;
+		DECLARE @hayStock BIT = 0;
+		DECLARE @tieneSuficientesMillas BIT = 0;
+		DECLARE @millasUsuario int;
+		DECLARE @idUsuario int;
+		
+		SELECT @idUsuario = U.id FROM JUST_DO_IT.Usuarios AS U WHERE  U.dni = @dni AND U.nombre = @nombre AND U.apellido = @apellido;
+		
+		-- Millas del usuario
+		select @millasUsuario = SUM(P.millas) From JUST_DO_IT.Puntos AS P 
+		Where P.id = @idUsuario AND p.vencimiento > CURRENT_TIMESTAMP ;
+	
+		EXEC @hayStock = JUST_DO_IT.canjeMillas_hayStockDe @descripcionProd, @cantProducto;
+		EXEC @tieneSuficientesMillas = JUST_DO_IT.canjeMillas_leAlcanzanlasMillasPara @descripcionProd,@cantProducto, @dni;
+		
+		-- Controla si hay stock y si le alcanzan las millas 
+		IF(@hayStock = 0)
+		BEGIN
+			SET @error = 1;
+			RAISERROR('No hay stock suficiente del producto',16,217) WITH SETERROR
+		END
+		IF(@tieneSuficientesMillas = 0)
+		BEGIN 
+			SET @error = 1;
+			RAISERROR('Millas insuficientes para realizar el canje',16,217) WITH SETERROR
+		END
+		-- Obtiene las millas necesarias para el canje
+		SELECT @millasNecesarias = P.cantMillasNecesarias FROM JUST_DO_IT.Productos AS P 
+		WHERE P.descripcionProd LIKE @descripcionProd;
+
+		DECLARE @stockActual INT;
+		SELECT @stockActual = P.stockProd FROM JUST_DO_IT.Productos AS P WHERE P.descripcionProd LIKE @descripcionProd;
+		IF(@stockActual >= 1)
+			UPDATE JUST_DO_IT.Productos SET stockProd = stockProd - @cantProducto WHERE descripcionProd LIKE @descripcionProd;
+		ELSE
+			DELETE FROM JUST_DO_IT.Productos WHERE descripcionProd LIKE @descripcionProd;
+
+		DECLARE @producto NUMERIC(18,0)
+		SELECT @producto = id FROM JUST_DO_IT.Productos WHERE descripcionProd = @descripcionProd
+		INSERT INTO JUST_DO_IT.RegistroCanjeMillas(id_usuario,cantProductoElegido, id_producto, fechaCanje) VALUES (@idUsuario,@cantProducto, @producto, CURRENT_TIMESTAMP);
+
+		COMMIT TRANSACTION canjearMillas	
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION canjearMillas
+		IF (@error = 0)
+			RAISERROR('El canje no pudo ser efectuado',16,217) WITH SETERROR
+		ELSE
+		BEGIN
+			DECLARE @ErrorMessage VARCHAR(255)
+			SET @ErrorMessage = ERROR_MESSAGE()
+			RAISERROR(@ErrorMessage,16,217) WITH SETERROR
+		END
+	END CATCH	
+END 
+
+GO
