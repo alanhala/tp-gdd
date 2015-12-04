@@ -46,7 +46,6 @@
             this.registroLlegada = new System.Windows.Forms.Button();
             this.altaViaje = new System.Windows.Forms.Button();
             this.bajaFuncionalidad = new System.Windows.Forms.Button();
-            this.modificarFuncionalidad = new System.Windows.Forms.Button();
             this.crearFuncionalidad = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.modificarRuta = new System.Windows.Forms.Button();
@@ -131,6 +130,7 @@
             this.button2.TabIndex = 21;
             this.button2.Text = "Eliminar Ruta Aerea";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button5
             // 
@@ -143,6 +143,7 @@
             this.button5.TabIndex = 20;
             this.button5.Text = "Modificar Ruta Aérea";
             this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -155,6 +156,7 @@
             this.button6.TabIndex = 19;
             this.button6.Text = "Crear Ruta Aérea";
             this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // bajaAeronave
             // 
@@ -265,26 +267,13 @@
             this.bajaFuncionalidad.BackColor = System.Drawing.Color.Tomato;
             this.bajaFuncionalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bajaFuncionalidad.ForeColor = System.Drawing.Color.White;
-            this.bajaFuncionalidad.Location = new System.Drawing.Point(438, 333);
+            this.bajaFuncionalidad.Location = new System.Drawing.Point(438, 265);
             this.bajaFuncionalidad.Name = "bajaFuncionalidad";
             this.bajaFuncionalidad.Size = new System.Drawing.Size(178, 43);
             this.bajaFuncionalidad.TabIndex = 29;
             this.bajaFuncionalidad.Text = "Eliminar Funcionalidad";
             this.bajaFuncionalidad.UseVisualStyleBackColor = false;
             this.bajaFuncionalidad.Click += new System.EventHandler(this.bajaFuncionalidad_Click);
-            // 
-            // modificarFuncionalidad
-            // 
-            this.modificarFuncionalidad.BackColor = System.Drawing.Color.Tomato;
-            this.modificarFuncionalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.modificarFuncionalidad.ForeColor = System.Drawing.Color.White;
-            this.modificarFuncionalidad.Location = new System.Drawing.Point(438, 264);
-            this.modificarFuncionalidad.Name = "modificarFuncionalidad";
-            this.modificarFuncionalidad.Size = new System.Drawing.Size(178, 43);
-            this.modificarFuncionalidad.TabIndex = 28;
-            this.modificarFuncionalidad.Text = "Modificar Funcionalidad";
-            this.modificarFuncionalidad.UseVisualStyleBackColor = false;
-            this.modificarFuncionalidad.Click += new System.EventHandler(this.modificarFuncionalidad_Click);
             // 
             // crearFuncionalidad
             // 
@@ -327,19 +316,20 @@
             this.button1.BackColor = System.Drawing.Color.Tomato;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(438, 392);
+            this.button1.Location = new System.Drawing.Point(438, 324);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(178, 43);
             this.button1.TabIndex = 32;
             this.button1.Text = "Canje de millas";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.Tomato;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(643, 18);
+            this.button3.Location = new System.Drawing.Point(438, 391);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(178, 43);
             this.button3.TabIndex = 33;
@@ -358,7 +348,6 @@
             this.Controls.Add(this.modificarRuta);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bajaFuncionalidad);
-            this.Controls.Add(this.modificarFuncionalidad);
             this.Controls.Add(this.crearFuncionalidad);
             this.Controls.Add(this.estadisticas);
             this.Controls.Add(this.bajaPasaje_Encom);
@@ -402,7 +391,6 @@
         private System.Windows.Forms.Button registroLlegada;
         private System.Windows.Forms.Button altaViaje;
         private System.Windows.Forms.Button bajaFuncionalidad;
-        private System.Windows.Forms.Button modificarFuncionalidad;
         private System.Windows.Forms.Button crearFuncionalidad;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button modificarRuta;

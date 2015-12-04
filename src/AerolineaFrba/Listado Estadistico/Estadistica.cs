@@ -20,11 +20,11 @@ namespace AerolineaFrba.Listado_Estadistico
             this.cargarTopAeronavesFueraDeServicio();
             this.cargarDestinosConAeronavesMasVacias();
             this.clientesConMasPuntos();
+            this.destinosConPasajesCancelados();
         }
 
         private void Estadistica_Load(object sender, EventArgs e)
         {
-            
 
         }
 
@@ -69,6 +69,31 @@ namespace AerolineaFrba.Listado_Estadistico
                 dgvClientesConMasPuntos.Rows.Add(reader["nombre"].ToString(), reader["apellido"].ToString(), reader["millas_totales"].ToString());
             }
             reader.Close();
+        }
+
+        public void destinosConPasajesCancelados() {
+            string query = "SELECT * FROM JUST_DO_IT.destinos_con_pasajes_cancelados()";
+            SqlDataReader reader = Server.getInstance().query(query);
+            while (reader.Read())
+            {
+                dgvDestinosConPasajesCancelados.Rows.Add(reader["nombre_ciudad"].ToString(), reader["pasajes_cancelados"].ToString());
+            }
+            reader.Close();
+        }
+
+        private void tabPage4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvAeronavesConMayorCantDiasFueraDeServicio_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

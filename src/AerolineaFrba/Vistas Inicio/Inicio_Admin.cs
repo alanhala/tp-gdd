@@ -129,6 +129,30 @@ namespace AerolineaFrba.Vistas_Inicio
             this.Hide();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new Canje_Millas.Form1().Show();
+            this.Hide();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            new Abm_Ruta.Alta_Ruta().Show();
+            this.Hide();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            new Abm_Ruta.Modificar_Ruta().Show();
+            this.Hide();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new Abm_Ruta.Baja_Ruta().Show();
+            this.Hide();
+        }
+
 
     }
 }
