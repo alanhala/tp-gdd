@@ -1972,6 +1972,6 @@ AS RETURN
 	SELECT TOP 5 SUM(p.millas) as millas_totales, p.usuario_id, u.nombre, u.apellido
 	FROM JUST_DO_IT.Puntos p
 	join JUST_DO_IT.Usuarios u on p.usuario_id = u.id
-	GROUP BY usuario_id
+	GROUP BY p.usuario_id, u.nombre, u.apellido
 	ORDER BY 1 desc
 GO
