@@ -189,6 +189,10 @@ IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
     drop function JUST_DO_IT.IDCiudad;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.destinos_con_pasajes_cancelados') IS NOT NULL
+    drop function JUST_DO_IT.destinos_con_pasajes_cancelados;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.AeronavesDisponiblesParaBaja') IS NOT NULL
     drop function JUST_DO_IT.AeronavesDisponiblesParaBaja;
 GO
@@ -1974,4 +1978,18 @@ AS RETURN
 	join JUST_DO_IT.Usuarios u on p.usuario_id = u.id
 	GROUP BY p.usuario_id, u.nombre, u.apellido
 	ORDER BY 1 desc
+GO
+
+CREATE FUNCTION JUST_DO_IT.destinos_con_pasajes_cancelados()
+RETURNS TABLE
+AS RETURN
+	SELECT TOP 5 ciudades.nombre AS nombre_ciudad, COUNT(pasajes.codigo) AS pasajes_cancelados
+	FROM JUST_DO_IT.Pasajes pasajes, JUST_DO_IT.Vuelos vuelos, JUST_DO_IT.Rutas rutas, JUST_DO_IT.Ciudades ciudades
+	WHERE pasajes.vuelo_id = vuelos.id
+		AND vuelos.ruta_id = rutas.id
+		AND rutas.ciu_id_destino = ciudades.id
+		AND pasajes.cancelado = 1
+	GROUP BY ciudades.nombre
+	ORDER BY 2 DESC
+
 GO
