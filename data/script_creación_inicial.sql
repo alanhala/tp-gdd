@@ -565,8 +565,10 @@ CREATE TABLE JUST_DO_IT.Puntos(
 	vencimiento DATETIME NOT NULL,
 	usuario_id NUMERIC(18,0) NOT NULL,
 	validos BIT DEFAULT 0,
+	vuelo_id NUMERIC(18,0),
 	PRIMARY KEY(id),
-	FOREIGN KEY(usuario_id) REFERENCES JUST_DO_IT.Usuarios
+	FOREIGN KEY(usuario_id) REFERENCES JUST_DO_IT.Usuarios,
+	FOREIGN KEY(vuelo_id) REFERENCES JUST_DO_IT.Vuelos
 )
 
 GO
@@ -908,8 +910,8 @@ INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
 
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
 
-INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
-	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador 
+INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id, vuelo_id)
+	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador , pasajes.vuelo_id
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Compras AS compras
 		 WHERE pasajes.compra = compras.codigo
 
