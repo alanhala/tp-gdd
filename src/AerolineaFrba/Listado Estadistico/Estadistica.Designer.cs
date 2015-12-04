@@ -42,8 +42,6 @@
             this.cantAcientosVacios = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgvClientesConMasPuntos = new System.Windows.Forms.DataGridView();
-            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantPuntos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dgvDestinosConPasajesCancelados = new System.Windows.Forms.DataGridView();
             this.ciudadPasajeCancelados = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,6 +51,9 @@
             this.matriculaAeronave = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidadDiasFueraDeServicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.nombreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.apellidoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantPuntos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tcEstadisticas.SuspendLayout();
             this.tablaDestinosMasComprados.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDestinosMasPasajesComprados)).BeginInit();
@@ -98,7 +99,7 @@
             this.tcEstadisticas.Location = new System.Drawing.Point(12, 94);
             this.tcEstadisticas.Name = "tcEstadisticas";
             this.tcEstadisticas.SelectedIndex = 0;
-            this.tcEstadisticas.Size = new System.Drawing.Size(521, 184);
+            this.tcEstadisticas.Size = new System.Drawing.Size(602, 238);
             this.tcEstadisticas.TabIndex = 8;
             // 
             // tablaDestinosMasComprados
@@ -107,7 +108,7 @@
             this.tablaDestinosMasComprados.Location = new System.Drawing.Point(4, 22);
             this.tablaDestinosMasComprados.Name = "tablaDestinosMasComprados";
             this.tablaDestinosMasComprados.Padding = new System.Windows.Forms.Padding(3);
-            this.tablaDestinosMasComprados.Size = new System.Drawing.Size(513, 158);
+            this.tablaDestinosMasComprados.Size = new System.Drawing.Size(594, 212);
             this.tablaDestinosMasComprados.TabIndex = 0;
             this.tablaDestinosMasComprados.Text = "Distinos con más pasajes comprados";
             this.tablaDestinosMasComprados.UseVisualStyleBackColor = true;
@@ -144,7 +145,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(513, 158);
+            this.tabPage2.Size = new System.Drawing.Size(594, 212);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Destinos con aeronaves mas vacías";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -181,7 +182,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(513, 158);
+            this.tabPage3.Size = new System.Drawing.Size(594, 212);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Clientes con más puntos";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -193,6 +194,7 @@
             this.dgvClientesConMasPuntos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvClientesConMasPuntos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nombreCliente,
+            this.apellidoCliente,
             this.cantPuntos});
             this.dgvClientesConMasPuntos.Location = new System.Drawing.Point(6, 6);
             this.dgvClientesConMasPuntos.Name = "dgvClientesConMasPuntos";
@@ -200,25 +202,13 @@
             this.dgvClientesConMasPuntos.Size = new System.Drawing.Size(501, 147);
             this.dgvClientesConMasPuntos.TabIndex = 1;
             // 
-            // nombreCliente
-            // 
-            this.nombreCliente.HeaderText = "Nombre";
-            this.nombreCliente.Name = "nombreCliente";
-            this.nombreCliente.ReadOnly = true;
-            // 
-            // cantPuntos
-            // 
-            this.cantPuntos.HeaderText = "Cantidad de puntos";
-            this.cantPuntos.Name = "cantPuntos";
-            this.cantPuntos.ReadOnly = true;
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.dgvDestinosConPasajesCancelados);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(513, 158);
+            this.tabPage4.Size = new System.Drawing.Size(594, 212);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Destinos con pasajes cancelados";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -255,7 +245,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(513, 158);
+            this.tabPage5.Size = new System.Drawing.Size(594, 212);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Aeronaves con mayor cantidad de días fuera de servicio";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -271,7 +261,7 @@
             this.dgvAeronavesConMayorCantDiasFueraDeServicio.Location = new System.Drawing.Point(6, 6);
             this.dgvAeronavesConMayorCantDiasFueraDeServicio.Name = "dgvAeronavesConMayorCantDiasFueraDeServicio";
             this.dgvAeronavesConMayorCantDiasFueraDeServicio.ReadOnly = true;
-            this.dgvAeronavesConMayorCantDiasFueraDeServicio.Size = new System.Drawing.Size(501, 147);
+            this.dgvAeronavesConMayorCantDiasFueraDeServicio.Size = new System.Drawing.Size(585, 206);
             this.dgvAeronavesConMayorCantDiasFueraDeServicio.TabIndex = 3;
             // 
             // matriculaAeronave
@@ -289,12 +279,30 @@
             // btnVolver
             // 
             this.btnVolver.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnVolver.Location = new System.Drawing.Point(16, 296);
+            this.btnVolver.Location = new System.Drawing.Point(16, 338);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(75, 23);
             this.btnVolver.TabIndex = 9;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
+            // 
+            // nombreCliente
+            // 
+            this.nombreCliente.HeaderText = "Nombre";
+            this.nombreCliente.Name = "nombreCliente";
+            this.nombreCliente.ReadOnly = true;
+            // 
+            // apellidoCliente
+            // 
+            this.apellidoCliente.HeaderText = "Apellido";
+            this.apellidoCliente.Name = "apellidoCliente";
+            this.apellidoCliente.ReadOnly = true;
+            // 
+            // cantPuntos
+            // 
+            this.cantPuntos.HeaderText = "Cantidad de puntos";
+            this.cantPuntos.Name = "cantPuntos";
+            this.cantPuntos.ReadOnly = true;
             // 
             // Estadistica
             // 
@@ -302,7 +310,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(600, 331);
+            this.ClientSize = new System.Drawing.Size(853, 470);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.tcEstadisticas);
             this.Controls.Add(this.label2);
@@ -342,8 +350,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cantAcientosVacios;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DataGridView dgvClientesConMasPuntos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantPuntos;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.DataGridView dgvDestinosConPasajesCancelados;
         private System.Windows.Forms.DataGridViewTextBoxColumn ciudadPasajeCancelados;
@@ -353,5 +359,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn matriculaAeronave;
         private System.Windows.Forms.DataGridViewTextBoxColumn cantidadDiasFueraDeServicio;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombreCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn apellidoCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantPuntos;
     }
 }
