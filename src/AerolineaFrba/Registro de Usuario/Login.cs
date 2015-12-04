@@ -32,7 +32,7 @@ namespace AerolineaFrba.Registro_de_Usuario
         private void button1_Click(object sender, EventArgs e)
         {
             Server server = Server.getInstance();
-            string queryLogueo = "EXEC JUST_DO_IT.LoguearUsuario " + username.Text + ", " + password.Text;
+            string queryLogueo = "EXEC JUST_DO_IT.LoguearUsuario '" + username.Text + "', '" + password.Text + "'";
             try
             {
                 server.query(queryLogueo);
