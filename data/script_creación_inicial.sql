@@ -1007,6 +1007,10 @@ AS BEGIN
 							WHERE nombre = 'Administrativo' AND @usuario = id_usuario)
 			   RAISERROR('El usuario no tiene los permisos necesarios',16,217) WITH SETERROR
 		END
+		UPDATE intentos SET intentos = 0 
+		FROM JUST_DO_IT.Usuarios usuarios
+		JOIN JUST_DO_IT.IntentosFallidos intentos ON intentos.usuario_id = usuarios.id
+		WHERE usuarios.username = @username
 	END TRY
 	BEGIN CATCH
 		DECLARE @ErrorMessage VARCHAR(255)
@@ -1029,9 +1033,12 @@ AS BEGIN
 	BEGIN TRY
 		DECLARE @CantidadPasajes INT
 		DECLARE @CostoKG NUMERIC(18,0)
+
 		IF (@Costo > 0)
+		BEGIN
 			SELECT @CantidadPasajes = COUNT(*) FROM JUST_DO_IT.ButacasReservadas 
 								WHERE vuelo_id = 1 GROUP BY vuelo_id
+		END
 		ELSE
 			SET @CantidadPasajes = 0
 
@@ -1084,7 +1091,7 @@ AS BEGIN
 		END
 
 		INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
-			VALUES (@Costo * @CantidadPasajes * 0.1, DATEADD(year, 1, GETDATE()), @Comprador)
+			VALUES ((@Costo * @CantidadPasajes + @KGs * @CostoKG) * 0.1, DATEADD(year, 1, GETDATE()), @Comprador)
 
 		COMMIT TRANSACTION almacenarPasaje	
 	END TRY
