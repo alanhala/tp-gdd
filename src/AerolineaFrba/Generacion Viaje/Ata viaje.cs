@@ -82,7 +82,7 @@ namespace AerolineaFrba.Generacion_Viaje
         {
             if (ruta_seleccionada != null || aeronave_seleccionada != null)
             {
-                string query = "EXEC JUST_DO_IT.almacenarVuelo '" + dtpFechaSalidaVuelo.Value.ToString("yyyy-dd-MM hh:mm:ss") + "', '" + dtpFechaLlegadaEstimadaVuelo.Value.ToString("yyyy-dd-MM hh:mm:ss") + "', " + ruta_seleccionada.id + ", " + aeronave_seleccionada.id +
+                string query = "EXEC JUST_DO_IT.almacenarVuelo '" + dtpFechaSalidaVuelo.Value.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + dtpFechaLlegadaEstimadaVuelo.Value.ToString("yyyy-MM-dd hh:mm:ss") + "', " + ruta_seleccionada.id + ", " + aeronave_seleccionada.id +
                                 ", " + aeronave_seleccionada.butacas_totales + ", '" + ruta_seleccionada.servicio + "', '" + aeronave_seleccionada.servicio + "'";
                 try
                 {

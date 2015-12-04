@@ -43,7 +43,7 @@ namespace AerolineaFrba.Abm_Aeronave
                 query = "SELECT * FROM JUST_DO_IT.obtener_aeronaves_que_reemplacen_a('" + this.matriculaAReemplazar + "', 1, null, null)";
             }
             else {
-                query = "SELECT * FROM JUST_DO_IT.obtener_aeronaves_que_reemplacen_a('" + this.matriculaAReemplazar + "', 0, '" + this.fechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + this.fechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "')";
+                query = "SELECT * FROM JUST_DO_IT.obtener_aeronaves_que_reemplacen_a('" + this.matriculaAReemplazar + "', 0, '" + this.fechaFueraServicio.Value.ToString("yyyy-MM-dd") + "', '" + this.fechaReinicioServicio.Value.ToString("yyyy-MM-dd") + "')";
             }
             SqlDataReader reader = Server.getInstance().query(query);
             while (reader.Read())
@@ -75,7 +75,7 @@ namespace AerolineaFrba.Abm_Aeronave
                     query = "EXEC JUST_DO_IT.reemplazar_vuelos_aeronave_fin_vida_util '" + this.matriculaAReemplazar + "', '" + matriculaNueva + "'";
                 }
                 else {
-                    query = "EXEC JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio '" + this.matriculaAReemplazar + "', '" + matriculaNueva + "', '" + this.fechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + this.fechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "'";
+                    query = "EXEC JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio '" + this.matriculaAReemplazar + "', '" + matriculaNueva + "', '" + this.fechaFueraServicio.Value.ToString("yyyy-MM-dd") + "', '" + this.fechaReinicioServicio.Value.ToString("yyyy-MM-dd") + "'";
                 }
                 SqlDataReader reader = Server.getInstance().query(query);
                 MessageBox.Show("Los vuelos han sido reemplazados y la aeronave se dio de baja satisfactoriamente");

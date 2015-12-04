@@ -18,6 +18,7 @@ namespace AerolineaFrba.Abm_Aeronave
         public Generacion_Viaje.Alta_Viaje owner { get; set; }
         public DateTime fecha_salida { get; set; }
         public DateTime fecha_estimada_llegada { get; set; }
+        public bool vistaModificar { get; set; }
 
         public Listado_Aeronaves(Generacion_Viaje.Alta_Viaje owner, DateTime fecha_salida, DateTime fecha_estimada_llegada)
         {
@@ -31,6 +32,16 @@ namespace AerolineaFrba.Abm_Aeronave
             listadoAeronaves.Columns["id"].Visible = false;
         }
 
+        public Listado_Aeronaves(bool vistaModificar)
+        {
+            InitializeComponent();
+            this.vistaModificar = vistaModificar;
+            aeronaves = new ObservableCollection<Aeronave>();
+            this.cargarAeronavesAModificar();
+            this.listadoAeronaves.DataSource = aeronaves;
+            listadoAeronaves.Columns["id"].Visible = false;
+
+        }
         private void Listado_Aeronaves_Load(object sender, EventArgs e)
         {
 
@@ -40,7 +51,7 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             string query = 
                 "SELECT aeronaves.id, matricula, modelo, kgs_disponibles, butacas_totales, fabricante , servicios.nombre AS tipo_servicio " +
-                "FROM JUST_DO_IT.aeronavesDisponiblesParaVuelos('" + fecha_salida.ToString("yyyy-dd-MM hh:mm:ss") + "', '" + fecha_estimada_llegada.ToString("yyyy-dd-MM hh:mm:ss") + "') AS aeronaves, JUST_DO_IT.TiposServicios AS servicios " +
+                "FROM JUST_DO_IT.aeronavesDisponiblesParaVuelos('" + fecha_salida.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + fecha_estimada_llegada.ToString("yyyy-MM-dd hh:mm:ss") + "') AS aeronaves, JUST_DO_IT.TiposServicios AS servicios " +
                 "WHERE aeronaves.tipo_servicio = servicios.id " +
                 "AND aeronaves.baja_fuera_servicio = 0 AND aeronaves.baja_vida_util = 0 " +
                 "ORDER BY matricula";
@@ -64,9 +75,38 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void seleccionarAeronave_Click(object sender, EventArgs e)
         {
-            Aeronave aeronave= (Aeronave)listadoAeronaves.CurrentRow.DataBoundItem;
-            owner.cargarLabelsAeronave(aeronave);
-            this.Close();
+            Aeronave aeronave = (Aeronave)listadoAeronaves.CurrentRow.DataBoundItem;
+            if (vistaModificar ==  true)
+            {
+                new Abm_Aeronave.Modificar(aeronave.matricula, aeronave.id).Show();
+                this.Hide();
+            }
+            else
+            {
+                owner.cargarLabelsAeronave(aeronave);
+                this.Close();
+            }
+            
+        }
+
+        public void cargarAeronavesAModificar()
+        {
+            string query = "SELECT * FROM JUST_DO_IT.Aeronaves WHERE baja_vida_util = 0";
+            SqlDataReader reader = Server.getInstance().query(query);
+            while (reader.Read())
+            {
+                var aeronave = new Aeronave();
+                aeronave.id = Convert.ToInt32(reader["id"]);
+                aeronave.matricula = reader["matricula"].ToString();
+                aeronave.modelo = reader["modelo"].ToString();
+                aeronave.kgs_disponibles = Convert.ToInt32(reader["kgs_disponibles"]);
+                aeronave.butacas_totales = Convert.ToInt32(reader["butacas_totales"]);
+                aeronave.fabricante = reader["fabricante"].ToString();
+                aeronave.servicio = reader["tipo_servicio"].ToString();
+
+                aeronaves.Add(aeronave);
+            }
+            reader.Close();
         }
 
         private void listadoAeronaves_CellContentClick(object sender, DataGridViewCellEventArgs e)

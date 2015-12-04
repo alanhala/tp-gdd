@@ -11,25 +11,32 @@ using System.Data.SqlClient;
 
 namespace AerolineaFrba.Abm_Aeronave
 {
-    public partial class modificarAeronave : Form
+    public partial class Modificar : Form
     {
 
         public SqlDataReader respuesta;
         private string matriculaAModificar;
-        public modificarAeronave()
-        {
-            
-        }
+        public int aeronaveId { get; set; }
 
-        public modificarAeronave(string matricula)
+        public Modificar(string matricula, int id)
         {
             InitializeComponent();
             matriculaAModificar = matricula;
+            aeronaveId = id;
+            this.cargarDatos();
+            this.habilitarBotoFueraDeServicio();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void habilitarBotoFueraDeServicio()
         {
-            this.cargarDatos();
+            string query = "SELECT * FROM JUST_DO_IT.Aeronaves WHERE id = " + aeronaveId;
+            SqlDataReader reader = Server.getInstance().query(query);
+            reader.Read();
+            if (Convert.ToInt32(reader["baja_fuera_servicio"]) == 1)
+            {
+                this.btAltaFueraServicio.Enabled = true;
+            }
+            reader.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -42,10 +49,9 @@ namespace AerolineaFrba.Abm_Aeronave
                 string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
                 int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
                 int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
-                string fechaReinicioServicio = dtpFechaReinicioDeServicio.Value.ToString("yyyy-dd-MM");
                 int cantidadButacas = int.Parse(tbCantButacas.Text);
 
-                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", '" + fechaReinicioServicio + "', " + cantidadButacas;
+                string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave " + aeronaveId + ", '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + cantidadButacas;
                 try
                 {
                     Server.getInstance().realizarQuery(modificarAeronave);
@@ -118,17 +124,6 @@ namespace AerolineaFrba.Abm_Aeronave
             respuesta.Close();
         }
 
-        public void cargarDateTimePicker(string entidad, string atributo, DateTimePicker dateTimePicker, string condicion)
-        {
-            Server server = Server.getInstance();
-            string queryDateTimePicker = "SELECT " + atributo + " AS atributo FROM JUST_DO_IT." + entidad + " WHERE " + condicion;
-            respuesta = server.query(queryDateTimePicker);
-            respuesta.Read();
-            string nombreAtributo = respuesta["atributo"].ToString();
-            dateTimePicker.Text = nombreAtributo;
-            respuesta.Close();
-        }
-
         public void cargarDatos()
         {
             tbNumeroMatricula.Text = this.matriculaAModificar;
@@ -139,7 +134,6 @@ namespace AerolineaFrba.Abm_Aeronave
             this.cargarTextBox("Aeronaves", "butacas_totales", tbCantButacas);
             this.autoCompletarCombo("Aeronaves", "fabricante", cbFabricante, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
             this.autoCompletarComboConOtraTabla("Aeronaves", "tipo_servicio", cbTipoServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "' AND Aeronaves.tipo_servicio = TipoServicio.id", " Aeronaves.tipo_servicio = TipoServicio.id");
-            this.cargarDateTimePicker("Aeronaves", "fecha_reinicio_servicio", dtpFechaReinicioDeServicio, "Aeronaves.matricula = '" + tbNumeroMatricula.Text + "'");
         }
 
         private bool validarCampos()
@@ -162,19 +156,19 @@ namespace AerolineaFrba.Abm_Aeronave
             return fabricante;
         }
 
-        private void dtpFechaReinicioDeServicio_ValueChanged(object sender, EventArgs e)
+        private void btAltaFueraServicio_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void tbNumeroMatricula_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
+            try
+            {
+                string query = "EXEC JUST_DO_IT.alta_aeronave_fuera_de_servicio(" + aeronaveId + ")";
+                Server.getInstance().realizarQuery(query);
+                MessageBox.Show("Se ha dado de alta la aeronave");
+            }
+            catch
+            {
+                MessageBox.Show("No se ha podido dar de alta la aeroanve");
+            }
+            
         }
     }
 }

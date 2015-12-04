@@ -69,18 +69,6 @@
     <Compile Include="Abm Aeronave\BajaFinVidaUtil.Designer.cs">
       <DependentUpon>BajaFinVidaUtil.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Aeronave\AeronaveAModificar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Aeronave\AeronaveAModificar.Designer.cs">
-      <DependentUpon>AeronaveAModificar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Aeronave\AltaFueraDeServicio.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Aeronave\AltaFueraDeServicio.Designer.cs">
-      <DependentUpon>AltaFueraDeServicio.cs</DependentUpon>
-    </Compile>
     <Compile Include="Abm Aeronave\SeleccionarSiDarDeBajaOCancelarVuelos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -315,14 +303,8 @@
     <Compile Include="Vistas Inicio\Inicio_Admin.Designer.cs">
       <DependentUpon>Inicio_Admin.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Abm Aeronave\AeronaveAModificar.resx">
-      <DependentUpon>AeronaveAModificar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Abm Aeronave\Alta.resx">
       <DependentUpon>Alta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Aeronave\AltaFueraDeServicio.resx">
-      <DependentUpon>AltaFueraDeServicio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Aeronave\Baja.resx">
       <DependentUpon>Baja.cs</DependentUpon>

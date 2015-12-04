@@ -342,9 +342,6 @@ IF OBJECT_ID (N'JUST_DO_IT.agregarCompraADevolver') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.procesarCancelaciones') IS NOT NULL
     drop procedure JUST_DO_IT.procesarCancelaciones;
 
-IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_baja_de_servicio') IS NOT NULL
-	drop procedure JUST_DO_IT.alta_aeronave_baja_de_servicio;
-
 IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
 	drop procedure JUST_DO_IT.alta_aeronave_fuera_de_servicio;
 
@@ -1227,17 +1224,16 @@ AS BEGIN
 END 
 
 GO
-    
 
-CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @fecha_reinicio_servicio DATETIME, @cant_butacas NUMERIC(18,0))
+CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@id NUMERIC(18,0), @matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
 			UPDATE JUST_DO_IT.Aeronaves
 				SET matricula = @matricula, modelo = @modelo, fabricante = @fabricante, tipo_servicio = @tipo_servicio, 
-				kgs_disponibles = @kgs_disponibles, fecha_reinicio_servicio = @fecha_reinicio_servicio, butacas_totales = @cant_butacas
-				WHERE Aeronaves.matricula = @matricula
+				kgs_disponibles = @kgs_disponibles, butacas_totales = @cant_butacas
+				WHERE Aeronaves.id = @id
 		END TRY
 		BEGIN CATCH
 			RAISERROR('Fallo la actualización de la aeronave',16,217) WITH SETERROR
@@ -1536,8 +1532,8 @@ AS BEGIN
 			DECLARE busqueda CURSOR
 			FOR SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
 				WHERE vuelos.aeronave_id = @idAeronaveAReemplazar 
-					AND (vuelos.fecha_salida >= @fecha_fin_servicio AND vuelos.fecha_salida <= @fecha_reinicio_servicio)
-					AND (vuelos.fecha_llegada_estimada >= @fecha_fin_servicio AND vuelos.fecha_llegada_estimada <= @fecha_reinicio_servicio)
+					AND ((@fecha_fin_servicio <= vuelos.fecha_salida AND @fecha_reinicio_servicio >= vuelos.fecha_llegada_estimada) 
+					OR (@fecha_fin_servicio >= vuelos.fecha_salida AND @fecha_fin_servicio <= vuelos.fecha_llegada_estimada))			
 		END
 
 	OPEN busqueda
@@ -1609,10 +1605,16 @@ AS BEGIN
 		BEGIN TRY
 			UPDATE JUST_DO_IT.Vuelos
 				SET aeronave_id = @idAeronaveNueva
-				WHERE vuelos.aeronave_id = @idAeronaveVieja
-				AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
+				WHERE vuelos.aeronave_id = @idAeronaveVieja 
+					AND ((@fechaFueraServicio <= vuelos.fecha_salida AND @fechaReinicioServicio >= vuelos.fecha_llegada_estimada) 
+					OR (@fechaFueraServicio >= vuelos.fecha_salida AND @fechaFueraServicio <= vuelos.fecha_llegada_estimada))
 
-			EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '@aeronaveVieja' , @fechaFueraServicio, @fechaReinicioServicio	
+			IF (@fechaFueraServicio <= @fechaReinicioServicio  AND @fechaFueraServicio >= CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)))
+				UPDATE JUST_DO_IT.Aeronaves
+				SET baja_fuera_servicio = 1, fecha_fuera_servicio = @fechaFueraServicio, fecha_reinicio_servicio = @fechaReinicioServicio
+				WHERE id = @idAeronaveVieja
+			ELSE
+				RAISERROR('La fecha de fuera de servicio debe ser menor a la fecha de reinicio de servicio y mayor a la actual',16,217) WITH SETERROR
 
 			COMMIT TRANSACTION reemplazarVuelos
 		END TRY
@@ -1894,54 +1896,25 @@ END
 
 GO
 
-CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@matricula NVARCHAR(255))
+CREATE PROCEDURE JUST_DO_IT.alta_aeronave_fuera_de_servicio(@id NUMERIC(18,0))
 AS
 BEGIN
-	DECLARE @aeroanve_id NUMERIC(18,0) = (SELECT id FROM JUST_DO_IT.Aeronaves WHERE matricula = @matricula)
+	DECLARE @fecha_fuera_servicio DATETIME 
+	SELECT fecha_fuera_servicio = @fecha_fuera_servicio FROM JUST_DO_IT.Aeronaves	WHERE id = @id
 	BEGIN TRANSACTION
 		BEGIN TRY
-			UPDATE JUST_DO_IT.Aeronaves
-			SET baja_fuera_servicio = 0
-			WHERE id = @aeroanve_id
+			INSERT INTO JUST_DO_IT.Aeronaves_Fuera_De_Servicio(aeronave_id, fecha_fuera_servicio, fecha_reinicio_servicio)
+			VALUES(@id, @fecha_fuera_servicio, CURRENT_TIMESTAMP)
 			
-			UPDATE JUST_DO_IT.Aeronaves_Fuera_De_Servicio
-			SET fecha_reinicio_servicio = CURRENT_TIMESTAMP
-			WHERE aeronave_id = @aeroanve_id AND fecha_reinicio_servicio IS NULL
+			UPDATE JUST_DO_IT.Aeronaves
+			SET baja_fuera_servicio = 0, fecha_fuera_servicio = NULL, fecha_reinicio_servicio = NULL
+			WHERE id = @id
 			
 			COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
 			ROLLBACK TRANSACTION
 			RAISERROR('No se ha podido dar de alta la aeronave',16,217) WITH SETERROR
-		END CATCH
-END
-
-GO
-
-CREATE PROCEDURE JUST_DO_IT.alta_aeronave_baja_de_servicio(@matricula NVARCHAR(255))
-AS
-BEGIN
-	DECLARE @aeronave_id NUMERIC(18,0)
-	DECLARE @fecha_fuera_servicio DATETIME
-
-	SELECT id = @aeronave_id, fecha_fuera_servicio = @fecha_fuera_servicio
-	FROM JUST_DO_IT.Aeronaves
-	WHERE matricula = @matricula
-
-	BEGIN TRANSACTION
-		BEGIN TRY
-			INSERT INTO JUST_DO_IT.Aeronaves_Fuera_De_Servicio(aeronave_id, fecha_fuera_servicio, fecha_reinicio_servicio)
-			VALUES(@aeronave_id, @fecha_fuera_servicio, CURRENT_TIMESTAMP)
-
-			UPDATE JUST_DO_IT.Aeronaves
-			SET baja_fuera_servicio = 0, fecha_fuera_servicio = NULL, fecha_reinicio_servicio = NULL
-			WHERE id = @aeronave_id
-
-			COMMIT TRANSACTION
-		END TRY
-		BEGIN CATCH
-			ROLLBACK TRANSACTION
-			RAISERROR('No se pudo dar de alta la aeronave',16,217) WITH SETERROR
 		END CATCH
 END
 
