@@ -80,6 +80,16 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Vu
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.RegistroCanjeMillas'))
+	drop table JUST_DO_IT.RegistroCanjeMillas
+
+GO
+
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Productos'))
+	drop table JUST_DO_IT.Productos
+	
+GO
+
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Usuarios'))
 	drop table JUST_DO_IT.Usuarios
 
@@ -113,13 +123,6 @@ GO
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.MediosDePago'))
 	drop table JUST_DO_IT.MediosDePago
 
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Productos'))
-	drop table JUST_DO_IT.Productos
-
-if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.RegistroCanjeMillas'))
-	drop table JUST_DO_IT.RegistroCanjeMillas
-
-	
 GO
 
 
@@ -382,8 +385,16 @@ IF OBJECT_ID (N'JUST_DO_IT.canjeMillas_leAlcanzanlasMillasPara') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.canjeMillas_hayStockDe') IS NOT NULL
 	drop function JUST_DO_IT.canjeMillas_hayStockDe;
-
 	
+IF OBJECT_ID (N'JUST_DO_IT.ConsultaMillas') IS NOT NULL
+	drop function JUST_DO_IT.ConsultaMillas;
+
+IF OBJECT_ID (N'JUST_DO_IT.MillasTotalesDe') IS NOT NULL
+	drop function JUST_DO_IT.MillasTotalesDe;
+
+IF OBJECT_ID (N'JUST_DO_IT.CantidadDeMillasUsuario') IS NOT NULL
+	drop function JUST_DO_IT.CantidadDeMillasUsuario;
+ 
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -654,12 +665,6 @@ CREATE TABLE JUST_DO_IT.Aeronaves_Fuera_De_Servicio(
 
 GO
 
-/******TABLA AUXILIAR******/
-CREATE TABLE #cantidadDeButacas(
-	matricula VARCHAR(255),
-	cantidadTotal NUMERIC(18,0)
-)
-
 CREATE TABLE JUST_DO_IT.Productos(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	descripcionProd NVARCHAR(255) NOT NULL UNIQUE,
@@ -680,6 +685,12 @@ CREATE TABLE JUST_DO_IT.RegistroCanjeMillas(
 )
 
 GO
+
+/******TABLA AUXILIAR******/
+CREATE TABLE #cantidadDeButacas(
+	matricula VARCHAR(255),
+	cantidadTotal NUMERIC(18,0)
+)
 
 INSERT INTO #cantidadDeButacas(matricula, cantidadTotal)
 	SELECT Aeronave_Matricula, COUNT (DISTINCT Butaca_Nro)
@@ -2087,11 +2098,35 @@ BEGIN
     
 	IF(@hayStock >= @cantProducto)
 		RETURN 1
-	ELSE
+	
+	RETURN 0
+END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.MillasTotalesDe(@usuario NUMERIC(18,0))
+RETURNS NUMERIC(18,0)
+AS BEGIN
+	DECLARE @millasUsuario NUMERIC(18,0)
+	SELECT @millasUsuario = SUM(P.millas) FROM JUST_DO_IT.Puntos AS P 
+	WHERE P.usuario_id = @usuario AND P.vencimiento > CURRENT_TIMESTAMP AND P.validos=1
+	GROUP BY P.usuario_id
+	IF (@millasUsuario IS NULL)
 		RETURN 0
 
-	RETURN @hayStock;
+	RETURN @millasUsuario
 END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.CantidadDeMillasUsuario(@dni NUMERIC(18,0), @nombre VARCHAR(255), @apellido VARCHAR(255))
+RETURNS NUMERIC(18,0)
+AS BEGIN
+	DECLARE @id NUMERIC(18,0)
+	SELECT @id = id FROM JUST_DO_IT.Usuarios WHERE dni = @dni AND @nombre = nombre AND @apellido = apellido
+	RETURN JUST_DO_IT.MillasTotalesDe(@id)
+END
+
 GO
 
 CREATE FUNCTION JUST_DO_IT.canjeMillas_leAlcanzanlasMillasPara(@DescripcionProd  NVARCHAR(255),@cantProducto NUMERIC(18,0), @dni NUMERIC(18,0))
@@ -2105,9 +2140,8 @@ BEGIN
 
 	SELECT @idUsuario = U.id FROM JUST_DO_IT.Usuarios AS U WHERE U.dni LIKE @dni; 
 
-	SELECT @millasUsuario = SUM(P.millas) FROM JUST_DO_IT.Usuarios AS U, JUST_DO_IT.Puntos AS P 
-	WHERE P.usuario_id LIKE @idUsuario AND P.vencimiento > CURRENT_TIMESTAMP AND P.validos='0';
-
+	
+	SELECT @millasUsuario = JUST_DO_IT.MillasTotalesDe(@idUsuario)
 	SELECT @millasRequeridas = Prod.cantMillasNecesarias FROM JUST_DO_IT.Productos AS Prod WHERE Prod.descripcionProd LIKE @DescripcionProd;
 	
 	SET @millasRequeridas = @millasRequeridas * @cantProducto;	
@@ -2160,7 +2194,7 @@ AS BEGIN
 
 		DECLARE @stockActual INT;
 		SELECT @stockActual = P.stockProd FROM JUST_DO_IT.Productos AS P WHERE P.descripcionProd LIKE @descripcionProd;
-		IF(@stockActual >= 1)
+		IF(@stockActual - @cantProducto >= 1)
 			UPDATE JUST_DO_IT.Productos SET stockProd = stockProd - @cantProducto WHERE descripcionProd LIKE @descripcionProd;
 		ELSE
 			DELETE FROM JUST_DO_IT.Productos WHERE descripcionProd LIKE @descripcionProd;
@@ -2168,6 +2202,8 @@ AS BEGIN
 		DECLARE @producto NUMERIC(18,0)
 		SELECT @producto = id FROM JUST_DO_IT.Productos WHERE descripcionProd = @descripcionProd
 		INSERT INTO JUST_DO_IT.RegistroCanjeMillas(id_usuario,cantProductoElegido, id_producto, fechaCanje) VALUES (@idUsuario,@cantProducto, @producto, CURRENT_TIMESTAMP);
+		INSERT INTO JUST_DO_IT.Puntos(usuario_id, millas, validos, vencimiento)
+			VALUES (@idUsuario, @millasNecesarias * @cantProducto * (-1), 1, DATEADD(YEAR, 1, CURRENT_TIMESTAMP))
 
 		COMMIT TRANSACTION canjearMillas	
 	END TRY
@@ -2183,5 +2219,16 @@ AS BEGIN
 		END
 	END CATCH	
 END 
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.ConsultaMillas(@dni NUMERIC(18,0), @nombre VARCHAR(255), @apellido VARCHAR(255))
+RETURNS TABLE
+AS RETURN
+	SELECT puntos.millas millas, puntos.vencimiento vencimiento 
+	FROM JUST_DO_IT.Puntos AS puntos, JUST_DO_IT.Usuarios AS usuarios
+	WHERE usuarios.id = puntos.usuario_id AND usuarios.dni = @dni AND usuarios.nombre = @nombre
+                    AND usuarios.apellido = @apellido AND puntos.vencimiento > CURRENT_TIMESTAMP
+					AND puntos.validos = 1
 
 GO

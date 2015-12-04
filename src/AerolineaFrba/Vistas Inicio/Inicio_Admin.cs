@@ -153,6 +153,11 @@ namespace AerolineaFrba.Vistas_Inicio
             this.Hide();
         }
 
+        private void btnConsultarMillas_Click(object sender, EventArgs e)
+        {
+            new Consulta_Millas.ConsultaMillas().Show();
+        }
+
 
     }
 }

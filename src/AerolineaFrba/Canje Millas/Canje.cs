@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,42 @@ namespace AerolineaFrba.Canje_Millas
         public Form1()
         {
             InitializeComponent();
+            this.cargarPremios();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string DNI = txtDNI.Text;
+            string apellido = txtApellido.Text;
+            string nombre = txtNombre.Text;
+            if (DNI.Trim() == "" || nombre.Trim() == "" || apellido.Trim() == "")
+            {
+                MessageBox.Show("Debe completar los 3 campos");
+            }
+            else
+            {
+                try
+                {
 
+                    DataGridViewRow premio = Commons.getInstance().getSelectedRow(dgvMillasPorProducto);
+                    if (premio == null)
+                    {
+                        MessageBox.Show("Debe seleccionar algun premio");
+                        return;
+                    }
+                    string query = "EXEC JUST_DO_IT.canjearMillas '" + DNI + "', '" + nombre + "', '" + apellido + "', '" +
+                        premio.Cells[0].Value.ToString() + "', '" + txtCantidad.Text + "'";
+                    Server.getInstance().realizarQuery(query);
+                    MessageBox.Show("El premio se ha canjeado exitosamente");
+                    this.Hide();
+                    new Vistas_Inicio.Inicio_Admin().Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+                
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -52,5 +84,20 @@ namespace AerolineaFrba.Canje_Millas
 
         }
 
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cargarPremios()
+        {
+            string query = "SELECT * FROM JUST_DO_IT.Productos";
+            SqlDataReader reader = Server.getInstance().query(query);
+            while (reader.Read())
+            {
+                dgvMillasPorProducto.Rows.Add(reader["descripcionProd"].ToString(), reader["cantMillasNecesarias"].ToString());
+            }
+            reader.Close();
+        }
       }
 }

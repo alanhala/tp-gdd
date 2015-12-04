@@ -35,8 +35,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnConsultaMillas = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -98,26 +96,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
-            // 
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(267, 261);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "Cancelar";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // btnConsultaMillas
-            // 
-            this.btnConsultaMillas.Location = new System.Drawing.Point(12, 261);
-            this.btnConsultaMillas.Name = "btnConsultaMillas";
-            this.btnConsultaMillas.Size = new System.Drawing.Size(89, 23);
-            this.btnConsultaMillas.TabIndex = 19;
-            this.btnConsultaMillas.Text = "Consultar millas";
-            this.btnConsultaMillas.UseVisualStyleBackColor = true;
-            this.btnConsultaMillas.Click += new System.EventHandler(this.btnConsultaMillas_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -135,11 +113,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(449, 301);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnConsultaMillas);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -162,8 +137,6 @@
         private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btnConsultaMillas;
         private System.Windows.Forms.Label label1;
     }
 }

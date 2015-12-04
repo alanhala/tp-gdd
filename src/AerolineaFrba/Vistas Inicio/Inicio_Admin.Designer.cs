@@ -51,6 +51,7 @@
             this.modificarRuta = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.btnConsultarMillas = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -337,12 +338,26 @@
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // btnConsultarMillas
+            // 
+            this.btnConsultarMillas.BackColor = System.Drawing.Color.Tomato;
+            this.btnConsultarMillas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConsultarMillas.ForeColor = System.Drawing.Color.White;
+            this.btnConsultarMillas.Location = new System.Drawing.Point(645, 18);
+            this.btnConsultarMillas.Name = "btnConsultarMillas";
+            this.btnConsultarMillas.Size = new System.Drawing.Size(178, 43);
+            this.btnConsultarMillas.TabIndex = 34;
+            this.btnConsultarMillas.Text = "Consultar Millas";
+            this.btnConsultarMillas.UseVisualStyleBackColor = false;
+            this.btnConsultarMillas.Click += new System.EventHandler(this.btnConsultarMillas_Click);
+            // 
             // Inicio_Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(835, 456);
+            this.Controls.Add(this.btnConsultarMillas);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.modificarRuta);
@@ -396,5 +411,6 @@
         private System.Windows.Forms.Button modificarRuta;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnConsultarMillas;
     }
 }

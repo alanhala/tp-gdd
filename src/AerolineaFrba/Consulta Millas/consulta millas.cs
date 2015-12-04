@@ -44,19 +44,30 @@ namespace AerolineaFrba.Consulta_Millas
             }
             else
             {
-                string query = "SELECT puntos.millas millas, puntos.vencimiento vencimiento FROM JUST_DO_IT.Puntos AS puntos, JUST_DO_IT.Usuarios AS usuarios " +
-                    "WHERE usuarios.id = puntos.usuario_id AND usuarios.dni = '" + DNI + "' AND usuarios.nombre = '" + nombre + 
-                    "' AND usuarios.apellido = '" + apellido + "'";
-                SqlDataReader reader = Server.getInstance().query(query);
-                int cont = 0;
-                while (reader.Read())
+                try
                 {
-                    dgvDetalleMillas.Rows.Add(reader["millas"].ToString(), reader["vencimiento"].ToString(), "------");
-                    cont++;
+                    string query = "SELECT * FROM JUST_DO_IT.ConsultaMillas (" + DNI + ", '" + nombre + "', '" + apellido + "')";
+                    SqlDataReader reader = Server.getInstance().query(query);
+                    int cont = 0;
+                    while (reader.Read())
+                    {
+                        dgvDetalleMillas.Rows.Add(reader["millas"].ToString(), reader["vencimiento"].ToString(), "------");
+                        cont++;
+                    }
+                    if (cont == 0)
+                        MessageBox.Show("El usuario ingresado no existe o no posee millas");
+                    reader.Close();
+                    query = "SELECT JUST_DO_IT.CantidadDeMillasUsuario (" + DNI + ", '" + nombre + "', '" + apellido + "') AS millas";
+                    reader = Server.getInstance().query(query);
+                    reader.Read();
+                    lblMillas.Text = reader["millas"].ToString();
+                    reader.Close();
                 }
-                if (cont == 0)
-                    MessageBox.Show("El usuario ingresado no existe o no posee millas");
-                reader.Close();
+                catch (Exception)
+                {
+                    MessageBox.Show("Debe ingresar datos validos");
+                }
+                
             }
         }
 
