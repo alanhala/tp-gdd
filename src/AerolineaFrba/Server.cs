@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Configuration;
 
 namespace AerolineaFrba
 {
     class Server
     {
-        const string servidor = "localhost\\SQLSERVER2012";
-        const string db = "GD2C2015";
-        const string user = "gd";
-        const string password = "gd2015";
+        string servidor = ConfigurationManager.AppSettings["server"];
+        string db = ConfigurationManager.AppSettings["database"];
+        string user = ConfigurationManager.AppSettings["username"];
+        string password = ConfigurationManager.AppSettings["password"];
         public static Server server;
-        private string username;
         private SqlConnection connection;
         private SqlDataReader reader;
 
@@ -40,16 +39,6 @@ namespace AerolineaFrba
         public void closeReader()
         {
             this.reader.Close();
-        }
-
-        public void setUser(string username)
-        {
-            this.username = username;
-        }
-
-        public string getUser()
-        {
-            return this.username;
         }
 
         public void realizarQuery(string query) {
