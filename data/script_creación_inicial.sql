@@ -920,8 +920,8 @@ INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
 
 INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
 
-INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id, vuelo_id)
-	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador , pasajes.vuelo_id
+INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id, vuelo_id, validos)
+	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador , pasajes.vuelo_id, 1
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Compras AS compras
 		 WHERE pasajes.compra = compras.codigo
 
@@ -1100,8 +1100,8 @@ AS BEGIN
 			DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id = @Vuelo
 		END
 
-		INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id)
-			VALUES ((@Costo * @CantidadPasajes + @KGs * @CostoKG) * 0.1, DATEADD(year, 1, GETDATE()), @Comprador)
+		INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id, vuelo_id)
+			VALUES ((@Costo * @CantidadPasajes + @KGs * @CostoKG) * 0.1, DATEADD(year, 1, GETDATE()), @Comprador, @Vuelo)
 
 		COMMIT TRANSACTION almacenarPasaje	
 	END TRY
@@ -1726,6 +1726,10 @@ BEGIN
 		UPDATE JUST_DO_IT.Vuelos
 		SET fecha_llegada = @fecha_llegada
 		where id = @vuelo_id
+
+		UPDATE JUST_DO_IT.Puntos
+		SET validos = 1
+		WHERE id = @vuelo_id
 	END TRY
 	BEGIN CATCH
 		RAISERROR('No se pudo registrar la llegada del vuelo',16,217) WITH SETERROR
@@ -1976,6 +1980,7 @@ AS RETURN
 	SELECT TOP 5 SUM(p.millas) as millas_totales, p.usuario_id, u.nombre, u.apellido
 	FROM JUST_DO_IT.Puntos p
 	join JUST_DO_IT.Usuarios u on p.usuario_id = u.id
+	WHERE validos = 1
 	GROUP BY p.usuario_id, u.nombre, u.apellido
 	ORDER BY 1 desc
 GO
