@@ -357,6 +357,14 @@ IF OBJECT_ID (N'JUST_DO_IT.top_aeroanves_fuera_de_servicio') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.usuarios_con_mas_puntaje') IS NOT NULL
     drop function JUST_DO_IT.usuarios_con_mas_puntaje;
 
+IF OBJECT_ID (N'JUST_DO_IT.DestinosConAeronavesMasVacias') IS NOT NULL
+    drop function JUST_DO_IT.DestinosConAeronavesMasVacias;
+
+IF OBJECT_ID (N'JUST_DO_IT.DestinosConPasajesMasComprados') IS NOT NULL
+    drop function JUST_DO_IT.DestinosConPasajesMasComprados;
+	
+
+	
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -1974,4 +1982,25 @@ AS RETURN
 	join JUST_DO_IT.Usuarios u on p.usuario_id = u.id
 	GROUP BY p.usuario_id, u.nombre, u.apellido
 	ORDER BY 1 desc
+GO
+
+CREATE FUNCTION JUST_DO_IT.DestinosConAeronavesMasVacias()
+RETURNS TABLE
+AS RETURN
+	SELECT TOP 5 ciudades.nombre AS destino, MAX(vuelos.cantidadDisponible) AS cantidad
+	FROM JUST_DO_IT.Ciudades ciudades, JUST_DO_IT.Vuelos vuelos
+	JOIN JUST_DO_IT.Rutas rutas ON vuelos.ruta_id = rutas.id
+	WHERE rutas.ciu_id_destino = ciudades.id
+	GROUP BY ciudades.nombre
+	ORDER BY MAX(vuelos.cantidadDisponible) DESC
+GO
+
+CREATE FUNCTION JUST_DO_IT.DestinosConPasajesMasComprados()
+RETURNS TABLE
+AS RETURN
+	SELECT TOP 5 ciudades.nombre ciudad, COUNT(pasajes.codigo) cantidad 
+	FROM JUST_DO_IT.Ciudades ciudades, JUST_DO_IT.Pasajes pasajes, JUST_DO_IT.Vuelos vuelos, JUST_DO_IT.Rutas rutas 
+    WHERE vuelos.id = Pasajes.vuelo_id AND rutas.id = vuelos.ruta_id AND rutas.ciu_id_destino = ciudades.id
+    GROUP BY ciudades.nombre 
+	ORDER BY cantidad DESC
 GO

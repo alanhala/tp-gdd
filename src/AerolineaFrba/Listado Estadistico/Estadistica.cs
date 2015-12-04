@@ -16,22 +16,31 @@ namespace AerolineaFrba.Listado_Estadistico
         public Estadistica()
         {
             InitializeComponent();
+            this.cargarDestinosConPasajesMasComprados();
+            this.cargarTopAeronavesFueraDeServicio();
+            this.cargarDestinosConAeronavesMasVacias();
+            this.clientesConMasPuntos();
         }
 
         private void Estadistica_Load(object sender, EventArgs e)
         {
-            this.cargarDestinosConPasajesMasComprados();
-            this.cargarTopAeronavesFueraDeServicio();
-            this.clientesConMasPuntos();
+            
 
         }
 
+        private void cargarDestinosConAeronavesMasVacias()
+        {
+            string query = "SELECT * FROM JUST_DO_IT.DestinosConAeronavesMasVacias()";
+            SqlDataReader reader = Server.getInstance().query(query);
+            while (reader.Read())
+            {
+                dgvDestinosConAeronavesMasVacias.Rows.Add(reader["destino"].ToString(), reader["cantidad"].ToString());
+            }
+            reader.Close();
+        }
         private void cargarDestinosConPasajesMasComprados()
         {
-            string query = "SELECT TOP 5 ciudades.nombre ciudad, COUNT(pasajes.codigo) cantidad " +
-                "FROM JUST_DO_IT.Ciudades ciudades, JUST_DO_IT.Pasajes pasajes, JUST_DO_IT.Vuelos vuelos, JUST_DO_IT.Rutas rutas " +
-                "WHERE vuelos.id = Pasajes.vuelo_id AND rutas.id = vuelos.ruta_id AND rutas.ciu_id_destino = ciudades.id " +
-                "GROUP BY ciudades.nombre ORDER BY cantidad DESC";
+            string query = "SELECT * FROM JUST_DO_IT.DestinosConPasajesMasComprados()";
             SqlDataReader reader = Server.getInstance().query(query);
             while (reader.Read())
             {
