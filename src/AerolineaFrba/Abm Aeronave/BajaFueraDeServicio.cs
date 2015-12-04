@@ -54,7 +54,7 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             try
             {
-                string query = "EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '" + matricula + "', '" + fechaFueraServicio.Value.ToString("yyyy-dd-MM") + "', '" + fechaReinicioServicio.Value.ToString("yyyy-dd-MM") + "'";
+                string query = "EXEC JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio '" + matricula + "', '" + fechaFueraServicio.Value.ToString("yyyy-MM-dd") + "', '" + fechaReinicioServicio.Value.ToString("yyyy-MM-dd") + "'";
                 Server.getInstance().realizarQuery(query);
                 MessageBox.Show("La aeronave se dió de baja satisfactoriamente");
             }

@@ -1,6 +1,6 @@
 ﻿namespace AerolineaFrba.Abm_Aeronave
 {
-    partial class modificarAeronave
+    partial class Modificar
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(modificarAeronave));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Modificar));
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.dtpFechaReinicioDeServicio = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbCantButacas = new System.Windows.Forms.TextBox();
             this.cbTipoServicio = new System.Windows.Forms.ComboBox();
@@ -46,7 +44,7 @@
             this.tbModelo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btAltaFueraServicio = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,23 +69,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(298, 125);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(142, 13);
-            this.label8.TabIndex = 31;
-            this.label8.Text = "Fecha de reinicio de servicio";
-            // 
-            // dtpFechaReinicioDeServicio
-            // 
-            this.dtpFechaReinicioDeServicio.Location = new System.Drawing.Point(460, 125);
-            this.dtpFechaReinicioDeServicio.Name = "dtpFechaReinicioDeServicio";
-            this.dtpFechaReinicioDeServicio.Size = new System.Drawing.Size(200, 20);
-            this.dtpFechaReinicioDeServicio.TabIndex = 34;
-            this.dtpFechaReinicioDeServicio.ValueChanged += new System.EventHandler(this.dtpFechaReinicioDeServicio_ValueChanged);
-            // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
@@ -103,15 +84,12 @@
             this.groupBox1.Controls.Add(this.tbModelo);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.dtpFechaReinicioDeServicio);
-            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Location = new System.Drawing.Point(26, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(715, 154);
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // tbCantButacas
             // 
@@ -187,7 +165,6 @@
             this.tbNumeroMatricula.Name = "tbNumeroMatricula";
             this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
             this.tbNumeroMatricula.TabIndex = 36;
-            this.tbNumeroMatricula.TextChanged += new System.EventHandler(this.tbNumeroMatricula_TextChanged);
             // 
             // tbModelo
             // 
@@ -214,16 +191,18 @@
             this.label3.TabIndex = 40;
             this.label3.Text = "Fabricante";
             // 
-            // button3
+            // btAltaFueraServicio
             // 
-            this.button3.Location = new System.Drawing.Point(35, 158);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(132, 52);
-            this.button3.TabIndex = 37;
-            this.button3.Text = "Dar de alta una aeronave fuera de servicio";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btAltaFueraServicio.Enabled = false;
+            this.btAltaFueraServicio.Location = new System.Drawing.Point(35, 158);
+            this.btAltaFueraServicio.Name = "btAltaFueraServicio";
+            this.btAltaFueraServicio.Size = new System.Drawing.Size(132, 52);
+            this.btAltaFueraServicio.TabIndex = 37;
+            this.btAltaFueraServicio.Text = "Dar de alta una aeronave fuera de servicio";
+            this.btAltaFueraServicio.UseVisualStyleBackColor = true;
+            this.btAltaFueraServicio.Click += new System.EventHandler(this.btAltaFueraServicio_Click);
             // 
-            // modificarAeronave
+            // Modificar
             // 
             this.AcceptButton = this.button1;
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.ScrollBar;
@@ -233,7 +212,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(771, 222);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btAltaFueraServicio);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -241,10 +220,9 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Location = global::AerolineaFrba.Properties.Settings.Default.pruebaModifAer;
-            this.Name = "modificarAeronave";
+            this.Name = "Modificar";
             this.Text = "Modificar Aeronave";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -255,8 +233,6 @@
 
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DateTimePicker dtpFechaReinicioDeServicio;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbFabricante;
@@ -270,6 +246,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btAltaFueraServicio;
     }
 }

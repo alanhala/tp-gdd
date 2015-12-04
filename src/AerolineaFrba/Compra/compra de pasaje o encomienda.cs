@@ -56,7 +56,7 @@ namespace AerolineaFrba.Compra
                 int origen = Ciudades.obtenerID(cmbOrigen.Text);
                 int destino = Ciudades.obtenerID(cmbDestino.Text);
                 string query = "SELECT * FROM JUST_DO_IT.vuelosDisponibles(" + origen + ", " + destino + ", '" +
-                    dtpFechaSalidaVuelo.Value.ToString("yyyy-dd-MM") + "')";
+                    dtpFechaSalidaVuelo.Value.ToString("yyyy-MM-dd") + "')";
                 SqlDataReader reader = Server.getInstance().query(query);
                 while (reader.Read())
                 {
