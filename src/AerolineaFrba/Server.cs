@@ -37,21 +37,6 @@ namespace AerolineaFrba
             return this.reader;
         }
 
-        public int successfullLog()
-        {
-            int cont = 0;
-            while (this.reader.Read())
-            {
-                this.username = this.reader["username"].ToString();
-                cont++;
-            }
-            this.reader.Close();
-            if (cont == 1)
-                return cont;
-
-            return 0;
-        }
-
         public void closeReader()
         {
             this.reader.Close();

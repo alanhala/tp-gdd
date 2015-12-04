@@ -16,6 +16,11 @@ if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Ro
 
 GO
 
+if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.IntentosFallidos'))
+	drop table JUST_DO_IT.IntentosFallidos
+
+GO
+
 if EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'JUST_DO_IT.Usuario_Rol'))
 	drop table JUST_DO_IT.Usuario_Rol
 
@@ -343,6 +348,11 @@ IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_baja_de_servicio') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.alta_aeronave_fuera_de_servicio') IS NOT NULL
 	drop procedure JUST_DO_IT.alta_aeronave_fuera_de_servicio;
 
+IF OBJECT_ID (N'JUST_DO_IT.LoguearUsuario') IS NOT NULL
+	drop procedure JUST_DO_IT.LoguearUsuario;
+
+	
+
 
 /******CREACION DE TABLAS******/
 
@@ -424,6 +434,12 @@ CREATE TABLE JUST_DO_IT.Usuarios(
 )
 
 GO
+
+CREATE TABLE JUST_DO_IT.IntentosFallidos(
+	usuario_id NUMERIC(18,0),
+	intentos INT DEFAULT 0,
+	FOREIGN KEY(usuario_id) REFERENCES JUST_DO_IT.Usuarios
+)
 
 CREATE TABLE JUST_DO_IT.Vuelos(
 	id NUMERIC(18,0) IDENTITY(1,1),
@@ -638,14 +654,20 @@ INSERT INTO JUST_DO_IT.Usuarios(nombre, apellido, dni, direccion, telefono, mail
 	SELECT  DISTINCT Cli_Nombre, Cli_Apellido, Cli_Dni, Cli_Dir, Cli_Telefono, Cli_Mail, Cli_Fecha_Nac
 		FROM gd_esquema.Maestra
 
+INSERT INTO JUST_DO_IT.IntentosFallidos(usuario_id)
+	SELECT id FROM JUST_DO_IT.Usuarios
+
 INSERT INTO JUST_DO_IT.Usuario_Rol(id_usuario, id_rol)
 	SELECT id, 2 FROM JUST_DO_IT.Usuarios
 
 INSERT INTO JUST_DO_IT.Usuarios(username, pass, nombre, apellido, dni, direccion, telefono, mail, fecha_nacimiento)
 	VALUES('admin', 'w23e', 'Administrador', 'General', 123456789, 'Sheraton', 44444444, 'admin@admin.com', 1/1/1900)
 
-INSERT INTO JUST_DO_IT.Usuario_Rol(id_usuario, id_rol)
-	VALUES (@@IDENTITY, 1)
+DECLARE @id_admin NUMERIC(18,0)
+SET @id_admin = @@IDENTITY
+
+INSERT INTO JUST_DO_IT.Usuario_Rol(id_usuario, id_rol) VALUES (@id_admin, 1)
+INSERT INTO JUST_DO_IT.IntentosFallidos(usuario_id) VALUES(@id_admin)
 
 INSERT INTO JUST_DO_IT.Ciudades(nombre)
 	SELECT DISTINCT Ruta_Ciudad_Origen AS Ciudad FROM gd_esquema.Maestra
@@ -955,6 +977,36 @@ AS BEGIN
 	UPDATE JUST_DO_IT.Usuarios
 		SET mail = @Mail, direccion = @Direccion, telefono = @Telefono
 		WHERE id = @Usuario
+END
+
+GO
+
+CREATE PROCEDURE JUST_DO_IT.LoguearUsuario(@username VARCHAR(255), @pass VARCHAR(255))
+AS BEGIN
+	DECLARE @exists BIT
+	DECLARE @intentos INT
+	BEGIN TRY
+		SELECT @intentos = intentos FROM JUST_DO_IT.IntentosFallidos i
+									JOIN JUST_DO_IT.Usuarios u ON i.usuario_id = u.id
+									WHERE u.username = @username
+		IF (@intentos >= 3)
+			RAISERROR('El usuario se encuentra bloqueado por tener 3 intentos de logueo fallidos',16,217) WITH SETERROR
+
+		SELECT @exists = 1 FROM JUST_DO_IT.Usuarios WHERE username = @username AND pass = @pass
+		IF (@exists IS NULL)
+		BEGIN	
+			UPDATE intentos SET intentos = @intentos + 1 
+			FROM JUST_DO_IT.Usuarios usuarios
+			JOIN JUST_DO_IT.IntentosFallidos intentos ON intentos.usuario_id = usuarios.id
+			WHERE usuarios.username = @username
+			RAISERROR('Los datos ingresados no son validos',16,217) WITH SETERROR
+		END
+	END TRY
+	BEGIN CATCH
+		DECLARE @ErrorMessage VARCHAR(255)
+		SET @ErrorMessage = ERROR_MESSAGE()
+		RAISERROR(@ErrorMessage,16,217) WITH SETERROR
+	END CATCH
 END
 
 GO
