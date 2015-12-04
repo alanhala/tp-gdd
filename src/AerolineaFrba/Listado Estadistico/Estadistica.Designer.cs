@@ -321,7 +321,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.CancelButton = this.btnVolver;
-            this.ClientSize = new System.Drawing.Size(853, 470);
+            this.ClientSize = new System.Drawing.Size(647, 470);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.tcEstadisticas);
             this.Controls.Add(this.label2);
