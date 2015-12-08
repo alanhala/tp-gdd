@@ -44,7 +44,8 @@ namespace AerolineaFrba.Abm_Rol
             dgvShowRoles.Refresh();
 
             {
-                string query = "SELECT * FROM JUST_DO_IT.nombresRolesYFuncionalidades()";
+                string query = "SELECT * FROM JUST_DO_IT.nombresRolesYFuncionalidades (" + idRol1 + ")";
+              
             
                 SqlDataReader reader = Server.getInstance().query(query);
                 while (reader.Read())
