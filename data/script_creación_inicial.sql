@@ -394,7 +394,12 @@ IF OBJECT_ID (N'JUST_DO_IT.MillasTotalesDe') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.CantidadDeMillasUsuario') IS NOT NULL
 	drop function JUST_DO_IT.CantidadDeMillasUsuario;
+
+IF OBJECT_ID (N'JUST_DO_IT.existeFuncionalidad') IS NOT NULL
+	drop procedure JUST_DO_IT.existeFuncionalidad;
  
+ 
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -1349,12 +1354,12 @@ AS RETURN
 
 GO
 
-CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades()
+CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades(@idRol NUMERIC(18,0))
 RETURNS TABLE
 AS RETURN
 	SELECT F.descripcion AS nombreFuncionalidad
 	FROM JUST_DO_IT.Funcionalidades AS F, JUST_DO_IT.Rol_Funcionalidad AS RF
-	WHERE RF.id_rol = RF.id_rol AND RF .id_funcionalidad = F.id
+	WHERE RF.id_rol = @idRol AND F.id = RF .id_funcionalidad
 		
 GO
 
@@ -1386,6 +1391,15 @@ END
 GO
 
 
+CREATE PROCEDURE JUST_DO_IT.existeFuncionalidad(@descrFuncionalidad NVARCHAR(255))
+AS BEGIN
+		-- yo quiero que esto explote y no explota
+		DECLARE @existe INT = 0;
+		SELECT @existe = COUNT(*) FROM JUST_DO_IT.Funcionalidades AS F WHERE F.descripcion LIKE @descrFuncionalidad
+		IF (@existe = 0)
+			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
+END
+
 GO
 
 CREATE FUNCTION JUST_DO_IT.IDFuncionalidad(@Descripcion nvarchar(255))
@@ -1396,11 +1410,11 @@ BEGIN
     SELECT @id = id
 	FROM JUST_DO_IT.Funcionalidades
     WHERE descripcion LIKE @Descripcion
-    RETURN @id;
+	RETURN @id;
+
 END
 
 GO
-
 
 CREATE PROCEDURE JUST_DO_IT.almacenarRol_Funcionalidad(@IdRol NUMERIC(18,0), @IdFuncionalidad NUMERIC(18,0))
 AS BEGIN
@@ -1409,7 +1423,9 @@ AS BEGIN
 		SELECT @estaRepetido = COUNT(*) FROM JUST_DO_IT.Rol_Funcionalidad where id_rol = @IdRol AND id_funcionalidad = @IdFuncionalidad
 
 		IF(@estaRepetido=0)
-			INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_rol, id_funcionalidad) VALUES(@IdRol,@IdFuncionalidad)
+			INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_rol, id_funcionalidad) VALUES(@IdRol,@IdFuncionalidad);
+		ELSE 
+			RAISERROR('La funcionalidad ingresada ya existe para ese rol',16,217) WITH SETERROR
 
 	END TRY
 	BEGIN CATCH

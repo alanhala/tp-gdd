@@ -29,8 +29,20 @@ namespace AerolineaFrba.Abm_Rol
             else
             {
                 string descrFunc = comboBoxFunc.Text;
+                string query = "EXEC JUST_DO_IT.existeFuncionalidad '" + descrFunc + "'";
+                try
+                {
+                    Server.getInstance().realizarQuery(query);
+                }
+                catch (Exception ex1)
+                {
+                    MessageBox.Show(ex1.Message);
+                    return;
+                }
+
+                
                 int idFuncionalidad = Funcionalidad.obtenerID(descrFunc);
-                string query = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + idRol + "," + idFuncionalidad;
+                query = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + idRol + "," + idFuncionalidad;
                 try
                 {
                     Server.getInstance().realizarQuery(query);
