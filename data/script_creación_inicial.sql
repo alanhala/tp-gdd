@@ -301,8 +301,8 @@ IF OBJECT_ID (N'JUST_DO_IT.reservarButaca') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.almacenarPasaje') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarPasaje;
 
-IF OBJECT_ID (N'JUST_DO_IT.actualizarUsuario') IS NOT NULL
-    drop procedure JUST_DO_IT.actualizarUsuario;
+IF OBJECT_ID (N'JUST_DO_IT.actualizarCliente') IS NOT NULL
+    drop procedure JUST_DO_IT.actualizarCliente;
 
 IF OBJECT_ID (N'JUST_DO_IT.bajaRol') IS NOT NULL
     drop procedure JUST_DO_IT.bajaRol;
@@ -397,6 +397,12 @@ IF OBJECT_ID (N'JUST_DO_IT.CantidadDeMillasUsuario') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.existeFuncionalidad') IS NOT NULL
 	drop procedure JUST_DO_IT.existeFuncionalidad;
+ 
+IF OBJECT_ID (N'JUST_DO_IT.almacenarCliente') IS NOT NULL
+	drop procedure JUST_DO_IT.almacenarCliente;
+
+ IF OBJECT_ID (N'JUST_DO_IT.obtenerIDUsuario') IS NOT NULL
+	drop function JUST_DO_IT.obtenerIDUsuario;
  
  
 
@@ -1041,7 +1047,7 @@ SET KGsDisponibles = (SELECT JUST_DO_IT.KGsDisponibles(JUST_DO_IT.Vuelos.id))
 
 GO
 
-CREATE PROCEDURE JUST_DO_IT.actualizarUsuario(@Usuario NUMERIC(18,0), @Mail NVARCHAR(255), @Direccion NVARCHAR(255), @Telefono NUMERIC(18,0))
+CREATE PROCEDURE JUST_DO_IT.actualizarCliente(@Usuario NUMERIC(18,0), @Mail NVARCHAR(255), @Direccion NVARCHAR(255), @Telefono NUMERIC(18,0))
 AS BEGIN
 	UPDATE JUST_DO_IT.Usuarios
 		SET mail = @Mail, direccion = @Direccion, telefono = @Telefono
@@ -1050,43 +1056,71 @@ END
 
 GO
 
+CREATE PROCEDURE JUST_DO_IT.almacenarCliente(@dni NUMERIC(18,0), @nombre VARCHAR(255), @apellido VARCHAR(255),
+											@mail VARCHAR(255), @direccion VARCHAR(255), @telefono NUMERIC(18,0),
+											@fechaNacimiento DATETIME)
+AS BEGIN
+	DECLARE @id NUMERIC(18,0)
+	SELECT @id = id FROM JUST_DO_IT.Usuarios WHERE dni = @dni AND nombre = @nombre AND apellido = @apellido
+	IF (@id IS NOT NULL)
+		RAISERROR('Ya existe un cliente con el dni, nombre y apellido ingresados',16,217) WITH SETERROR
+
+	BEGIN TRANSACTION agregarCliente
+	BEGIN TRY
+		INSERT INTO JUST_DO_IT.Usuarios(dni, apellido, nombre, mail, direccion, telefono, fecha_nacimiento, username, pass)
+			VALUES(@dni, @apellido, @nombre, @mail, @direccion, @telefono, @fechaNacimiento,
+			CONCAT(@dni, @nombre, @apellido), HASHBYTES('SHA2_256', ''))
+
+		INSERT INTO JUST_DO_IT.Usuario_Rol(id_usuario, id_rol) 
+			VALUES(@@IDENTITY, 2)
+		COMMIT TRANSACTION agregarCliente
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION agregarCliente
+		RAISERROR('No se pudo crear al cliente nuevo',16,217) WITH SETERROR
+	END CATCH
+END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.obtenerIDUsuario(@dni NUMERIC(18,0), @apellido VARCHAR(255), @nombre VARCHAR(255))
+RETURNS NUMERIC(18,0)
+AS BEGIN
+	RETURN (SELECT id FROM JUST_DO_IT.Usuarios WHERE dni = @dni AND apellido = @apellido AND nombre = @nombre)
+END
+
+GO
+
 CREATE PROCEDURE JUST_DO_IT.LoguearUsuario(@username VARCHAR(255), @pass VARCHAR(255))
 AS BEGIN
 	DECLARE @usuario NUMERIC(18,0)
 	DECLARE @intentos INT
-	BEGIN TRY
-		SELECT @intentos = intentos FROM JUST_DO_IT.IntentosFallidos i
-									JOIN JUST_DO_IT.Usuarios u ON i.usuario_id = u.id
-									WHERE u.username = @username
-		IF (@intentos >= 3)
-			RAISERROR('El usuario se encuentra bloqueado por tener 3 intentos de logueo fallidos',16,217) WITH SETERROR
+	SELECT @intentos = intentos FROM JUST_DO_IT.IntentosFallidos i
+								JOIN JUST_DO_IT.Usuarios u ON i.usuario_id = u.id
+								WHERE u.username = @username
+	IF (@intentos >= 3)
+		RAISERROR('El usuario se encuentra bloqueado por tener 3 intentos de logueo fallidos',16,217) WITH SETERROR
 			
-		SELECT @usuario = id FROM JUST_DO_IT.Usuarios WHERE username = @username AND pass = HASHBYTES('SHA2_256', @pass)
-		IF (@usuario IS NULL)
-		BEGIN	
-			UPDATE intentos SET intentos = @intentos + 1 
-			FROM JUST_DO_IT.Usuarios usuarios
-			JOIN JUST_DO_IT.IntentosFallidos intentos ON intentos.usuario_id = usuarios.id
-			WHERE usuarios.username = @username
-			RAISERROR('Los datos ingresados no son validos',16,217) WITH SETERROR
-		END
-		ELSE
-		BEGIN
-			IF NOT EXISTS (SELECT * FROM JUST_DO_IT.Usuario_Rol 
-							JOIN JUST_DO_IT.Roles ON id = id_rol
-							WHERE nombre = 'Administrativo' AND @usuario = id_usuario)
-			   RAISERROR('El usuario no tiene los permisos necesarios',16,217) WITH SETERROR
-		END
-		UPDATE intentos SET intentos = 0 
+	SELECT @usuario = id FROM JUST_DO_IT.Usuarios WHERE username = @username AND pass = HASHBYTES('SHA2_256', @pass)
+	IF (@usuario IS NULL)
+	BEGIN	
+		UPDATE intentos SET intentos = @intentos + 1 
 		FROM JUST_DO_IT.Usuarios usuarios
 		JOIN JUST_DO_IT.IntentosFallidos intentos ON intentos.usuario_id = usuarios.id
 		WHERE usuarios.username = @username
-	END TRY
-	BEGIN CATCH
-		DECLARE @ErrorMessage VARCHAR(255)
-		SET @ErrorMessage = ERROR_MESSAGE()
-		RAISERROR(@ErrorMessage,16,217) WITH SETERROR
-	END CATCH
+		RAISERROR('Los datos ingresados no son validos',16,217) WITH SETERROR
+	END
+	ELSE
+	BEGIN
+		IF NOT EXISTS (SELECT * FROM JUST_DO_IT.Usuario_Rol 
+						JOIN JUST_DO_IT.Roles ON id = id_rol
+						WHERE nombre = 'Administrativo' AND @usuario = id_usuario)
+			RAISERROR('El usuario no tiene los permisos necesarios',16,217) WITH SETERROR
+	END
+	UPDATE intentos SET intentos = 0 
+	FROM JUST_DO_IT.Usuarios usuarios
+	JOIN JUST_DO_IT.IntentosFallidos intentos ON intentos.usuario_id = usuarios.id
+	WHERE usuarios.username = @username
 END
 
 GO

@@ -75,27 +75,59 @@ namespace AerolineaFrba.Compra
 
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
-           if (this.clienteNuevo)
-                MessageBox.Show("El alta de usuario no era requerida, ingrese en soy cliente y entre con uno existente");
-           else if (cmbButacas.Text == "")
-               MessageBox.Show("Debe seleccionar una butaca");
-           else
-           {
-               if (this.txtMailPasajero.Text == "" || this.txtDireccionPasajero.Text == "" || this.txtTelefonoPasajero.Text == "")
-                   MessageBox.Show("Debe completar todos los campos");
-               else
-               {
-                   string query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", '" + this.txtMailPasajero.Text + "', '"
-                                   + this.txtDireccionPasajero.Text + "', " + this.txtTelefonoPasajero.Text;
-                   Server.getInstance().realizarQuery(query);
-                   this.form_pasajeros.agregarPasajero(txtApellidoPasajero.Text + ", " + txtNombrePasajero.Text,
-                                                       this.usuario_id,
-                                                       ((ComboBoxItem)cmbButacas.SelectedItem).Value.ToString());
-                   this.Hide();
-               }
-           }
+            if (cmbButacas.Text == "")
+            {
+                MessageBox.Show("Debe seleccionar una butaca");
+                return;
+            }
+            if (this.txtDNI.Text == "" || txtNombrePasajero.Text == "" || txtApellidoPasajero.Text == "" ||
+                this.txtMailPasajero.Text == "" || this.txtDireccionPasajero.Text == "" || this.txtTelefonoPasajero.Text == "")
+                MessageBox.Show("Debe completar todos los campos");
+            else
+            {
+                try
+                {
+                    try
+                    {
+                        int.Parse(this.txtDNI.Text);
+                        int.Parse(this.txtTelefonoPasajero.Text);
+                    }
+                    catch(Exception)
+                    {
+                        MessageBox.Show("El DNI y el telefono deben ser numericos");
+                        return;
+                    }
 
-        }
+                    if (!this.clienteNuevo)
+                    {
+                        string query = "EXEC JUST_DO_IT.actualizarCliente " + this.usuario_id + ", '" + this.txtMailPasajero.Text + "', '"
+                                        + this.txtDireccionPasajero.Text + "', " + this.txtTelefonoPasajero.Text;
+                        Server.getInstance().realizarQuery(query);
+                    }
+                    else
+                    {
+                        string query = "EXEC JUST_DO_IT.almacenarCliente " + this.txtDNI.Text + ", '" + this.txtNombrePasajero.Text + "', '" +
+                                this.txtApellidoPasajero.Text + "', '" + this.txtMailPasajero.Text + "', '" + this.txtDireccionPasajero.Text + "', " +
+                                this.txtTelefonoPasajero.Text + ", '" + dtpFechaNacimientoPasajero.Value.ToString("yyyy-MM-dd") + "'";
+                        Server.getInstance().realizarQuery(query);
+                        query = "SELECT JUST_DO_IT.obtenerIDUsuario (" + txtDNI.Text + ", '" +
+                                txtApellidoPasajero.Text + "', '" + txtNombrePasajero.Text + "') AS id";
+                        SqlDataReader reader = Server.getInstance().query(query);
+                        reader.Read();
+                        this.usuario_id = int.Parse(reader["id"].ToString());
+                        reader.Close();
+                    }
+                    this.form_pasajeros.agregarPasajero(txtApellidoPasajero.Text + ", " + txtNombrePasajero.Text,
+                                                    this.usuario_id,
+                                                    ((ComboBoxItem)cmbButacas.SelectedItem).Value.ToString());
+                    this.Hide();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+    }
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {

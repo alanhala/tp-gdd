@@ -32,11 +32,11 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbRutas = new System.Windows.Forms.ComboBox();
+            this.cmbDestino = new System.Windows.Forms.ComboBox();
+            this.cmbOrigen = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.cmbOrigen = new System.Windows.Forms.ComboBox();
-            this.cmbDestino = new System.Windows.Forms.ComboBox();
-            this.cmbRutas = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +48,7 @@
             this.btnCancelar.TabIndex = 43;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnAceptar
             // 
@@ -74,6 +75,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
             // 
+            // cmbRutas
+            // 
+            this.cmbRutas.FormattingEnabled = true;
+            this.cmbRutas.Location = new System.Drawing.Point(171, 67);
+            this.cmbRutas.Name = "cmbRutas";
+            this.cmbRutas.Size = new System.Drawing.Size(185, 21);
+            this.cmbRutas.TabIndex = 56;
+            // 
+            // cmbDestino
+            // 
+            this.cmbDestino.FormattingEnabled = true;
+            this.cmbDestino.Location = new System.Drawing.Point(403, 29);
+            this.cmbDestino.Name = "cmbDestino";
+            this.cmbDestino.Size = new System.Drawing.Size(100, 21);
+            this.cmbDestino.TabIndex = 54;
+            this.cmbDestino.SelectedIndexChanged += new System.EventHandler(this.cmbDestino_SelectedIndexChanged);
+            // 
+            // cmbOrigen
+            // 
+            this.cmbOrigen.FormattingEnabled = true;
+            this.cmbOrigen.Location = new System.Drawing.Point(141, 29);
+            this.cmbOrigen.Name = "cmbOrigen";
+            this.cmbOrigen.Size = new System.Drawing.Size(100, 21);
+            this.cmbOrigen.TabIndex = 53;
+            this.cmbOrigen.SelectedIndexChanged += new System.EventHandler(this.cmbOrigen_SelectedIndexChanged);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -91,32 +118,6 @@
             this.label7.Size = new System.Drawing.Size(87, 13);
             this.label7.TabIndex = 48;
             this.label7.Text = "Ciudad de origen";
-            // 
-            // cmbOrigen
-            // 
-            this.cmbOrigen.FormattingEnabled = true;
-            this.cmbOrigen.Location = new System.Drawing.Point(141, 29);
-            this.cmbOrigen.Name = "cmbOrigen";
-            this.cmbOrigen.Size = new System.Drawing.Size(100, 21);
-            this.cmbOrigen.TabIndex = 53;
-            this.cmbOrigen.SelectedIndexChanged += new System.EventHandler(this.cmbOrigen_SelectedIndexChanged);
-            // 
-            // cmbDestino
-            // 
-            this.cmbDestino.FormattingEnabled = true;
-            this.cmbDestino.Location = new System.Drawing.Point(403, 29);
-            this.cmbDestino.Name = "cmbDestino";
-            this.cmbDestino.Size = new System.Drawing.Size(100, 21);
-            this.cmbDestino.TabIndex = 54;
-            this.cmbDestino.SelectedIndexChanged += new System.EventHandler(this.cmbDestino_SelectedIndexChanged);
-            // 
-            // cmbRutas
-            // 
-            this.cmbRutas.FormattingEnabled = true;
-            this.cmbRutas.Location = new System.Drawing.Point(171, 67);
-            this.cmbRutas.Name = "cmbRutas";
-            this.cmbRutas.Size = new System.Drawing.Size(185, 21);
-            this.cmbRutas.TabIndex = 56;
             // 
             // Baja_Ruta
             // 
