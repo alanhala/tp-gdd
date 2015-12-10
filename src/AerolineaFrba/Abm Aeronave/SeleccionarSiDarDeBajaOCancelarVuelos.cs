@@ -49,52 +49,24 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             try
             {
-                SqlDataReader respuestaAeronave;
-                Server server = Server.getInstance();
-                string query = "SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula('" + matricula + "') AS idAeronave";
-                respuestaAeronave = server.query(query);
-                respuestaAeronave.Read();
-                int idAeronave = int.Parse(respuestaAeronave["idAeronave"].ToString());
-                respuestaAeronave.Close();
-                SqlDataReader respuestaVuelo;
-
+                string query;
                 if (finVidaUtil)
                 {
-                    string comboQuery = "SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave(" + idAeronave + ")";
-                    respuestaVuelo = server.query(comboQuery);
+                    query = "EXEC JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave '" + matricula + "', 1, null, null";
                 }
-                else
+                else 
                 {
-                    string comboQuery = "SELECT vuelos FROM JUST_DO_IT.obtener_vuelos_segun_id_aeronave_y_fechas(" + idAeronave + ", " + fechaFueraServicio.Text + ", " + fechaReinicioServicio.Text + ")";
-                    respuestaVuelo = server.query(comboQuery);
+                    query = "EXEC JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave '" + matricula + "', 0, '" + fechaFueraServicio.Value.ToString("yyyy-MM-dd") + "', '" + fechaReinicioServicio.Value.ToString("yyyy-MM-dd") + "'";
                 }
-                ArrayList vuelos = new ArrayList();
-                int cantVuelos = 0;
+                
+                Server.getInstance().realizarQuery(query);
 
-                while (respuestaVuelo.Read())
-                {
-                    vuelos.Add(int.Parse(respuestaVuelo["vuelos"].ToString()));
-                    cantVuelos++;
-                }
-
-                respuestaVuelo.Close();
-
-                foreach (object vuelo in vuelos)
-                {
-                    query = "EXEC JUST_DO_IT.eliminar_vuelos " + vuelo;
-                    server.realizarQuery(query);
-                }
-                MessageBox.Show("Los vuelos se han cancelado");
-                if (finVidaUtil)
-                {
-                    new BajaFinVidaUtil().darDeBajaAeronave(matricula);
-                }
-                else {
-                    new BajaFueraDeServicio().darDeBajaAeronave(matricula, this.fechaFueraServicio, this.fechaReinicioServicio);
-                }
+                MessageBox.Show("Las aeronaves se han dado de baja y sus respectivos vuelos se han cancelado");
+                
             }
-            catch {
-                MessageBox.Show("Los vuelos no fueron cancelados");
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

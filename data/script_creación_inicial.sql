@@ -167,6 +167,10 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRuta;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave') IS NOT NULL
+    drop PROCEDURE JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio') IS NOT NULL
     drop procedure JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio;
 GO
@@ -189,10 +193,6 @@ GO
 
 IF OBJECT_ID (N'JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio') IS NOT NULL
     drop procedure JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.eliminar_vuelos') IS NOT NULL
-    drop procedure JUST_DO_IT.eliminar_vuelos;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
@@ -2230,5 +2230,71 @@ AS RETURN
 	WHERE usuarios.id = puntos.usuario_id AND usuarios.dni = @dni AND usuarios.nombre = @nombre
                     AND usuarios.apellido = @apellido AND puntos.vencimiento > CURRENT_TIMESTAMP
 					AND puntos.validos = 1
+
+GO
+CREATE PROCEDURE JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave(@aeronave NVARCHAR(255), @fin_vida_util BIT, @fecha_fin_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
+AS BEGIN
+	DECLARE @vueloId NUMERIC(18,0)
+	DECLARE @idAeronave NUMERIC(18,0)
+	
+	CREATE TABLE #vuelosAEliminar(
+		id NUMERIC(18,0)
+	)
+
+	BEGIN TRANSACTION eliminarVueloYDarDeBajaAeronave
+	BEGIN TRY
+		SELECT @idAeronave = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronave))
+	
+		IF (@fin_vida_util = 1)
+			BEGIN
+				INSERT INTO #vuelosAEliminar(id)
+					SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
+								WHERE vuelos.aeronave_id = @idAeronave
+								AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
+
+				UPDATE JUST_DO_IT.Aeronaves 
+				SET baja_vida_util = 1, 
+					fecha_baja_definitiva = CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)) 
+				WHERE id = @idAeronave
+			END
+		ELSE
+			BEGIN
+				INSERT INTO #vuelosAEliminar(id)
+					SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
+					WHERE vuelos.aeronave_id = @idAeronave 
+						AND ((@fecha_fin_servicio <= vuelos.fecha_salida AND @fecha_reinicio_servicio >= vuelos.fecha_llegada_estimada) 
+						OR (@fecha_fin_servicio >= vuelos.fecha_salida AND @fecha_fin_servicio <= vuelos.fecha_llegada_estimada))			
+			
+				UPDATE JUST_DO_IT.Aeronaves
+				SET baja_fuera_servicio = 1, 
+					fecha_fuera_servicio = @fecha_fin_servicio, 
+					fecha_reinicio_servicio = @fecha_reinicio_servicio
+				WHERE id = @idAeronave
+			END
+
+		
+			UPDATE JUST_DO_IT.Vuelos	
+			SET vuelo_eliminado = 1
+			WHERE id IN (SELECT * FROM #vuelosAEliminar)
+		
+			UPDATE pas
+			SET pas.cancelado = 1
+			FROM JUST_DO_IT.Pasajes pas
+			WHERE pas.vuelo_id IN (SELECT * FROM #vuelosAEliminar)
+
+			UPDATE paq
+			SET paq.cancelado = 1
+			FROM JUST_DO_IT.Pasajes paq
+			WHERE paq.vuelo_id IN (SELECT * FROM #vuelosAEliminar)
+
+	COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+		RAISERROR('No se pudieron cancelar los vuelos ni dar de baja la aeronave',16,217) WITH SETERROR
+	END CATCH
+
+	DROP TABLE #vuelosAEliminar
+END
 
 GO
