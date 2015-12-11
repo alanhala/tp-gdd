@@ -68,11 +68,14 @@ namespace AerolineaFrba.Abm_Aeronave
             {
                 MessageBox.Show(ex.Message);
             }
+            this.Close();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+            new Abm_Aeronave.Baja().Show();
         }
 
         private void btnReemplazarAeronave_Click(object sender, EventArgs e)

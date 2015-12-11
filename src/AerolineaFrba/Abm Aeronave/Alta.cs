@@ -78,7 +78,8 @@ namespace AerolineaFrba.Abm_Aeronave
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.validarCampos()) {
+            try{ 
+                this.validarCampos();
                 if (this.aeronaveValida())
                 {
                     string altaAeronave;
@@ -101,20 +102,21 @@ namespace AerolineaFrba.Abm_Aeronave
                         {
                             owner.aeronaveCreada(matricula);
                             this.Close();
+                            new Vistas_Inicio.Inicio_Admin().Show();
                         }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
                     }
-                    
+
                 }
                 else
                 {
                     MessageBox.Show("Debe crear una aeronave con el mismo fabricante, tipo de servicio, cantidad de butacas y kilogramos disponibles");
                 }
             }
-            else
+            catch
             {
                 MessageBox.Show("Debe ingresar datos validos");
             }
@@ -171,6 +173,7 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button2_Click_1(object sender, EventArgs e)
         {
             this.Close();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         public bool aeronaveValida()

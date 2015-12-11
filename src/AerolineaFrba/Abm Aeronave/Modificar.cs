@@ -42,8 +42,9 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             Server server = Server.getInstance();
-            if (this.validarCampos())
+            try
             {
+                this.validarCampos();
                 string matricula = tbNumeroMatricula.Text;
                 string modelo = tbModelo.Text;
                 string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
@@ -56,17 +57,23 @@ namespace AerolineaFrba.Abm_Aeronave
                 {
                     Server.getInstance().realizarQuery(modificarAeronave);
                     MessageBox.Show("La aeronave se modifico satisfactoriamente");
+                    this.Close();
+                    new Vistas_Inicio.Inicio_Admin().Show();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
+            catch {
+                MessageBox.Show("Los datos modificados no son validos");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         public void cargarTextBox(string entidad, string atributo, TextBox textbox)
@@ -169,6 +176,11 @@ namespace AerolineaFrba.Abm_Aeronave
             {
                 MessageBox.Show("No se ha podido dar de alta la aeroanve");
             }
+
+        }
+
+        private void Modificar_Load(object sender, EventArgs e)
+        {
 
         }
     }

@@ -47,7 +47,8 @@ namespace AerolineaFrba.Abm_Aeronave
             else
             {
                 new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
-            }           
+                this.Close();
+            }
         }
 
         public void darDeBajaAeronave(string matricula, DateTimePicker fechaFueraServicio, DateTimePicker fechaReinicioServicio)
@@ -67,6 +68,7 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+            new Abm_Aeronave.Baja().Show();
         }
 
         private void Baja_Load(object sender, EventArgs e)
