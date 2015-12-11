@@ -12,6 +12,7 @@ using System.Collections;
 
 namespace AerolineaFrba.Abm_Aeronave
 {
+
     public partial class SeleccionarSiDarDeBajaOCancelarVuelos : Form
     {
         public string matricula;
@@ -62,14 +63,12 @@ namespace AerolineaFrba.Abm_Aeronave
                 Server.getInstance().realizarQuery(query);
 
                 MessageBox.Show("Las aeronaves se han dado de baja y sus respectivos vuelos se han cancelado");
-                
+                new Vistas_Inicio.Inicio_Admin().Show();   
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            this.Close();
-            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -82,11 +81,11 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             if (finVidaUtil)
             {
-                new ReemplazoAeronave(matricula).Show();
+                new ReemplazoAeronave(matricula, this).Show();
             }
             else 
             {
-                new ReemplazoAeronave(matricula, this.fechaFueraServicio, this.fechaReinicioServicio).Show();
+                new ReemplazoAeronave(matricula, this.fechaFueraServicio, this.fechaReinicioServicio, this).Show();
             }
         }
     }

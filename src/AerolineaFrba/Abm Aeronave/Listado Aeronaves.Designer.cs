@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Listado_Aeronaves));
             this.listadoAeronaves = new System.Windows.Forms.DataGridView();
             this.seleccionarAeronave = new System.Windows.Forms.Button();
+            this.btnMenuPrincipal = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.listadoAeronaves)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,12 +58,23 @@
             this.seleccionarAeronave.UseVisualStyleBackColor = true;
             this.seleccionarAeronave.Click += new System.EventHandler(this.seleccionarAeronave_Click);
             // 
+            // btnMenuPrincipal
+            // 
+            this.btnMenuPrincipal.Location = new System.Drawing.Point(74, 511);
+            this.btnMenuPrincipal.Name = "btnMenuPrincipal";
+            this.btnMenuPrincipal.Size = new System.Drawing.Size(163, 46);
+            this.btnMenuPrincipal.TabIndex = 2;
+            this.btnMenuPrincipal.Text = "Menu Principal";
+            this.btnMenuPrincipal.UseVisualStyleBackColor = true;
+            this.btnMenuPrincipal.Click += new System.EventHandler(this.btnMenuPrincipal_Click);
+            // 
             // Listado_Aeronaves
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(831, 569);
+            this.Controls.Add(this.btnMenuPrincipal);
             this.Controls.Add(this.seleccionarAeronave);
             this.Controls.Add(this.listadoAeronaves);
             this.Name = "Listado_Aeronaves";
@@ -77,5 +89,6 @@
 
         private System.Windows.Forms.DataGridView listadoAeronaves;
         private System.Windows.Forms.Button seleccionarAeronave;
+        private System.Windows.Forms.Button btnMenuPrincipal;
     }
 }
