@@ -34,6 +34,79 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             Commons.getInstance().cargarComboBox("Aeronaves", "fabricante", cbFabricante);
             Commons.getInstance().cargarComboBox("TiposServicios", "nombre", cbTipoServicio);
+            if(matriculaAReemplazar != null){
+                this.cargarDatos();
+                tbEspacioTotalParaEncomiendas.Enabled = false;
+                tbCantButacas.Enabled = false;
+                cbFabricante.Enabled = false;
+                cbTipoServicio.Enabled = false;
+            }
+        }
+
+        public void cargarDatos()
+        {
+            this.cargarTextBox("Aeronaves", "kgs_disponibles", tbEspacioTotalParaEncomiendas);
+            this.cargarTextBox("Aeronaves", "butacas_totales", tbCantButacas);
+            this.autoCompletarCombo("Aeronaves", "fabricante", cbFabricante, "Aeronaves.matricula = '" + matriculaAReemplazar + "'");
+            this.autoCompletarComboConOtraTabla("Aeronaves", "tipo_servicio", cbTipoServicio, "Aeronaves.matricula = '" + matriculaAReemplazar + "' AND Aeronaves.tipo_servicio = TipoServicio.id", " Aeronaves.tipo_servicio = TipoServicio.id");
+        }
+
+        public void cargarTextBox(string entidad, string atributo, TextBox textbox)
+        {
+            Server server = Server.getInstance();
+            string queryTextBox = "SELECT DISTINCT " + atributo + " FROM JUST_DO_IT." + entidad + " AS " + entidad + " WHERE Aeronaves.matricula = '" + matriculaAReemplazar + "'";
+            respuesta = server.query(queryTextBox);
+
+            respuesta.Read();
+            textbox.Text = Convert.ToString(respuesta[atributo]);
+
+            respuesta.Close();
+        }
+
+        public void autoCompletarCombo(string entidad, string atributo, ComboBox comboBox, string condicion)
+        {
+            Server server = Server.getInstance();
+            string queryComboBox = "SELECT " + atributo + " AS atributo FROM JUST_DO_IT." + entidad + " WHERE " + condicion;
+            respuesta = server.query(queryComboBox);
+            respuesta.Read();
+            string nombreAtributo = respuesta["atributo"].ToString();
+            respuesta.Close();
+
+            int idAtributo = 0;
+            respuesta = server.query("SELECT DISTINCT " + atributo + " AS atributo FROM JUST_DO_IT." + entidad);
+            while (respuesta.Read())
+            {
+                if (String.CompareOrdinal(nombreAtributo, respuesta["atributo"].ToString()) == 0)
+                {
+                    break;
+                }
+                idAtributo++;
+            }
+            comboBox.SelectedIndex = idAtributo;
+            respuesta.Close();
+        }
+
+        public void autoCompletarComboConOtraTabla(string entidad, string atributo, ComboBox comboBox, string condicionParaBuscarElTipoEspecifico, string condicionParaBuscarTodosLosTipos)
+        {
+            Server server = Server.getInstance();
+            string queryComboBox = "SELECT DISTINCT TipoServicio.nombre AS atributo FROM JUST_DO_IT.TiposServicios AS TipoServicio, JUST_DO_IT." + entidad + " AS Aeronaves WHERE " + condicionParaBuscarElTipoEspecifico;
+            respuesta = server.query(queryComboBox);
+            respuesta.Read();
+            string nombreAtributo = respuesta["atributo"].ToString();
+            respuesta.Close();
+
+            int idAtributo = 0;
+            respuesta = server.query("SELECT DISTINCT TipoServicio.nombre AS atributo FROM JUST_DO_IT.TiposServicios AS TipoServicio, JUST_DO_IT." + entidad + " AS Aeronaves WHERE " + condicionParaBuscarTodosLosTipos);
+            while (respuesta.Read())
+            {
+                if (String.CompareOrdinal(nombreAtributo, respuesta["atributo"].ToString()) == 0)
+                {
+                    break;
+                }
+                idAtributo++;
+            }
+            comboBox.SelectedIndex = idAtributo;
+            respuesta.Close();
         }
 
         private void label1_Click(object sender, EventArgs e)
