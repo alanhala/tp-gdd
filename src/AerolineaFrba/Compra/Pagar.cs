@@ -111,11 +111,6 @@ namespace AerolineaFrba.Compra
 
         private void btnFinalizar_Click(object sender, EventArgs e)
         {
-            if (!this.soyCliente)
-            {
-                MessageBox.Show("El alta de usuario no era requerida, ingrese en soy cliente y entre con uno existente");
-                return;
-            }
             if (!this.cargoPago)
             {
                 MessageBox.Show("Debe elegir un medio de pago");
@@ -132,7 +127,9 @@ namespace AerolineaFrba.Compra
             try
             {
                 string query;
-                if (this.txtMailPasajero.Text == "" || this.txtDireccionPasajero.Text == "" || this.txtTelefonoPasajero.Text == "")
+                SqlDataReader reader;
+                if (this.txtDNI.Text == "" || txtNombrePasajero.Text == "" || txtApellidoPasajero.Text == "" ||
+                this.txtMailPasajero.Text == "" || this.txtDireccionPasajero.Text == "" || this.txtTelefonoPasajero.Text == "")
                     MessageBox.Show("Debe completar todos los campos");
                 else
                 {
@@ -149,13 +146,39 @@ namespace AerolineaFrba.Compra
                         }
                         catch (Exception)
                         {
-                            MessageBox.Show("La cantidad de KGs ingresada no es valida");
+                            MessageBox.Show("La cantidad de KGs a enviar no es valida");
                             return;
                         }
                     }
-                    query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", '" + this.txtMailPasajero.Text + "', '"
-                                    + this.txtDireccionPasajero.Text + "', " + this.txtTelefonoPasajero.Text;
-                    Server.getInstance().realizarQuery(query);
+                    try
+                    {
+                        int.Parse(this.txtDNI.Text);
+                        int.Parse(this.txtTelefonoPasajero.Text);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("El DNI y el telefono deben ser numericos");
+                        return;
+                    }
+                    if (this.soyCliente)
+                    {
+                        query = "EXEC JUST_DO_IT.actualizarUsuario " + this.usuario_id + ", '" + this.txtMailPasajero.Text + "', '"
+                                        + this.txtDireccionPasajero.Text + "', " + this.txtTelefonoPasajero.Text;
+                        Server.getInstance().realizarQuery(query);
+                    }
+                    else
+                    {
+                        query = "EXEC JUST_DO_IT.almacenarCliente " + this.txtDNI.Text + ", '" + this.txtNombrePasajero.Text + "', '" +
+                                this.txtApellidoPasajero.Text + "', '" + this.txtMailPasajero.Text + "', '" + this.txtDireccionPasajero.Text + "', " +
+                                this.txtTelefonoPasajero.Text + ", '" + dtpFechaNacimientoPasajero.Value.ToString("yyyy-MM-dd") + "'";
+                        Server.getInstance().realizarQuery(query);
+                        query = "SELECT JUST_DO_IT.obtenerIDUsuario (" + txtDNI.Text + ", '" +
+                                txtApellidoPasajero.Text + "', '" + txtNombrePasajero.Text + "') AS id";
+                        reader = Server.getInstance().query(query);
+                        reader.Read();
+                        this.usuario_id = int.Parse(reader["id"].ToString());
+                        reader.Close();
+                    }
                     int idMedioDePago;
                     if (this.efectivo)
                         idMedioDePago = MedioDePago.obtenerID("Efectivo");
@@ -169,7 +192,7 @@ namespace AerolineaFrba.Compra
                     Server.getInstance().realizarQuery(query);
 
                     query = "SELECT TOP 1 codigo, monto FROM JUST_DO_IT.Compras ORDER BY codigo DESC";
-                    SqlDataReader reader = Server.getInstance().query(query);
+                    reader = Server.getInstance().query(query);
                     reader.Read();
                     string codigo = reader["codigo"].ToString();
                     string monto = reader["monto"].ToString();
