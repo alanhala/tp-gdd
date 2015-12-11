@@ -49,6 +49,7 @@
             // 
             // cmbOrigen
             // 
+            this.cmbOrigen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbOrigen.FormattingEnabled = true;
             this.cmbOrigen.Location = new System.Drawing.Point(161, 58);
             this.cmbOrigen.Name = "cmbOrigen";
@@ -57,6 +58,7 @@
             // 
             // cmbTipoServicio
             // 
+            this.cmbTipoServicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipoServicio.FormattingEnabled = true;
             this.cmbTipoServicio.Location = new System.Drawing.Point(440, 29);
             this.cmbTipoServicio.Name = "cmbTipoServicio";
@@ -185,6 +187,7 @@
             // 
             // cmbDestino
             // 
+            this.cmbDestino.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDestino.FormattingEnabled = true;
             this.cmbDestino.Location = new System.Drawing.Point(440, 61);
             this.cmbDestino.Name = "cmbDestino";
