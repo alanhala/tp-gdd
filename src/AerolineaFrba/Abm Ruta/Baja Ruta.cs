@@ -59,6 +59,7 @@ namespace AerolineaFrba.Abm_Ruta
         {
             if (!(cmbDestino.Text == "" || cmbOrigen.Text == ""))
             {
+                cmbRutas.Items.Clear();
                 int origen = Ciudades.obtenerID(cmbOrigen.Text);
                 int destino = Ciudades.obtenerID(cmbDestino.Text);
                 List<string> codigos = new List<string>();

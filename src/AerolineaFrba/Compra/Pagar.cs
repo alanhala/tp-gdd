@@ -214,5 +214,13 @@ namespace AerolineaFrba.Compra
             this.efectivo = true;
             this.cargoPago = true;
         }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            string query = "DELETE FROM JUST_DO_IT.ButacasReservadas WHERE vuelo_id=" + this.vuelo_id;
+            Server.getInstance().realizarQuery(query);
+            new compraPasaje().Show();
+            this.Hide();
+        }
     }
 }

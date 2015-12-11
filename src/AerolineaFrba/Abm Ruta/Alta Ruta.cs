@@ -45,19 +45,30 @@ namespace AerolineaFrba.Abm_Ruta
             if (txtCodigo.Text.Trim() != "" && txtPrecioBasePorKg.Text.Trim() != "" && txtPrecioBasePorPasaje.Text.Trim() != ""
                 && cmbDestino.Text.Trim() != "" && cmbOrigen.Text.Trim() != "" && cmbTipoServicio.Text.Trim() != "")
             {
-                int codigo = int.Parse(txtCodigo.Text);
-                float kgs = float.Parse(txtPrecioBasePorKg.Text);
-                float pasaje = float.Parse(txtPrecioBasePorPasaje.Text);
-                int destino = Ciudades.obtenerID(cmbDestino.Text);
-                int origen = Ciudades.obtenerID(cmbOrigen.Text);
-                int servicio = TiposServicios.obtenerID(cmbTipoServicio.Text);
-
-                string query = "EXEC JUST_DO_IT.almacenarRuta " + codigo + ", " + kgs + ", " + pasaje + ", " + origen + ", " +
+                string query;
+                try
+                {
+                    int codigo = int.Parse(txtCodigo.Text);
+                    float kgs = float.Parse(txtPrecioBasePorKg.Text);
+                    float pasaje = float.Parse(txtPrecioBasePorPasaje.Text);
+                    int destino = Ciudades.obtenerID(cmbDestino.Text);
+                    int origen = Ciudades.obtenerID(cmbOrigen.Text);
+                    int servicio = TiposServicios.obtenerID(cmbTipoServicio.Text);
+                    query = "EXEC JUST_DO_IT.almacenarRuta " + codigo + ", " + kgs + ", " + pasaje + ", " + origen + ", " +
                     destino + ", " + servicio;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Debe ingresar datos validos");
+                    return;
+                }
+
                 try
                 {
                     Server.getInstance().realizarQuery(query);
                     MessageBox.Show("La ruta se agrego satisfactoriamente");
+                    new Vistas_Inicio.Inicio_Admin().Show();
+                    this.Hide();
                 }
                 catch (Exception ex)
                 {

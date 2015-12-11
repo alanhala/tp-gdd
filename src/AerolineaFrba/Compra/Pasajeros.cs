@@ -15,14 +15,16 @@ namespace AerolineaFrba.Compra
         private int vuelo_id;
         private float costo_viaje;
         private float costo_encomienda;
+        private int cantidad_disponible;
 
         public Pasajeros() { }
-        public Pasajeros(int id, float costo, float costoEncomienda)
+        public Pasajeros(int id, float costo, float costoEncomienda, int cantidadDisponible)
         {
             InitializeComponent();
             this.vuelo_id = id;
             this.costo_viaje = costo;
             this.costo_encomienda = costoEncomienda;
+            this.cantidad_disponible = cantidadDisponible;
         }
 
         public void agregarPasajero(string usuario, int usuario_id, string butaca)
@@ -30,11 +32,15 @@ namespace AerolineaFrba.Compra
             lstPasajeros.Items.Add(usuario);
             string query = "EXEC JUST_DO_IT.reservarButaca " + usuario_id + ", " + this.vuelo_id + ", " + butaca;
             Server.getInstance().realizarQuery(query);
+            this.cantidad_disponible--;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            new AgregarPasajero(this.vuelo_id, this).Show();
+            if (this.cantidad_disponible > 0)
+                new AgregarPasajero(this.vuelo_id, this).Show();
+            else
+                MessageBox.Show("No quedan butacas disponibles");
         }
 
         private void btnContinuar_Click(object sender, EventArgs e)
