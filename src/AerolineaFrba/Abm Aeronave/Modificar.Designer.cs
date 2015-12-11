@@ -163,6 +163,7 @@
             // 
             this.tbNumeroMatricula.Location = new System.Drawing.Point(121, 35);
             this.tbNumeroMatricula.Name = "tbNumeroMatricula";
+            this.tbNumeroMatricula.ReadOnly = true;
             this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
             this.tbNumeroMatricula.TabIndex = 36;
             // 

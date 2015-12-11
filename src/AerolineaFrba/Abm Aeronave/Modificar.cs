@@ -160,15 +160,16 @@ namespace AerolineaFrba.Abm_Aeronave
         {
             try
             {
-                string query = "EXEC JUST_DO_IT.alta_aeronave_fuera_de_servicio(" + aeronaveId + ")";
+                string query = "EXEC JUST_DO_IT.alta_aeronave_fuera_de_servicio " + aeronaveId;
                 Server.getInstance().realizarQuery(query);
+                this.btAltaFueraServicio.Enabled = false;
                 MessageBox.Show("Se ha dado de alta la aeronave");
             }
             catch
             {
                 MessageBox.Show("No se ha podido dar de alta la aeroanve");
             }
-            
+
         }
     }
 }
