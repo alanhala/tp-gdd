@@ -63,9 +63,15 @@ namespace AerolineaFrba.Abm_Rol
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            // controlar que el rol ya tenga asignado por lo menos 1 funcionalidad
+            System.Data.SqlClient.SqlDataReader respuesta;
+            string query = "SELECT * FROM JUST_DO_IT.cantFuncionalidadQuePosee (" + idRol + ")";
+            Server server = Server.getInstance();
+            respuesta = server.query(query);
+
             this.Hide();
         }
-
+        
         private void btnFinalizar_Click(object sender, EventArgs e)
         {
             this.Hide();
