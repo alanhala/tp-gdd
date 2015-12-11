@@ -86,7 +86,8 @@ namespace AerolineaFrba.Compra
                 int vuelo_id = int.Parse(row.Cells[0].Value.ToString());
                 float costoViaje = float.Parse(row.Cells[6].Value.ToString());
                 float costoEncomienda = float.Parse(row.Cells[7].Value.ToString());
-                new Pasajeros(vuelo_id, costoViaje, costoEncomienda).Show();
+                int cantidadDisponible = int.Parse(row.Cells[1].Value.ToString());
+                new Pasajeros(vuelo_id, costoViaje, costoEncomienda, cantidadDisponible).Show();
                 this.Hide();
             }
         }
@@ -104,9 +105,9 @@ namespace AerolineaFrba.Compra
                 MessageBox.Show("Debe seleccionar algun vuelo");
                 return;
             }
-            if (int.Parse(row.Cells[1].Value.ToString()) == 0)
+            if (float.Parse(row.Cells[2].Value.ToString()) == 0)
             {
-                MessageBox.Show("No quedan butacas disponibles");
+                MessageBox.Show("No quedan KGs disponibles para encomiendas");
             }
             else
             {
@@ -115,6 +116,12 @@ namespace AerolineaFrba.Compra
                 new Pagar(vuelo_id, costoEncomienda).Show();
                 this.Hide();
             }
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            new Vistas_Inicio.Inicio_Admin().Show();
+            this.Hide();
         }
 
     }

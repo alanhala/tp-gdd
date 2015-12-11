@@ -212,6 +212,7 @@
             // 
             // cmbButacas
             // 
+            this.cmbButacas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbButacas.FormattingEnabled = true;
             this.cmbButacas.Location = new System.Drawing.Point(143, 322);
             this.cmbButacas.Name = "cmbButacas";
