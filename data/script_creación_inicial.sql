@@ -397,14 +397,24 @@ IF OBJECT_ID (N'JUST_DO_IT.CantidadDeMillasUsuario') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.existeFuncionalidad') IS NOT NULL
 	drop procedure JUST_DO_IT.existeFuncionalidad;
- 
+
+IF OBJECT_ID (N'JUST_DO_IT.cantFuncionalidadQuePosee') IS NOT NULL
+	drop function JUST_DO_IT.cantFuncionalidadQuePosee;
+
 IF OBJECT_ID (N'JUST_DO_IT.almacenarCliente') IS NOT NULL
 	drop procedure JUST_DO_IT.almacenarCliente;
 
  IF OBJECT_ID (N'JUST_DO_IT.obtenerIDUsuario') IS NOT NULL
 	drop function JUST_DO_IT.obtenerIDUsuario;
- 
- 
+
+IF OBJECT_ID (N'JUST_DO_IT.eliminarFuncionalidad') IS NOT NULL
+	drop procedure JUST_DO_IT.eliminarFuncionalidad;
+
+IF OBJECT_ID (N'JUST_DO_IT.existeRol') IS NOT NULL
+	drop procedure JUST_DO_IT.existeRol;
+	
+IF OBJECT_ID (N'JUST_DO_IT.estabaDadoDeBajaElRol') IS NOT NULL
+	drop procedure JUST_DO_IT.estabaDadoDeBajaElRol; 
 
 /******CREACION DE TABLAS******/
 
@@ -982,10 +992,6 @@ ON JUST_DO_IT.Paquetes ([codigo],[compra])
 INCLUDE ([precio],[vuelo_id],[kg],[fecha_compra])
 GO
 
-INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
-
-INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
-
 INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id, vuelo_id, validos)
 	SELECT (pasajes.precio * 0.1), DATEADD(year, 1, pasajes.fecha_compra), compras.comprador , pasajes.vuelo_id, 1
 		FROM JUST_DO_IT.Pasajes AS pasajes, JUST_DO_IT.Compras AS compras
@@ -993,11 +999,16 @@ INSERT INTO JUST_DO_IT.Puntos(millas, vencimiento, usuario_id, vuelo_id, validos
 
 GO
 
+--Funcionalidades
+INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede loguearse')
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede habilitar aeronaves')
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar aeronaves')
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede agregar roles')
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede eliminar funcionalidades')
 INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) VALUES ('Puede deshabilitar roles')
+
+-- Funcionalidades que posee un rol
+INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol) VALUES (1, 1)
 
 GO
 
@@ -1363,19 +1374,6 @@ END
 
 GO
 
-CREATE PROCEDURE JUST_DO_IT.almacenarFuncionalidad(@Descripcion VARCHAR(255))
-AS BEGIN
-		BEGIN TRY
-			INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) 
-				VALUES(@Descripcion)
-		END TRY
-		BEGIN CATCH
-			RAISERROR('La funcionalidad ingresada ya existe',16,217) WITH SETERROR
-		END CATCH
-END
-
-GO
-
 CREATE FUNCTION JUST_DO_IT.aeronavesDisponiblesParaVuelos(@Salida DATETIME, @LlegadaEstimada DATETIME)
 RETURNS TABLE
 AS RETURN
@@ -1389,6 +1387,36 @@ AS RETURN
 
 GO
 
+
+------------ Funcionalidades ------------
+
+CREATE PROCEDURE JUST_DO_IT.almacenarFuncionalidad(@Descripcion VARCHAR(255))
+AS BEGIN
+		BEGIN TRY
+			INSERT INTO JUST_DO_IT.Funcionalidades(descripcion) 
+				VALUES(@Descripcion)
+		END TRY
+		BEGIN CATCH
+			RAISERROR('La funcionalidad ingresada ya existe',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
+
+
+CREATE PROCEDURE JUST_DO_IT.eliminarFuncionalidad(@Descripcion VARCHAR(255))
+AS BEGIN
+		BEGIN TRY
+			DELETE FROM JUST_DO_IT.Funcionalidades WHERE descripcion LIKE @Descripcion
+		END TRY
+		BEGIN CATCH
+			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
+
+
 CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades(@idRol NUMERIC(18,0))
 RETURNS TABLE
 AS RETURN
@@ -1397,6 +1425,45 @@ AS RETURN
 	WHERE RF.id_rol = @idRol AND F.id = RF .id_funcionalidad
 		
 GO
+
+
+CREATE FUNCTION JUST_DO_IT.cantFuncionalidadQuePosee(@idRol NUMERIC(18,0))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @cantDeFuncionalidades int;
+	SELECT @cantDeFuncionalidades = COUNT(*) FROM JUST_DO_IT.nombresRolesYFuncionalidades(@idRol)
+    RETURN @cantDeFuncionalidades;
+END
+
+GO
+
+
+CREATE PROCEDURE JUST_DO_IT.existeFuncionalidad(@descrFuncionalidad NVARCHAR(255))
+AS BEGIN
+		DECLARE @existe INT = 0;
+		SELECT @existe = COUNT(*) FROM JUST_DO_IT.Funcionalidades AS F WHERE F.descripcion LIKE @descrFuncionalidad
+		IF (@existe = 0)
+			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
+END
+
+GO
+
+
+CREATE FUNCTION JUST_DO_IT.IDFuncionalidad(@Descripcion nvarchar(255))
+RETURNS int 
+AS
+BEGIN
+    DECLARE @id int;
+    SELECT @id = id
+	FROM JUST_DO_IT.Funcionalidades
+    WHERE descripcion LIKE @Descripcion
+	RETURN @id;
+
+END
+
+GO
+------------- Roles -------------
 
 CREATE FUNCTION JUST_DO_IT.IDRol(@Nombre varchar(255))
 RETURNS int 
@@ -1422,33 +1489,6 @@ AS BEGIN
 		RAISERROR('El rol ingresado ya existe',16,217) WITH SETERROR
 	END CATCH
 END
-
-GO
-
-
-CREATE PROCEDURE JUST_DO_IT.existeFuncionalidad(@descrFuncionalidad NVARCHAR(255))
-AS BEGIN
-		-- yo quiero que esto explote y no explota
-		DECLARE @existe INT = 0;
-		SELECT @existe = COUNT(*) FROM JUST_DO_IT.Funcionalidades AS F WHERE F.descripcion LIKE @descrFuncionalidad
-		IF (@existe = 0)
-			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
-END
-
-GO
-
-CREATE FUNCTION JUST_DO_IT.IDFuncionalidad(@Descripcion nvarchar(255))
-RETURNS int 
-AS
-BEGIN
-    DECLARE @id int;
-    SELECT @id = id
-	FROM JUST_DO_IT.Funcionalidades
-    WHERE descripcion LIKE @Descripcion
-	RETURN @id;
-
-END
-
 GO
 
 CREATE PROCEDURE JUST_DO_IT.almacenarRol_Funcionalidad(@IdRol NUMERIC(18,0), @IdFuncionalidad NUMERIC(18,0))
@@ -1467,8 +1507,91 @@ AS BEGIN
 		RAISERROR('La funcionalidad ingresada ya existe para ese rol',16,217) WITH SETERROR
 	END CATCH
 END
+GO
+
+CREATE PROCEDURE JUST_DO_IT.bajaRol(@nombre VARCHAR(50))
+AS BEGIN
+	BEGIN TRY
+		UPDATE JUST_DO_IT.Roles
+			SET baja_rol = 1
+			WHERE nombre = @nombre
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Fallo la baja de rol',16,217) WITH SETERROR
+	END CATCH
+END 
+GO
+
+CREATE PROCEDURE JUST_DO_IT.altaRolExistente(@nombre VARCHAR(50))
+AS BEGIN
+	BEGIN TRY
+		DECLARE @estaDadoDeBaja BIT
+		SELECT @estaDadoDeBaja=baja_rol FROM JUST_DO_IT.Roles WHERE nombre = @nombre
+
+		IF( @estaDadoDeBaja = 1)
+			UPDATE JUST_DO_IT.Roles SET baja_rol = 0 WHERE nombre = @nombre
+	END TRY
+	BEGIN CATCH
+		RAISERROR('El rol ya se encontraba habilitado',16,217) WITH SETERROR
+	END CATCH
+END 
+GO
+
+
+CREATE PROCEDURE JUST_DO_IT.modificarNombreRol(@idRol NUMERIC(18,0),@nombreNuevo VARCHAR(50))
+AS BEGIN
+	BEGIN TRY
+		UPDATE JUST_DO_IT.Roles SET nombre = @nombreNuevo WHERE id = @idRol
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Fallo la modificación del nombre',16,217) WITH SETERROR
+	END CATCH
+END 
 
 GO
+
+CREATE PROCEDURE JUST_DO_IT.bajaRol_Funcionalidad(@idRol NUMERIC(18,0),@idFuncionalidad NUMERIC(18,0))
+AS BEGIN
+	BEGIN TRY
+		DELETE FROM JUST_DO_IT.Rol_Funcionalidad WHERE id_rol = @idRol AND id_funcionalidad = @idFuncionalidad
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Fallo la baja de la funcionalidad',16,217) WITH SETERROR
+	END CATCH
+END 
+GO
+
+CREATE PROCEDURE JUST_DO_IT.existeRol(@nombre VARCHAR(50))
+AS BEGIN
+	DECLARE @existe INT;
+	BEGIN TRY
+		SELECT @existe = COUNT(*) from JUST_DO_IT.Roles  AS R WHERE R.nombre LIKE @nombre
+		IF (@existe = 0 )
+			RAISERROR('El rol no existe',16,217) WITH SETERROR
+	END TRY
+	BEGIN CATCH
+		RAISERROR('El rol no existe',16,217) WITH SETERROR
+	END CATCH
+END 
+GO
+
+CREATE PROCEDURE JUST_DO_IT.estabaDadoDeBajaElRol(@nombre VARCHAR(50))
+AS BEGIN
+	DECLARE @existe INT;
+	BEGIN TRY
+		SELECT @existe = R.baja_rol from JUST_DO_IT.Roles  AS R WHERE R.nombre LIKE @nombre
+		IF (@existe = 0 )
+			RAISERROR('El rol que seleccionó se encontraba habilitado',16,217) WITH SETERROR
+	END TRY
+	BEGIN CATCH
+		RAISERROR('El rol no se encuentra inhabilitado',16,217) WITH SETERROR
+	END CATCH
+END 
+GO
+
+
+-----------------------------------------
+
 
 CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255))
 AS BEGIN
@@ -1484,23 +1607,7 @@ END
 GO
 
 
-CREATE PROCEDURE JUST_DO_IT.bajaRol(@nombre VARCHAR(50))
-AS BEGIN
-	BEGIN TRY
-		UPDATE JUST_DO_IT.Roles
-			SET baja_rol = 1
-			WHERE nombre = @nombre
 
-
-	END TRY
-	BEGIN CATCH
-		RAISERROR('Fallo la baja de rol',16,217) WITH SETERROR
-	END CATCH
-
-END 
-
-
-GO
 CREATE FUNCTION JUST_DO_IT.obtener_id_aeronave_segun_matricula(@matricula NVARCHAR(255))
 RETURNS NUMERIC(18,0)
 AS
@@ -1564,48 +1671,6 @@ AS RETURN
 				AND vuelos.vuelo_eliminado = 0 AND vuelos.aeronave_id = 3
 GO
 
-CREATE PROCEDURE JUST_DO_IT.altaRolExistente(@nombre VARCHAR(50))
-AS BEGIN
-	BEGIN TRY
-		DECLARE @estaDadoDeBaja BIT
-		SELECT @estaDadoDeBaja=baja_rol FROM JUST_DO_IT.Roles WHERE nombre = @nombre
-
-		IF( @estaDadoDeBaja = 1)
-			UPDATE JUST_DO_IT.Roles SET baja_rol = 0 WHERE nombre = @nombre
-	END TRY
-	BEGIN CATCH
-		RAISERROR('El rol ya se encontraba habilitado',16,217) WITH SETERROR
-	END CATCH
-
-END 
-
-GO
-
-CREATE PROCEDURE JUST_DO_IT.modificarNombreRol(@idRol NUMERIC(18,0),@nombreNuevo VARCHAR(50))
-AS BEGIN
-	BEGIN TRY
-		UPDATE JUST_DO_IT.Roles SET nombre = @nombreNuevo WHERE id = @idRol
-	END TRY
-	BEGIN CATCH
-		RAISERROR('Fallo la modificación del nombre',16,217) WITH SETERROR
-	END CATCH
-
-END 
-
-GO
-
-CREATE PROCEDURE JUST_DO_IT.bajaRol_Funcionalidad(@idRol NUMERIC(18,0),@idFuncionalidad NUMERIC(18,0))
-AS BEGIN
-	BEGIN TRY
-		DELETE FROM JUST_DO_IT.Rol_Funcionalidad WHERE id_rol = @idRol AND id_funcionalidad = @idFuncionalidad
-	END TRY
-	BEGIN CATCH
-		RAISERROR('Fallo la baja de la funcionalidad',16,217) WITH SETERROR
-	END CATCH
-
-END 
-
-GO
 
 
 CREATE PROCEDURE JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio(@matricula NVARCHAR(255), @fecha_fuera_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
@@ -2288,6 +2353,7 @@ AS RETURN
 					AND puntos.validos = 1
 
 GO
+
 CREATE PROCEDURE JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave(@aeronave NVARCHAR(255), @fin_vida_util BIT, @fecha_fin_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
 AS BEGIN
 	DECLARE @vueloId NUMERIC(18,0)
@@ -2354,4 +2420,3 @@ AS BEGIN
 END
 
 GO
-

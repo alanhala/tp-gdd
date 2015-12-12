@@ -30,31 +30,24 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(bajaFunc));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.cancelar = new System.Windows.Forms.Button();
+            this.comboBoxFunc = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.tbNombre);
+            this.groupBox1.Controls.Add(this.comboBoxFunc);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(24, 33);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(269, 109);
+            this.groupBox1.Size = new System.Drawing.Size(269, 82);
             this.groupBox1.TabIndex = 60;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
-            // 
-            // tbNombre
-            // 
-            this.tbNombre.Location = new System.Drawing.Point(139, 32);
-            this.tbNombre.Name = "tbNombre";
-            this.tbNombre.Size = new System.Drawing.Size(100, 20);
-            this.tbNombre.TabIndex = 36;
             // 
             // label1
             // 
@@ -67,28 +60,38 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(238, 163);
+            this.btnGuardar.Location = new System.Drawing.Point(228, 134);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(65, 23);
             this.btnGuardar.TabIndex = 59;
             this.btnGuardar.Text = "Aceptar";
             this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // cancelar
             // 
-            this.cancelar.Location = new System.Drawing.Point(148, 163);
+            this.cancelar.Location = new System.Drawing.Point(138, 134);
             this.cancelar.Name = "cancelar";
             this.cancelar.Size = new System.Drawing.Size(65, 23);
             this.cancelar.TabIndex = 58;
             this.cancelar.Text = "Cancelar";
             this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
+            // 
+            // comboBoxFunc
+            // 
+            this.comboBoxFunc.FormattingEnabled = true;
+            this.comboBoxFunc.Location = new System.Drawing.Point(92, 32);
+            this.comboBoxFunc.Name = "comboBoxFunc";
+            this.comboBoxFunc.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxFunc.TabIndex = 33;
             // 
             // bajaFunc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(315, 197);
+            this.ClientSize = new System.Drawing.Size(315, 172);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.cancelar);
@@ -104,9 +107,9 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button cancelar;
+        private System.Windows.Forms.ComboBox comboBoxFunc;
     }
 }

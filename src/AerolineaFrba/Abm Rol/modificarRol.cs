@@ -33,9 +33,21 @@ namespace AerolineaFrba.Abm_Rol
             }
             else
             {
+
+                string descrRol = comboBox1.Text;
+                string query = "EXEC JUST_DO_IT.existeRol '" + descrRol + "'";
+                try
+                {
+                    Server.getInstance().realizarQuery(query);
+                }
+                catch (Exception ex1)
+                {
+                    MessageBox.Show(ex1.Message);
+                    return;
+                }
+
                 string nombreRol = comboBox1.Text;
                 int idRol = Rol.obtenerID(nombreRol);
-
                 new modificarNombre(idRol,nombreRol).Show();
                 this.Hide();
             }
@@ -49,6 +61,19 @@ namespace AerolineaFrba.Abm_Rol
             }
             else
             {
+                string descrRol = comboBox1.Text;
+                string query = "EXEC JUST_DO_IT.existeRol '" + descrRol + "'";
+                try
+                {
+                    Server.getInstance().realizarQuery(query);
+                }
+                catch (Exception ex1)
+                {
+                    MessageBox.Show(ex1.Message);
+                    return;
+                }
+                
+                
                 string nombreRol = comboBox1.Text;
                 int idRol = Rol.obtenerID(nombreRol);
 
@@ -65,6 +90,18 @@ namespace AerolineaFrba.Abm_Rol
             }
             else
             {
+                string descrRol = comboBox1.Text;
+                string query = "EXEC JUST_DO_IT.existeRol '" + descrRol + "'";
+                try
+                {
+                    Server.getInstance().realizarQuery(query);
+                }
+                catch (Exception ex1)
+                {
+                    MessageBox.Show(ex1.Message);
+                    return;
+                }          
+                
                 string nombreRol = comboBox1.Text;
                 int idRol = Rol.obtenerID(nombreRol);
 
@@ -81,9 +118,31 @@ namespace AerolineaFrba.Abm_Rol
             }
             else
             {
-                string nombreRol = comboBox1.Text;
+                string descrRol = comboBox1.Text;
+                string query = "EXEC JUST_DO_IT.existeRol '" + descrRol + "'";
+                try
+                {
+                    Server.getInstance().realizarQuery(query);
+                }
+                catch (Exception ex1)
+                {
+                    MessageBox.Show(ex1.Message);
+                    return;
+                }
 
-                string query = "EXEC JUST_DO_IT.altaRolExistente '" + nombreRol + "'";
+                descrRol = comboBox1.Text;
+                query = "EXEC JUST_DO_IT.estabaDadoDeBajaElRol '" + descrRol + "'";
+                try
+                {
+                    Server.getInstance().realizarQuery(query);
+                }
+                catch (Exception ex1)
+                {
+                    MessageBox.Show(ex1.Message);
+                    return;
+                }
+                string nombreRol = comboBox1.Text;
+                query = "EXEC JUST_DO_IT.altaRolExistente '" + nombreRol + "'";
                 try
                 {
                     Server.getInstance().realizarQuery(query);
