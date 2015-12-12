@@ -32,7 +32,7 @@ namespace AerolineaFrba.Generacion_Viaje
             }
             else
             {
-                MessageBox.Show("La Fecha de Salida debe ser previa a la Fecha de Llegada Estimada");
+                MessageBox.Show("La Fecha de Salida debe ser previa a la Fecha de Llegada Estimada y deben tener de diferencia como máximo un día.");
             }
             
         }
@@ -64,13 +64,13 @@ namespace AerolineaFrba.Generacion_Viaje
             }
             else
             {
-                MessageBox.Show("La Fecha de Salida debe ser previa a la Fecha de Llegada Estimada");
+                MessageBox.Show("La Fecha de Salida debe ser previa a la Fecha de Llegada Estimada y deben tener de diferencia como máximo un día.");
             }   
         }
 
         public bool fechasValidas()
         {
-            return (dtpFechaSalidaVuelo.Value < dtpFechaLlegadaEstimadaVuelo.Value);
+            return (dtpFechaSalidaVuelo.Value < dtpFechaLlegadaEstimadaVuelo.Value && (dtpFechaLlegadaEstimadaVuelo.Value - dtpFechaSalidaVuelo.Value).TotalDays <= 1);
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -82,23 +82,53 @@ namespace AerolineaFrba.Generacion_Viaje
         {
             if (ruta_seleccionada != null || aeronave_seleccionada != null)
             {
-                string query = "EXEC JUST_DO_IT.almacenarVuelo '" + dtpFechaSalidaVuelo.Value.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + dtpFechaLlegadaEstimadaVuelo.Value.ToString("yyyy-MM-dd hh:mm:ss") + "', " + ruta_seleccionada.id + ", " + aeronave_seleccionada.id +
-                                ", " + aeronave_seleccionada.butacas_totales + ", '" + ruta_seleccionada.servicio + "', '" + aeronave_seleccionada.servicio + "'";
-                try
+                if (this.verificarVueloUnico())
                 {
-                    Server.getInstance().realizarQuery(query);
-                    MessageBox.Show("El vuelo se agrego satisfactoriamente");
+                    string query = "EXEC JUST_DO_IT.almacenarVuelo '" + dtpFechaSalidaVuelo.Value.ToString("yyyy-MM-dd hh:mm:ss") + "', '" + dtpFechaLlegadaEstimadaVuelo.Value.ToString("yyyy-MM-dd hh:mm:ss") + "', " + ruta_seleccionada.id + ", " + aeronave_seleccionada.id +
+                                ", " + aeronave_seleccionada.butacas_totales + ", '" + ruta_seleccionada.servicio + "', '" + aeronave_seleccionada.servicio + "', " + aeronave_seleccionada.kgs_disponibles;
+                    try
+                    {
+                        Server.getInstance().realizarQuery(query);
+                        MessageBox.Show("El vuelo se agrego satisfactoriamente");
+                        this.Close();
+                        new Vistas_Inicio.Inicio_Admin().Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Debe crear un nuevo vuelo. El mismo ya existe.");
                 }
+                
             }
             else
             {
                 MessageBox.Show("Debe seleccionar una ruta y una aeronave");
             }
                 
+        }
+
+        public bool verificarVueloUnico()
+        {
+            string query = "SELECT * FROM JUST_DO_IT.Vuelos WHERE aeronave_id = " + aeronave_seleccionada.id + " AND ruta_id = " + ruta_seleccionada.id + " AND cantidadDisponible = " + aeronave_seleccionada.butacas_totales +
+                " AND KGsDisponibles = " + aeronave_seleccionada.kgs_disponibles + " AND fecha_salida = '" + dtpFechaSalidaVuelo.Value.ToString("yyyy-MM-dd hh:mm:ss") + "' AND " +
+                "fecha_llegada_estimada = '" + dtpFechaLlegadaEstimadaVuelo.Value.ToString("yyyy-MM-dd hh:mm:ss") + "'";
+            SqlDataReader reader = Server.getInstance().query(query);
+            reader.Read();
+            if (reader.HasRows)
+            {
+                reader.Close();
+                return false;
+            }
+            else
+            {
+                reader.Close();
+                return true;
+            }
+         
         }
 
         private void dtpFechaSalidaVuelo_ValueChanged(object sender, EventArgs e)
@@ -123,6 +153,12 @@ namespace AerolineaFrba.Generacion_Viaje
         private void dtpFechaLlegadaEstimadaVuelo_ValueChanged(object sender, EventArgs e)
         {
             this.emptyForm();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
     }
 }

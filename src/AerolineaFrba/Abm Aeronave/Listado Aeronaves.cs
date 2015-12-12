@@ -91,7 +91,7 @@ namespace AerolineaFrba.Abm_Aeronave
 
         public void cargarAeronavesAModificar()
         {
-            string query = "SELECT * FROM JUST_DO_IT.Aeronaves WHERE baja_vida_util = 0";
+            string query = "SELECT aeronaves.id, matricula, modelo, kgs_disponibles, butacas_totales, fabricante , servicios.nombre AS tipo_servicio FROM JUST_DO_IT.Aeronaves aeronaves JOIN JUST_DO_IT.TiposServicios servicios ON aeronaves.tipo_servicio = servicios.id WHERE baja_vida_util = 0";
             SqlDataReader reader = Server.getInstance().query(query);
             while (reader.Read())
             {

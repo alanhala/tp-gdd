@@ -89,8 +89,10 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.groupBox1.Controls.Add(this.lblKgEncomiendasAeronave);
             this.groupBox1.Controls.Add(this.lblTipoServicioAeronave);
             this.groupBox1.Controls.Add(this.lblMatriculaAeronave);
+            this.groupBox1.Controls.Add(this.lblModeloAeronave);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.lblCantButacasAeronave);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label8);
@@ -221,7 +223,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             // lblModeloAeronave
             // 
             this.lblModeloAeronave.AutoSize = true;
-            this.lblModeloAeronave.Location = new System.Drawing.Point(173, 162);
+            this.lblModeloAeronave.Location = new System.Drawing.Point(215, 132);
             this.lblModeloAeronave.Name = "lblModeloAeronave";
             this.lblModeloAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblModeloAeronave.TabIndex = 27;
@@ -229,7 +231,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             // lblCantButacasAeronave
             // 
             this.lblCantButacasAeronave.AutoSize = true;
-            this.lblCantButacasAeronave.Location = new System.Drawing.Point(174, 134);
+            this.lblCantButacasAeronave.Location = new System.Drawing.Point(214, 103);
             this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
             this.lblCantButacasAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblCantButacasAeronave.TabIndex = 25;
@@ -259,9 +261,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.destinoComboBox);
             this.groupBox2.Controls.Add(this.origenComboBox);
-            this.groupBox2.Controls.Add(this.lblModeloAeronave);
             this.groupBox2.Controls.Add(this.dtpFechaYHoraLlegada);
-            this.groupBox2.Controls.Add(this.lblCantButacasAeronave);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label4);

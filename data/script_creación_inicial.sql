@@ -1382,15 +1382,13 @@ CREATE FUNCTION JUST_DO_IT.aeronavesDisponiblesParaVuelos(@Salida DATETIME, @Lle
 RETURNS TABLE
 AS RETURN
 	SELECT aeronaves.* FROM JUST_DO_IT.Aeronaves AS aeronaves 
-	WHERE aeronaves.id IN 
+	WHERE aeronaves.id NOT IN 
 		(SELECT aeronave_id FROM JUST_DO_IT.Vuelos 
-		WHERE ((@Salida > fecha_salida AND @Salida > fecha_llegada_estimada) 
-			OR (@Salida < fecha_salida AND @LlegadaEstimada < fecha_salida)
-			OR (@Salida > fecha_llegada_estimada)) 
+		WHERE ((@Salida < fecha_salida AND @LlegadaEstimada > fecha_salida)
+			   OR (@Salida > fecha_salida AND @Salida < fecha_llegada_estimada))
 		GROUP BY aeronave_id)
 
 GO
-
 
 ------------ Funcionalidades ------------
 
@@ -1407,7 +1405,6 @@ END
 
 GO
 
-
 CREATE PROCEDURE JUST_DO_IT.eliminarFuncionalidad(@Descripcion VARCHAR(255))
 AS BEGIN
 		BEGIN TRY
@@ -1417,9 +1414,7 @@ AS BEGIN
 			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
 		END CATCH
 END
-
 GO
-
 
 CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades(@idRol NUMERIC(18,0))
 RETURNS TABLE
@@ -1597,12 +1592,12 @@ GO
 -----------------------------------------
 
 
-CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255))
+CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255), @KGsDisponibles NUMERIC(18,0))
 AS BEGIN
 	IF @AeronaveTipo = @RutaTipo
 		BEGIN
-			INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada_estimada, ruta_id, aeronave_id, cantidadDisponible)
-				VALUES(@FechaSalida, @FechaLlegadaEstimada, @RutaID, @AeronaveId, @CantidadDisponible)
+			INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada_estimada, ruta_id, aeronave_id, cantidadDisponible, KGsDisponibles)
+				VALUES(@FechaSalida, @FechaLlegadaEstimada, @RutaID, @AeronaveId, @CantidadDisponible, @KGsDisponibles)
 		END
 	ELSE
 		RAISERROR('El servicio de la ruta debe ser el mismo que el de la aeronave',16,217) WITH SETERROR
@@ -2442,3 +2437,4 @@ AS RETURN
 	WHERE b.vuelo_id = @vuelo
 
 GO
+
