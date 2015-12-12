@@ -123,6 +123,7 @@
             this.Controls.Add(this.label1);
             this.Name = "altaRol_elegirFuncionalidades";
             this.Text = "altaRol_elegirFuncionalidades";
+            this.Load += new System.EventHandler(this.altaRol_elegirFuncionalidades_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

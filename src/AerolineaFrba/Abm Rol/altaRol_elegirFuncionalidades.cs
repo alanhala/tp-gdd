@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,16 @@ namespace AerolineaFrba.Abm_Rol
         {
             InitializeComponent();
             nombreRol1 = nombreR;
-            Commons.getInstance().cargarComboBox("Funcionalidades","descripcion",comboBoxFunc);
+            SqlDataReader respuesta;
+            Server server = Server.getInstance();
+            string queryCombo = "SELECT DISTINCT descripcion FROM JUST_DO_IT.funcionalidades WHERE eliminada = 0";
+            respuesta = server.query(queryCombo);
+
+            while (respuesta.Read())
+            {
+                comboBoxFunc.Items.Add(respuesta["descripcion"].ToString());
+            }
+            respuesta.Close();
             
         }
 
@@ -43,35 +53,33 @@ namespace AerolineaFrba.Abm_Rol
                     MessageBox.Show(ex1.Message);
                     return;
                 }
-
+                int idFuncionalidad = Funcionalidad.obtenerID(descrFunc);
                 if (primeraEjecución == 0)
                 {
-                    query = "EXEC JUST_DO_IT.almacenarRol '" + nombreRol1 + "'";
+                    query = "EXEC JUST_DO_IT.almacenarRol '" + nombreRol1 + "', " + idFuncionalidad;
+                    primeraEjecución = 1;
                     try
                     {
-                        primeraEjecución = 1;
                         Server.getInstance().realizarQuery(query);
-                        idRol = Rol.obtenerID(nombreRol1);
+                        MessageBox.Show("El rol se creo satisfactoriamente y se le asigno la funcionalidad");
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
-                        this.Hide();
-                        new Vistas_Inicio.Inicio_Admin().Show();
-                        return;
                     }
                 }
-
-                int idFuncionalidad = Funcionalidad.obtenerID(descrFunc);
-                query = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + idRol + "," + idFuncionalidad;
-                try
+                else
                 {
-                    Server.getInstance().realizarQuery(query);
-                    MessageBox.Show("La funcionalidad se agrego satisfactoriamente");
-                }
-                catch (Exception ex1)
-                {
-                    MessageBox.Show(ex1.Message);
+                    query = "EXEC JUST_DO_IT.almacenarRol_Funcionalidad " + idRol + "," + idFuncionalidad;
+                    try
+                    {
+                        Server.getInstance().realizarQuery(query);
+                        MessageBox.Show("La funcionalidad se agrego satisfactoriamente");
+                    }
+                    catch (Exception ex1)
+                    {
+                        MessageBox.Show(ex1.Message);
+                    }
                 }
             }
         }
@@ -85,20 +93,18 @@ namespace AerolineaFrba.Abm_Rol
         
         private void btnFinalizar_Click(object sender, EventArgs e)
         {
-            System.Data.SqlClient.SqlDataReader respuesta;
-            string query = "SELECT JUST_DO_IT.cantFuncionalidadQuePosee (" + idRol + ") AS atributo";
-            respuesta = Server.getInstance().query(query);
-            respuesta.Read();
-            string atributo = respuesta["atributo"].ToString();
-            respuesta.Close();
-
-            if (atributo == "0")
+            if (primeraEjecución == 0)
                 MessageBox.Show("No ha seleccionado ninguna funcionalidad para el nuevo rol");
             else
             {
                 this.Hide();
                 new Vistas_Inicio.Inicio_Admin().Show();
             }
+        }
+
+        private void altaRol_elegirFuncionalidades_Load(object sender, EventArgs e)
+        {
+
         }
 
 

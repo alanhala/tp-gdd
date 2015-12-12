@@ -426,9 +426,10 @@ IF OBJECT_ID (N'JUST_DO_IT.BuscarUsuario') IS NOT NULL
 	drop function JUST_DO_IT.BuscarUsuario; 
 
 IF OBJECT_ID (N'JUST_DO_IT.butacasReservadasParaVuelo') IS NOT NULL
-	drop function JUST_DO_IT.butacasReservadasParaVuelo; 
+	drop function JUST_DO_IT.butacasReservadasParaVuelo;
 
-
+IF OBJECT_ID (N'JUST_DO_IT.cantidadDeFuncionalidades') IS NOT NULL
+	drop function JUST_DO_IT.cantidadDeFuncionalidades; 
 
 /******CREACION DE TABLAS******/
 
@@ -1416,14 +1417,27 @@ END
 
 GO
 
+CREATE FUNCTION JUST_DO_IT.cantidadDeFuncionalidades(@rol NUMERIC(18,0))
+RETURNS INT
+AS BEGIN
+	RETURN (SELECT COUNT(*) FROM JUST_DO_IT.Rol_Funcionalidad WHERE id_rol = @rol)
+END
+
+GO
+
 CREATE PROCEDURE JUST_DO_IT.eliminarFuncionalidad(@Descripcion VARCHAR(255))
 AS BEGIN
-		BEGIN TRY
-			UPDATE JUST_DO_IT.Funcionalidades SET eliminada = 1 WHERE descripcion LIKE @Descripcion
-		END TRY
-		BEGIN CATCH
-			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
-		END CATCH
+	DECLARE @funcionalidad NUMERIC(18,0)
+	SELECT @funcionalidad = id FROM JUST_DO_IT.Funcionalidades WHERE descripcion = @Descripcion
+
+	IF (NOT EXISTS
+			(SELECT * FROM JUST_DO_IT.Roles r
+			JOIN JUST_DO_IT.Rol_Funcionalidad rf ON r.id = rf.id_rol
+			WHERE rf.id_funcionalidad = @funcionalidad AND JUST_DO_IT.cantidadDeFuncionalidades(r.id) = 1))
+		UPDATE JUST_DO_IT.Funcionalidades SET eliminada = 1 WHERE descripcion LIKE @Descripcion
+	ELSE
+		RAISERROR('No pueden quedar roles sin funcionalidades',16,217) WITH SETERROR
+	
 END
 GO
 
@@ -1488,15 +1502,21 @@ END
 GO
 
 
-CREATE PROCEDURE JUST_DO_IT.almacenarRol(@Nombre VARCHAR(50))
+CREATE PROCEDURE JUST_DO_IT.almacenarRol(@Nombre VARCHAR(50), @funcionalidad NUMERIC(18,0))
 AS BEGIN
+	BEGIN TRANSACTION guardarRol
 	BEGIN TRY
 		INSERT INTO JUST_DO_IT.Roles VALUES(@Nombre, 0)
+		INSERT INTO JUST_DO_IT.Rol_Funcionalidad(id_funcionalidad, id_rol)
+			VALUES(@funcionalidad, @@IDENTITY)
+		COMMIT TRANSACTION guardarRol
 	END TRY
 	BEGIN CATCH
+		ROLLBACK TRANSACTION guardarRol
 		RAISERROR('El rol ingresado ya existe',16,217) WITH SETERROR
 	END CATCH
 END
+
 GO
 
 CREATE PROCEDURE JUST_DO_IT.almacenarRol_Funcionalidad(@IdRol NUMERIC(18,0), @IdFuncionalidad NUMERIC(18,0))
@@ -1627,7 +1647,7 @@ AS RETURN
 	FROM JUST_DO_IT.Usuarios AS usuarios
 GO
 
-create FUNCTION JUST_DO_IT.BuscarUsuario(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @dni NUMERIC(18,0))
+CREATE FUNCTION JUST_DO_IT.BuscarUsuario(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @dni NUMERIC(18,0))
 RETURNS TABLE
 AS RETURN
 	SELECT usuarios.id AS id 

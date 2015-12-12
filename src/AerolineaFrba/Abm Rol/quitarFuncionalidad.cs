@@ -68,25 +68,28 @@ namespace AerolineaFrba.Abm_Rol
            if (row == null)
             {
                 MessageBox.Show("No se ha seleccionado ninguna funcionalidad");
+                return;
             }
-            else
-            {
-                string descripcionFuncionalidad = row.Cells[0].Value.ToString();
-                int idFuncionalidad = Funcionalidad.obtenerID(descripcionFuncionalidad);
+           if (dgvShowRoles.RowCount == 1)
+           {
+               MessageBox.Show("El rol no puede quedar sin funcionalidades");
+               return;
+           }
+            string descripcionFuncionalidad = row.Cells[0].Value.ToString();
+            int idFuncionalidad = Funcionalidad.obtenerID(descripcionFuncionalidad);
 
-                string query = "EXEC JUST_DO_IT.bajaRol_Funcionalidad " + idRol1 + "," + idFuncionalidad;
-                try
-                {
-                    Server.getInstance().realizarQuery(query);
-                    MessageBox.Show("La funcionalidad se eliminó satisfactoriamente");
-                }
-                catch (Exception ex1)
-                {
-                    MessageBox.Show(ex1.Message);
-                }
-                this.Hide();
-                new Vistas_Inicio.Inicio_Admin().Show();
+            string query = "EXEC JUST_DO_IT.bajaRol_Funcionalidad " + idRol1 + "," + idFuncionalidad;
+            try
+            {
+                Server.getInstance().realizarQuery(query);
+                MessageBox.Show("La funcionalidad se eliminó satisfactoriamente");
             }
+            catch (Exception ex1)
+            {
+                MessageBox.Show(ex1.Message);
+            }
+            this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void cancelar_Click(object sender, EventArgs e)
