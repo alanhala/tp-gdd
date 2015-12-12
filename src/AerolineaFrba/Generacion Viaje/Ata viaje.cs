@@ -80,7 +80,7 @@ namespace AerolineaFrba.Generacion_Viaje
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (ruta_seleccionada != null || aeronave_seleccionada != null)
+            if (ruta_seleccionada != null && aeronave_seleccionada != null)
             {
                 if (this.verificarVueloUnico())
                 {
