@@ -1886,7 +1886,7 @@ BEGIN
 
 	RETURN @vuelo_id
 END
-SELECT * FROM JUST_DO_IT.Puntos ORDER By id DESC
+
 GO
 
 CREATE PROCEDURE JUST_DO_IT.registrar_llegada(@vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME)
