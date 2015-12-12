@@ -155,7 +155,8 @@ namespace AerolineaFrba.Vistas_Inicio
 
         private void btnConsultarMillas_Click(object sender, EventArgs e)
         {
-            new Consulta_Millas.ConsultaMillas().Show();
+            new Consulta_Millas.ConsultaMillas(this).Show();
+            this.Hide();
         }
 
 

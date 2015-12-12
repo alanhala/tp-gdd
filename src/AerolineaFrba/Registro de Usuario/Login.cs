@@ -53,7 +53,7 @@ namespace AerolineaFrba.Registro_de_Usuario
 
         private void btnConsultaMillas_Click(object sender, EventArgs e)
         {
-            new Consulta_Millas.ConsultaMillas().Show();
+            
         }
     }
 }

@@ -13,9 +13,11 @@ namespace AerolineaFrba.Consulta_Millas
 {
     public partial class ConsultaMillas : Form
     {
-        public ConsultaMillas()
+        private Form owner;
+        public ConsultaMillas(Form owner)
         {
             InitializeComponent();
+            this.owner = owner;
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -30,7 +32,8 @@ namespace AerolineaFrba.Consulta_Millas
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            owner.Show();
+            this.Hide();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -51,7 +54,7 @@ namespace AerolineaFrba.Consulta_Millas
                     int cont = 0;
                     while (reader.Read())
                     {
-                        dgvDetalleMillas.Rows.Add(reader["millas"].ToString(), reader["vencimiento"].ToString(), "------");
+                        dgvDetalleMillas.Rows.Add(reader["millas"].ToString(), reader["vencimiento"].ToString());
                         cont++;
                     }
                     if (cont == 0)

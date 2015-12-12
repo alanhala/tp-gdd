@@ -1891,12 +1891,14 @@ AS BEGIN
 		UPDATE JUST_DO_IT.Pasajes SET cancelado = 1
 				WHERE EXISTS (SELECT 1
 							 FROM JUST_DO_IT.Vuelos v
-							 WHERE v.ruta_id = @Ruta AND JUST_DO_IT.Pasajes.vuelo_id = v.id)
+							 WHERE v.ruta_id = @Ruta AND JUST_DO_IT.Pasajes.vuelo_id = v.id
+							 AND v.fecha_salida > GETDATE())
 
 		UPDATE JUST_DO_IT.Paquetes SET cancelado = 1
 				WHERE EXISTS (SELECT 1
 							 FROM JUST_DO_IT.Vuelos v
-							 WHERE v.ruta_id = @Ruta AND JUST_DO_IT.Paquetes.vuelo_id = v.id)
+							 WHERE v.ruta_id = @Ruta AND JUST_DO_IT.Paquetes.vuelo_id = v.id
+							 AND v.fecha_salida > GETDATE())
 
 		COMMIT TRANSACTION bajaRuta
 	END TRY
@@ -1916,6 +1918,10 @@ CREATE PROCEDURE JUST_DO_IT.ActualizarRuta(@ruta NUMERIC(18,0), @codigo NUMERIC(
 										   @pasaje NUMERIC(18,2), @origen NUMERIC(18,0), @destino NUMERIC(18,0),
 										   @tipo_servicio NUMERIC(18,0))
 AS BEGIN
+	IF (@pasaje <= 0 OR @kg <= 0)
+		RAISERROR('Debe ingresar un precio para pasaje y para kgs mayor a cero',16,217) WITH SETERROR
+	IF (@origen = @destino)
+		RAISERROR('La ciudad de origen debe ser distinta a la de destino',16,217) WITH SETERROR
 	UPDATE JUST_DO_IT.Rutas SET codigo = @codigo, precio_baseKG = @kg, precio_basePasaje = @pasaje,
 								ciu_id_origen = @origen, ciu_id_destino = @destino, tipo_servicio = @tipo_servicio
 							WHERE id = @ruta

@@ -77,6 +77,7 @@
             // 
             // cmbRutas
             // 
+            this.cmbRutas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRutas.FormattingEnabled = true;
             this.cmbRutas.Location = new System.Drawing.Point(171, 67);
             this.cmbRutas.Name = "cmbRutas";

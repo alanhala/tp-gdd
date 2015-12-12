@@ -65,9 +65,21 @@ namespace AerolineaFrba.Abm_Ruta
 
             try
             {
-                float kg = float.Parse(txtPrecioBasePorKg.Text);
-                float pasaje = float.Parse(txtPrecioBasePorPasaje.Text);
-                float codigo = float.Parse(txtCodigoRuta.Text);
+                float kg;
+                float pasaje;
+                float codigo;
+
+                try
+                {
+                    kg = float.Parse(txtPrecioBasePorKg.Text);
+                    pasaje = float.Parse(txtPrecioBasePorPasaje.Text);
+                    codigo = float.Parse(txtCodigoRuta.Text);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Debe ingresar datos validos");
+                    return;
+                }
                 int origen = Commons.getInstance().getIDFrom("IDCiudad", cmbCiudadOrigen.Text);
                 int destino = Commons.getInstance().getIDFrom("IDCiudad", cmbCiudadDestino.Text);
                 int tipo_servicio = Commons.getInstance().getIDFrom("IDTipoDeServicio", cmbTipoServicio.Text);
@@ -78,16 +90,16 @@ namespace AerolineaFrba.Abm_Ruta
                 new Listado_Rutas().Show();
                 this.Hide();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Debe ingresar datos validos");
+                MessageBox.Show(ex.Message);
             }
 
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            new Vistas_Inicio.Inicio_Admin().Show();
+            new Listado_Rutas().Show();
             this.Hide();
         }
     }
