@@ -47,9 +47,8 @@
             this.btnPagaConTarjeta = new System.Windows.Forms.Button();
             this.btnPagaEnEfectivo = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.btnFinalizar = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnSoyCliente = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lblCosto = new System.Windows.Forms.Label();
@@ -233,33 +232,25 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tipo  de Pago";
             // 
-            // btnAnterior
+            // btnCancelar
             // 
-            this.btnAnterior.Location = new System.Drawing.Point(255, 430);
-            this.btnAnterior.Name = "btnAnterior";
-            this.btnAnterior.Size = new System.Drawing.Size(75, 23);
-            this.btnAnterior.TabIndex = 34;
-            this.btnAnterior.Text = "Anterior";
-            this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnCancelar.Location = new System.Drawing.Point(87, 430);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.TabIndex = 34;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnFinalizar
             // 
-            this.btnFinalizar.Location = new System.Drawing.Point(161, 430);
+            this.btnFinalizar.Location = new System.Drawing.Point(214, 430);
             this.btnFinalizar.Name = "btnFinalizar";
             this.btnFinalizar.Size = new System.Drawing.Size(75, 23);
             this.btnFinalizar.TabIndex = 33;
             this.btnFinalizar.Text = "Finalizar";
             this.btnFinalizar.UseVisualStyleBackColor = true;
             this.btnFinalizar.Click += new System.EventHandler(this.btnFinalizar_Click);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Location = new System.Drawing.Point(67, 430);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.btnLimpiar.TabIndex = 32;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
             // btnSoyCliente
             // 
@@ -361,13 +352,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(425, 457);
+            this.ClientSize = new System.Drawing.Size(425, 463);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.lblCosto);
             this.Controls.Add(this.btnSoyCliente);
-            this.Controls.Add(this.btnAnterior);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnFinalizar);
-            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -403,9 +393,8 @@
         private System.Windows.Forms.Button btnPagaConTarjeta;
         private System.Windows.Forms.Button btnPagaEnEfectivo;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnFinalizar;
-        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnSoyCliente;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblCosto;

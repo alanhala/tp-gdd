@@ -93,7 +93,8 @@ namespace AerolineaFrba.Listado_Estadistico
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
     }
 }

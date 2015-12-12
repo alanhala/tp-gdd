@@ -113,5 +113,11 @@ namespace AerolineaFrba.Abm_Aeronave
         {
 
         }
+
+        private void btnMenuPrincipal_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            new Vistas_Inicio.Inicio_Admin().Show();
+        }
     }
 }

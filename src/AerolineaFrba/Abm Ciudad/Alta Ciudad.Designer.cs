@@ -94,7 +94,7 @@
             this.groupBox2.Size = new System.Drawing.Size(201, 127);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Alta de ciudad";
+            this.groupBox2.Text = "Modificar ciudad";
             // 
             // cmbCiudades
             // 

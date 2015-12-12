@@ -1311,7 +1311,8 @@ AS RETURN
 	JOIN JUST_DO_IT.Aeronaves aeronaves
 	ON aeronaves.id = vuelos.aeronave_id
 	JOIN JUST_DO_IT.TiposServicios tipos
-	ON tipos.id = aeronaves.tipo_servicio 
+	ON tipos.id = aeronaves.tipo_servicio
+	WHERE vuelo_eliminado = 0
 
 GO
 
@@ -1328,7 +1329,7 @@ AS BEGIN
 		END ELSE
 			RAISERROR('La ruta ingresada ya existe',16,217) WITH SETERROR
 	ELSE 
-		RAISERROR('No se pudo agregar la ruta',16,217) WITH SETERROR
+		RAISERROR('Los precios tienen que ser validos y la ciudad origen debe ser distinta a la de destino',16,217) WITH SETERROR
 
 END
 
@@ -1573,9 +1574,6 @@ AS BEGIN
 	END CATCH
 END 
 GO
-
-
-
 
 CREATE PROCEDURE JUST_DO_IT.estabaDadoDeBajaElRol(@nombre VARCHAR(50))
 AS BEGIN
@@ -1924,7 +1922,7 @@ GO
 CREATE PROCEDURE JUST_DO_IT.BajarRuta(@Ruta NUMERIC(18,0))
 AS BEGIN
 	CREATE TABLE #AuxiliarEliminarRuta(
-		compra NUMERIC(18,0) UNIQUE,
+		compra NUMERIC(18,0),
 		monto NUMERIC(18,2),
 		codigo NUMERIC(18,0),
 		tipo VARCHAR(255)
@@ -1933,7 +1931,7 @@ AS BEGIN
 		BEGIN TRANSACTION bajaRuta
 		UPDATE JUST_DO_IT.Rutas SET eliminada = 1
 			WHERE id = @Ruta
-
+		
 		INSERT INTO #AuxiliarEliminarRuta(compra, monto, codigo, tipo)
 		SELECT DISTINCT compra, p.precio, p.codigo, 'Pasaje'
 		FROM JUST_DO_IT.Pasajes p, JUST_DO_IT.Vuelos v
@@ -1941,14 +1939,17 @@ AS BEGIN
 		UNION
 		SELECT DISTINCT compra, p.precio, p.codigo, 'Paquete'
 		FROM JUST_DO_IT.Paquetes p, JUST_DO_IT.Vuelos v
-		WHERE ruta_id = @Ruta AND vuelo_id = v.id
-						
+		WHERE ruta_id = @Ruta AND vuelo_id = v.id 
+
+		/* Se lo almacena primero en cancelaciones pendientes porque es la que se encarga de generar el codigo */			
 		INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, fecha, monto, motivo, tipo, codigo)
-			SELECT a.compra, GETDATE(), a.monto, 'La ruta fue dada de baja', a.tipo, a.codigo
+			SELECT a.compra, GETDATE(), a.monto, 'La ruta fue dada de baja', 
+			CASE WHEN a.tipo = 'Pasaje' THEN 0 ELSE 1 END, a.codigo
 			FROM #AuxiliarEliminarRuta a
 		
 		INSERT INTO JUST_DO_IT.CancelacionesHechas(codigo_cancelacion, compra, fecha, monto_devuelto, motivo, tipo)
-			SELECT id, compra, fecha, monto, motivo, tipo FROM JUST_DO_IT.CancelacionesPendientes
+			SELECT id, compra, fecha, monto, motivo, 
+			CASE WHEN tipo = 0 THEN 'Pasaje' ELSE 'Paquete' END FROM JUST_DO_IT.CancelacionesPendientes
 
 		UPDATE JUST_DO_IT.Vuelos SET vuelo_eliminado = 1 WHERE ruta_id = @Ruta
 
@@ -1966,7 +1967,10 @@ AS BEGIN
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION bajaRuta
-		RAISERROR('No se pudo dar de baja la ruta',16,217) WITH SETERROR
+		DECLARE @error VARCHAR(255)
+		SET @error = ERROR_MESSAGE()
+		RAISERROR(@error,16,217) WITH SETERROR
+		--RAISERROR('No se pudo dar de baja la ruta',16,217) WITH SETERROR
 	END CATCH
 	DROP TABLE #AuxiliarEliminarRuta
 END
@@ -2012,32 +2016,25 @@ GO
 CREATE PROCEDURE JUST_DO_IT.agregarCompraADevolver(@compra NUMERIC(18,0), @tipo BIT, @codigo NUMERIC(18,0), 
 												   @motivo VARCHAR(255))
 AS BEGIN
-	BEGIN TRY
-		DECLARE @monto NUMERIC(18,2)
-		IF (@tipo = 0) /* Pasajes */
-		BEGIN
-			SELECT @monto = precio FROM JUST_DO_IT.Pasajes p
-			WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
-		END
-		ELSE /* Paquetes */
-		BEGIN
-			SELECT @monto = precio FROM JUST_DO_IT.Paquetes p
-			WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
-		END
-		IF (@monto IS NULL)
-			RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
+	DECLARE @monto NUMERIC(18,2)
+	IF (@tipo = 0) /* Pasajes */
+	BEGIN
+		SELECT @monto = precio FROM JUST_DO_IT.Pasajes p
+		WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
+	END
+	ELSE /* Paquetes */
+	BEGIN
+		SELECT @monto = precio FROM JUST_DO_IT.Paquetes p
+		WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
+	END
+	IF (@monto IS NULL)
+		RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
 
-		IF EXISTS (SELECT 1 FROM JUST_DO_IT.CancelacionesPendientes WHERE compra = @compra AND @codigo = codigo AND tipo = @tipo)
-			RAISERROR('La compra ingresada ya ha sido encolada para darse de baja',16,217) WITH SETERROR
+	IF EXISTS (SELECT 1 FROM JUST_DO_IT.CancelacionesPendientes WHERE compra = @compra AND @codigo = codigo AND tipo = @tipo)
+		RAISERROR('La compra ingresada ya ha sido encolada para darse de baja',16,217) WITH SETERROR
 
-		INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, tipo, codigo, motivo, monto, fecha)
-			VALUES(@compra, @tipo, @codigo, @motivo, @monto, GETDATE())
-	END TRY
-	BEGIN CATCH
-		DECLARE @error VARCHAR(255)
-		SET @error = ERROR_MESSAGE()
-		RAISERROR(@error,16,217) WITH SETERROR
-	END CATCH
+	INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, tipo, codigo, motivo, monto, fecha)
+		VALUES(@compra, @tipo, @codigo, @motivo, @monto, GETDATE())
 END
 
 GO
