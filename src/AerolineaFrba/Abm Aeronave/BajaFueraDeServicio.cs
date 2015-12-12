@@ -46,6 +46,11 @@ namespace AerolineaFrba.Abm_Aeronave
             }
             else
             {
+                if (dtpFechaFueraServicio.Value > dtpFechaReinicioServicio.Value)
+                {
+                    MessageBox.Show("La fecha de reinicio debe ser posterior a la de baja");
+                    return;
+                }
                 new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text, dtpFechaFueraServicio, dtpFechaReinicioServicio).Show();
                 this.Close();
             }

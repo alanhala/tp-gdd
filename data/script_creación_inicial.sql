@@ -1340,7 +1340,7 @@ END
 GO
 
 
-CREATE PROCEDURE JUST_DO_IT.almacenarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255), @tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
+CREATE PROCEDURE JUST_DO_IT.almacenarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255), @tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,2), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		IF (NOT EXISTS (SELECT * FROM JUST_DO_IT.Aeronaves
@@ -1359,7 +1359,7 @@ END
 GO
 
 CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@id NUMERIC(18,0), @matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,2), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
@@ -2285,6 +2285,7 @@ BEGIN
 		
 	RETURN -1;
 END
+
 GO
 
 CREATE PROCEDURE JUST_DO_IT.canjearMillas(@dni NUMERIC(18,0), @nombre VARCHAR(255), @apellido VARCHAR(255), @descripcionProd  NVARCHAR(255), @cantProducto NUMERIC(18,0))
