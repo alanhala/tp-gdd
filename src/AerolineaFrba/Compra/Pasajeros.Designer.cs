@@ -98,6 +98,7 @@
             this.Controls.Add(this.lstPasajeros);
             this.Name = "Pasajeros";
             this.Text = "Pasajeros";
+            this.Load += new System.EventHandler(this.Pasajeros_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

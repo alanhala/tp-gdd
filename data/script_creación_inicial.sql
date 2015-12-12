@@ -416,6 +416,10 @@ IF OBJECT_ID (N'JUST_DO_IT.existeRol') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.estabaDadoDeBajaElRol') IS NOT NULL
 	drop procedure JUST_DO_IT.estabaDadoDeBajaElRol; 
 
+IF OBJECT_ID (N'JUST_DO_IT.butacasReservadasParaVuelo') IS NOT NULL
+	drop function JUST_DO_IT.butacasReservadasParaVuelo; 
+
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -1167,7 +1171,7 @@ AS BEGIN
 		DECLARE @compra_id INT
 		SELECT @compra_id = @@IDENTITY
 
-		IF (@KGs < 0)
+		IF (@KGs <= 0)
 		BEGIN
 			SET @error = 0
 			RAISERROR('La cantidad de KGs ingresada para encomienda debe ser positiva',16,217) WITH SETERROR
@@ -2033,14 +2037,21 @@ AS BEGIN
 		SELECT @monto = precio FROM JUST_DO_IT.Paquetes p
 		WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
 	END
-	IF (@monto IS NULL)
-		RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
+	BEGIN TRY
+		IF (@monto IS NULL)
+			RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
 
-	IF EXISTS (SELECT 1 FROM JUST_DO_IT.CancelacionesPendientes WHERE compra = @compra AND @codigo = codigo AND tipo = @tipo)
-		RAISERROR('La compra ingresada ya ha sido encolada para darse de baja',16,217) WITH SETERROR
+		IF EXISTS (SELECT 1 FROM JUST_DO_IT.CancelacionesPendientes WHERE compra = @compra AND @codigo = codigo AND tipo = @tipo)
+			RAISERROR('La compra ingresada ya ha sido encolada para darse de baja',16,217) WITH SETERROR
 
-	INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, tipo, codigo, motivo, monto, fecha)
-		VALUES(@compra, @tipo, @codigo, @motivo, @monto, GETDATE())
+		INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, tipo, codigo, motivo, monto, fecha)
+			VALUES(@compra, @tipo, @codigo, @motivo, @monto, GETDATE())
+	END TRY
+	BEGIN CATCH
+		DECLARE @error NVARCHAR(255)
+		SET @error = ERROR_MESSAGE()
+		RAISERROR (@error, 16, 217) WITH SETERROR
+	END CATCH
 END
 
 GO
@@ -2420,3 +2431,18 @@ AS BEGIN
 END
 
 GO
+
+CREATE FUNCTION JUST_DO_IT.butacasReservadasParaVuelo(@vuelo NUMERIC(18,0))
+RETURNS TABLE
+AS RETURN
+	SELECT apellido, nombre 
+	FROM JUST_DO_IT.Usuarios u
+	JOIN JUST_DO_IT.ButacasReservadas b
+	ON b.usuario_id = u.id
+	WHERE b.vuelo_id = @vuelo
+
+GO
+
+SELECT * FROM JUST_DO_IT.Compras ORDER BY codigo desc
+
+SELECT * FROM JUST_DO_IT.Pasajes WHERE compra = 1072154
