@@ -72,10 +72,14 @@ namespace AerolineaFrba.Registro_Llegada_Destino
                 var vuelo_id = reader["vuelo_id"].ToString();
                 reader.Close();
                 if (vuelo_id == "")
-                    MessageBox.Show("La aeronave seleccionada no posee un vuelo con los campos ingresados.");
+                    MessageBox.Show("La aeronave seleccionada no posee un vuelo con los campos ingresados o el vuelo ya registro la llegada.");
                 else
                 {
-                    Server.getInstance().realizarQuery("EXEC JUST_DO_IT.registrar_llegada(" + vuelo_id + ", " + dtpFechaYHoraLlegada.Value.ToString("yyy-MM-dd") + ")");
+                    query = "EXEC JUST_DO_IT.registrar_llegada " + vuelo_id + ", '" + dtpFechaYHoraLlegada.Value.ToString("yyy-MM-dd") + "'";
+                    Server.getInstance().realizarQuery(query);
+                    MessageBox.Show("La llegada ha sido registrada");
+                    this.Hide();
+                    new Vistas_Inicio.Inicio_Admin().Show();
                 }
             }
             else
@@ -86,6 +90,12 @@ namespace AerolineaFrba.Registro_Llegada_Destino
         public bool camposValidos()
         {
             return this.aeronave_seleccionada != null && this.origenComboBox.SelectedItem != null && this.destinoComboBox.SelectedItem != null;
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
     }
 }
