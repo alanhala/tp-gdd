@@ -75,17 +75,27 @@ namespace AerolineaFrba.Registro_Llegada_Destino
                     MessageBox.Show("La aeronave seleccionada no posee un vuelo con los campos ingresados.");
                 else
                 {
-                    Server.getInstance().realizarQuery("EXEC JUST_DO_IT.registrar_llegada(" + vuelo_id + ", " + dtpFechaYHoraLlegada.Value.ToString("yyy-MM-dd") + ")");
+                    try
+                    {
+                        Server.getInstance().realizarQuery("EXEC JUST_DO_IT.registrar_llegada " + vuelo_id + ", '" + dtpFechaYHoraLlegada.Value.ToString("yyy-MM-dd HH:mm:ss") + "'");
+                        MessageBox.Show("Se ha registrado satisfactoriamente la llegada de la aeronave");
+                        this.Close();
+                        new Vistas_Inicio.Inicio_Admin().Show();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("No se ha podido registrar la llegada de la aeronave.");
+                    }
                 }
             }
             else
-                MessageBox.Show("Debe completar todos los datos");
+                MessageBox.Show("Debe completar todos los datos. La fecha de llegada debe ser posterior a la fecha de salida");
          
         }
 
         public bool camposValidos()
         {
-            return this.aeronave_seleccionada != null && this.origenComboBox.SelectedItem != null && this.destinoComboBox.SelectedItem != null;
+            return this.aeronave_seleccionada != null && this.origenComboBox.SelectedItem != null && this.destinoComboBox.SelectedItem != null && dtpFechaYHoraSalida.Value < dtpFechaYHoraLlegada.Value;
         }
     }
 }

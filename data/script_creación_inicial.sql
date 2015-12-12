@@ -1889,7 +1889,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE JUST_DO_IT.registrar_llegada(@vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME)
+CREATE PROCEDURE JUST_DO_IT.registrar_llegada @vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME
 AS
 BEGIN
 	BEGIN TRY
