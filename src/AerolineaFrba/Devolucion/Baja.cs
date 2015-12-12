@@ -27,6 +27,16 @@ namespace AerolineaFrba.Devolucion
                 MessageBox.Show("Debe completar todos los campos");
                 return;
             }
+            try
+            {
+                float.Parse(txtCodigo.Text);
+                float.Parse(txtCompra.Text);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Debe ingresar una compra y un codigo validos");
+                return;
+            }
             string query = "EXEC JUST_DO_IT.agregarCompraADevolver " + txtCompra.Text + ", " + cmbTipo.SelectedIndex + ", " +
                 txtCodigo.Text + ", " + txtMotivo.Text;
             try

@@ -38,8 +38,10 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.lblKgEncomiendasAeronave = new System.Windows.Forms.Label();
             this.lblTipoServicioAeronave = new System.Windows.Forms.Label();
             this.lblMatriculaAeronave = new System.Windows.Forms.Label();
+            this.lblModeloAeronave = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.lblCantButacasAeronave = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -47,8 +49,6 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.lblModeloAeronave = new System.Windows.Forms.Label();
-            this.lblCantButacasAeronave = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -60,6 +60,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.btnBuscarAeronave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.matriculasComboBox = new System.Windows.Forms.ComboBox();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -89,8 +90,10 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.groupBox1.Controls.Add(this.lblKgEncomiendasAeronave);
             this.groupBox1.Controls.Add(this.lblTipoServicioAeronave);
             this.groupBox1.Controls.Add(this.lblMatriculaAeronave);
+            this.groupBox1.Controls.Add(this.lblModeloAeronave);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.lblCantButacasAeronave);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label8);
@@ -137,6 +140,14 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.lblMatriculaAeronave.Size = new System.Drawing.Size(0, 13);
             this.lblMatriculaAeronave.TabIndex = 12;
             // 
+            // lblModeloAeronave
+            // 
+            this.lblModeloAeronave.AutoSize = true;
+            this.lblModeloAeronave.Location = new System.Drawing.Point(215, 132);
+            this.lblModeloAeronave.Name = "lblModeloAeronave";
+            this.lblModeloAeronave.Size = new System.Drawing.Size(0, 13);
+            this.lblModeloAeronave.TabIndex = 27;
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -154,6 +165,14 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.label13.Size = new System.Drawing.Size(42, 13);
             this.label13.TabIndex = 21;
             this.label13.Text = "Modelo";
+            // 
+            // lblCantButacasAeronave
+            // 
+            this.lblCantButacasAeronave.AutoSize = true;
+            this.lblCantButacasAeronave.Location = new System.Drawing.Point(214, 103);
+            this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
+            this.lblCantButacasAeronave.Size = new System.Drawing.Size(0, 13);
+            this.lblCantButacasAeronave.TabIndex = 25;
             // 
             // label7
             // 
@@ -218,22 +237,6 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.label3.TabIndex = 4;
             this.label3.Text = "Matrícula";
             // 
-            // lblModeloAeronave
-            // 
-            this.lblModeloAeronave.AutoSize = true;
-            this.lblModeloAeronave.Location = new System.Drawing.Point(173, 162);
-            this.lblModeloAeronave.Name = "lblModeloAeronave";
-            this.lblModeloAeronave.Size = new System.Drawing.Size(0, 13);
-            this.lblModeloAeronave.TabIndex = 27;
-            // 
-            // lblCantButacasAeronave
-            // 
-            this.lblCantButacasAeronave.AutoSize = true;
-            this.lblCantButacasAeronave.Location = new System.Drawing.Point(174, 134);
-            this.lblCantButacasAeronave.Name = "lblCantButacasAeronave";
-            this.lblCantButacasAeronave.Size = new System.Drawing.Size(0, 13);
-            this.lblCantButacasAeronave.TabIndex = 25;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -259,9 +262,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.destinoComboBox);
             this.groupBox2.Controls.Add(this.origenComboBox);
-            this.groupBox2.Controls.Add(this.lblModeloAeronave);
             this.groupBox2.Controls.Add(this.dtpFechaYHoraLlegada);
-            this.groupBox2.Controls.Add(this.lblCantButacasAeronave);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label4);
@@ -347,6 +348,16 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.matriculasComboBox.Size = new System.Drawing.Size(150, 21);
             this.matriculasComboBox.TabIndex = 9;
             // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(21, 336);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.TabIndex = 13;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // Registro
             // 
             this.AcceptButton = this.btnGuardar;
@@ -354,6 +365,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(614, 362);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.matriculasComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnBuscarAeronave);
@@ -404,5 +416,6 @@ namespace AerolineaFrba.Registro_Llegada_Destino
         private ComboBox origenComboBox;
         private DateTimePicker dtpFechaYHoraSalida;
         private Label label12;
+        private Button btnCancelar;
     }
 }

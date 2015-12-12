@@ -152,8 +152,7 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             try{ 
-                this.validarCampos();
-                if (this.aeronaveValida())
+                if (this.aeronaveValida() && this.validarCampos())
                 {
                     string altaAeronave;
                     string generarButacas;
@@ -161,7 +160,7 @@ namespace AerolineaFrba.Abm_Aeronave
                     string modelo = tbModelo.Text;
                     string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
                     int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
-                    int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
+                    float espacioParaEncomiendas = float.Parse(tbEspacioTotalParaEncomiendas.Text);
                     int cantidadButacas = int.Parse(tbCantButacas.Text);
 
                     altaAeronave = "EXEC JUST_DO_IT.almacenarAeronave '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + cantidadButacas;
@@ -174,6 +173,11 @@ namespace AerolineaFrba.Abm_Aeronave
                         if (this.matriculaAReemplazar != null)
                         {
                             owner.aeronaveCreada(matricula);
+                            this.Close();
+                            new Vistas_Inicio.Inicio_Admin().Show();
+                        }
+                        else
+                        {
                             this.Close();
                             new Vistas_Inicio.Inicio_Admin().Show();
                         }

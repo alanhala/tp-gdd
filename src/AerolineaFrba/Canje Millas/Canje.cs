@@ -24,14 +24,24 @@ namespace AerolineaFrba.Canje_Millas
             string DNI = txtDNI.Text;
             string apellido = txtApellido.Text;
             string nombre = txtNombre.Text;
-            if (DNI.Trim() == "" || nombre.Trim() == "" || apellido.Trim() == "")
+            if (DNI.Trim() == "" || nombre.Trim() == "" || apellido.Trim() == "" || txtCantidad.Text == "")
             {
-                MessageBox.Show("Debe completar los 3 campos");
+                MessageBox.Show("Debe completar todos los campos");
             }
             else
             {
                 try
                 {
+                    try
+                    {
+                        float.Parse(txtDNI.Text);
+                        int.Parse(txtCantidad.Text);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Debe ingresar datos validos");
+                        return;
+                    }
 
                     DataGridViewRow premio = Commons.getInstance().getSelectedRow(dgvMillasPorProducto);
                     if (premio == null)

@@ -425,6 +425,10 @@ IF OBJECT_ID (N'JUST_DO_IT.asignarRolAUsuario') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.BuscarUsuario') IS NOT NULL
 	drop procedure JUST_DO_IT.BuscarUsuario; 
 
+IF OBJECT_ID (N'JUST_DO_IT.butacasReservadasParaVuelo') IS NOT NULL
+	drop function JUST_DO_IT.butacasReservadasParaVuelo; 
+
+
 
 /******CREACION DE TABLAS******/
 
@@ -449,7 +453,7 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	matricula NVARCHAR(255) UNIQUE NOT NULL,
 	modelo NVARCHAR(255) NOT NULL,
-	kgs_disponibles NUMERIC(18,0) NOT NULL,
+	kgs_disponibles NUMERIC(18,2) NOT NULL,
 	butacas_totales NUMERIC(18,0) NOT NULL,
 	fabricante NVARCHAR(255) NOT NULL,
 	tipo_servicio NUMERIC(18,0) NOT NULL,
@@ -1162,7 +1166,7 @@ AS BEGIN
 		IF (@Costo > 0)
 		BEGIN
 			SELECT @CantidadPasajes = COUNT(*) FROM JUST_DO_IT.ButacasReservadas 
-								WHERE vuelo_id = 1 GROUP BY vuelo_id
+								WHERE vuelo_id = @Vuelo GROUP BY vuelo_id
 		END
 		ELSE
 			SET @CantidadPasajes = 0
@@ -1346,7 +1350,7 @@ END
 GO
 
 
-CREATE PROCEDURE JUST_DO_IT.almacenarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255), @tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
+CREATE PROCEDURE JUST_DO_IT.almacenarAeronave(@matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255), @tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,2), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		IF (NOT EXISTS (SELECT * FROM JUST_DO_IT.Aeronaves
@@ -1365,7 +1369,7 @@ END
 GO
 
 CREATE PROCEDURE JUST_DO_IT.modificarAeronave(@id NUMERIC(18,0), @matricula NVARCHAR(255), @modelo NVARCHAR(255), @fabricante NVARCHAR(255),
-	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,0), @cant_butacas NUMERIC(18,0))
+	@tipo_servicio NUMERIC(18,0), @kgs_disponibles NUMERIC(18,2), @cant_butacas NUMERIC(18,0))
 AS BEGIN
 	IF (@kgs_disponibles >= 0)
 		BEGIN TRY
@@ -1388,15 +1392,13 @@ CREATE FUNCTION JUST_DO_IT.aeronavesDisponiblesParaVuelos(@Salida DATETIME, @Lle
 RETURNS TABLE
 AS RETURN
 	SELECT aeronaves.* FROM JUST_DO_IT.Aeronaves AS aeronaves 
-	WHERE aeronaves.id IN 
+	WHERE aeronaves.id NOT IN 
 		(SELECT aeronave_id FROM JUST_DO_IT.Vuelos 
-		WHERE ((@Salida > fecha_salida AND @Salida > fecha_llegada_estimada) 
-			OR (@Salida < fecha_salida AND @LlegadaEstimada < fecha_salida)
-			OR (@Salida > fecha_llegada_estimada)) 
+		WHERE ((@Salida < fecha_salida AND @LlegadaEstimada > fecha_salida)
+			   OR (@Salida > fecha_salida AND @Salida < fecha_llegada_estimada))
 		GROUP BY aeronave_id)
 
 GO
-
 
 ------------ Funcionalidades ------------
 
@@ -1413,7 +1415,6 @@ END
 
 GO
 
-
 CREATE PROCEDURE JUST_DO_IT.eliminarFuncionalidad(@Descripcion VARCHAR(255))
 AS BEGIN
 		BEGIN TRY
@@ -1423,9 +1424,7 @@ AS BEGIN
 			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
 		END CATCH
 END
-
 GO
-
 
 CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades(@idRol NUMERIC(18,0))
 RETURNS TABLE
@@ -1640,13 +1639,12 @@ GO
 
 -----------------------------------------
 
-
-CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255))
+CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255), @KGsDisponibles NUMERIC(18,2))
 AS BEGIN
 	IF @AeronaveTipo = @RutaTipo
 		BEGIN
-			INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada_estimada, ruta_id, aeronave_id, cantidadDisponible)
-				VALUES(@FechaSalida, @FechaLlegadaEstimada, @RutaID, @AeronaveId, @CantidadDisponible)
+			INSERT INTO JUST_DO_IT.Vuelos(fecha_salida, fecha_llegada_estimada, ruta_id, aeronave_id, cantidadDisponible, KGsDisponibles)
+				VALUES(@FechaSalida, @FechaLlegadaEstimada, @RutaID, @AeronaveId, @CantidadDisponible, @KGsDisponibles)
 		END
 	ELSE
 		RAISERROR('El servicio de la ruta debe ser el mismo que el de la aeronave',16,217) WITH SETERROR
@@ -1936,11 +1934,13 @@ BEGIN
 
 	RETURN @vuelo_id
 END
+
 GO
 
-CREATE PROCEDURE JUST_DO_IT.registrar_llegada(@vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME)
+CREATE PROCEDURE JUST_DO_IT.registrar_llegada @vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME
 AS
 BEGIN
+	BEGIN TRANSACTION registro
 	BEGIN TRY
 		UPDATE JUST_DO_IT.Vuelos
 		SET fecha_llegada = @fecha_llegada
@@ -1948,9 +1948,12 @@ BEGIN
 
 		UPDATE JUST_DO_IT.Puntos
 		SET validos = 1
-		WHERE id = @vuelo_id
+		WHERE vuelo_id = @vuelo_id
+
+		COMMIT TRANSACTION registro
 	END TRY
 	BEGIN CATCH
+		ROLLBACK TRANSACTION registro
 		RAISERROR('No se pudo registrar la llegada del vuelo',16,217) WITH SETERROR
 	END CATCH
 END
@@ -2081,14 +2084,21 @@ AS BEGIN
 		SELECT @monto = precio FROM JUST_DO_IT.Paquetes p
 		WHERE p.compra = @compra AND p.codigo = @codigo AND p.cancelado = 0
 	END
-	IF (@monto IS NULL)
-		RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
+	BEGIN TRY
+		IF (@monto IS NULL)
+			RAISERROR('Los datos ingresados no existen',16,217) WITH SETERROR
 
-	IF EXISTS (SELECT 1 FROM JUST_DO_IT.CancelacionesPendientes WHERE compra = @compra AND @codigo = codigo AND tipo = @tipo)
-		RAISERROR('La compra ingresada ya ha sido encolada para darse de baja',16,217) WITH SETERROR
+		IF EXISTS (SELECT 1 FROM JUST_DO_IT.CancelacionesPendientes WHERE compra = @compra AND @codigo = codigo AND tipo = @tipo)
+			RAISERROR('La compra ingresada ya ha sido encolada para darse de baja',16,217) WITH SETERROR
 
-	INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, tipo, codigo, motivo, monto, fecha)
-		VALUES(@compra, @tipo, @codigo, @motivo, @monto, GETDATE())
+		INSERT INTO JUST_DO_IT.CancelacionesPendientes(compra, tipo, codigo, motivo, monto, fecha)
+			VALUES(@compra, @tipo, @codigo, @motivo, @monto, GETDATE())
+	END TRY
+	BEGIN CATCH
+		DECLARE @error NVARCHAR(255)
+		SET @error = ERROR_MESSAGE()
+		RAISERROR (@error, 16, 217) WITH SETERROR
+	END CATCH
 END
 
 GO
@@ -2322,6 +2332,7 @@ BEGIN
 		
 	RETURN -1;
 END
+
 GO
 
 CREATE PROCEDURE JUST_DO_IT.canjearMillas(@dni NUMERIC(18,0), @nombre VARCHAR(255), @apellido VARCHAR(255), @descripcionProd  NVARCHAR(255), @cantProducto NUMERIC(18,0))
@@ -2466,5 +2477,16 @@ AS BEGIN
 
 	DROP TABLE #vuelosAEliminar
 END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.butacasReservadasParaVuelo(@vuelo NUMERIC(18,0))
+RETURNS TABLE
+AS RETURN
+	SELECT apellido, nombre 
+	FROM JUST_DO_IT.Usuarios u
+	JOIN JUST_DO_IT.ButacasReservadas b
+	ON b.usuario_id = u.id
+	WHERE b.vuelo_id = @vuelo
 
 GO

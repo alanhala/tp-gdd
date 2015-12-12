@@ -27,6 +27,17 @@ namespace AerolineaFrba.Compra
         {
             if (txtNumero.Text.Length == 16 && txtCodigo.Text.Length > 0 && txtVencimiento.Text.Length == 4)
             {
+                try
+                {
+                    float.Parse(txtNumero.Text);
+                    int.Parse(txtCodigo.Text);
+                    int.Parse(txtVencimiento.Text);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Debe ingresar datos validos");
+                    return;
+                }
                 this.form_pago.cargarDatosTarjeta(txtNumero.Text,
                                                   txtCodigo.Text,
                                                   txtVencimiento.Text,
@@ -36,7 +47,7 @@ namespace AerolineaFrba.Compra
             }
             else
             {
-                MessageBox.Show("Debe ingresar datos válidos");
+                MessageBox.Show("Debe ingresar un numero de tarjeta de 16 digitos, un codigo de seguridad y una fecha de vencimiento de 4 digitos");
             }
         }
 
@@ -64,6 +75,11 @@ namespace AerolineaFrba.Compra
 
             cmbCuotas.SelectedIndex = 0;
             reader.Close();
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

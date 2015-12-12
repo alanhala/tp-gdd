@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -60,6 +61,15 @@ namespace AerolineaFrba.Compra
             Server.getInstance().realizarQuery(query);
             new compraPasaje().Show();
             this.Hide();
+        }
+
+        private void Pasajeros_Load(object sender, EventArgs e)
+        {
+            string query = "SELECT * FROM JUST_DO_IT.butacasReservadasParaVuelo(" + this.vuelo_id + ")";
+            SqlDataReader reader = Server.getInstance().query(query);
+            while(reader.Read())
+                lstPasajeros.Items.Add(reader["apellido"].ToString() + ", " + reader["nombre"].ToString());
+            reader.Close();
         }
     }
 }

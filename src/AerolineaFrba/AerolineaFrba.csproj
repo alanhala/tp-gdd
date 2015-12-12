@@ -100,16 +100,16 @@
     <Compile Include="Abm Ciudad\Alta Ciudad.Designer.cs">
       <DependentUpon>Alta Ciudad.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Funcionalidad\altaFunc.cs">
+    <Compile Include="Abm Rol\Abm Funcionalidad\altaFunc.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Funcionalidad\altaFunc.Designer.cs">
+    <Compile Include="Abm Rol\Abm Funcionalidad\altaFunc.Designer.cs">
       <DependentUpon>altaFunc.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Funcionalidad\bajaFunc.cs">
+    <Compile Include="Abm Rol\Abm Funcionalidad\bajaFunc.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Funcionalidad\bajaFunc.Designer.cs">
+    <Compile Include="Abm Rol\Abm Funcionalidad\bajaFunc.Designer.cs">
       <DependentUpon>bajaFunc.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Rol\agregarFuncionalidad.cs">
@@ -331,10 +331,10 @@
     <EmbeddedResource Include="Abm Ciudad\Alta Ciudad.resx">
       <DependentUpon>Alta Ciudad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Funcionalidad\altaFunc.resx">
+    <EmbeddedResource Include="Abm Rol\Abm Funcionalidad\altaFunc.resx">
       <DependentUpon>altaFunc.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Funcionalidad\bajaFunc.resx">
+    <EmbeddedResource Include="Abm Rol\Abm Funcionalidad\bajaFunc.resx">
       <DependentUpon>bajaFunc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\agregarFuncionalidad.resx">

@@ -62,7 +62,7 @@ namespace AerolineaFrba.Abm_Aeronave
                 aeronave.id = Convert.ToInt32(reader["id"]);
                 aeronave.matricula = reader["matricula"].ToString();
                 aeronave.modelo = reader["modelo"].ToString();
-                aeronave.kgs_disponibles = Convert.ToInt32(reader["kgs_disponibles"]);
+                aeronave.kgs_disponibles = float.Parse(reader["kgs_disponibles"].ToString());
                 aeronave.butacas_totales = Convert.ToInt32(reader["butacas_totales"]);
                 aeronave.fabricante = reader["fabricante"].ToString();
                 aeronave.servicio = reader["tipo_servicio"].ToString();
@@ -91,7 +91,7 @@ namespace AerolineaFrba.Abm_Aeronave
 
         public void cargarAeronavesAModificar()
         {
-            string query = "SELECT * FROM JUST_DO_IT.Aeronaves WHERE baja_vida_util = 0";
+            string query = "SELECT aeronaves.id, matricula, modelo, kgs_disponibles, butacas_totales, fabricante , servicios.nombre AS tipo_servicio FROM JUST_DO_IT.Aeronaves aeronaves JOIN JUST_DO_IT.TiposServicios servicios ON aeronaves.tipo_servicio = servicios.id WHERE baja_vida_util = 0";
             SqlDataReader reader = Server.getInstance().query(query);
             while (reader.Read())
             {

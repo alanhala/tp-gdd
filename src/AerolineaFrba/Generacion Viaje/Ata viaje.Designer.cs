@@ -58,6 +58,7 @@ namespace AerolineaFrba.Generacion_Viaje
             this.label9 = new System.Windows.Forms.Label();
             this.dtpFechaSalidaVuelo = new System.Windows.Forms.DateTimePicker();
             this.btnGuardar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -318,13 +319,24 @@ namespace AerolineaFrba.Generacion_Viaje
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(417, 384);
+            this.btnGuardar.Location = new System.Drawing.Point(417, 365);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 15;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            // 
+            // button1
+            // 
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button1.Location = new System.Drawing.Point(417, 410);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 39;
+            this.button1.Text = "Cancelar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Alta_Viaje
             // 
@@ -333,6 +345,7 @@ namespace AerolineaFrba.Generacion_Viaje
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(542, 445);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -382,5 +395,6 @@ namespace AerolineaFrba.Generacion_Viaje
         private Label label1;
         private Label lblFabricanteAeronave;
         private Label label4;
+        private Button button1;
     }
 }
