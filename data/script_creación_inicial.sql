@@ -1156,7 +1156,7 @@ AS BEGIN
 		IF (@Costo > 0)
 		BEGIN
 			SELECT @CantidadPasajes = COUNT(*) FROM JUST_DO_IT.ButacasReservadas 
-								WHERE vuelo_id = 1 GROUP BY vuelo_id
+								WHERE vuelo_id = @Vuelo GROUP BY vuelo_id
 		END
 		ELSE
 			SET @CantidadPasajes = 0
@@ -1171,7 +1171,7 @@ AS BEGIN
 		DECLARE @compra_id INT
 		SELECT @compra_id = @@IDENTITY
 
-		IF (@KGs <= 0)
+		IF (@KGs < 0)
 		BEGIN
 			SET @error = 0
 			RAISERROR('La cantidad de KGs ingresada para encomienda debe ser positiva',16,217) WITH SETERROR
@@ -1591,7 +1591,6 @@ GO
 
 -----------------------------------------
 
-
 CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255), @KGsDisponibles NUMERIC(18,2))
 AS BEGIN
 	IF @AeronaveTipo = @RutaTipo
@@ -1887,11 +1886,13 @@ BEGIN
 
 	RETURN @vuelo_id
 END
+
 GO
 
 CREATE PROCEDURE JUST_DO_IT.registrar_llegada @vuelo_id NUMERIC(18,0), @fecha_llegada DATETIME
 AS
 BEGIN
+	BEGIN TRANSACTION registro
 	BEGIN TRY
 		UPDATE JUST_DO_IT.Vuelos
 		SET fecha_llegada = @fecha_llegada
@@ -1899,9 +1900,12 @@ BEGIN
 
 		UPDATE JUST_DO_IT.Puntos
 		SET validos = 1
-		WHERE id = @vuelo_id
+		WHERE vuelo_id = @vuelo_id
+
+		COMMIT TRANSACTION registro
 	END TRY
 	BEGIN CATCH
+		ROLLBACK TRANSACTION registro
 		RAISERROR('No se pudo registrar la llegada del vuelo',16,217) WITH SETERROR
 	END CATCH
 END
@@ -2438,4 +2442,3 @@ AS RETURN
 	WHERE b.vuelo_id = @vuelo
 
 GO
-

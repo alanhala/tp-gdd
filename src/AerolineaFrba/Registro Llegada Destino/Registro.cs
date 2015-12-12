@@ -72,7 +72,7 @@ namespace AerolineaFrba.Registro_Llegada_Destino
                 var vuelo_id = reader["vuelo_id"].ToString();
                 reader.Close();
                 if (vuelo_id == "")
-                    MessageBox.Show("La aeronave seleccionada no posee un vuelo con los campos ingresados.");
+                    MessageBox.Show("La aeronave seleccionada no posee un vuelo con los campos ingresados o el vuelo ya registro la llegada.");
                 else
                 {
                     try
@@ -96,6 +96,12 @@ namespace AerolineaFrba.Registro_Llegada_Destino
         public bool camposValidos()
         {
             return this.aeronave_seleccionada != null && this.origenComboBox.SelectedItem != null && this.destinoComboBox.SelectedItem != null && dtpFechaYHoraSalida.Value < dtpFechaYHoraLlegada.Value;
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
     }
 }
