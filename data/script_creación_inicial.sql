@@ -1592,7 +1592,7 @@ GO
 -----------------------------------------
 
 
-CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255), @KGsDisponibles NUMERIC(18,0))
+CREATE PROCEDURE JUST_DO_IT.almacenarVuelo(@FechaSalida DATETIME, @FechaLlegadaEstimada DATETIME, @RutaID NUMERIC(18,0), @AeronaveId NUMERIC(18,0), @CantidadDisponible NUMERIC(18,0), @RutaTipo VARCHAR(255), @AeronaveTipo VARCHAR(255), @KGsDisponibles NUMERIC(18,2))
 AS BEGIN
 	IF @AeronaveTipo = @RutaTipo
 		BEGIN
