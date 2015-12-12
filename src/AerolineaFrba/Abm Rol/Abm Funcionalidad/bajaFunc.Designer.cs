@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(bajaFunc));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBoxFunc = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.cancelar = new System.Windows.Forms.Button();
-            this.comboBoxFunc = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +48,15 @@
             this.groupBox1.TabIndex = 60;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Complete los siguientes campos";
+            // 
+            // comboBoxFunc
+            // 
+            this.comboBoxFunc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFunc.FormattingEnabled = true;
+            this.comboBoxFunc.Location = new System.Drawing.Point(92, 32);
+            this.comboBoxFunc.Name = "comboBoxFunc";
+            this.comboBoxFunc.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxFunc.TabIndex = 33;
             // 
             // label1
             // 
@@ -78,14 +87,6 @@
             this.cancelar.UseVisualStyleBackColor = true;
             this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
             // 
-            // comboBoxFunc
-            // 
-            this.comboBoxFunc.FormattingEnabled = true;
-            this.comboBoxFunc.Location = new System.Drawing.Point(92, 32);
-            this.comboBoxFunc.Name = "comboBoxFunc";
-            this.comboBoxFunc.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxFunc.TabIndex = 33;
-            // 
             // bajaFunc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -98,6 +99,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "bajaFunc";
             this.Text = "Eliminar Funcionalidad";
+            this.Load += new System.EventHandler(this.bajaFunc_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

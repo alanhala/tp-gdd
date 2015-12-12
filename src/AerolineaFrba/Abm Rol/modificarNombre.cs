@@ -30,6 +30,11 @@ namespace AerolineaFrba.Abm_Rol
         private void aceptar_Click(object sender, EventArgs e)
         {
             string nombreNuevo = tbNombreNuevo.Text;
+            if (tbNombreNuevo.Text.Trim() == "")
+            {
+                MessageBox.Show("Debe ingresar un nuevo nombre");
+                return;
+            }
             string query_rol = "EXEC JUST_DO_IT.modificarNombreRol " + idRolLocal + ",'" + nombreNuevo + "'";
             try
             {

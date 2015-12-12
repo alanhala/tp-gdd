@@ -32,11 +32,9 @@
             this.cancelar = new System.Windows.Forms.Button();
             this.aceptar = new System.Windows.Forms.Button();
             this.dgvShowRoles = new System.Windows.Forms.DataGridView();
-            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbNombre = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.buscar = new System.Windows.Forms.Button();
+            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -76,17 +74,9 @@
             this.dgvShowRoles.Size = new System.Drawing.Size(468, 164);
             this.dgvShowRoles.TabIndex = 64;
             // 
-            // funcionalidad
-            // 
-            this.funcionalidad.HeaderText = "Funcionalidad";
-            this.funcionalidad.Name = "funcionalidad";
-            this.funcionalidad.ReadOnly = true;
-            // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.tbNombre);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.buscar);
             this.groupBox1.Location = new System.Drawing.Point(16, 16);
             this.groupBox1.Name = "groupBox1";
@@ -95,32 +85,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Seleccione la funcionalidad que desee agregar";
             // 
-            // tbNombre
-            // 
-            this.tbNombre.Enabled = false;
-            this.tbNombre.Location = new System.Drawing.Point(83, 29);
-            this.tbNombre.Name = "tbNombre";
-            this.tbNombre.Size = new System.Drawing.Size(100, 20);
-            this.tbNombre.TabIndex = 56;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Nombre";
-            // 
             // buscar
             // 
-            this.buscar.Location = new System.Drawing.Point(205, 27);
+            this.buscar.Location = new System.Drawing.Point(18, 31);
             this.buscar.Name = "buscar";
-            this.buscar.Size = new System.Drawing.Size(75, 23);
+            this.buscar.Size = new System.Drawing.Size(148, 23);
             this.buscar.TabIndex = 56;
-            this.buscar.Text = "Buscar";
+            this.buscar.Text = "Buscar funcionalidades";
             this.buscar.UseVisualStyleBackColor = true;
             this.buscar.Click += new System.EventHandler(this.buscar_Click);
+            // 
+            // funcionalidad
+            // 
+            this.funcionalidad.HeaderText = "Funcionalidad";
+            this.funcionalidad.Name = "funcionalidad";
+            this.funcionalidad.ReadOnly = true;
+            this.funcionalidad.Width = 450;
             // 
             // agregarFuncionalidad
             // 
@@ -136,7 +116,6 @@
             this.Text = "agregarOtraFuncionalidad";
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -146,10 +125,8 @@
         private System.Windows.Forms.Button cancelar;
         private System.Windows.Forms.Button aceptar;
         private System.Windows.Forms.DataGridView dgvShowRoles;
-        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tbNombre;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buscar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
     }
 }

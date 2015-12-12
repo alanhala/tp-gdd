@@ -30,13 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(quitarFuncionalidad));
             this.dgvShowRoles = new System.Windows.Forms.DataGridView();
-            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buscar = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbNombre = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.cancelar = new System.Windows.Forms.Button();
+            this.funcionalidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -57,44 +55,19 @@
             this.dgvShowRoles.TabIndex = 58;
             this.dgvShowRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowRoles_CellContentClick);
             // 
-            // funcionalidad
-            // 
-            this.funcionalidad.HeaderText = "Funcionalidad";
-            this.funcionalidad.Name = "funcionalidad";
-            this.funcionalidad.ReadOnly = true;
-            // 
             // buscar
             // 
-            this.buscar.Location = new System.Drawing.Point(205, 27);
+            this.buscar.Location = new System.Drawing.Point(18, 33);
             this.buscar.Name = "buscar";
-            this.buscar.Size = new System.Drawing.Size(75, 23);
+            this.buscar.Size = new System.Drawing.Size(143, 23);
             this.buscar.TabIndex = 56;
-            this.buscar.Text = "Buscar";
+            this.buscar.Text = "Buscar funcionalidades";
             this.buscar.UseVisualStyleBackColor = true;
             this.buscar.Click += new System.EventHandler(this.buscar_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Nombre";
-            // 
-            // tbNombre
-            // 
-            this.tbNombre.Enabled = false;
-            this.tbNombre.Location = new System.Drawing.Point(83, 29);
-            this.tbNombre.Name = "tbNombre";
-            this.tbNombre.Size = new System.Drawing.Size(100, 20);
-            this.tbNombre.TabIndex = 56;
             // 
             // groupBox1
             // 
             this.groupBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox1.BackgroundImage")));
-            this.groupBox1.Controls.Add(this.tbNombre);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.buscar);
             this.groupBox1.Location = new System.Drawing.Point(22, 17);
             this.groupBox1.Name = "groupBox1";
@@ -123,6 +96,13 @@
             this.cancelar.UseVisualStyleBackColor = true;
             this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
             // 
+            // funcionalidad
+            // 
+            this.funcionalidad.HeaderText = "Funcionalidad";
+            this.funcionalidad.Name = "funcionalidad";
+            this.funcionalidad.ReadOnly = true;
+            this.funcionalidad.Width = 450;
+            // 
             // quitarFuncionalidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -139,7 +119,6 @@
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowRoles)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -148,11 +127,9 @@
 
         private System.Windows.Forms.DataGridView dgvShowRoles;
         private System.Windows.Forms.Button buscar;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
         private System.Windows.Forms.Button cancelar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn funcionalidad;
     }
 }

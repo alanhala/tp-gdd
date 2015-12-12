@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,16 @@ namespace AerolineaFrba.Abm_Funcionalidades
         public bajaFunc()
         {
             InitializeComponent();
-            Commons.getInstance().cargarComboBox("Funcionalidades", "descripcion", comboBoxFunc);
+            SqlDataReader respuesta;
+            Server server = Server.getInstance();
+            string queryCombo = "SELECT DISTINCT descripcion FROM JUST_DO_IT.funcionalidades WHERE eliminada = 0";
+            respuesta = server.query(queryCombo);
+
+            while (respuesta.Read())
+            {
+                comboBoxFunc.Items.Add(respuesta["descripcion"].ToString());
+            }
+            respuesta.Close();
         }
 
 
@@ -36,18 +46,23 @@ namespace AerolineaFrba.Abm_Funcionalidades
                 {
                     Server.getInstance().realizarQuery(query);
                     MessageBox.Show("La funcionalidad se eliminó satisfactoriamente");
+                    this.Hide();
+                    new Vistas_Inicio.Inicio_Admin().Show();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-                this.Hide();
-                new Vistas_Inicio.Inicio_Admin().Show();
             }
             else
             {
                 MessageBox.Show("Por favor, ingrese la descripción");
             }
+        }
+
+        private void bajaFunc_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

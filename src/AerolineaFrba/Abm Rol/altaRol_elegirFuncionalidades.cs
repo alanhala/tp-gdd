@@ -79,17 +79,8 @@ namespace AerolineaFrba.Abm_Rol
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            // controlar que el rol ya tenga asignado por lo menos 1 funcionalidad
-            System.Data.SqlClient.SqlDataReader respuesta;
-            string query = "SELECT JUST_DO_IT.cantFuncionalidadQuePosee (" + idRol + ") AS atributo";
-            respuesta = Server.getInstance().query(query);
-            respuesta.Read();
-            string atributo = respuesta["atributo"].ToString();
-            respuesta.Close();
-
-            if (atributo == "0")
-                MessageBox.Show("No ha seleccionado ninguna funcionalidad para el nuevo rol");
-
+            this.Hide();
+            new altaRol_crearSoloRol().Show();
         }
         
         private void btnFinalizar_Click(object sender, EventArgs e)

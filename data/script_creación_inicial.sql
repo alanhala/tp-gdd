@@ -423,7 +423,7 @@ IF OBJECT_ID (N'JUST_DO_IT.asignarRolAUsuario') IS NOT NULL
 	drop function JUST_DO_IT.ListadoUsuarios;
 
 IF OBJECT_ID (N'JUST_DO_IT.BuscarUsuario') IS NOT NULL
-	drop procedure JUST_DO_IT.BuscarUsuario; 
+	drop function JUST_DO_IT.BuscarUsuario; 
 
 IF OBJECT_ID (N'JUST_DO_IT.butacasReservadasParaVuelo') IS NOT NULL
 	drop function JUST_DO_IT.butacasReservadasParaVuelo; 
@@ -655,6 +655,7 @@ GO
 CREATE TABLE JUST_DO_IT.Funcionalidades(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	descripcion NVARCHAR(255) NOT NULL UNIQUE,
+	eliminada BIT DEFAULT 0,
 	PRIMARY KEY (id)
 )
 
@@ -1418,7 +1419,7 @@ GO
 CREATE PROCEDURE JUST_DO_IT.eliminarFuncionalidad(@Descripcion VARCHAR(255))
 AS BEGIN
 		BEGIN TRY
-			DELETE FROM JUST_DO_IT.Funcionalidades WHERE descripcion LIKE @Descripcion
+			UPDATE JUST_DO_IT.Funcionalidades SET eliminada = 1 WHERE descripcion LIKE @Descripcion
 		END TRY
 		BEGIN CATCH
 			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
@@ -1431,10 +1432,9 @@ RETURNS TABLE
 AS RETURN
 	SELECT F.descripcion AS nombreFuncionalidad
 	FROM JUST_DO_IT.Funcionalidades AS F, JUST_DO_IT.Rol_Funcionalidad AS RF
-	WHERE RF.id_rol = @idRol AND F.id = RF .id_funcionalidad
+	WHERE RF.id_rol = @idRol AND F.id = RF .id_funcionalidad AND f.eliminada = 0
 		
 GO
-
 
 CREATE FUNCTION JUST_DO_IT.cantFuncionalidadQuePosee(@idRol NUMERIC(18,0))
 RETURNS int 

@@ -24,7 +24,7 @@ namespace AerolineaFrba.Abm_Rol
             dgvShowRoles.Rows.Clear();
             dgvShowRoles.Refresh();
             
-            string query = "SELECT * FROM JUST_DO_IT.Funcionalidades";
+            string query = "SELECT * FROM JUST_DO_IT.Funcionalidades WHERE eliminada = 0";
 
             System.Data.SqlClient.SqlDataReader reader = Server.getInstance().query(query);
             while (reader.Read())
@@ -52,13 +52,13 @@ namespace AerolineaFrba.Abm_Rol
             {
                 Server.getInstance().realizarQuery(query);
                 MessageBox.Show("La funcionalidad se agregó satisfactoriamente");
+                this.Hide();
+                new Vistas_Inicio.Inicio_Admin().Show();
             }
             catch (Exception ex1)
             {
                 MessageBox.Show(ex1.Message);
             }
-            this.Hide();
-            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void cancelar_Click(object sender, EventArgs e)
