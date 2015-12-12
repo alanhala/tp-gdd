@@ -443,7 +443,7 @@ CREATE TABLE JUST_DO_IT.Aeronaves(
 	id NUMERIC(18,0) IDENTITY(1,1),
 	matricula NVARCHAR(255) UNIQUE NOT NULL,
 	modelo NVARCHAR(255) NOT NULL,
-	kgs_disponibles NUMERIC(18,0) NOT NULL,
+	kgs_disponibles NUMERIC(18,2) NOT NULL,
 	butacas_totales NUMERIC(18,0) NOT NULL,
 	fabricante NVARCHAR(255) NOT NULL,
 	tipo_servicio NUMERIC(18,0) NOT NULL,
@@ -2442,7 +2442,3 @@ AS RETURN
 	WHERE b.vuelo_id = @vuelo
 
 GO
-
-SELECT * FROM JUST_DO_IT.Compras ORDER BY codigo desc
-
-SELECT * FROM JUST_DO_IT.Pasajes WHERE compra = 1072154
