@@ -62,7 +62,7 @@ namespace AerolineaFrba.Abm_Aeronave
                 aeronave.id = Convert.ToInt32(reader["id"]);
                 aeronave.matricula = reader["matricula"].ToString();
                 aeronave.modelo = reader["modelo"].ToString();
-                aeronave.kgs_disponibles = Convert.ToInt32(reader["kgs_disponibles"]);
+                aeronave.kgs_disponibles = float.Parse(reader["kgs_disponibles"].ToString());
                 aeronave.butacas_totales = Convert.ToInt32(reader["butacas_totales"]);
                 aeronave.fabricante = reader["fabricante"].ToString();
                 aeronave.servicio = reader["tipo_servicio"].ToString();

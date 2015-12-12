@@ -63,7 +63,8 @@ namespace AerolineaFrba.Abm_Aeronave
                 Server.getInstance().realizarQuery(query);
 
                 MessageBox.Show("Las aeronaves se han dado de baja y sus respectivos vuelos se han cancelado");
-                new Vistas_Inicio.Inicio_Admin().Show();   
+                new Vistas_Inicio.Inicio_Admin().Show();
+                this.Hide();
             }
             catch (Exception ex)
             {

@@ -44,12 +44,16 @@ namespace AerolineaFrba.Abm_Aeronave
             Server server = Server.getInstance();
             try
             {
-                this.validarCampos();
+                if (!this.validarCampos())
+                {
+                    MessageBox.Show("Debe completar todos los campos");
+                    return;
+                }
                 string matricula = tbNumeroMatricula.Text;
                 string modelo = tbModelo.Text;
                 string fabricante = this.buscarSegunPosicion(cbFabricante.SelectedIndex, "Aeronaves", "fabricante");
                 int tipoDeServicio = TiposServicios.obtenerID(cbTipoServicio.Text);
-                int espacioParaEncomiendas = int.Parse(tbEspacioTotalParaEncomiendas.Text);
+                float espacioParaEncomiendas = float.Parse(tbEspacioTotalParaEncomiendas.Text);
                 int cantidadButacas = int.Parse(tbCantButacas.Text);
 
                 string modificarAeronave = "EXEC JUST_DO_IT.modificarAeronave " + aeronaveId + ", '" + matricula + "', '" + modelo + "', '" + fabricante + "', " + tipoDeServicio + ", " + espacioParaEncomiendas + ", " + cantidadButacas;
