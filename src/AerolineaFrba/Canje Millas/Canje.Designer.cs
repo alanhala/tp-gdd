@@ -44,13 +44,14 @@
             this.txtDNI = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.cancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMillasPorProducto)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(162, 401);
+            this.btnAceptar.Location = new System.Drawing.Point(246, 401);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 30;
@@ -111,7 +112,7 @@
             this.groupBox2.Controls.Add(this.txtDNI);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Location = new System.Drawing.Point(62, 58);
+            this.groupBox2.Location = new System.Drawing.Point(62, 66);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(292, 164);
             this.groupBox2.TabIndex = 55;
@@ -182,6 +183,16 @@
             this.label7.TabIndex = 12;
             this.label7.Text = "Cantidad del producto";
             // 
+            // cancelar
+            // 
+            this.cancelar.Location = new System.Drawing.Point(77, 401);
+            this.cancelar.Name = "cancelar";
+            this.cancelar.Size = new System.Drawing.Size(75, 23);
+            this.cancelar.TabIndex = 56;
+            this.cancelar.Text = "Cancelar";
+            this.cancelar.UseVisualStyleBackColor = true;
+            this.cancelar.Click += new System.EventHandler(this.cancelar_Click);
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnAceptar;
@@ -189,6 +200,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(446, 436);
+            this.Controls.Add(this.cancelar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dgvMillasPorProducto);
@@ -225,5 +237,6 @@
         private System.Windows.Forms.TextBox txtDNI;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button cancelar;
     }
 }

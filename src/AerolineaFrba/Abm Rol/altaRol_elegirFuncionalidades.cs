@@ -65,17 +65,33 @@ namespace AerolineaFrba.Abm_Rol
         {
             // controlar que el rol ya tenga asignado por lo menos 1 funcionalidad
             System.Data.SqlClient.SqlDataReader respuesta;
-            string query = "SELECT * FROM JUST_DO_IT.cantFuncionalidadQuePosee (" + idRol + ")";
-            Server server = Server.getInstance();
-            respuesta = server.query(query);
+            string query = "SELECT JUST_DO_IT.cantFuncionalidadQuePosee (" + idRol + ") AS atributo";
+            respuesta = Server.getInstance().query(query);
+            respuesta.Read();
+            string atributo = respuesta["atributo"].ToString();
+            respuesta.Close();
 
-            this.Hide();
+            if (atributo == "0")
+                MessageBox.Show("No ha seleccionado ninguna funcionalidad para el nuevo rol");
+
         }
         
         private void btnFinalizar_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            new Vistas_Inicio.Inicio_Admin().Show();
+            System.Data.SqlClient.SqlDataReader respuesta;
+            string query = "SELECT JUST_DO_IT.cantFuncionalidadQuePosee (" + idRol + ") AS atributo";
+            respuesta = Server.getInstance().query(query);
+            respuesta.Read();
+            string atributo = respuesta["atributo"].ToString();
+            respuesta.Close();
+
+            if (atributo == "0")
+                MessageBox.Show("No ha seleccionado ninguna funcionalidad para el nuevo rol");
+            else
+            {
+                this.Hide();
+                new Vistas_Inicio.Inicio_Admin().Show();
+            }
         }
 
 

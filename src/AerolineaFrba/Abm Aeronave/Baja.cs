@@ -20,17 +20,19 @@ namespace AerolineaFrba.Abm_Aeronave
         private void button1_Click(object sender, EventArgs e)
         {
             new BajaFinVidaUtil().Show();
-
+            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            new BajaFueraDeServicio().Show();
+            new Abm_Aeronave.BajaFueraDeServicio().Show();
+            this.Close();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
 
         private void Baja_Load(object sender, EventArgs e)

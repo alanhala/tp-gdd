@@ -20,6 +20,7 @@ namespace AerolineaFrba.Abm_Aeronave
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+            new Abm_Aeronave.Baja().Show();
         }
 
         private void btnDarDeBaja_Click(object sender, EventArgs e)
@@ -32,6 +33,7 @@ namespace AerolineaFrba.Abm_Aeronave
             {
                 new SeleccionarSiDarDeBajaOCancelarVuelos(cbMatricula.Text).Show();
                 this.chequearYProcederFrenteARutasProgramadas();
+                this.Close();
             }
         }
 

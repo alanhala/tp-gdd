@@ -38,11 +38,19 @@ namespace AerolineaFrba.Abm_Funcionalidades
                 {
                     MessageBox.Show(ex.Message);
                 }
+                this.Hide();
+                new Vistas_Inicio.Inicio_Admin().Show();
             }
             else
             {
                 MessageBox.Show("Por favor, ingrese la descripción");
             }
+        }
+
+        private void cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
         }
     }
 }

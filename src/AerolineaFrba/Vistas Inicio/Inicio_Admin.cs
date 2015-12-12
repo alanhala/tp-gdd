@@ -48,7 +48,7 @@ namespace AerolineaFrba.Vistas_Inicio
 
         private void modificarAeronave_Click(object sender, EventArgs e)
         {
-            new Abm_Aeronave.Listado_Aeronaves(true);
+            new Abm_Aeronave.Listado_Aeronaves(true).Show();
             this.Hide();
         }
 

@@ -163,6 +163,7 @@
             // 
             this.tbNumeroMatricula.Location = new System.Drawing.Point(121, 35);
             this.tbNumeroMatricula.Name = "tbNumeroMatricula";
+            this.tbNumeroMatricula.ReadOnly = true;
             this.tbNumeroMatricula.Size = new System.Drawing.Size(100, 20);
             this.tbNumeroMatricula.TabIndex = 36;
             // 
@@ -223,6 +224,7 @@
             this.Name = "Modificar";
             this.Text = "Modificar Aeronave";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.Modificar_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

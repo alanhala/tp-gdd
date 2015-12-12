@@ -167,6 +167,10 @@ IF OBJECT_ID (N'JUST_DO_IT.almacenarRuta') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarRuta;
 GO
 
+IF OBJECT_ID (N'JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave') IS NOT NULL
+    drop PROCEDURE JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave;
+GO
+
 IF OBJECT_ID (N'JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio') IS NOT NULL
     drop procedure JUST_DO_IT.reemplazar_vuelos_aeronave_fuera_servicio;
 GO
@@ -189,10 +193,6 @@ GO
 
 IF OBJECT_ID (N'JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio') IS NOT NULL
     drop procedure JUST_DO_IT.dar_de_baja_aeronave_por_fuera_de_servicio;
-GO
-
-IF OBJECT_ID (N'JUST_DO_IT.eliminar_vuelos') IS NOT NULL
-    drop procedure JUST_DO_IT.eliminar_vuelos;
 GO
 
 IF OBJECT_ID (N'JUST_DO_IT.IDCiudad') IS NOT NULL
@@ -301,8 +301,8 @@ IF OBJECT_ID (N'JUST_DO_IT.reservarButaca') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.almacenarPasaje') IS NOT NULL
     drop procedure JUST_DO_IT.almacenarPasaje;
 
-IF OBJECT_ID (N'JUST_DO_IT.actualizarUsuario') IS NOT NULL
-    drop procedure JUST_DO_IT.actualizarUsuario;
+IF OBJECT_ID (N'JUST_DO_IT.actualizarCliente') IS NOT NULL
+    drop procedure JUST_DO_IT.actualizarCliente;
 
 IF OBJECT_ID (N'JUST_DO_IT.bajaRol') IS NOT NULL
     drop procedure JUST_DO_IT.bajaRol;
@@ -400,7 +400,21 @@ IF OBJECT_ID (N'JUST_DO_IT.existeFuncionalidad') IS NOT NULL
 
 IF OBJECT_ID (N'JUST_DO_IT.cantFuncionalidadQuePosee') IS NOT NULL
 	drop function JUST_DO_IT.cantFuncionalidadQuePosee;
- 
+
+IF OBJECT_ID (N'JUST_DO_IT.almacenarCliente') IS NOT NULL
+	drop procedure JUST_DO_IT.almacenarCliente;
+
+ IF OBJECT_ID (N'JUST_DO_IT.obtenerIDUsuario') IS NOT NULL
+	drop function JUST_DO_IT.obtenerIDUsuario;
+
+IF OBJECT_ID (N'JUST_DO_IT.eliminarFuncionalidad') IS NOT NULL
+	drop procedure JUST_DO_IT.eliminarFuncionalidad;
+
+IF OBJECT_ID (N'JUST_DO_IT.existeRol') IS NOT NULL
+	drop procedure JUST_DO_IT.existeRol;
+	
+IF OBJECT_ID (N'JUST_DO_IT.estabaDadoDeBajaElRol') IS NOT NULL
+	drop procedure JUST_DO_IT.estabaDadoDeBajaElRol; 
 
 /******CREACION DE TABLAS******/
 
@@ -1044,7 +1058,7 @@ SET KGsDisponibles = (SELECT JUST_DO_IT.KGsDisponibles(JUST_DO_IT.Vuelos.id))
 
 GO
 
-CREATE PROCEDURE JUST_DO_IT.actualizarUsuario(@Usuario NUMERIC(18,0), @Mail NVARCHAR(255), @Direccion NVARCHAR(255), @Telefono NUMERIC(18,0))
+CREATE PROCEDURE JUST_DO_IT.actualizarCliente(@Usuario NUMERIC(18,0), @Mail NVARCHAR(255), @Direccion NVARCHAR(255), @Telefono NUMERIC(18,0))
 AS BEGIN
 	UPDATE JUST_DO_IT.Usuarios
 		SET mail = @Mail, direccion = @Direccion, telefono = @Telefono
@@ -1053,43 +1067,71 @@ END
 
 GO
 
+CREATE PROCEDURE JUST_DO_IT.almacenarCliente(@dni NUMERIC(18,0), @nombre VARCHAR(255), @apellido VARCHAR(255),
+											@mail VARCHAR(255), @direccion VARCHAR(255), @telefono NUMERIC(18,0),
+											@fechaNacimiento DATETIME)
+AS BEGIN
+	DECLARE @id NUMERIC(18,0)
+	SELECT @id = id FROM JUST_DO_IT.Usuarios WHERE dni = @dni AND nombre = @nombre AND apellido = @apellido
+	IF (@id IS NOT NULL)
+		RAISERROR('Ya existe un cliente con el dni, nombre y apellido ingresados',16,217) WITH SETERROR
+
+	BEGIN TRANSACTION agregarCliente
+	BEGIN TRY
+		INSERT INTO JUST_DO_IT.Usuarios(dni, apellido, nombre, mail, direccion, telefono, fecha_nacimiento, username, pass)
+			VALUES(@dni, @apellido, @nombre, @mail, @direccion, @telefono, @fechaNacimiento,
+			CONCAT(@dni, @nombre, @apellido), HASHBYTES('SHA2_256', ''))
+
+		INSERT INTO JUST_DO_IT.Usuario_Rol(id_usuario, id_rol) 
+			VALUES(@@IDENTITY, 2)
+		COMMIT TRANSACTION agregarCliente
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION agregarCliente
+		RAISERROR('No se pudo crear al cliente nuevo',16,217) WITH SETERROR
+	END CATCH
+END
+
+GO
+
+CREATE FUNCTION JUST_DO_IT.obtenerIDUsuario(@dni NUMERIC(18,0), @apellido VARCHAR(255), @nombre VARCHAR(255))
+RETURNS NUMERIC(18,0)
+AS BEGIN
+	RETURN (SELECT id FROM JUST_DO_IT.Usuarios WHERE dni = @dni AND apellido = @apellido AND nombre = @nombre)
+END
+
+GO
+
 CREATE PROCEDURE JUST_DO_IT.LoguearUsuario(@username VARCHAR(255), @pass VARCHAR(255))
 AS BEGIN
 	DECLARE @usuario NUMERIC(18,0)
 	DECLARE @intentos INT
-	BEGIN TRY
-		SELECT @intentos = intentos FROM JUST_DO_IT.IntentosFallidos i
-									JOIN JUST_DO_IT.Usuarios u ON i.usuario_id = u.id
-									WHERE u.username = @username
-		IF (@intentos >= 3)
-			RAISERROR('El usuario se encuentra bloqueado por tener 3 intentos de logueo fallidos',16,217) WITH SETERROR
+	SELECT @intentos = intentos FROM JUST_DO_IT.IntentosFallidos i
+								JOIN JUST_DO_IT.Usuarios u ON i.usuario_id = u.id
+								WHERE u.username = @username
+	IF (@intentos >= 3)
+		RAISERROR('El usuario se encuentra bloqueado por tener 3 intentos de logueo fallidos',16,217) WITH SETERROR
 			
-		SELECT @usuario = id FROM JUST_DO_IT.Usuarios WHERE username = @username AND pass = HASHBYTES('SHA2_256', @pass)
-		IF (@usuario IS NULL)
-		BEGIN	
-			UPDATE intentos SET intentos = @intentos + 1 
-			FROM JUST_DO_IT.Usuarios usuarios
-			JOIN JUST_DO_IT.IntentosFallidos intentos ON intentos.usuario_id = usuarios.id
-			WHERE usuarios.username = @username
-			RAISERROR('Los datos ingresados no son validos',16,217) WITH SETERROR
-		END
-		ELSE
-		BEGIN
-			IF NOT EXISTS (SELECT * FROM JUST_DO_IT.Usuario_Rol 
-							JOIN JUST_DO_IT.Roles ON id = id_rol
-							WHERE nombre = 'Administrativo' AND @usuario = id_usuario)
-			   RAISERROR('El usuario no tiene los permisos necesarios',16,217) WITH SETERROR
-		END
-		UPDATE intentos SET intentos = 0 
+	SELECT @usuario = id FROM JUST_DO_IT.Usuarios WHERE username = @username AND pass = HASHBYTES('SHA2_256', @pass)
+	IF (@usuario IS NULL)
+	BEGIN	
+		UPDATE intentos SET intentos = @intentos + 1 
 		FROM JUST_DO_IT.Usuarios usuarios
 		JOIN JUST_DO_IT.IntentosFallidos intentos ON intentos.usuario_id = usuarios.id
 		WHERE usuarios.username = @username
-	END TRY
-	BEGIN CATCH
-		DECLARE @ErrorMessage VARCHAR(255)
-		SET @ErrorMessage = ERROR_MESSAGE()
-		RAISERROR(@ErrorMessage,16,217) WITH SETERROR
-	END CATCH
+		RAISERROR('Los datos ingresados no son validos',16,217) WITH SETERROR
+	END
+	ELSE
+	BEGIN
+		IF NOT EXISTS (SELECT * FROM JUST_DO_IT.Usuario_Rol 
+						JOIN JUST_DO_IT.Roles ON id = id_rol
+						WHERE nombre = 'Administrativo' AND @usuario = id_usuario)
+			RAISERROR('El usuario no tiene los permisos necesarios',16,217) WITH SETERROR
+	END
+	UPDATE intentos SET intentos = 0 
+	FROM JUST_DO_IT.Usuarios usuarios
+	JOIN JUST_DO_IT.IntentosFallidos intentos ON intentos.usuario_id = usuarios.id
+	WHERE usuarios.username = @username
 END
 
 GO
@@ -1276,7 +1318,7 @@ GO
 CREATE PROCEDURE JUST_DO_IT.almacenarRuta(@Codigo NUMERIC(18,0), @PrecioKgs NUMERIC(18,2), @PrecioPasaje NUMERIC(18,2),
 	@Origen NUMERIC(18,0), @Destino NUMERIC(18,0), @TipoServicio NUMERIC(18,0))
 AS BEGIN
-	IF (@PrecioKgs >= 0 AND  @PrecioPasaje >= 0 AND @Origen <> @Destino)
+	IF (@PrecioKgs > 0 AND  @PrecioPasaje > 0 AND @Origen <> @Destino)
 		IF (NOT EXISTS (SELECT * FROM JUST_DO_IT.Rutas 
 			WHERE codigo = @Codigo AND precio_baseKG = @PrecioKgs AND precio_basePasaje = @PrecioPasaje 
 				AND ciu_id_origen = @Origen AND ciu_id_destino = @Destino AND tipo_servicio = @TipoServicio))
@@ -1361,6 +1403,19 @@ END
 GO
 
 
+CREATE PROCEDURE JUST_DO_IT.eliminarFuncionalidad(@Descripcion VARCHAR(255))
+AS BEGIN
+		BEGIN TRY
+			DELETE FROM JUST_DO_IT.Funcionalidades WHERE descripcion LIKE @Descripcion
+		END TRY
+		BEGIN CATCH
+			RAISERROR('La funcionalidad ingresada no existe',16,217) WITH SETERROR
+		END CATCH
+END
+
+GO
+
+
 CREATE FUNCTION JUST_DO_IT.nombresRolesYFuncionalidades(@idRol NUMERIC(18,0))
 RETURNS TABLE
 AS RETURN
@@ -1381,6 +1436,7 @@ BEGIN
 END
 
 GO
+
 
 CREATE PROCEDURE JUST_DO_IT.existeFuncionalidad(@descrFuncionalidad NVARCHAR(255))
 AS BEGIN
@@ -1406,7 +1462,6 @@ BEGIN
 END
 
 GO
-
 ------------- Roles -------------
 
 CREATE FUNCTION JUST_DO_IT.IDRol(@Nombre varchar(255))
@@ -1505,6 +1560,36 @@ AS BEGIN
 END 
 GO
 
+CREATE PROCEDURE JUST_DO_IT.existeRol(@nombre VARCHAR(50))
+AS BEGIN
+	DECLARE @existe INT;
+	BEGIN TRY
+		SELECT @existe = COUNT(*) from JUST_DO_IT.Roles  AS R WHERE R.nombre LIKE @nombre
+		IF (@existe = 0 )
+			RAISERROR('El rol no existe',16,217) WITH SETERROR
+	END TRY
+	BEGIN CATCH
+		RAISERROR('El rol no existe',16,217) WITH SETERROR
+	END CATCH
+END 
+GO
+
+
+
+
+CREATE PROCEDURE JUST_DO_IT.estabaDadoDeBajaElRol(@nombre VARCHAR(50))
+AS BEGIN
+	DECLARE @existe INT;
+	BEGIN TRY
+		SELECT @existe = R.baja_rol from JUST_DO_IT.Roles  AS R WHERE R.nombre LIKE @nombre
+		IF (@existe = 0 )
+			RAISERROR('El rol que seleccionó se encontraba habilitado',16,217) WITH SETERROR
+	END TRY
+	BEGIN CATCH
+		RAISERROR('El rol no se encuentra inhabilitado',16,217) WITH SETERROR
+	END CATCH
+END 
+GO
 
 
 -----------------------------------------
@@ -2266,4 +2351,69 @@ AS RETURN
 
 GO
 
+CREATE PROCEDURE JUST_DO_IT.cancelar_vuelos_y_dar_de_baja_aeronave(@aeronave NVARCHAR(255), @fin_vida_util BIT, @fecha_fin_servicio DATETIME, @fecha_reinicio_servicio DATETIME)
+AS BEGIN
+	DECLARE @vueloId NUMERIC(18,0)
+	DECLARE @idAeronave NUMERIC(18,0)
+	
+	CREATE TABLE #vuelosAEliminar(
+		id NUMERIC(18,0)
+	)
 
+	BEGIN TRANSACTION eliminarVueloYDarDeBajaAeronave
+	BEGIN TRY
+		SELECT @idAeronave = (SELECT JUST_DO_IT.obtener_id_aeronave_segun_matricula(@aeronave))
+	
+		IF (@fin_vida_util = 1)
+			BEGIN
+				INSERT INTO #vuelosAEliminar(id)
+					SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
+								WHERE vuelos.aeronave_id = @idAeronave
+								AND vuelos.fecha_salida > CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP))
+
+				UPDATE JUST_DO_IT.Aeronaves 
+				SET baja_vida_util = 1, 
+					fecha_baja_definitiva = CONVERT(DATETIME, CONVERT(DATE, CURRENT_TIMESTAMP)) 
+				WHERE id = @idAeronave
+			END
+		ELSE
+			BEGIN
+				INSERT INTO #vuelosAEliminar(id)
+					SELECT vuelos.id FROM JUST_DO_IT.Vuelos vuelos
+					WHERE vuelos.aeronave_id = @idAeronave 
+						AND ((@fecha_fin_servicio <= vuelos.fecha_salida AND @fecha_reinicio_servicio >= vuelos.fecha_llegada_estimada) 
+						OR (@fecha_fin_servicio >= vuelos.fecha_salida AND @fecha_fin_servicio <= vuelos.fecha_llegada_estimada))			
+			
+				UPDATE JUST_DO_IT.Aeronaves
+				SET baja_fuera_servicio = 1, 
+					fecha_fuera_servicio = @fecha_fin_servicio, 
+					fecha_reinicio_servicio = @fecha_reinicio_servicio
+				WHERE id = @idAeronave
+			END
+
+		
+			UPDATE JUST_DO_IT.Vuelos	
+			SET vuelo_eliminado = 1
+			WHERE id IN (SELECT * FROM #vuelosAEliminar)
+		
+			UPDATE pas
+			SET pas.cancelado = 1
+			FROM JUST_DO_IT.Pasajes pas
+			WHERE pas.vuelo_id IN (SELECT * FROM #vuelosAEliminar)
+
+			UPDATE paq
+			SET paq.cancelado = 1
+			FROM JUST_DO_IT.Pasajes paq
+			WHERE paq.vuelo_id IN (SELECT * FROM #vuelosAEliminar)
+
+	COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+		RAISERROR('No se pudieron cancelar los vuelos ni dar de baja la aeronave',16,217) WITH SETERROR
+	END CATCH
+
+	DROP TABLE #vuelosAEliminar
+END
+
+GO

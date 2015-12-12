@@ -99,5 +99,11 @@ namespace AerolineaFrba.Canje_Millas
             }
             reader.Close();
         }
+
+        private void cancelar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Vistas_Inicio.Inicio_Admin().Show();
+        }
       }
 }
