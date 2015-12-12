@@ -30,8 +30,7 @@ namespace AerolineaFrba.Abm_Ciudad
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Commons.getInstance().cargarComboBoxOrderBy("Ciudades", "nombre", cmbCiudades);
-            cmbCiudades.SelectedIndex = 0;
+            this.cargarCiudades();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -41,11 +40,13 @@ namespace AerolineaFrba.Abm_Ciudad
                 MessageBox.Show("Debe ingresar una ciudad");
                 return;
             }
-            string query = "EXEC JUST_DO_IT.almacenarCiudad " + txtCiudadNueva.Text;
+            string query = "EXEC JUST_DO_IT.almacenarCiudad ' " + txtCiudadNueva.Text + "'";
             try
             {
                 Server.getInstance().realizarQuery(query);
                 MessageBox.Show("La ciudad fue agregada");
+                txtCiudadNueva.Clear();
+                this.cargarCiudades();
             }
             catch (Exception ex)
             {
@@ -61,16 +62,26 @@ namespace AerolineaFrba.Abm_Ciudad
                 return;
             }
             int id = Commons.getInstance().getIDFrom("IDCiudad", cmbCiudades.Text);
-            string query = "EXEC JUST_DO_IT.ModificarCiudad " + id + ", " + txtCiudadModificada.Text;
+            string query = "EXEC JUST_DO_IT.ModificarCiudad " + id + ", ' " + txtCiudadModificada.Text + "'";
             try
             {
                 Server.getInstance().realizarQuery(query);
                 MessageBox.Show("La ciudad fue modificada");
+                this.cargarCiudades();
+                txtCiudadModificada.Clear();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void cargarCiudades()
+        {
+            cmbCiudades.Items.Clear();
+            Commons.getInstance().cargarComboBoxOrderBy("Ciudades", "nombre", cmbCiudades);
+            cmbCiudades.SelectedIndex = 0;
+        }
+
     }
 }
