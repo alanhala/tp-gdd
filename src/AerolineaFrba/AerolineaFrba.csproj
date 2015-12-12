@@ -130,6 +130,12 @@
     <Compile Include="Abm Rol\altaRol_elegirFuncionalidades.Designer.cs">
       <DependentUpon>altaRol_elegirFuncionalidades.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Rol\Asignar rol a usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Rol\Asignar rol a usuario.Designer.cs">
+      <DependentUpon>Asignar rol a usuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Rol\bajaRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -339,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\altaRol_elegirFuncionalidades.resx">
       <DependentUpon>altaRol_elegirFuncionalidades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Rol\Asignar rol a usuario.resx">
+      <DependentUpon>Asignar rol a usuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Rol\bajaRol.resx">
       <DependentUpon>bajaRol.cs</DependentUpon>

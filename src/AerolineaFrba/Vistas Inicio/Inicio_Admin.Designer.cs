@@ -49,6 +49,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.btnConsultarMillas = new System.Windows.Forms.Button();
+            this.asignarRol_Usuario = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -309,12 +310,26 @@
             this.btnConsultarMillas.UseVisualStyleBackColor = false;
             this.btnConsultarMillas.Click += new System.EventHandler(this.btnConsultarMillas_Click);
             // 
+            // asignarRol_Usuario
+            // 
+            this.asignarRol_Usuario.BackColor = System.Drawing.Color.Orange;
+            this.asignarRol_Usuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.asignarRol_Usuario.ForeColor = System.Drawing.Color.White;
+            this.asignarRol_Usuario.Location = new System.Drawing.Point(227, 385);
+            this.asignarRol_Usuario.Name = "asignarRol_Usuario";
+            this.asignarRol_Usuario.Size = new System.Drawing.Size(178, 43);
+            this.asignarRol_Usuario.TabIndex = 35;
+            this.asignarRol_Usuario.Text = "Asignar un rol a un usuario";
+            this.asignarRol_Usuario.UseVisualStyleBackColor = false;
+            this.asignarRol_Usuario.Click += new System.EventHandler(this.asignarRol_Usuario_Click);
+            // 
             // Inicio_Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(835, 456);
+            this.Controls.Add(this.asignarRol_Usuario);
             this.Controls.Add(this.btnConsultarMillas);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
@@ -364,5 +379,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button btnConsultarMillas;
+        private System.Windows.Forms.Button asignarRol_Usuario;
     }
 }

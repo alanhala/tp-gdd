@@ -416,6 +416,16 @@ IF OBJECT_ID (N'JUST_DO_IT.existeRol') IS NOT NULL
 IF OBJECT_ID (N'JUST_DO_IT.estabaDadoDeBajaElRol') IS NOT NULL
 	drop procedure JUST_DO_IT.estabaDadoDeBajaElRol; 
 
+IF OBJECT_ID (N'JUST_DO_IT.asignarRolAUsuario') IS NOT NULL
+	drop procedure JUST_DO_IT.asignarRolAUsuario; 
+
+ IF OBJECT_ID (N'JUST_DO_IT.ListadoUsuarios') IS NOT NULL
+	drop function JUST_DO_IT.ListadoUsuarios;
+
+IF OBJECT_ID (N'JUST_DO_IT.BuscarUsuario') IS NOT NULL
+	drop procedure JUST_DO_IT.BuscarUsuario; 
+
+
 /******CREACION DE TABLAS******/
 
 CREATE TABLE JUST_DO_IT.Ciudades(
@@ -1482,8 +1492,7 @@ GO
 CREATE PROCEDURE JUST_DO_IT.almacenarRol(@Nombre VARCHAR(50))
 AS BEGIN
 	BEGIN TRY
-		INSERT INTO JUST_DO_IT.Roles(nombre, baja_rol) 
-			VALUES(@Nombre, 0)
+		INSERT INTO JUST_DO_IT.Roles VALUES(@Nombre, 0)
 	END TRY
 	BEGIN CATCH
 		RAISERROR('El rol ingresado ya existe',16,217) WITH SETERROR
@@ -1511,10 +1520,13 @@ GO
 
 CREATE PROCEDURE JUST_DO_IT.bajaRol(@nombre VARCHAR(50))
 AS BEGIN
+	DECLARE @idRol INT;
 	BEGIN TRY
-		UPDATE JUST_DO_IT.Roles
-			SET baja_rol = 1
-			WHERE nombre = @nombre
+		SELECT @idRol = R.id FROM JUST_DO_IT.Roles AS R WHERE R.nombre LIKE @nombre;
+		UPDATE JUST_DO_IT.Roles SET baja_rol = 1 WHERE nombre = @nombre
+		
+		-- Eliminar el rol para los usuarios que lo poseen
+		DELETE FROM JUST_DO_IT.Usuario_Rol WHERE id_rol = @idRol
 	END TRY
 	BEGIN CATCH
 		RAISERROR('Fallo la baja de rol',16,217) WITH SETERROR
@@ -1588,6 +1600,42 @@ AS BEGIN
 	END CATCH
 END 
 GO
+
+------------------- Roles y usuarios ----------------------
+
+CREATE PROCEDURE JUST_DO_IT.asignarRolAUsuario(@IdRol NUMERIC(18,0), @id_usuario NUMERIC(18,0))
+AS BEGIN
+	BEGIN TRY
+		DECLARE @estaRepetido BIT;
+		SELECT @estaRepetido = COUNT(*) FROM JUST_DO_IT.Usuario_Rol AS U where id_rol = @IdRol AND U.id_usuario = @id_usuario
+
+		IF(@estaRepetido=0)
+			INSERT INTO JUST_DO_IT.Usuario_Rol(id_rol, id_usuario) VALUES(@IdRol,@id_usuario);
+		ELSE 
+			RAISERROR('Error. El usuario ya poseía con anterioridad dicho rol',16,217) WITH SETERROR
+
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Error. El usuario ya poseía con anterioridad dicho rol',16,217) WITH SETERROR
+	END CATCH
+END
+GO
+
+CREATE FUNCTION JUST_DO_IT.ListadoUsuarios()
+RETURNS TABLE
+AS RETURN
+	SELECT usuarios.nombre AS nombre, usuarios.apellido AS apellido, usuarios.dni AS dni
+	FROM JUST_DO_IT.Usuarios AS usuarios
+GO
+
+create FUNCTION JUST_DO_IT.BuscarUsuario(@nombre NVARCHAR(255), @apellido NVARCHAR(255), @dni NUMERIC(18,0))
+RETURNS TABLE
+AS RETURN
+	SELECT usuarios.id AS id 
+	FROM JUST_DO_IT.Usuarios AS usuarios
+	WHERE usuarios.apellido LIKE @apellido AND usuarios.nombre LIKE @nombre AND usuarios.dni LIKE @dni
+GO
+
 
 
 -----------------------------------------

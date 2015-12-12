@@ -19,22 +19,11 @@ namespace AerolineaFrba.Abm_Rol
 
         private void button1_Click(object sender, EventArgs e) //siguiente
         {
-            if (nombreRol.Text.Trim() != "")
+            if (tbNombreNuevo.Text.Trim() != "")
             {
                 string nombreR = tbNombreNuevo.Text;
-                string query_rol = "EXEC JUST_DO_IT.almacenarRol'" + nombreR + "'";
-                try
-                {
-                    Server.getInstance().realizarQuery(query_rol);
-                    int IdRol = Rol.obtenerID(nombreR);
-                    new altaRol_elegirFuncionalidades(IdRol).Show();
-                    this.Hide();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
+                new altaRol_elegirFuncionalidades(nombreR).Show();
+                this.Hide();
             }
             else
             {

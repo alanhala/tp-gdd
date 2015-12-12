@@ -36,7 +36,6 @@
             this.comboBoxFunc = new System.Windows.Forms.ComboBox();
             this.nombreRol = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnAgregarMasFunc = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,23 +110,12 @@
             this.label1.TabIndex = 59;
             this.label1.Text = "Paso 2. Ingreso de funcionalidades";
             // 
-            // btnAgregarMasFunc
-            // 
-            this.btnAgregarMasFunc.Location = new System.Drawing.Point(35, 146);
-            this.btnAgregarMasFunc.Name = "btnAgregarMasFunc";
-            this.btnAgregarMasFunc.Size = new System.Drawing.Size(166, 23);
-            this.btnAgregarMasFunc.TabIndex = 63;
-            this.btnAgregarMasFunc.Text = "Agregar otra funcionalidad";
-            this.btnAgregarMasFunc.UseVisualStyleBackColor = true;
-            this.btnAgregarMasFunc.Click += new System.EventHandler(this.btnAgregarMasFunc_Click);
-            // 
             // altaRol_elegirFuncionalidades
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(497, 191);
-            this.Controls.Add(this.btnAgregarMasFunc);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnFinalizar);
             this.Controls.Add(this.groupBox1);
@@ -150,6 +138,5 @@
         private System.Windows.Forms.ComboBox comboBoxFunc;
         private System.Windows.Forms.Label nombreRol;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnAgregarMasFunc;
     }
 }

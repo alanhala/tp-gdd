@@ -159,6 +159,12 @@ namespace AerolineaFrba.Vistas_Inicio
             this.Hide();
         }
 
+        private void asignarRol_Usuario_Click(object sender, EventArgs e)
+        {
+            new Abm_Rol.Asignar_rol_a_usuario().Show();
+            this.Hide();
+        }
+
 
     }
 }

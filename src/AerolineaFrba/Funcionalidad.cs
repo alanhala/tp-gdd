@@ -13,17 +13,6 @@ namespace AerolineaFrba
             return Commons.getInstance().getIDFrom("IDFuncionalidad", descripcion);
         }
 
-/*         public string obtenerCantFuncionalidades(int idRol)
-             {
-                   System.Data.SqlClient.SqlDataReader reader;
-                   string query = "SELECT JUST_DO_IT.cantFuncionalidadQuePosee (" + idRol + ") AS cant";
-                   reader = Server.getInstance().query(query);
-                   reader.Read();
-                   int cant = reader["cant"]
-                   reader.Close();
-                   return cant;
-               }
-         */
     }
 
 }
